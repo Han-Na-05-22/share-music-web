@@ -9,6 +9,7 @@ const Button = ({
   disabled = false,
   onClick,
   fontSize = "24px",
+  btnType = "none",
 }: ButtonProps) => {
   return (
     <ButtonContainer
@@ -18,6 +19,7 @@ const Button = ({
       disabled={disabled}
       onClick={onClick}
       fontSize={fontSize}
+      btnType={btnType}
     >
       <span>{children}</span>
     </ButtonContainer>

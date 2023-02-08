@@ -1,5 +1,6 @@
 import Container from "common/layout/Container";
 import Header from "common/layout/Header";
+import Main from "common/layout/Main";
 import Home from "pages/Home";
 import { Route, Routes } from "react-router-dom";
 
@@ -8,9 +9,11 @@ function App() {
     <div className="App">
       <Container>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+        <Main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </Main>
       </Container>
     </div>
   );
