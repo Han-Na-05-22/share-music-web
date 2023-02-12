@@ -7,6 +7,7 @@ export interface TextInputProps {
   height?: string;
   isError?: boolean;
   errorMsg?: string;
+  label: string;
 }
 
 export interface TextInputStyleProps {

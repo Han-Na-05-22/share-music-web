@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0px;
     margin:0px;
     box-sizing:border-box;
-    color:#FFFFFF;
+color:#fff;
     font-family:"arial";
     font-weight:400;
     line-height: 1;

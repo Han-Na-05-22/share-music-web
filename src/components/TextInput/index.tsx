@@ -6,14 +6,15 @@ const TextInput = ({
   onChange,
   name,
   value,
-  width,
-  height,
+  width = "300px",
+  height = "50px",
+  label,
   isError = false,
   errorMsg,
 }: TextInputProps) => {
   return (
     <TextInputContainer className={className} width={width} height={height}>
-      <label htmlFor={name}></label>
+      <label htmlFor={name}>{label}</label>
 
       <input
         type="text"
