@@ -8,6 +8,7 @@ export interface TextInputProps {
   isError?: boolean;
   errorMsg?: string;
   label: string;
+  fontSize?: string;
 }
 
 export interface TextInputStyleProps {
@@ -15,4 +16,5 @@ export interface TextInputStyleProps {
   height?: string;
   isError?: boolean;
   errorMsg?: string;
+  fontSize?: string;
 }

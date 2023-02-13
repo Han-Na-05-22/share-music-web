@@ -11,9 +11,16 @@ const TextInput = ({
   label,
   isError = false,
   errorMsg,
+  fontSize = "18px",
 }: TextInputProps) => {
   return (
-    <TextInputContainer className={className} width={width} height={height}>
+    <TextInputContainer
+      className={className}
+      width={width}
+      height={height}
+      isError={isError}
+      fontSize={fontSize}
+    >
       <label htmlFor={name}>{label}</label>
 
       <input
@@ -23,6 +30,7 @@ const TextInput = ({
         value={value}
         onChange={onChange}
       />
+      <p>{errorMsg}</p>
     </TextInputContainer>
   );
 };

@@ -10,6 +10,7 @@ const Button = ({
   onClick,
   fontSize = "24px",
   btnType = "none",
+  marginLeft,
 }: ButtonProps) => {
   return (
     <ButtonContainer
@@ -19,6 +20,7 @@ const Button = ({
       disabled={disabled}
       onClick={onClick}
       fontSize={fontSize}
+      marginLeft={marginLeft}
       btnType={btnType}
     >
       <span>{children}</span>

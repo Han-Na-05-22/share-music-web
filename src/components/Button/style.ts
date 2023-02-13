@@ -8,6 +8,7 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
   color: ${({ theme }) => theme.colors.ButtonText};
   transition: 0.5s;
   border: none;
+  margin-left: ${(props) => props.marginLeft};
 
   &:hover {
     background: ${({ theme }) => theme.colors.HoverColor};

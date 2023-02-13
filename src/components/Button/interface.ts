@@ -19,11 +19,13 @@ export interface ButtonProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   fontSize?: string;
   btnType?: buttonType;
+  marginLeft?: string;
 }
 
 export interface ButtonStyleProps {
   width?: string;
   height?: string;
+  marginLeft?: string;
   fontSize?: string;
   btnType?: buttonType;
 }
