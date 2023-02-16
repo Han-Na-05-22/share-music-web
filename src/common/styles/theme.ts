@@ -8,6 +8,8 @@ const colors = {
   HoverText: "#6C6A6A",
   ButtonText: "#FFFFFF",
 
+  ModalColor: "#FFFFFF",
+
   DefaultRed: "#F25D5D",
   DisabledRed: "#F25D5D",
 };

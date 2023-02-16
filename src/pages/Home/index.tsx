@@ -24,7 +24,7 @@ const Home = () => {
           업로드
         </Button>
       </div>
-      <Modal></Modal>
+      <Modal>등록이 완료 되었습니다.</Modal>
     </HomeContainer>
   );
 };

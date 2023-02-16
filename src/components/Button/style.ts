@@ -43,4 +43,10 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
         background: ${({ theme }) => theme.colors.DefaultColor};
       }
     `};
+
+  ${(props) =>
+    props.btnType === "confirm" &&
+    css`
+      background: ${({ theme }) => theme.colors.DisabledColor};
+    `};
 `;
