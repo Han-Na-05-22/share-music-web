@@ -11,7 +11,7 @@ const Modal = ({
 }: ModalProps) => {
   return (
     <Overlay>
-      <ModalContainer width={width} height={height}>
+      <ModalContainer width={width} height={height} className={className}>
         <div className="modal-header"></div>
         {children}
         <Button btnType="confirm">버튼</Button>

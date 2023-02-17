@@ -5,9 +5,10 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0px;
     margin:0px;
     box-sizing:border-box;
-color:#fff;
+    color:#fff;
     font-family:"arial";
     font-weight:400;
+    border-collapse: collapse;
     line-height: 1;
   }
 
