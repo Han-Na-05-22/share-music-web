@@ -21,7 +21,7 @@ const Tabel = ({
           ))}
         </tr>
       </thead>
-      <tbody>{children}</tbody>
+      <tbody>{children} </tbody>
     </TabelContainer>
   );
 };

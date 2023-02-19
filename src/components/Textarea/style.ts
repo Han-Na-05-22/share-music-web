@@ -1,5 +1,19 @@
 import styled from "styled-components";
+import { textareaStyleProps } from "./interface";
 
-export const TextareaContainer = styled.textarea`
+export const TextareaContainer = styled.div<textareaStyleProps>`
   border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  gap: 10px 0px;
+
+  textarea {
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+  }
+
+  label {
+    font-size: 20px;
+    color: ${({ theme }) => theme.colors.HoverText};
+  }
 `;
