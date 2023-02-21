@@ -8,6 +8,23 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
   justify-content: center;
   color: ${({ theme }) => theme.colors.DefaultText};
   font-size: ${(props) => props?.fontSize};
+
+  &:active {
+    input {
+      border: 2px solid ${({ theme }) => theme.colors.ActiveColor};
+    }
+  }
+
+  &:hover {
+    input {
+      border: 2px solid ${({ theme }) => theme.colors.HoverColor};
+    }
+
+    label {
+      color: ${({ theme }) => theme.colors.HoverText};
+    }
+  }
+
   label,
   input {
     color: inherit;
@@ -20,14 +37,6 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
     height: ${(props) => props.height};
     margin: 10px 0px;
     padding-left: 10px;
-
-    &:active {
-      border: 2px solid ${({ theme }) => theme.colors.ActiveColor};
-    }
-
-    &:hover {
-      border: 2px solid ${({ theme }) => theme.colors.HoverColor};
-    }
   }
 
   p {
@@ -43,6 +52,10 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
 
       p {
         display: block;
+        color: ${({ theme }) => theme.colors.DefaultRed};
+      }
+
+      label {
         color: ${({ theme }) => theme.colors.DefaultRed};
       }
     `}

@@ -9,9 +9,16 @@ const Textarea = ({
   label = "설명",
   width = "800px",
   height = "100px",
+  isError = true,
+  errorMsg,
 }: textareaPorps) => {
   return (
-    <TextareaContainer className={className} width={width} height={height}>
+    <TextareaContainer
+      className={className}
+      width={width}
+      height={height}
+      isError={isError}
+    >
       <label htmlFor={name}>{label}</label>
       <textarea
         name={name}
@@ -19,6 +26,7 @@ const Textarea = ({
         id={name}
         onChange={onChange}
       ></textarea>
+      <p>{errorMsg}</p>
     </TextareaContainer>
   );
 };

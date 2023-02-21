@@ -7,11 +7,13 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import Tabel from "components/Table";
 import Textarea from "components/Textarea";
+import ImgUpload from "components/ImgUpload";
 
 const Home = () => {
   const [test, setTest] = useState<any>({
     title: "",
     content: "",
+    img: "",
   });
   const [tdContent, setTdContent] = useState<any[]>([
     {
@@ -32,7 +34,26 @@ const Home = () => {
     },
   ]);
   console.log("test", test);
+
   const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const handleChangeImg = (event: any) => {
+    const { name } = event.target;
+    const formData = new FormData();
+    const fr = new FileReader();
+    const file = event.target.files[0];
+
+    if (file) {
+      fr.readAsDataURL(file);
+
+      fr.onload = () => {
+        if (typeof fr.result === "string") {
+          formData.append("file", file);
+          setTest({ ...test, [name]: fr.result, formDataImg: formData });
+        }
+      };
+    }
+  };
 
   return (
     <HomeContainer>
@@ -103,6 +124,7 @@ const Home = () => {
         <Textarea
           name="content"
           value={test?.content}
+          errorMsg="설명을 입력해주세요."
           onChange={(event: any) => {
             setTest({
               ...test,
@@ -110,6 +132,13 @@ const Home = () => {
             });
           }}
         ></Textarea>
+        <ImgUpload
+          name="img"
+          file={test.img}
+          onChange={handleChangeImg}
+          onClick={() => {}}
+          // isError={true}
+        />
       </div>
     </HomeContainer>
   );

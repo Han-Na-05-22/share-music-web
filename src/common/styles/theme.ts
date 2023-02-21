@@ -12,6 +12,8 @@ const colors = {
 
   DefaultRed: "#F25D5D",
   DisabledRed: "#F25D5D",
+
+  BlackColor: "#000000",
 };
 
 const theme = {
