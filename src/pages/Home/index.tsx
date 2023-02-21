@@ -9,7 +9,10 @@ import Tabel from "components/Table";
 import Textarea from "components/Textarea";
 
 const Home = () => {
-  const [test, setTest] = useState<string>("test");
+  const [test, setTest] = useState<any>({
+    title: "",
+    content: "",
+  });
   const [tdContent, setTdContent] = useState<any[]>([
     {
       a: "순위",
@@ -28,7 +31,7 @@ const Home = () => {
       f: <SVG src="/svg/download.svg" />,
     },
   ]);
-
+  console.log("test", test);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   return (
@@ -37,10 +40,16 @@ const Home = () => {
         <Box>Box</Box>
         <div className="input-test">
           <TextInput
-            name="test"
-            value={test}
+            name="title"
+            value={test?.title}
             label="음원"
             isError={true}
+            onChange={(event: any) => {
+              setTest({
+                ...test,
+                title: event?.target.value,
+              });
+            }}
             errorMsg="에러 메시지 입니다."
           ></TextInput>
           <Button marginLeft="15px" btnType="submit">
@@ -91,7 +100,16 @@ const Home = () => {
             </tr>
           ))}
         </Tabel>
-        <Textarea name="content" value="test"></Textarea>
+        <Textarea
+          name="content"
+          value={test?.content}
+          onChange={(event: any) => {
+            setTest({
+              ...test,
+              content: event?.target.value,
+            });
+          }}
+        ></Textarea>
       </div>
     </HomeContainer>
   );

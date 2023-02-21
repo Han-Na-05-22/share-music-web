@@ -10,6 +10,9 @@ export const TextareaContainer = styled.div<textareaStyleProps>`
   textarea {
     width: ${(props) => props.width};
     height: ${(props) => props.height};
+    color: ${({ theme }) => theme.colors.DefaultText};
+    font-size: 18px;
+    padding: 10px 0px 0px 10px;
   }
 
   label {
