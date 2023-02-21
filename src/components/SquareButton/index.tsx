@@ -5,6 +5,7 @@ const SquareButton = ({
   className,
   disabled,
   active,
+  children,
   onClick,
 }: SquareButtonProps) => {
   return (
@@ -13,7 +14,9 @@ const SquareButton = ({
       onClick={onClick}
       disabled={disabled}
       active={active}
-    ></SquareButtonContainer>
+    >
+      {children}
+    </SquareButtonContainer>
   );
 };
 export default SquareButton;

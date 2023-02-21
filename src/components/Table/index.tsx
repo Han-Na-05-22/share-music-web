@@ -1,17 +1,9 @@
 import { TabelProps } from "./interface";
 import { TabelContainer } from "./style";
 
-// todo : 페이지네이션  최대 7열 이후에는 다음 페이지로
+// todo : 테스트 길이가 길 경우 말줄임 적용
 
-const Tabel = ({
-  className,
-  children,
-  theadData,
-  totalPages,
-  nowPage,
-  onChangePageRange,
-  onChangePageNo,
-}: TabelProps) => {
+const Tabel = ({ className, children, theadData }: TabelProps) => {
   return (
     <TabelContainer className={className}>
       <thead>
@@ -21,7 +13,7 @@ const Tabel = ({
           ))}
         </tr>
       </thead>
-      <tbody>{children} </tbody>
+      <tbody>{children}</tbody>
     </TabelContainer>
   );
 };

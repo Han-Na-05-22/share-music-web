@@ -7,8 +7,4 @@ export interface TabelProps {
   className?: string;
   children: React.ReactNode;
   theadData: theadData[];
-  totalPages?: number;
-  nowPage?: number;
-  onChangePageNo?: (no: number) => void;
-  onChangePageRange?: (page: number) => void;
 }

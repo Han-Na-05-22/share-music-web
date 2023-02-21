@@ -8,32 +8,132 @@ import Modal from "components/Modal";
 import Tabel from "components/Table";
 import Textarea from "components/Textarea";
 import ImgUpload from "components/ImgUpload";
+import Pagination from "components/Pagination";
 
 const Home = () => {
+  const [limit, setLimit] = useState(7);
+  const [page, setPage] = useState(1);
   const [test, setTest] = useState<any>({
     title: "",
     content: "",
     img: "",
   });
+  const offset = (page - 1) * limit;
   const [tdContent, setTdContent] = useState<any[]>([
     {
-      a: "순위",
+      a: "1",
       b: "음원",
       c: "제목",
       d: "가수",
-      e: <SVG src="/svg/heart.svg" />,
-      f: <SVG src="/svg/download.svg" />,
+      e: 111,
+      f: 55555555555,
     },
     {
-      a: "순위",
+      a: "2",
       b: "음원",
       c: "제목",
       d: "가수",
-      e: <SVG src="/svg/heart.svg" />,
-      f: <SVG src="/svg/download.svg" />,
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "3",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "4",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "5",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "6",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "7",
+      b: "음원1",
+      c: "제목1",
+      d: "가수1",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "8",
+      b: "음원2",
+      c: "제목2",
+      d: "가수2",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "9",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "10",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "11",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "12",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
+    },
+    {
+      a: "13",
+      b: "음원",
+      c: "제목",
+      d: "가수",
+      e: 11111,
+      f: 55555555555,
     },
   ]);
-  console.log("test", test);
+
+  const handleChangePage = (page: any) => {
+    if (tdContent.length < 7) {
+      page = 1;
+      return setPage(page);
+    } else {
+      return;
+    }
+  };
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
@@ -110,16 +210,25 @@ const Home = () => {
             },
           ]}
         >
-          {tdContent?.map((item: any, idx: number) => (
-            <tr key={idx}>
-              <td>{item?.a}</td>
-              <td>{item?.b}</td>
-              <td>{item?.c}</td>
-              <td>{item?.d}</td>
-              <td>{item?.e}</td>
-              <td>{item?.f}</td>
-            </tr>
-          ))}
+          {tdContent
+            ?.slice(offset, offset + limit)
+            ?.map((item: any, idx: number) => (
+              <tr key={idx}>
+                <td>{item?.a}</td>
+                <td>{item?.b}</td>
+                <td>{item?.c}</td>
+                <td>{item?.d}</td>
+                <td>{item?.e}</td>
+                <td>{item?.f}</td>
+              </tr>
+            ))}
+          <Pagination
+            total={tdContent.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            handleChangePage={handleChangePage}
+          />
         </Tabel>
         <Textarea
           name="content"

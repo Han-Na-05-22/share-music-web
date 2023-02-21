@@ -1,7 +1,8 @@
 export interface SquareButtonProps {
   className?: string;
-  disabled?: any;
-  active?: any;
+  disabled?: boolean;
+  active?: boolean;
+  children: React.ReactNode;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 

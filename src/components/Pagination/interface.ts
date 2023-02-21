@@ -1,7 +1,7 @@
-// 버튼 색 theme 확인 필요
 export interface PaginationProps {
-  nowPage: number;
-  totalPages: number;
-  onChangePageNo: (no: number) => void;
-  onChangePageRange: (page: number) => void;
+  total?: undefined | number;
+  limit?: undefined | number;
+  page?: number;
+  setPage?: any;
+  handleChangePage?: (page: any) => void | undefined;
 }
