@@ -1,17 +1,15 @@
 import styled from "styled-components";
 export const TabelContainer = styled.table`
-  width: 500px;
-  max-height: 700px;
+  width: 550px;
   border-collapse: collapse;
   table-layout: fixed;
-  background: ${({ theme }) => theme.colors.ModalColor};
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
   thead {
     height: 70px;
     width: 100%;
     display: flex;
     border-bottom: 2px solid ${({ theme }) => theme.colors.DefaultText};
+
     tr {
       display: flex;
       justify-content: space-between;
@@ -32,7 +30,7 @@ export const TabelContainer = styled.table`
         }
 
         &:nth-child(3) {
-          width: 150px;
+          width: 175px;
         }
 
         &:nth-child(4) {
@@ -52,10 +50,11 @@ export const TabelContainer = styled.table`
 
   tbody {
     width: 100%;
-    height: 560px;
     overflow-y: auto;
     display: inline-block;
     position: relative;
+    max-height: 710px;
+    min-height: 700px;
 
     tr {
       height: 70px;
@@ -79,7 +78,7 @@ export const TabelContainer = styled.table`
         }
 
         &:nth-child(3) {
-          width: 150px;
+          width: 175px;
         }
 
         &:nth-child(4) {

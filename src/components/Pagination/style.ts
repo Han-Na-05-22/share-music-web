@@ -4,30 +4,17 @@ export const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  bottom: 15px;
+  position: relative;
+  bottom: 0px;
   transform: translateX(-50%);
   left: 50%;
+  margin-top: 20px;
 
-  .btn-num-group {
-    display: flex;
-    gap: 0px 10px;
-
-    .btn-num-active {
-      background: ${({ theme }) => theme.colors.ActiveColor};
-    }
-  }
-
-  .left,
-  .right {
+  button {
     border: none;
   }
 
-  .left {
-    margin-right: 10px;
-  }
-
-  .right {
-    margin-left: 10px;
+  .btn-num-active {
+    background: ${({ theme }) => theme.colors.ActiveColor};
   }
 `;

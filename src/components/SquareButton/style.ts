@@ -14,7 +14,11 @@ export const SquareButtonContainer = styled.button<SquareButtonStyleProps>`
   background: ${({ theme }) => theme.colors.DefaultColor};
   border: none;
   transition: 0.5s;
+  margin-right: 10px;
 
+  &:last-child {
+    margin-right: 0px;
+  }
   &:hover {
     background: ${({ theme }) => theme.colors.HoverColor};
   }

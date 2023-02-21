@@ -29,29 +29,28 @@ const Pagination = ({
       <SquareButton
         onClick={() => setPage(page - 1)}
         disabled={page === 1}
-        className="left"
+        className="prev-btn"
       >
         <SVG src="/svg/page-prev.svg" />
       </SquareButton>
-      <div className="btn-num-group">
-        {Array(numPages)
-          ?.fill(null)
-          ?.map((_: any, idx: number) => (
-            <SquareButton
-              key={idx + 1}
-              onClick={() => setPage(idx + 1)}
-              className={idx + 1 === page ? "btn-num-active" : "btn-num"}
-              active={idx + 1 === page}
-            >
-              {idx + 1}
-            </SquareButton>
-          ))}
-      </div>
+
+      {Array(numPages)
+        ?.fill(null)
+        ?.map((_: any, idx: number) => (
+          <SquareButton
+            key={idx + 1}
+            onClick={() => setPage(idx + 1)}
+            className={idx + 1 === page ? "btn-num-active" : "btn-num"}
+            active={idx + 1 === page}
+          >
+            {idx + 1}
+          </SquareButton>
+        ))}
 
       <SquareButton
         onClick={() => setPage(page + 1)}
         disabled={page === numPages}
-        className="right"
+        className="next-btn"
       >
         <SVG src="/svg/page-next.svg" />
       </SquareButton>
