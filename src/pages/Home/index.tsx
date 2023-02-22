@@ -11,11 +11,13 @@ import Pagination from "components/Pagination";
 import { dummyData } from "utility/data";
 import ProfileImg from "components/ProfileImg";
 import CheckBox from "components/CheckBox";
+import PopUp from "components/PopUp";
+import Record from "components/Record";
 
-// todo : 프로필 삭제 버튼(완), 체크박스 컴포넌트 개발(완), Search, Popup (2023-02-23)
+// todo : 프로필 삭제 버튼(완), 체크박스 컴포넌트 개발(완), Search, Popup(완) (2023-02-23)
 
 const Home = () => {
-  const [isDelete, setIsDelete] = useState<boolean>(false);
+  const [isPlay, setIsPlay] = useState<boolean>(false);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [test, setTest] = useState<any>({
@@ -38,6 +40,10 @@ const Home = () => {
 
   console.log("test", test);
   const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const handleChangePlay = () => {
+    setIsPlay(!isPlay);
+  };
 
   const deleteImg = () => {
     setTest({
@@ -70,7 +76,7 @@ const Home = () => {
       };
     }
   };
-
+  console.log("isPlay", isPlay);
   return (
     <HomeContainer>
       <div className="left">
@@ -172,6 +178,41 @@ const Home = () => {
           checked={test?.checkBox}
           onChange={handleChangeCheckBox}
         />
+        {/* <PopUp>
+          <TextInput
+            name="title"
+            value={test?.title}
+            label="음원"
+            isError={true}
+            onChange={(event: any) => {
+              setTest({
+                ...test,
+                title: event?.target.value,
+              });
+            }}
+            errorMsg="에러 메시지 입니다."
+          ></TextInput>{" "}
+          <TextInput
+            name="title"
+            value={test?.title}
+            label="음원"
+            isError={true}
+            onChange={(event: any) => {
+              setTest({
+                ...test,
+                title: event?.target.value,
+              });
+            }}
+            errorMsg="에러 메시지 입니다."
+          ></TextInput>
+          <Button marginLeft="15px" btnType="submit">
+            업로드
+          </Button>
+          <Button marginLeft="15px" btnType="submit">
+            업로드
+          </Button>
+        </PopUp> */}
+        <Record isPlay={isPlay} onClickPlay={handleChangePlay} />
       </div>
     </HomeContainer>
   );
