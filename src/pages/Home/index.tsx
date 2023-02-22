@@ -7,17 +7,22 @@ import Button from "components/Button";
 import Modal from "components/Modal";
 import Tabel from "components/Table";
 import Textarea from "components/Textarea";
-import ImgUpload from "components/ImgUpload";
 import Pagination from "components/Pagination";
 import { dummyData } from "utility/data";
+import ProfileImg from "components/ProfileImg";
+import CheckBox from "components/CheckBox";
+
+// todo : 프로필 삭제 버튼(완), 체크박스 컴포넌트 개발(완), Search, Popup (2023-02-23)
 
 const Home = () => {
+  const [isDelete, setIsDelete] = useState<boolean>(false);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [test, setTest] = useState<any>({
     title: "",
     content: "",
     img: "",
+    checkBox: false,
   });
   const offset = (page - 1) * limit;
   const [tdContent, setTdContent] = useState<any[]>(dummyData);
@@ -31,7 +36,22 @@ const Home = () => {
     }
   };
 
+  console.log("test", test);
   const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const deleteImg = () => {
+    setTest({
+      ...test,
+      img: "",
+    });
+  };
+
+  const handleChangeCheckBox = () => {
+    setTest({
+      ...test,
+      checkBox: !test?.checkBox,
+    });
+  };
 
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
@@ -140,11 +160,17 @@ const Home = () => {
             });
           }}
         ></Textarea>
-        <ImgUpload
+        <ProfileImg
           name="img"
           file={test.img}
           onChange={handleChangeImg}
-          onClick={() => {}}
+          onClickDelete={deleteImg}
+        />
+        <CheckBox
+          name="checkBox"
+          value={test?.checkBox}
+          checked={test?.checkBox}
+          onChange={handleChangeCheckBox}
         />
       </div>
     </HomeContainer>

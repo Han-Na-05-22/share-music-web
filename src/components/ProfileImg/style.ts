@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { ImgUploadStyleProps } from "./interface";
+import { ProfileImgStyleProps } from "./interface";
 
-export const ImgUploadContainer = styled.div<ImgUploadStyleProps>`
+export const ProfileImgContainer = styled.div<ProfileImgStyleProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: 5px;
@@ -59,6 +59,13 @@ export const ImgUploadContainer = styled.div<ImgUploadStyleProps>`
       left: 50%;
       transform: translate(-50%, -50%);
     }
+  }
+
+  .delete-icon {
+    top: 5px;
+    right: 5px;
+    position: absolute;
+    z-index: 10000;
   }
 
   img {

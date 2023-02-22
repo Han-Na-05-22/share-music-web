@@ -1,8 +1,8 @@
-import { ImgUploadContainer } from "./style";
-import { ImgUploadProps } from "./interface";
+import { ProfileImgContainer } from "./style";
+import { ProfileImgProps } from "./interface";
 import SVG from "react-inlinesvg";
 
-const ImgUpload = ({
+const ProfileImg = ({
   width = "100px",
   height = "100px",
   className,
@@ -10,16 +10,24 @@ const ImgUpload = ({
   name,
   file,
   onChange,
+  onClickDelete,
   onClick,
   isError = false,
-}: ImgUploadProps) => {
+}: ProfileImgProps) => {
   return (
-    <ImgUploadContainer
+    <ProfileImgContainer
       width={width}
       height={height}
       className={className}
       isError={isError}
     >
+      {file && (
+        <SVG
+          onClick={onClickDelete}
+          className="delete-icon"
+          src="/svg/delete-red.svg"
+        />
+      )}
       {file && !isError ? (
         <label htmlFor="file-change" className="file-change">
           <SVG src="/svg/icon-pic.svg" />
@@ -38,8 +46,8 @@ const ImgUpload = ({
         onChange={onChange}
       />
       {file && <img src={file} alt="preview-img" />}
-    </ImgUploadContainer>
+    </ProfileImgContainer>
   );
 };
 
-export default ImgUpload;
+export default ProfileImg;
