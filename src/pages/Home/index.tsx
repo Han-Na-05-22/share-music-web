@@ -13,8 +13,8 @@ import ProfileImg from "components/ProfileImg";
 import CheckBox from "components/CheckBox";
 import PopUp from "components/PopUp";
 import Record from "components/Record";
-
-// todo : 프로필 삭제 버튼(완), 체크박스 컴포넌트 개발(완), Search, Popup(완) (2023-02-23)
+import { auth } from "service/firebase";
+// todo : 파이어베이스 로그인 및 회원가입 기능 구현 및 top, new 등 리스트가 없을 때 에러처리, 404 page
 
 const Home = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const Home = () => {
   });
   const offset = (page - 1) * limit;
   const [tdContent, setTdContent] = useState<any[]>(dummyData);
-
+  console.log("auth", auth);
   const handleChangePage = (page: any) => {
     if (tdContent.length < 10) {
       page = 1;
