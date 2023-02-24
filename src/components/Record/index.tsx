@@ -16,8 +16,7 @@ const Record = ({
   onClick,
 }: RecordProps) => {
   useEffect(() => {}, [isPlay, onClickPlay]);
-  console.log("!!!!!", isPlay);
-  console.log("onClickPlay", onClickPlay);
+
   return (
     <RecordContainer
       className={className}

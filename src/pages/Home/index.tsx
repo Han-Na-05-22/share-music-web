@@ -13,7 +13,7 @@ import ProfileImg from "components/ProfileImg";
 import CheckBox from "components/CheckBox";
 import PopUp from "components/PopUp";
 import Record from "components/Record";
-import { auth } from "service/firebase";
+
 // todo : 파이어베이스 로그인 및 회원가입 기능 구현 및 top, new 등 리스트가 없을 때 에러처리, 404 page
 
 const Home = () => {
@@ -28,7 +28,7 @@ const Home = () => {
   });
   const offset = (page - 1) * limit;
   const [tdContent, setTdContent] = useState<any[]>(dummyData);
-  console.log("auth", auth);
+
   const handleChangePage = (page: any) => {
     if (tdContent.length < 10) {
       page = 1;
@@ -38,7 +38,6 @@ const Home = () => {
     }
   };
 
-  console.log("test", test);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const handleChangePlay = () => {
@@ -76,7 +75,7 @@ const Home = () => {
       };
     }
   };
-  console.log("isPlay", isPlay);
+
   return (
     <HomeContainer>
       <div className="left">
@@ -178,40 +177,7 @@ const Home = () => {
           checked={test?.checkBox}
           onChange={handleChangeCheckBox}
         />
-        {/* <PopUp>
-          <TextInput
-            name="title"
-            value={test?.title}
-            label="음원"
-            isError={true}
-            onChange={(event: any) => {
-              setTest({
-                ...test,
-                title: event?.target.value,
-              });
-            }}
-            errorMsg="에러 메시지 입니다."
-          ></TextInput>{" "}
-          <TextInput
-            name="title"
-            value={test?.title}
-            label="음원"
-            isError={true}
-            onChange={(event: any) => {
-              setTest({
-                ...test,
-                title: event?.target.value,
-              });
-            }}
-            errorMsg="에러 메시지 입니다."
-          ></TextInput>
-          <Button marginLeft="15px" btnType="submit">
-            업로드
-          </Button>
-          <Button marginLeft="15px" btnType="submit">
-            업로드
-          </Button>
-        </PopUp> */}
+        <PopUp>test</PopUp>
         <Record isPlay={isPlay} onClickPlay={handleChangePlay} />
       </div>
     </HomeContainer>

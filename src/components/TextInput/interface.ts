@@ -8,6 +8,7 @@ export interface TextInputProps {
   isError?: boolean;
   errorMsg?: string;
   label: string;
+  type?: string;
   fontSize?: string;
 }
 

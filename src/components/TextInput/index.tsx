@@ -9,6 +9,7 @@ const TextInput = ({
   width = "300px",
   height = "50px",
   label,
+  type = "text",
   isError = false,
   errorMsg,
   fontSize = "18px",
@@ -24,7 +25,7 @@ const TextInput = ({
       <label htmlFor={name}>{label}</label>
 
       <input
-        type="text"
+        type={type}
         id={name}
         name={name}
         value={value}
