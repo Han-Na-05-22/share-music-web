@@ -11,10 +11,12 @@ import Pagination from "components/Pagination";
 import { dummyData } from "utility/data";
 import ProfileImg from "components/ProfileImg";
 import CheckBox from "components/CheckBox";
-import PopUp from "components/PopUp";
 import Record from "components/Record";
+import { auth } from "service/firebase";
+import Join from "components/Join";
+import Login from "components/Login";
 
-// todo : 파이어베이스 로그인 및 회원가입 기능 구현 및 top, new 등 리스트가 없을 때 에러처리, 404 page
+// todo : 파이어베이스 로그인 및 회원가입 기능 구현(완) 및 top, new 등 리스트가 없을 때 에러처리, 404 page
 
 const Home = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -26,9 +28,11 @@ const Home = () => {
     img: "",
     checkBox: false,
   });
+  console.log("auth", auth);
   const offset = (page - 1) * limit;
   const [tdContent, setTdContent] = useState<any[]>(dummyData);
 
+  // page
   const handleChangePage = (page: any) => {
     if (tdContent.length < 10) {
       page = 1;
@@ -51,6 +55,7 @@ const Home = () => {
     });
   };
 
+  // checkbox
   const handleChangeCheckBox = () => {
     setTest({
       ...test,
@@ -58,6 +63,7 @@ const Home = () => {
     });
   };
 
+  // img
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -79,7 +85,7 @@ const Home = () => {
   return (
     <HomeContainer>
       <div className="left">
-        <Box>Box</Box>
+        <Box>box</Box>
         <div className="input-test">
           <TextInput
             name="title"
@@ -177,7 +183,8 @@ const Home = () => {
           checked={test?.checkBox}
           onChange={handleChangeCheckBox}
         />
-        <PopUp>test</PopUp>
+        <Join>Join</Join>
+        <Login></Login>
         <Record isPlay={isPlay} onClickPlay={handleChangePlay} />
       </div>
     </HomeContainer>

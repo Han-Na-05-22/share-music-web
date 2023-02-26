@@ -1,22 +1,22 @@
 import Overlay from "components/Overlay";
-import { PopUpPorps } from "./interface";
-import { PopUpContainer } from "./style";
+import { JoinProps } from "./interface";
+import { JoinContainer } from "./style";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "service/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
+import { firestore } from "service/firebase";
+import { doc } from "@firebase/firestore";
+import { setDoc } from "firebase/firestore";
 
-// todo : 회원가입 or 음원등록, 수정, 자세히보기
-
-const PopUp = ({
+const Join = ({
   className,
   width = "1150px",
   height = "780px",
   children,
-  isJoin = undefined,
-}: PopUpPorps) => {
+}: JoinProps) => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState<any>({
@@ -25,6 +25,7 @@ const PopUp = ({
   });
   console.log("form", form);
 
+  // 회원가입
   const signin = async ({ email, password }: any) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -33,10 +34,29 @@ const PopUp = ({
         password
       );
       console.log("user", user);
+      console.log("auth", auth);
+
       setForm({
         email: "",
         password: "",
       });
+
+      const washingtonRef = doc(firestore, "users", user?.uid);
+
+      await setDoc(washingtonRef, {
+        userInfo: [
+          {
+            name: auth?.currentUser?.displayName,
+            email: auth?.currentUser?.email,
+            profile: auth?.currentUser?.photoURL,
+            creationTime: auth?.currentUser?.metadata?.creationTime,
+            lastSignInTime: auth?.currentUser?.metadata?.lastSignInTime,
+          },
+        ],
+      });
+
+      auth?.signOut();
+      alert("회원가입에 성공하였습니다.");
       return user;
     } catch (err) {
       console.log("err", err);
@@ -44,16 +64,11 @@ const PopUp = ({
       navigate("/");
     }
   };
-
   return (
     <Overlay>
-      <PopUpContainer
-        className={className}
-        width={width}
-        height={height}
-        isJoin={isJoin}
-      >
+      <JoinContainer className={className} width={width} height={height}>
         {children}
+
         <TextInput
           name="email"
           value={form?.email}
@@ -81,9 +96,9 @@ const PopUp = ({
         <Button marginLeft="15px" btnType="submit" onClick={() => signin(form)}>
           회원가입
         </Button>
-      </PopUpContainer>
+      </JoinContainer>
     </Overlay>
   );
 };
 
-export default PopUp;
+export default Join;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { PopUpStyleProps } from "./interface";
+import { JoinStyleProps } from "./interface";
 
-export const PopUpContainer = styled.div<PopUpStyleProps>`
+export const JoinContainer = styled.div<JoinStyleProps>`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   padding: 48px;
