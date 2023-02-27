@@ -2,7 +2,7 @@ export interface TextInputProps {
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
-  value: string;
+  value: string | undefined;
   width?: string;
   height?: string;
   isError?: boolean;

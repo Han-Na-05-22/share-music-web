@@ -15,6 +15,7 @@ import Record from "components/Record";
 import { auth } from "service/firebase";
 import Join from "components/Join";
 import Login from "components/Login";
+import Upload from "components/Upload";
 
 // todo : 파이어베이스 로그인 및 회원가입 기능 구현(완) 및 top, new 등 리스트가 없을 때 에러처리, 404 page
 
@@ -47,7 +48,7 @@ const Home = () => {
   const handleChangePlay = () => {
     setIsPlay(!isPlay);
   };
-
+  console.log("testtest", test);
   const deleteImg = () => {
     setTest({
       ...test,
@@ -72,7 +73,7 @@ const Home = () => {
 
     if (file) {
       fr.readAsDataURL(file);
-
+      console.log("formData", formData);
       fr.onload = () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);
@@ -84,7 +85,8 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <div className="left">
+      {/* <div className="left">
+        <Upload name="img" file={test.img} onChange={handleChangeImg}></Upload>
         <Box>box</Box>
         <div className="input-test">
           <TextInput
@@ -112,9 +114,9 @@ const Home = () => {
             </Button>
           </Modal>
         )}
-      </div>
+      </div> */}
 
-      <div className="right">
+      {/* <div className="right">
         <div className="tabel-container">
           <Tabel
             theadData={[
@@ -186,7 +188,7 @@ const Home = () => {
         <Join>Join</Join>
         <Login></Login>
         <Record isPlay={isPlay} onClickPlay={handleChangePlay} />
-      </div>
+      </div> */}
     </HomeContainer>
   );
 };
