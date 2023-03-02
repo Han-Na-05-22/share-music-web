@@ -14,7 +14,6 @@ const Upload = ({
   onChange,
   onClick,
 }: UploadProps) => {
-  console.log("file", file);
   return (
     <UploadContainer className={className} width={width} height={height}>
       <span>프로필 사진</span>

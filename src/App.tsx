@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     const getUserInfo: any = sessionStorage?.getItem(
-      "firebase:authUser:AIzaSyC-KMn4fS7UYqRyF-s_Bb775lVCmBkLXDk:[DEFAULT]"
+      `firebase:authUser:${process.env.REACT_APP_FIREBASE_API_KEY}:[DEFAULT]`
     );
 
     if (getUserInfo) {

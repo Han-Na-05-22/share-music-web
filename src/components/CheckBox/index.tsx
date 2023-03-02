@@ -9,7 +9,6 @@ const CheckBox = ({
   onChange,
   onClick,
 }: CheckBoxProps) => {
-  console.log("checked", checked);
   return (
     <CheckBoxContainer className={className} onClick={onClick}>
       <input

@@ -7,8 +7,6 @@ import Login from "components/Login";
 import { useEffect } from "react";
 import Box from "components/Box";
 const Main = ({ children, className }: MainProps) => {
-  console.log("auth", auth?.currentUser);
-
   const [user, setUser] = useRecoilState<any>(userInfo);
 
   return (

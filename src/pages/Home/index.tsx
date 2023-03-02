@@ -31,7 +31,7 @@ const Home = () => {
     img: "",
     checkBox: false,
   });
-  console.log("auth", auth);
+
   const offset = (page - 1) * limit;
   const [tdContent, setTdContent] = useState<any[]>(dummyData);
 
@@ -50,7 +50,7 @@ const Home = () => {
   const handleChangePlay = () => {
     setIsPlay(!isPlay);
   };
-  console.log("testtest", test);
+
   const deleteImg = () => {
     setTest({
       ...test,
@@ -75,7 +75,7 @@ const Home = () => {
 
     if (file) {
       fr.readAsDataURL(file);
-      console.log("formData", formData);
+
       fr.onload = () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);

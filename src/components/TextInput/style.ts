@@ -2,10 +2,10 @@ import { TextInputStyleProps } from "./interface";
 import styled, { css } from "styled-components";
 
 export const TextInputContainer = styled.div<TextInputStyleProps>`
-  border: 2px solid yellow;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position: relative;
   color: ${({ theme }) => theme.colors.DefaultText};
   font-size: ${(props) => props?.fontSize};
 
@@ -37,6 +37,10 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
     height: ${(props) => props.height};
     margin: 10px 0px;
     padding-left: 10px;
+
+    &:focus-visible {
+      outline-style: none;
+    }
   }
 
   p {
@@ -51,12 +55,34 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
       }
 
       p {
+        font-size: 10px;
+        position: absolute;
+        bottom: -10px;
         display: block;
         color: ${({ theme }) => theme.colors.DefaultRed};
       }
 
       label {
         color: ${({ theme }) => theme.colors.DefaultRed};
+      }
+
+      &:hover,
+      &:active {
+        input {
+          border: 2px solid ${({ theme }) => theme.colors.DefaultRed};
+        }
+
+        p {
+          font-size: 10px;
+          position: absolute;
+          bottom: -10px;
+          display: block;
+          color: ${({ theme }) => theme.colors.DefaultRed};
+        }
+
+        label {
+          color: ${({ theme }) => theme.colors.DefaultRed};
+        }
       }
     `}
 `;
