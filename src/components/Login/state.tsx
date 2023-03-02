@@ -12,8 +12,3 @@ export const loginState = atom({
     isJoin: false,
   },
 });
-
-export const userState = atom({
-  key: "userStateData",
-  default: {},
-});

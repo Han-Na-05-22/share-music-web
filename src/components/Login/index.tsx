@@ -9,11 +9,10 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import { auth, firestore } from "service/firebase";
+import { auth } from "service/firebase";
 import Join from "components/Join";
 import { useRecoilState } from "recoil";
-import { loginState, userState } from "./state";
+import { loginState } from "./state";
 
 interface LoginFormProps {
   email: string;
@@ -27,9 +26,6 @@ const Login = ({ className }: LoginProps) => {
   });
 
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
-  const [user, setUser] = useRecoilState<any>(userState);
-
-  console.log("user", user);
 
   const login = async ({ email, password }: LoginFormProps) => {
     try {
@@ -39,24 +35,6 @@ const Login = ({ className }: LoginProps) => {
           `${email + "@music.com"}`,
           password
         );
-
-        const getUid: any = auth?.currentUser?.uid.replace('"', "");
-
-        const washingtonRef = doc(firestore, "users", getUid);
-
-        // setDoc(washingtonRef, {
-        //   userInfo: [
-        //     {
-        //       profile: array[0]?.img,
-        //       name: array[0]?.name,
-        //       nickName: array[0]?.nickName,
-        //       email: auth?.currentUser?.email,
-        //       phoneNumber: array[0]?.phoneNumber,
-        //       creationTime: auth?.currentUser?.metadata?.creationTime,
-        //       lastSignInTime: auth?.currentUser?.metadata?.lastSignInTime,
-        //     },
-        //   ],
-        // });
 
         alert("로그인에 성공하였습니다.");
         window.location.reload();

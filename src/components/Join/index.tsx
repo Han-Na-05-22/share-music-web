@@ -87,7 +87,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             email: auth?.currentUser?.email,
             phoneNumber: form?.phoneNumber,
             creationTime: auth?.currentUser?.metadata?.creationTime,
-            lastSignInTime: auth?.currentUser?.metadata?.lastSignInTime,
           },
         ],
       });

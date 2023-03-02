@@ -6,14 +6,27 @@ import { userInfo } from "components/Login/state";
 import Login from "components/Login";
 import { useEffect } from "react";
 import Box from "components/Box";
+import Button from "components/Button";
 const Main = ({ children, className }: MainProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
-
+  console.log("useruser", user);
   return (
     <MainContainer className={className}>
       {user?.email ? (
         <div className="my-content left">
-          <Box>{user?.email}</Box>
+          <Box>
+            {user?.email}
+            <Button
+              marginLeft="15px"
+              btnType="submit"
+              onClick={() => {
+                auth?.signOut();
+                window?.location?.reload();
+              }}
+            >
+              로그아웃
+            </Button>
+          </Box>
           <Box width="400px" height="300px">
             내 음악 듣기
           </Box>
