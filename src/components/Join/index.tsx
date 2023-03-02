@@ -105,6 +105,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       });
 
       alert("회원가입에 성공하였습니다.");
+      window.location.reload();
       setJoinStateDate(false);
       setIsClicked(false);
       return user;
@@ -141,6 +142,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     });
   };
 
+  console.log("form", form);
   return (
     <Overlay>
       <JoinContainer className={className} width={width} height={height}>

@@ -8,7 +8,7 @@ export const LoginContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
-  padding: 60px 0px 40px;
+  padding: 70px 0px 50px;
 
   .join-btn {
     position: absolute;

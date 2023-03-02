@@ -110,7 +110,6 @@ const Login = ({ className }: LoginProps) => {
             로그인
           </Button>
         </LoginContainer>
-        ;
       </Box>
       {loginStateDate?.isJoin && <Join></Join>}
     </>
