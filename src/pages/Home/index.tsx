@@ -2,7 +2,7 @@ import { HomeContainer } from "./style";
 import SVG from "react-inlinesvg";
 import Box from "components/Box";
 import TextInput from "components/TextInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "components/Button";
 import Modal from "components/Modal";
 import Tabel from "components/Table";
@@ -16,6 +16,8 @@ import { auth } from "service/firebase";
 import Join from "components/Join";
 import Login from "components/Login";
 import Upload from "components/Upload";
+import { useRecoilState } from "recoil";
+import { userInfo } from "components/Login/state";
 
 // todo : 파이어베이스 로그인 및 회원가입 기능 구현(완) 및 top, new 등 리스트가 없을 때 에러처리, 404 page
 
@@ -115,7 +117,94 @@ const Home = () => {
           </Modal>
         )}
       </div> */}
-
+      <div className="tabel-container">
+        <Tabel
+          theadData={[
+            {
+              title: "순위",
+            },
+            {
+              title: "음원",
+            },
+            {
+              title: "제목",
+            },
+            {
+              title: "가수",
+            },
+            {
+              title: <SVG src="/svg/heart.svg" />,
+            },
+            {
+              title: <SVG src="/svg/download.svg" />,
+            },
+          ]}
+        >
+          {tdContent
+            ?.slice(offset, offset + limit)
+            ?.map((item: any, idx: number) => (
+              <tr key={idx}>
+                <td>{item?.a}</td>
+                <td>{item?.b}</td>
+                <td>{item?.c}</td>
+                <td>{item?.d}</td>
+                <td>{item?.e}</td>
+                <td>{item?.f}</td>
+              </tr>
+            ))}
+        </Tabel>
+        <Pagination
+          total={tdContent.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+          handleChangePage={handleChangePage}
+        />
+      </div>
+      <div className="tabel-container">
+        <Tabel
+          theadData={[
+            {
+              title: "순위",
+            },
+            {
+              title: "음원",
+            },
+            {
+              title: "제목",
+            },
+            {
+              title: "가수",
+            },
+            {
+              title: <SVG src="/svg/heart.svg" />,
+            },
+            {
+              title: <SVG src="/svg/download.svg" />,
+            },
+          ]}
+        >
+          {tdContent
+            ?.slice(offset, offset + limit)
+            ?.map((item: any, idx: number) => (
+              <tr key={idx}>
+                <td>{item?.a}</td>
+                <td>{item?.b}</td>
+                <td>{item?.c}</td>
+                <td>{item?.d}</td>
+                <td>{item?.e}</td>
+                <td>{item?.f}</td>
+              </tr>
+            ))}
+        </Tabel>
+        <Pagination
+          total={tdContent.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+          handleChangePage={handleChangePage}
+        />
+      </div>
       {/* <div className="right">
         <div className="tabel-container">
           <Tabel

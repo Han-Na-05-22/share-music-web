@@ -5,5 +5,5 @@ export const RootContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 90px;
+  gap: 50px;
 `;

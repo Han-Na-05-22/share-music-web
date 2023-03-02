@@ -4,8 +4,8 @@ import { BoxContainer } from "./style";
 const Box = ({
   children,
   className,
-  height = "780px",
-  width = "550px",
+  height = "400px",
+  width = "450px",
 }: BoxProps) => {
   return (
     <BoxContainer className={className} height={height} width={width}>

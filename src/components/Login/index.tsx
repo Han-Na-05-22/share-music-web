@@ -4,11 +4,13 @@ import TextInput from "components/TextInput";
 import { useState } from "react";
 import { LoginProps } from "./interface";
 import { LoginContainer } from "./style";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  browserSessionPersistence,
+  setPersistence,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, firestore } from "service/firebase";
-import { useRecoilState } from "recoil";
-import { userInfo } from "./state";
 
 interface LoginFormProps {
   email: string;
@@ -22,40 +24,29 @@ const Login = ({ className }: LoginProps) => {
   });
   console.log("form", form);
 
-  const [user, setUser] = useRecoilState<any>(userInfo);
-  console.log("user", user);
-
   const login = async ({ email, password }: LoginFormProps) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      const getUid: any = auth?.currentUser?.uid.replace('"', "");
-      console.log("getUid", getUid);
-      const washingtonRef = doc(firestore, "users", getUid);
+      await setPersistence(auth, browserSessionPersistence).then(async () => {
+        await signInWithEmailAndPassword(auth, email, password);
+        const getUid: any = auth?.currentUser?.uid.replace('"', "");
+        console.log("getUid", getUid);
+        const washingtonRef = doc(firestore, "users", getUid);
 
-      await setDoc(washingtonRef, {
-        userInfo: [
-          {
-            name: auth?.currentUser?.displayName,
-            email: auth?.currentUser?.email,
-            profile: auth?.currentUser?.photoURL,
-            creationTime: auth?.currentUser?.metadata?.creationTime,
-            lastSignInTime: auth?.currentUser?.metadata?.lastSignInTime,
-          },
-        ],
+        await setDoc(washingtonRef, {
+          userInfo: [
+            {
+              name: auth?.currentUser?.displayName,
+              email: auth?.currentUser?.email,
+              profile: auth?.currentUser?.photoURL,
+              creationTime: auth?.currentUser?.metadata?.creationTime,
+              lastSignInTime: auth?.currentUser?.metadata?.lastSignInTime,
+            },
+          ],
+        });
+
+        alert("로그인에 성공하였습니다.");
+        window.location.reload();
       });
-
-      await localStorage?.setItem(
-        "token",
-        JSON.stringify(auth?.currentUser?.refreshToken)
-      );
-
-      await setUser({
-        name: auth?.currentUser?.displayName,
-        email: auth?.currentUser?.email,
-        profile: auth?.currentUser?.photoURL,
-      });
-
-      alert("로그인에 성공하였습니다.");
     } catch (err) {
       console.log("err", err);
       return alert("로그인에 실패하였습니다.");
@@ -64,6 +55,9 @@ const Login = ({ className }: LoginProps) => {
   return (
     <Box>
       <LoginContainer className={className}>
+        <Button className="join-btn" btnType="submit">
+          회원가입
+        </Button>
         <TextInput
           name="email"
           value={form?.email}

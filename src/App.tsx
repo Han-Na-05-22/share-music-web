@@ -6,24 +6,22 @@ import Home from "pages/Home";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { auth, firestore } from "service/firebase";
 
-// todo : 로컬스토리지에 토큰 정보가 저장되어 있을 시 자동으로 로그인 될 수 있게 구현
+// todo : 세션스토리지에 토큰 정보가 저장되어 있을 시 자동으로 로그인 될 수 있게 구현(완)
 
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
-  console.log("user", user);
-  console.log("user", user);
-  console.log("auth", auth?.currentUser);
+
   useEffect(() => {
-    if (auth?.currentUser) {
-      return setUser({
-        name: auth?.currentUser?.displayName,
-        email: auth?.currentUser?.email,
-        profile: auth?.currentUser?.photoURL,
-      });
+    const getUserInfo: any = sessionStorage?.getItem(
+      "firebase:authUser:AIzaSyC-KMn4fS7UYqRyF-s_Bb775lVCmBkLXDk:[DEFAULT]"
+    );
+
+    if (getUserInfo) {
+      setUser(JSON.parse(getUserInfo));
     }
   }, []);
+
   return (
     <div className="App">
       <Container>
