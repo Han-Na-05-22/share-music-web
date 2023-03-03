@@ -4,6 +4,7 @@ export interface ProfileImgProps {
   className?: string;
   value?: string;
   name: string;
+  errMsg?: string;
   onClickDelete?: () => void;
   file: string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

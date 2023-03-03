@@ -29,7 +29,7 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
   ${(props) =>
     props.btnType === "none" &&
     css`
-      cursor: no-drop;
+      cursor: not-allowed;
 
       &:hover {
         background: ${({ theme }) => theme.colors.DefaultColor};

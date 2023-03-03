@@ -44,6 +44,7 @@ export const TextareaContainer = styled.div<textareaStyleProps>`
 
       p {
         display: block;
+        font-size: 10px;
         color: ${({ theme }) => theme.colors.DefaultRed};
       }
 

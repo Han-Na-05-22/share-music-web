@@ -16,4 +16,5 @@ export interface AddMusicFormProps {
   singer: string;
   mpName?: string;
   explanation: string;
+  formData?: any;
 }

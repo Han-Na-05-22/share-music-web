@@ -6,9 +6,9 @@ export interface TextInputProps {
   width?: string;
   height?: string;
   isError?: boolean;
+  accept?: string;
   errorMsg?: string;
   label?: string;
-  children?: React.ReactNode;
   type?: string;
   fontSize?: string;
 }

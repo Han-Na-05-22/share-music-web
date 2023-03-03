@@ -15,7 +15,6 @@ import Record from "components/Record";
 import { auth } from "service/firebase";
 import Join from "components/Join";
 import Login from "components/Login";
-import Upload from "components/Upload";
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
 

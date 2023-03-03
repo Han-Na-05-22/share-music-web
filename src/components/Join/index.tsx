@@ -29,35 +29,14 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   });
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  console.log("form", form);
-  console.log("isClicked", isClicked);
+
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   const phoneRegex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
   // 회원가입
-  console.log(
-    "toewkrfoekwf",
-    form?.name?.length !== 0 &&
-      form?.nickName?.length !== 0 &&
-      form?.rePassword?.length !== 0 &&
-      form?.password !== form?.rePassword &&
-      form?.password?.length >= 8 &&
-      passwordRegex?.test(form?.password) &&
-      form?.email?.length >= 5 &&
-      phoneRegex?.test(form?.phoneNumber)
-  );
-  const signin = async ({ email, password }: any) => {
-    try {
-      const formRegex: boolean =
-        form?.name?.length !== 0 &&
-        form?.nickName?.length !== 0 &&
-        form?.rePassword?.length !== 0 &&
-        form?.password === form?.rePassword &&
-        form?.password?.length >= 8 &&
-        passwordRegex?.test(form?.password) &&
-        form?.email?.length >= 5 &&
-        phoneRegex?.test(form?.phoneNumber);
 
-      console.log("formRegex", formRegex);
+  const signin = async (event: any, { email, password }: any) => {
+    event.preventdefault();
+    try {
       const { user } = await createUserWithEmailAndPassword(
         auth,
         `${email + "@music.com"}`,
@@ -127,7 +106,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     });
   };
 
-  console.log("form", form);
   return (
     <Overlay>
       <JoinContainer className={className} width={width} height={height}>
@@ -256,8 +234,19 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             </Button>
             <Button
               marginLeft="15px"
-              btnType="submit"
-              onClick={() => signin(form)}
+              btnType={
+                form?.name?.length !== 0 &&
+                form?.nickName?.length !== 0 &&
+                form?.rePassword?.length !== 0 &&
+                form?.password === form?.rePassword &&
+                form?.password?.length >= 8 &&
+                passwordRegex?.test(form?.password) &&
+                form?.email?.length >= 5 &&
+                phoneRegex?.test(form?.phoneNumber)
+                  ? "submit"
+                  : "none"
+              }
+              onClick={(e) => signin(e, form)}
             >
               확인
             </Button>

@@ -91,4 +91,20 @@ export const ProfileImgContainer = styled.div<ProfileImgStyleProps>`
       opacity: 0.5;
     }
   }
+  p {
+    display: none;
+  }
+  ${(props) =>
+    props.isError &&
+    css`
+      p {
+        font-size: 10px;
+        position: absolute;
+        bottom: -20px;
+        left: 5px;
+        width: 100%;
+        display: block;
+        color: ${({ theme }) => theme.colors.DefaultRed};
+      }
+    `}
 `;

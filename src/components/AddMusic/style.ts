@@ -20,47 +20,75 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-direction: column;
     height: 100%;
+    border: 2px solid red;
   }
 
   .musics {
     width: 800px;
-    height: 75px;
-    border: 1px solid red;
+    /* height: 75px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .music-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .music-title-singer {
+  }
+
+  .music-explan {
+  }
+  .music-mp3 {
+    position: relative;
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .mp3s {
+      padding-left: 10px;
+      height: 50px;
+      line-height: 50px;
+      width: 600px;
+      color: ${({ theme }) => theme.colors.DefaultText};
+      border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
+    }
+
+    .mp3-error {
+      color: ${({ theme }) => theme.colors.DefaultRed};
+      font-size: 10px;
+      border: 2px solid ${({ theme }) => theme.colors.DefaultRed};
+    }
+
     div {
-      input {
-        height: 60px;
-        margin-bottom: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      label {
+        width: 150px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        border: none;
+        background: ${({ theme }) => theme.colors.DefaultColor};
+        color: ${({ theme }) => theme.colors.ButtonText};
+      }
+      #mp3 {
+        display: none;
       }
     }
   }
 
-  .music-title-singer {
+  .btn-container {
     display: flex;
-  }
-
-  .music-mp3 {
-    color: #000;
-    position: relative;
-    align-items: flex-end;
-    justify-content: space-between;
-    display: flex;
-    p {
-      padding-left: 10px;
-      line-height: 100px;
-      width: 600px;
-      height: 100%;
-      color: ${({ theme }) => theme.colors.HoverText};
-    }
-
-    strong {
-      left: 0px;
-      color: ${({ theme }) => theme.colors.HoverText};
-      position: absolute;
-      top: 0px;
-      font-size: 18px;
-    }
+    gap: 0 50px;
   }
 `;

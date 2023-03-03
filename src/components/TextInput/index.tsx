@@ -7,8 +7,8 @@ const TextInput = ({
   name,
   value,
   width = "300px",
+  accept,
   height = "50px",
-  children,
   label,
   type = "text",
   isError = false,
@@ -29,11 +29,11 @@ const TextInput = ({
         type={type}
         id={name}
         name={name}
+        accept={accept}
         value={value}
         onChange={onChange}
       />
       <p>{errorMsg}</p>
-      {children}
     </TextInputContainer>
   );
 };

@@ -6,6 +6,7 @@ const ProfileImg = ({
   width = "100px",
   height = "100px",
   className,
+  errMsg,
   value,
   name,
   file,
@@ -46,6 +47,7 @@ const ProfileImg = ({
         onChange={onChange}
       />
       {file && <img src={file} alt="preview-img" />}
+      {isError && <p>{errMsg}</p>}
     </ProfileImgContainer>
   );
 };

@@ -11,13 +11,12 @@ import ProfileImg from "components/ProfileImg";
 import { doc, setDoc } from "firebase/firestore";
 
 // todo: 이미지 변경 시 데이터베이스 profile도 수정 해야함(우선처리) --- 완
-// todo:음악등록 컴포넌트 만들기(우선처리)
+// todo:음악등록 컴포넌트 만들기(우선처리) --- 완
 const Main = ({ children, className }: MainProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
-  console.log("useruser", user);
+
   const getUserId = auth?.currentUser?.uid.replace('"', "");
 
-  console.log("getUserId", getUserId);
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
