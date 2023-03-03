@@ -3,7 +3,6 @@ export interface UploadProps {
   children?: React.ReactNode;
   width?: string;
   height?: string;
-  value?: string;
   name: string;
   file: string | null;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

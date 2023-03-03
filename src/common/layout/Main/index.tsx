@@ -8,11 +8,16 @@ import { useEffect } from "react";
 import Box from "components/Box";
 import Button from "components/Button";
 import ProfileImg from "components/ProfileImg";
+import { doc, setDoc } from "firebase/firestore";
 
-// todo: 이미지 변경 시 데이터베이스 profile도 수정 해야함
+// todo: 이미지 변경 시 데이터베이스 profile도 수정 해야함(우선처리) --- 완
+// todo:음악등록 컴포넌트 만들기(우선처리)
 const Main = ({ children, className }: MainProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   console.log("useruser", user);
+  const getUserId = auth?.currentUser?.uid.replace('"', "");
+
+  console.log("getUserId", getUserId);
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -22,10 +27,18 @@ const Main = ({ children, className }: MainProps) => {
     if (file) {
       fr.readAsDataURL(file);
 
-      fr.onload = () => {
+      fr.onload = async () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);
-          setUser({ ...user, [name]: fr.result, formDataImg: formData });
+          setUser({ ...user, [name]: fr.result });
+          const washingtonRef = doc(firestore, "users", `${getUserId}`);
+
+          await setDoc(washingtonRef, {
+            userInfo: {
+              ...user,
+              profile: fr.result,
+            },
+          });
         }
       };
     }

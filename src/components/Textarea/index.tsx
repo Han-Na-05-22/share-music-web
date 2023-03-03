@@ -9,7 +9,7 @@ const Textarea = ({
   label = "설명",
   width = "800px",
   height = "100px",
-  isError = true,
+  isError = false,
   errorMsg,
 }: textareaPorps) => {
   return (

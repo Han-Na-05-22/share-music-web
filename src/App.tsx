@@ -21,7 +21,7 @@ function App() {
         doc?.id === auth?.currentUser?.uid.replace('"', "") ||
         doc?.id === getUserInfo?.uid
       ) {
-        return setUser(doc?.data()?.userInfo[0]);
+        return setUser(doc?.data()?.userInfo);
       }
     });
   };

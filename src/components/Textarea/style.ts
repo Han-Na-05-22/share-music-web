@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 import { textareaStyleProps } from "./interface";
 
 export const TextareaContainer = styled.div<textareaStyleProps>`
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   gap: 10px 0px;
@@ -28,6 +27,7 @@ export const TextareaContainer = styled.div<textareaStyleProps>`
     color: ${({ theme }) => theme.colors.DefaultText};
     font-size: 18px;
     padding: 10px 0px 0px 10px;
+    border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
   }
 
   label {

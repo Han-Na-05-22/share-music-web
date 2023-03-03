@@ -1,5 +1,5 @@
 import Overlay from "components/Overlay";
-import { JoinProps } from "./interface";
+import { JoinFormProps, JoinProps } from "./interface";
 import { JoinContainer } from "./style";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "service/firebase";
@@ -14,17 +14,6 @@ import ProfileImg from "components/ProfileImg";
 import { useRecoilState } from "recoil";
 import { loginState } from "components/Login/state";
 
-interface JoinFormProps {
-  img: string;
-  name: string;
-  email: string;
-  password: string;
-  rePassword: string;
-  phoneNumber: any;
-  formDataImg: any;
-  nickName: string;
-}
-
 const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const navigate = useNavigate();
 
@@ -35,7 +24,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     email: "",
     password: "",
     rePassword: "",
-    formDataImg: "",
     phoneNumber: "",
     nickName: "",
   });
@@ -79,16 +67,14 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       const washingtonRef = doc(firestore, "users", user?.uid);
 
       await setDoc(washingtonRef, {
-        userInfo: [
-          {
-            profile: form?.img,
-            name: form?.name,
-            nickName: form?.nickName,
-            email: auth?.currentUser?.email,
-            phoneNumber: form?.phoneNumber,
-            creationTime: auth?.currentUser?.metadata?.creationTime,
-          },
-        ],
+        userInfo: {
+          profile: form?.img,
+          name: form?.name,
+          nickName: form?.nickName,
+          email: auth?.currentUser?.email,
+          phoneNumber: form?.phoneNumber,
+          creationTime: auth?.currentUser?.metadata?.creationTime,
+        },
       });
 
       auth?.signOut();
@@ -99,7 +85,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
         email: "",
         password: "",
         rePassword: "",
-        formDataImg: "",
         phoneNumber: "",
         nickName: "",
       });
@@ -129,7 +114,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       fr.onload = () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);
-          setForm({ ...form, [name]: fr.result, formDataImg: formData });
+          setForm({ ...form, [name]: fr.result });
         }
       };
     }

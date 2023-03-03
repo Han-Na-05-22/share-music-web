@@ -1,3 +1,4 @@
+import AddMusic from "components/AddMusic";
 import Button from "components/Button";
 import SVG from "react-inlinesvg";
 import { HeaderContainer } from "./style";
@@ -13,6 +14,7 @@ const Header = () => {
       <Button height="90px" width="240px">
         음원 등록
       </Button>
+      <AddMusic>d</AddMusic>
     </HeaderContainer>
   );
 };

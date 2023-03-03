@@ -8,6 +8,7 @@ const TextInput = ({
   value,
   width = "300px",
   height = "50px",
+  children,
   label,
   type = "text",
   isError = false,
@@ -32,6 +33,7 @@ const TextInput = ({
         onChange={onChange}
       />
       <p>{errorMsg}</p>
+      {children}
     </TextInputContainer>
   );
 };
