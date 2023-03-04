@@ -2,5 +2,10 @@ import { atom } from "recoil";
 
 export const myMusic = atom({
   key: "myMusicData",
-  default: {},
+  default: [],
+});
+
+export const myMusicAddState = atom({
+  key: "myMusicAddStateData",
+  default: false,
 });

@@ -23,12 +23,10 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     justify-content: space-around;
     flex-direction: column;
     height: 100%;
-    border: 2px solid red;
   }
 
   .musics {
     width: 800px;
-    /* height: 75px; */
     display: flex;
     align-items: center;
     justify-content: space-between;

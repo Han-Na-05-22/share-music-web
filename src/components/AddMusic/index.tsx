@@ -3,16 +3,14 @@ import Overlay from "components/Overlay";
 import ProfileImg from "components/ProfileImg";
 import Textarea from "components/Textarea";
 import TextInput from "components/TextInput";
-
+import * as functions from "../../common/functions";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { auth, firestore, storage } from "service/firebase";
-import { getDownloadURL } from "firebase/storage";
+import { auth } from "service/firebase";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
-import { myMusic } from "./state";
+import { myMusic, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
-import { ref as sRef, uploadBytesResumable } from "firebase/storage";
 
 const AddMusic = ({
   children,
@@ -28,9 +26,10 @@ const AddMusic = ({
     explanation: "",
     mpName: "",
   });
+  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [user, setUser] = useRecoilState<any>(userInfo);
-  const [music, setMusic] = useRecoilState<any>(myMusic);
-
+  const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
+  console.log("myMusicList", myMusicList);
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -69,55 +68,15 @@ const AddMusic = ({
   const getUserId = auth?.currentUser?.uid.replace('"', "");
 
   // todo : 공통으로 사용
-  const saveImgFunction = (file: any, src: any) => {
-    const uniqueKey = new Date()?.getTime();
-
-    if (!file) {
-      return;
-    }
-
-    const newName = file.name
-      .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-      .split(" ")
-      .join("");
-
-    const metaData = {
-      contentType: file.type,
-      customMetadata: {
-        mpName: `${file?.name}`,
-        title: `${form?.title}`,
-        singer: `${form?.singer}`,
-        explanation: `${form?.explanation}`,
-        img: `${form?.img}`,
-      },
-    };
-
-    const storageRef = sRef(storage, `${src}/` + newName + uniqueKey);
-
-    const UploadTask = uploadBytesResumable(storageRef, file, metaData);
-
-    UploadTask.on(
-      "state_changed",
-      async (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-        await console.log(`Upload is ${progress}% done`);
-      },
-      (error) => {
-        alert(`error: image upload error ${JSON.stringify(error)}`);
-      },
-      async () => {
-        await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
-          console.log(`완료 url: ${downloadUrl}`);
-        });
-      }
-    );
-  };
 
   const addMusicData = async (e: any) => {
     try {
-      saveImgFunction(form.formData, `music/${user?.email}`);
+      functions?.addMusicFunction(form.formData, `music/${user?.email}`, {
+        title: form?.title,
+        singer: form?.singer,
+        explanation: form?.explanation,
+        img: form?.img,
+      });
 
       setForm({
         img: "",
@@ -136,6 +95,8 @@ const AddMusic = ({
       console.log("err", err);
       alert("음원 등록에 실패하였습니다.");
     }
+
+    setMyMusicList(functions?.myMusicListFunction);
   };
 
   return (
@@ -220,7 +181,12 @@ const AddMusic = ({
             ></Textarea>
           </div>
           <div className="btn-container">
-            <Button btnType="cancel" onClick={() => {}}>
+            <Button
+              btnType="cancel"
+              onClick={() => {
+                setIsAddMuisc(false);
+              }}
+            >
               취소
             </Button>
             <Button

@@ -35,7 +35,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   // 회원가입
 
   const signin = async (event: any, { email, password }: any) => {
-    event.preventdefault();
     try {
       const { user } = await createUserWithEmailAndPassword(
         auth,

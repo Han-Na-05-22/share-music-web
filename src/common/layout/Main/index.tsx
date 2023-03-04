@@ -9,12 +9,12 @@ import Box from "components/Box";
 import Button from "components/Button";
 import ProfileImg from "components/ProfileImg";
 import { doc, setDoc } from "firebase/firestore";
+import { myMusic } from "components/AddMusic/state";
+import PlayList from "components/PlayList";
 
-// todo: 이미지 변경 시 데이터베이스 profile도 수정 해야함(우선처리) --- 완
-// todo:음악등록 컴포넌트 만들기(우선처리) --- 완
 const Main = ({ children, className }: MainProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
-
+  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const getUserId = auth?.currentUser?.uid.replace('"', "");
 
   const handleChangeImg = (event: any) => {
@@ -49,12 +49,16 @@ const Main = ({ children, className }: MainProps) => {
       profile: "",
     });
   };
-
+  console.log("myMusicList?.length", myMusicList?.length);
+  console.log("myMusicList", myMusicList);
   return (
     <MainContainer className={className}>
       {user?.email ? (
         <div className="my-content left">
           <Box>
+            <Button className="my-page-btn" btnType="submit" onClick={() => {}}>
+              마이페이지
+            </Button>
             <div className="my-profile">
               <ProfileImg
                 name="profile"
@@ -66,7 +70,9 @@ const Main = ({ children, className }: MainProps) => {
               <ul>
                 <li>
                   <span>등록 수</span>
-                  <span>0</span>
+                  <span>
+                    {myMusicList?.length !== 0 ? myMusicList?.length : "0"}
+                  </span>
                 </li>
                 <li>
                   <span>좋아요</span>
@@ -88,7 +94,7 @@ const Main = ({ children, className }: MainProps) => {
             </div>
           </Box>
           <Box width="400px" height="300px">
-            내 음악 듣기
+            <PlayList playListData={myMusicList}></PlayList>
           </Box>
         </div>
       ) : (

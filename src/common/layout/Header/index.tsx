@@ -1,11 +1,13 @@
 import AddMusic from "components/AddMusic";
+import { myMusicAddState } from "components/AddMusic/state";
 import Button from "components/Button";
 import { useState } from "react";
 import SVG from "react-inlinesvg";
+import { useRecoilState } from "recoil";
 import { HeaderContainer } from "./style";
 
 const Header = () => {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   return (
     <>
       <HeaderContainer>
@@ -18,12 +20,12 @@ const Header = () => {
           height="90px"
           btnType="add"
           width="240px"
-          onClick={() => setIsClicked(true)}
+          onClick={() => setIsAddMuisc(true)}
         >
           음원 등록
         </Button>
       </HeaderContainer>
-      {isClicked && <AddMusic>d</AddMusic>}
+      {isAddMusic && <AddMusic>d</AddMusic>}
     </>
   );
 };
