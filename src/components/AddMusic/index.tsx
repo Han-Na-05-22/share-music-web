@@ -25,6 +25,7 @@ const AddMusic = ({
     singer: "",
     explanation: "",
     mpName: "",
+    date: new Date(),
   });
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -71,13 +72,20 @@ const AddMusic = ({
 
   const addMusicData = async (e: any) => {
     try {
-      functions?.addMusicFunction(form.formData, `music/${user?.email}`, {
-        title: form?.title,
-        singer: form?.singer,
-        explanation: form?.explanation,
-        img: form?.img,
-      });
+      functions?.addMusicFunction(
+        form.formData,
+        `music/${user?.email}`,
+        {
+          title: form?.title,
+          singer: form?.singer,
+          explanation: form?.explanation,
+          img: form?.img,
+        },
+        setMyMusicList
+      );
+      await functions?.sendMusicDataFunction(user?.email, form);
 
+      alert("음원 등록이 완료되었습니다.");
       setForm({
         img: "",
         mp3: "",
@@ -86,10 +94,8 @@ const AddMusic = ({
         explanation: "",
         mpName: "",
         formData: "",
+        date: "",
       });
-
-      await alert("음원 등록이 완료되었습니다.");
-
       //
     } catch (err) {
       console.log("err", err);

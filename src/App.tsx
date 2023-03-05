@@ -35,13 +35,13 @@ function App() {
     getUserInfo();
   }, []);
 
-  useEffect(() => {
-    if (user?.email) {
-      setMyMusicList(
-        functions?.myMusicListFunction(`music/${user?.email}/`, setMyMusicList)
-      );
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     setMyMusicList(
+  //       functions?.myMusicListFunction(`music/${user?.email}/`, setMyMusicList)
+  //     );
+  //   }
+  // }, [user]);
   return (
     <div className="App">
       <Container>

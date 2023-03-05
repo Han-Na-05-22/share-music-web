@@ -1,4 +1,5 @@
 import { async } from "@firebase/util";
+import { doc, setDoc } from "firebase/firestore";
 import {
   ref as sRef,
   uploadBytesResumable,
@@ -7,7 +8,31 @@ import {
   ref,
   getMetadata,
 } from "firebase/storage";
-import { storage } from "service/firebase";
+import { firestore, storage } from "service/firebase";
+
+// 음악 추가 시  데이터베이스에 해당 음원 정보 저장
+export const sendMusicDataFunction = async (email: string, data: any) => {
+  const washingtonRef = doc(firestore, "music", email);
+
+  await setDoc(washingtonRef, {
+    musicList: [
+      {
+        type: "add",
+
+        title: data?.title,
+        singer: data?.singer,
+        explanation: data?.explanation,
+        img: data?.img,
+        date: data?.date,
+        // id: data?.id,
+        // likeCount: data?.likeCount,
+        // downloadCount: data?.downloadCount,
+      },
+    ],
+  });
+
+  console.log("음원 등록 완료");
+};
 
 export const addMusicFunction = (
   file: any,
@@ -17,7 +42,8 @@ export const addMusicFunction = (
     singer: string;
     explanation: string;
     img: string;
-  }
+  },
+  setData?: any
 ) => {
   const uniqueKey = new Date()?.getTime();
 
@@ -59,7 +85,7 @@ export const addMusicFunction = (
       await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
         console.log(`완료 url: ${downloadUrl}`);
 
-        myMusicListFunction(src);
+        myMusicListFunction(src, setData);
       });
     }
   );
@@ -69,11 +95,11 @@ export const myMusicListFunction = (src: any, setData?: any) => {
   if (!src) {
     return;
   }
-  const imageListRef = sRef(storage, `${src}/`);
+  const MusicListRef = sRef(storage, `${src}/`);
   console.log("src", src);
   let array: any = "";
 
-  listAll(imageListRef)
+  listAll(MusicListRef)
     .then((res) => {
       res?.items?.forEach((item: any) => {
         getDownloadURL(item)?.then((url) => {
@@ -92,13 +118,13 @@ export const myMusicListFunction = (src: any, setData?: any) => {
             })
             .catch((error) => {
               console.log("err", error);
-              alert("정보 불러오기 실패");
             });
         });
       });
     })
     .catch((error) => {
       console.log("err", error);
-      alert("데이터 불러오기 실패");
     });
+
+  return setData;
 };
