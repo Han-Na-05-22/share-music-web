@@ -21,10 +21,9 @@ const Genre = ({ className, onClick }: GenreProps) => {
           <Button
             key={idx}
             onClick={() => {
-              if (!user?.email) {
-                alert("로그인 후 이용해주세요.");
-              }
-              setIsGenre(item?.name);
+              !user?.email
+                ? alert("로그인 후 이용해주세요.")
+                : setIsGenre(item?.name);
               // navigate(`/music/${item?.name}`);
             }}
             width="100px"

@@ -10,6 +10,14 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   justify-content: center;
   align-items: center;
   border: 2px solid red;
+  position: relative;
+
+  .add-date {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: ${({ theme }) => theme.colors.DefaultText};
+  }
   img {
     width: 150px;
     height: 150px;
@@ -17,7 +25,7 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   }
 
   .about-music {
-    color: ${({ theme }) => theme.colors.BlackColor};
+    color: ${({ theme }) => theme.colors.HoverText};
 
     strong,
     span,

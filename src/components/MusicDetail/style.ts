@@ -16,5 +16,4 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 40px;
 `;

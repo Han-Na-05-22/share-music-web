@@ -5,8 +5,10 @@ import SVG from "react-inlinesvg";
 import { useRecoilState } from "recoil";
 import { HeaderContainer } from "./style";
 import { useNavigate } from "react-router-dom";
+import { userInfo } from "components/Login/state";
 const Header = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   return (
     <>
@@ -20,7 +22,11 @@ const Header = () => {
           height="90px"
           btnType="add"
           width="240px"
-          onClick={() => setIsAddMuisc(true)}
+          onClick={() => {
+            !user?.email
+              ? alert("로그인 후 이용해주세요")
+              : setIsAddMuisc(true);
+          }}
         >
           음원 등록
         </Button>
