@@ -47,6 +47,7 @@ export const sendMusicDataFunction = async (
           explanation: data?.explanation,
           img: data?.img,
           date: data?.date,
+          genre: data?.genre,
           mp3: `${
             data?.formData?.name
               .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
@@ -69,6 +70,7 @@ export const sendMusicDataFunction = async (
         explanation: data?.explanation,
         img: data?.img,
         date: data?.date,
+        genre: data?.genre,
         mp3: `${
           data?.formData?.name
             .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
@@ -86,6 +88,7 @@ export const addMusicFunction = (
   file: any,
   src: any,
   data: {
+    genre: string;
     title: string;
     singer: string;
     explanation: string;
@@ -93,7 +96,8 @@ export const addMusicFunction = (
     img: string;
   },
   setData?: any,
-  setIsCompleted?: any
+  setIsCompleted?: any,
+  setMusicList?: any
 ) => {
   if (!file) {
     return;
@@ -107,6 +111,7 @@ export const addMusicFunction = (
   const metaData = {
     contentType: file.type,
     customMetadata: {
+      genre: `${data?.genre}`,
       mpName: `${file?.name}`,
       title: `${data?.title}`,
       singer: `${data?.singer}`,
@@ -128,6 +133,7 @@ export const addMusicFunction = (
       if (progress === 100) {
         alert("음원 등록이 완료되었습니다.");
         setIsCompleted("done");
+        getMusicListDataFunction(setMusicList);
       }
     },
     (error) => {

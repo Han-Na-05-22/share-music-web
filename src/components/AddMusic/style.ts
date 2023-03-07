@@ -49,11 +49,17 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     justify-content: space-between;
     align-items: flex-end;
 
+    .add-mp3-input {
+      margin-right: 30px;
+    }
+
     .mp3s {
       padding-left: 10px;
       height: 50px;
+      width: 500px;
       line-height: 50px;
-      width: 600px;
+      position: relative;
+      display: flex;
       color: ${({ theme }) => theme.colors.DefaultText};
       border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
     }

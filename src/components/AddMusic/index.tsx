@@ -12,6 +12,8 @@ import { musicListState, myMusic, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
 import Loading from "components/Loading";
+import BasicSelect from "components/BasicSelect";
+import { GenreList } from "utility/data";
 
 const AddMusic = ({
   className,
@@ -22,6 +24,7 @@ const AddMusic = ({
     img: "",
     mp3: "",
     title: "",
+    genre: "",
     singer: "",
     explanation: "",
     mpName: "",
@@ -39,6 +42,12 @@ const AddMusic = ({
   console.log("isCompleted", isCompleted);
   console.log("musicList", musicList);
   console.log("myMusicList", myMusicList);
+
+  const handleChangeSelect = (event: any) => {
+    const { name } = event.target;
+    const isSelected = event.target.options[event.target.selectedIndex].value;
+    setForm({ ...form, [name]: isSelected });
+  };
 
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
@@ -85,6 +94,7 @@ const AddMusic = ({
         form.formData,
         `music/${user?.email}`,
         {
+          genre: form?.genre,
           title: form?.title,
           singer: form?.singer,
           explanation: form?.explanation,
@@ -92,7 +102,8 @@ const AddMusic = ({
           uniqueKey: form?.uniqueKey,
         },
         setMyMusicList,
-        setIsCompleted
+        setIsCompleted,
+        setMusicList
       );
 
       functions?.sendMusicDataFunction(user?.email, form, musicList);
@@ -105,7 +116,18 @@ const AddMusic = ({
 
   useEffect(() => {
     if (isCompleted === "done") {
-      window?.location.reload();
+      setIsAddMuisc(false);
+      setForm({
+        img: "",
+        mp3: "",
+        title: "",
+        singer: "",
+        explanation: "",
+        genre: "",
+        mpName: "",
+        uniqueKey: new Date()?.getTime(),
+        date: new Date(),
+      });
     }
   }, [isCompleted]);
   return (
@@ -138,10 +160,16 @@ const AddMusic = ({
               name="mp3"
               accept="audio/*"
               type="file"
+              className="add-mp3-input"
               value={undefined}
               label="음원등록"
               onChange={handleChangeImg}
             ></TextInput>
+            <BasicSelect
+              selectData={GenreList}
+              name="genre"
+              onChange={handleChangeSelect}
+            ></BasicSelect>
           </div>
           <div className="music-title-singer musics">
             <TextInput
