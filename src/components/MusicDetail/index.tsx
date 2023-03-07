@@ -8,8 +8,8 @@ import { MusicDetailContainer } from "./style";
 
 const MusicDetail = ({
   className,
-  width = "1150px",
-  height = "780px",
+  width = "800px",
+  height = "750px",
   detailData,
 }: MusicDetailProps) => {
   console.log("detailData", detailData);
