@@ -4,16 +4,16 @@ import ProfileImg from "components/ProfileImg";
 import Textarea from "components/Textarea";
 import TextInput from "components/TextInput";
 import * as functions from "../../common/functions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
 import { musicListState, myMusic, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
+import Loading from "components/Loading";
 
 const AddMusic = ({
-  children,
   className,
   width = "1150px",
   height = "780px",
@@ -25,15 +25,21 @@ const AddMusic = ({
     singer: "",
     explanation: "",
     mpName: "",
+    uniqueKey: new Date()?.getTime(),
     date: new Date(),
   });
+
   console.log("form", form);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [isCompleted, setIsCompleted] = useState<string>("none");
+
+  console.log("isCompleted", isCompleted);
   console.log("musicList", musicList);
   console.log("myMusicList", myMusicList);
+
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -75,7 +81,7 @@ const AddMusic = ({
 
   const addMusicData = async () => {
     try {
-      functions?.addMusicFunction(
+      await functions?.addMusicFunction(
         form.formData,
         `music/${user?.email}`,
         {
@@ -83,36 +89,28 @@ const AddMusic = ({
           singer: form?.singer,
           explanation: form?.explanation,
           img: form?.img,
+          uniqueKey: form?.uniqueKey,
         },
-        setMyMusicList
+        setMyMusicList,
+        setIsCompleted
       );
 
       functions?.sendMusicDataFunction(user?.email, form, musicList);
-
-      alert("음원 등록이 완료되었습니다.");
-      setForm({
-        date: new Date(),
-        img: "",
-        mp3: "",
-        title: "",
-        singer: "",
-        explanation: "",
-        mpName: "",
-        formData: "",
-      });
-      //
     } catch (err) {
       console.log("err", err);
-      alert("음원 등록에 실패하였습니다.");
     }
 
     setMyMusicList(functions?.myMusicListFunction);
   };
 
+  useEffect(() => {
+    if (isCompleted === "done") {
+      window?.location.reload();
+    }
+  }, [isCompleted]);
   return (
     <Overlay>
       <AddMusicContainer className={className} height={height} width={width}>
-        {children}
         <div className="music-infos">
           <div className="music-img musics">
             <ProfileImg
@@ -220,6 +218,7 @@ const AddMusic = ({
             </Button>
           </div>
         </div>
+        {isCompleted === "loading" && <Loading></Loading>}
       </AddMusicContainer>
     </Overlay>
   );

@@ -11,13 +11,13 @@ import { useRecoilState } from "recoil";
 import { auth, firestore } from "service/firebase";
 import * as functions from "./common/functions";
 
-// todo : 로딩 컴포넌트 추가하기
+// todo : 로딩 컴포넌트 추가하기(완)
 // todo : home music playlist delete and then add 장르
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-  console.log("musicList", musicList);
+
   const getUserInfo = async () => {
     const querySnapshot = await getDocs(collection(firestore, "users"));
     const getUserInfo: any = sessionStorage?.getItem(
@@ -35,7 +35,7 @@ function App() {
   console.log("auth", auth);
   console.log("user", user);
   console.log("myMusicList", myMusicList);
-
+  console.log("musicList", musicList);
   useEffect(() => {
     getUserInfo();
     functions.getMusicListDataFunction(setMusicList);

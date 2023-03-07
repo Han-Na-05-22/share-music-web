@@ -34,16 +34,12 @@ export const sendMusicDataFunction = async (
   musicListData: any
 ) => {
   const washingtonRef = doc(firestore, "music", "musicList");
-  console.log("musicListData?.length", musicListData?.length);
-
-  console.log("why?", musicListData?.length === 0);
 
   if (musicListData?.length === 0) {
-    console.log("아무 값이 없음");
     await setDoc(washingtonRef, {
       data: [
         {
-          id: 1,
+          id: musicListData?.length + 1,
           type: "add",
           email: email,
           title: data?.title,
@@ -51,18 +47,18 @@ export const sendMusicDataFunction = async (
           explanation: data?.explanation,
           img: data?.img,
           date: data?.date,
-          mp3: data?.formData?.name
-            .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-            .split(" ")
-            .join(""),
+          mp3: `${
+            data?.formData?.name
+              .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+              .split(" ")
+              .join("") + data?.uniqueKey
+          }`,
           // likeCount: data?.likeCount,
           // downloadCount: data?.downloadCount,
         },
       ],
     });
   } else {
-    console.log("배열안에 데이터 값이 있음");
-
     await updateDoc(washingtonRef, {
       data: arrayUnion({
         id: musicListData?.length + 1,
@@ -73,17 +69,17 @@ export const sendMusicDataFunction = async (
         explanation: data?.explanation,
         img: data?.img,
         date: data?.date,
-        mp3: data?.formData?.name
-          .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-          .split(" ")
-          .join(""),
+        mp3: `${
+          data?.formData?.name
+            .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+            .split(" ")
+            .join("") + data?.uniqueKey
+        }`,
         // likeCount: data?.likeCount,
         // downloadCount: data?.downloadCount,
       }),
     });
   }
-
-  console.log("음원 등록 완료");
 };
 
 export const addMusicFunction = (
@@ -93,9 +89,11 @@ export const addMusicFunction = (
     title: string;
     singer: string;
     explanation: string;
+    uniqueKey: string;
     img: string;
   },
-  setData?: any
+  setData?: any,
+  setIsCompleted?: any
 ) => {
   if (!file) {
     return;
@@ -117,7 +115,7 @@ export const addMusicFunction = (
     },
   };
 
-  const storageRef = sRef(storage, `${src}/` + newName);
+  const storageRef = sRef(storage, `${src}/` + newName + data?.uniqueKey);
 
   const UploadTask = uploadBytesResumable(storageRef, file, metaData);
 
@@ -125,11 +123,16 @@ export const addMusicFunction = (
     "state_changed",
     async (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
+      setIsCompleted("loading");
       await console.log(`Upload is ${progress}% done`);
+      if (progress === 100) {
+        alert("음원 등록이 완료되었습니다.");
+        setIsCompleted("done");
+      }
     },
     (error) => {
-      alert(`error: image upload error ${JSON.stringify(error)}`);
+      alert("음원 등록에 실패하였습니다.");
+      console.log(`error: image upload error ${JSON.stringify(error)}`);
     },
     async () => {
       await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
@@ -146,20 +149,16 @@ export const myMusicListFunction = (src: any, setData?: any) => {
     return;
   }
   const MusicListRef = sRef(storage, `${src}/`);
-  console.log("src", src);
+
   let array: any = "";
 
   listAll(MusicListRef)
     .then((res) => {
       res?.items?.forEach((item: any) => {
         getDownloadURL(item)?.then((url) => {
-          console.log("attay", array);
-          console.log("url", url);
-          console.log("item", item);
           const forestRef = ref(storage, `${item?._location?.path_}`);
           getMetadata(forestRef)
             .then((metadata) => {
-              console.log("metadata", metadata);
               array = [
                 ...array,
                 { url: url, path: item?._location?.path_, meta: metadata },

@@ -1,6 +1,5 @@
 export interface AddMusicProps {
   className?: string;
-  children: React.ReactNode;
   width?: string;
   height?: string;
 }
@@ -18,4 +17,5 @@ export interface AddMusicFormProps {
   explanation: string;
   formData?: any;
   date: any;
+  uniqueKey: any;
 }

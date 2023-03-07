@@ -4,13 +4,13 @@ import { auth, firestore } from "service/firebase";
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
 import Login from "components/Login";
-import { useEffect } from "react";
 import Box from "components/Box";
 import Button from "components/Button";
 import ProfileImg from "components/ProfileImg";
 import { doc, setDoc } from "firebase/firestore";
 import { myMusic } from "components/AddMusic/state";
 import PlayList from "components/PlayList";
+import Genre from "components/Genre";
 
 const Main = ({ children, className }: MainProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -49,17 +49,23 @@ const Main = ({ children, className }: MainProps) => {
       profile: "",
     });
   };
-  console.log("myMusicList?.length", myMusicList?.length);
-  console.log("myMusicList", myMusicList);
+
   return (
     <MainContainer className={className}>
       {user?.email ? (
         <div className="my-content left">
           <Box>
-            <Button className="my-page-btn" btnType="submit" onClick={() => {}}>
-              마이페이지
+            <Button
+              className="my-music-btn"
+              btnType="submit"
+              onClick={() => {}}
+            >
+              마이뮤직
             </Button>
             <div className="my-profile">
+              <strong className="my-page-btn" onClick={() => {}}>
+                마이페이지
+              </strong>
               <ProfileImg
                 name="profile"
                 file={user.profile}
@@ -93,18 +99,15 @@ const Main = ({ children, className }: MainProps) => {
               </strong>
             </div>
           </Box>
-          <Box width="400px" height="300px">
-            <PlayList playListData={myMusicList}></PlayList>
-          </Box>
+
+          <Genre></Genre>
         </div>
       ) : (
         <div className="login-content left">
           <Box>
             <Login></Login>
           </Box>
-          <Box width="400px" height="300px">
-            로그인 후 이용해 주시기 바랍니다.
-          </Box>
+          <Genre></Genre>
         </div>
       )}
       {children}

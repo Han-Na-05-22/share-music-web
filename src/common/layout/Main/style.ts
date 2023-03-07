@@ -15,7 +15,16 @@ export const MainContainer = styled.main`
     height: 840px;
     gap: 40px 0px;
     position: relative;
+
     .my-page-btn {
+      position: absolute;
+      top: 25px;
+      left: 15px;
+      cursor: pointer;
+      color: ${({ theme }) => theme.colors.DefaultText};
+    }
+
+    .my-music-btn {
       position: absolute;
       top: -25px;
       right: 15px;
