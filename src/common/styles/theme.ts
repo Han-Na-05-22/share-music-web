@@ -4,6 +4,8 @@ const colors = {
   ActiveColor: "#9924C2",
   HoverColor: "#B037DA",
 
+  TableHoverColor: "rgba(203, 93, 242, 0.25);",
+
   DefaultText: "#C0C0C0",
   HoverText: "#6C6A6A",
   ButtonText: "#FFFFFF",

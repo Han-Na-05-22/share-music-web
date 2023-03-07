@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const HomeContainer = styled.div`
   display: flex;
   gap: 0 50px;
+  position: relative;
+
   .input-test {
     display: flex;
     align-items: center;

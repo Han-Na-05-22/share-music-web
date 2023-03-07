@@ -20,6 +20,9 @@ const AddMusic = ({
   width = "1150px",
   height = "780px",
 }: AddMusicProps) => {
+  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
+  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+
   const [form, setForm] = useState<AddMusicFormProps>({
     img: "",
     mp3: "",
@@ -33,10 +36,10 @@ const AddMusic = ({
   });
 
   console.log("form", form);
-  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+
   const [isCompleted, setIsCompleted] = useState<string>("none");
 
   console.log("isCompleted", isCompleted);
@@ -85,8 +88,6 @@ const AddMusic = ({
 
   // todo : 합칠 것
   const getUserId = auth?.currentUser?.uid.replace('"', "");
-
-  // todo : 공통으로 사용
 
   const addMusicData = async () => {
     try {

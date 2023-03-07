@@ -5,14 +5,13 @@ import { musicListState, myMusic } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import { collection, getDocs } from "firebase/firestore";
 import Home from "pages/Home";
+import NotFound from "pages/NotFound";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { auth, firestore } from "service/firebase";
 import * as functions from "./common/functions";
 
-// todo : 로딩 컴포넌트 추가하기(완)
-// todo : home music playlist delete and then add 장르
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
@@ -55,6 +54,7 @@ function App() {
         <Main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </Main>
       </Container>

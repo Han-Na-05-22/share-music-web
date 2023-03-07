@@ -54,8 +54,8 @@ export const sendMusicDataFunction = async (
               .split(" ")
               .join("") + data?.uniqueKey
           }`,
-          // likeCount: data?.likeCount,
-          // downloadCount: data?.downloadCount,
+          likeCount: 0,
+          downloadCount: 0,
         },
       ],
     });

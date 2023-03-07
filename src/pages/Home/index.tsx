@@ -17,10 +17,12 @@ import Join from "components/Join";
 import Login from "components/Login";
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
+import { musicListState } from "components/AddMusic/state";
 
-// todo : 파이어베이스 로그인 및 회원가입 기능 구현(완) 및 top, new 등 리스트가 없을 때 에러처리, 404 page
+// todo : top, new 등 리스트가 없을 때 에러처리, 404 page(완)
 
 const Home = () => {
+  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -83,39 +85,11 @@ const Home = () => {
       };
     }
   };
-
+  console.log("musicList?.length !== 0", musicList?.length !== 0);
+  console.log("musicList?.length", musicList?.length);
+  console.log("musicList", musicList);
   return (
     <HomeContainer>
-      {/* <div className="left">
-        <Upload name="img" file={test.img} onChange={handleChangeImg}></Upload>
-        <Box>box</Box>
-        <div className="input-test">
-          <TextInput
-            name="title"
-            value={test?.title}
-            label="음원"
-            isError={true}
-            onChange={(event: any) => {
-              setTest({
-                ...test,
-                title: event?.target.value,
-              });
-            }}
-            errorMsg="에러 메시지 입니다."
-          ></TextInput>
-          <Button marginLeft="15px" btnType="submit">
-            업로드
-          </Button>
-        </div>
-        {!isClicked && (
-          <Modal>
-            등록이 완료 되었습니다.
-            <Button btnType="confirm" onClick={() => setIsClicked(!isClicked)}>
-              버튼
-            </Button>
-          </Modal>
-        )}
-      </div> */}
       <div className="tabel-container">
         <Tabel
           theadData={[
@@ -139,18 +113,29 @@ const Home = () => {
             },
           ]}
         >
-          {tdContent
-            ?.slice(offset, offset + limit)
-            ?.map((item: any, idx: number) => (
-              <tr key={idx}>
-                <td>{item?.a}</td>
-                <td>{item?.b}</td>
-                <td>{item?.c}</td>
-                <td>{item?.d}</td>
-                <td>{item?.e}</td>
-                <td>{item?.f}</td>
-              </tr>
-            ))}
+          {musicList?.length !== undefined ? (
+            musicList
+              ?.slice(offset, offset + limit)
+              ?.map((item: any, idx: number) => (
+                <tr
+                  key={idx}
+                  onClick={() => {
+                    console.log("ddd");
+                  }}
+                >
+                  <td>{idx + 1}</td>
+                  <td>
+                    <img src={item?.img} alt="" />
+                  </td>
+                  <td>{item?.title}</td>
+                  <td>{item?.singer}</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+              ))
+          ) : (
+            <p className="no-data">등록된 데이터가 없습니다.</p>
+          )}
         </Tabel>
         <Pagination
           total={tdContent.length}
@@ -183,18 +168,29 @@ const Home = () => {
             },
           ]}
         >
-          {tdContent
-            ?.slice(offset, offset + limit)
-            ?.map((item: any, idx: number) => (
-              <tr key={idx}>
-                <td>{item?.a}</td>
-                <td>{item?.b}</td>
-                <td>{item?.c}</td>
-                <td>{item?.d}</td>
-                <td>{item?.e}</td>
-                <td>{item?.f}</td>
-              </tr>
-            ))}
+          {musicList?.length !== undefined ? (
+            musicList
+              ?.slice(offset, offset + limit)
+              ?.map((item: any, idx: number) => (
+                <tr
+                  key={idx}
+                  onClick={() => {
+                    console.log("ddd");
+                  }}
+                >
+                  <td>{idx + 1}</td>
+                  <td>
+                    <img src={item?.img} alt="" />
+                  </td>
+                  <td>{item?.title}</td>
+                  <td>{item?.singer}</td>
+                  <td>0</td>
+                  <td>0</td>
+                </tr>
+              ))
+          ) : (
+            <p className="no-data">등록된 데이터가 없습니다.</p>
+          )}
         </Tabel>
         <Pagination
           total={tdContent.length}
