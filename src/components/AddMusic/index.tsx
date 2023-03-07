@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
-import { myMusic, myMusicAddState } from "./state";
+import { musicListState, myMusic, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
 
@@ -27,9 +27,12 @@ const AddMusic = ({
     mpName: "",
     date: new Date(),
   });
+  console.log("form", form);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
+  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  console.log("musicList", musicList);
   console.log("myMusicList", myMusicList);
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
@@ -70,7 +73,7 @@ const AddMusic = ({
 
   // todo : 공통으로 사용
 
-  const addMusicData = async (e: any) => {
+  const addMusicData = async () => {
     try {
       functions?.addMusicFunction(
         form.formData,
@@ -83,10 +86,12 @@ const AddMusic = ({
         },
         setMyMusicList
       );
-      await functions?.sendMusicDataFunction(user?.email, form);
+
+      functions?.sendMusicDataFunction(user?.email, form, musicList);
 
       alert("음원 등록이 완료되었습니다.");
       setForm({
+        date: new Date(),
         img: "",
         mp3: "",
         title: "",
@@ -94,7 +99,6 @@ const AddMusic = ({
         explanation: "",
         mpName: "",
         formData: "",
-        date: "",
       });
       //
     } catch (err) {
@@ -207,7 +211,10 @@ const AddMusic = ({
                   ? "submit"
                   : "none"
               }
-              onClick={(e) => addMusicData(e)}
+              onClick={async () => {
+                await functions.getMusicListDataFunction(setMusicList);
+                addMusicData();
+              }}
             >
               확인
             </Button>

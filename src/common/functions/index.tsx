@@ -1,5 +1,12 @@
 import { async } from "@firebase/util";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import {
   ref as sRef,
   uploadBytesResumable,
@@ -10,26 +17,71 @@ import {
 } from "firebase/storage";
 import { firestore, storage } from "service/firebase";
 
+// 데이터베이스에 저장된 음원리스트들을 불러오기 위한 함수
+export const getMusicListDataFunction = async (setMusicListData: any) => {
+  const querySnapshot = await getDocs(collection(firestore, "music"));
+  let array: any = "";
+  querySnapshot?.forEach((doc: any) => {
+    array = doc?.data()?.data;
+    return setMusicListData(array);
+  });
+};
+
 // 음악 추가 시  데이터베이스에 해당 음원 정보 저장
-export const sendMusicDataFunction = async (email: string, data: any) => {
-  const washingtonRef = doc(firestore, "music", email);
+export const sendMusicDataFunction = async (
+  email: string,
+  data: any,
+  musicListData: any
+) => {
+  const washingtonRef = doc(firestore, "music", "musicList");
+  console.log("musicListData?.length", musicListData?.length);
 
-  await setDoc(washingtonRef, {
-    musicList: [
-      {
+  console.log("why?", musicListData?.length === 0);
+
+  if (musicListData?.length === 0) {
+    console.log("아무 값이 없음");
+    await setDoc(washingtonRef, {
+      data: [
+        {
+          id: 1,
+          type: "add",
+          email: email,
+          title: data?.title,
+          singer: data?.singer,
+          explanation: data?.explanation,
+          img: data?.img,
+          date: data?.date,
+          mp3: data?.formData?.name
+            .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+            .split(" ")
+            .join(""),
+          // likeCount: data?.likeCount,
+          // downloadCount: data?.downloadCount,
+        },
+      ],
+    });
+  } else {
+    console.log("배열안에 데이터 값이 있음");
+
+    await updateDoc(washingtonRef, {
+      data: arrayUnion({
+        id: musicListData?.length + 1,
         type: "add",
-
+        email: email,
         title: data?.title,
         singer: data?.singer,
         explanation: data?.explanation,
         img: data?.img,
         date: data?.date,
-        // id: data?.id,
+        mp3: data?.formData?.name
+          .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+          .split(" ")
+          .join(""),
         // likeCount: data?.likeCount,
         // downloadCount: data?.downloadCount,
-      },
-    ],
-  });
+      }),
+    });
+  }
 
   console.log("음원 등록 완료");
 };
@@ -45,8 +97,6 @@ export const addMusicFunction = (
   },
   setData?: any
 ) => {
-  const uniqueKey = new Date()?.getTime();
-
   if (!file) {
     return;
   }
@@ -67,7 +117,7 @@ export const addMusicFunction = (
     },
   };
 
-  const storageRef = sRef(storage, `${src}/` + newName + uniqueKey);
+  const storageRef = sRef(storage, `${src}/` + newName);
 
   const UploadTask = uploadBytesResumable(storageRef, file, metaData);
 

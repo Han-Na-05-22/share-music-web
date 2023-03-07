@@ -9,3 +9,8 @@ export const myMusicAddState = atom({
   key: "myMusicAddStateData",
   default: false,
 });
+
+export const musicListState = atom({
+  key: "musicListStateData",
+  default: [],
+});
