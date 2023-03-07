@@ -8,15 +8,15 @@ import Box from "components/Box";
 import Button from "components/Button";
 import ProfileImg from "components/ProfileImg";
 import { doc, setDoc } from "firebase/firestore";
-import { myMusic } from "components/AddMusic/state";
-import PlayList from "components/PlayList";
+import { musicListState, myMusic } from "components/AddMusic/state";
 import Genre from "components/Genre";
 
 const Main = ({ children, className }: MainProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
-  const getUserId = auth?.currentUser?.uid.replace('"', "");
 
+  const getUserId = auth?.currentUser?.uid.replace('"', "");
+  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -49,7 +49,10 @@ const Main = ({ children, className }: MainProps) => {
       profile: "",
     });
   };
-
+  console.log(
+    "musicListTest",
+    musicList?.filter((item: any) => item?.email === user?.email)?.length
+  );
   return (
     <MainContainer className={className}>
       {user?.email ? (
@@ -77,7 +80,13 @@ const Main = ({ children, className }: MainProps) => {
                 <li>
                   <span>등록 수</span>
                   <span>
-                    {myMusicList?.length !== 0 ? myMusicList?.length : "0"}
+                    {musicList?.filter(
+                      (item: any) => item?.email === user?.email
+                    )?.length !== 0
+                      ? musicList?.filter(
+                          (item: any) => item?.email === user?.email
+                        )?.length
+                      : "0"}
                   </span>
                 </li>
                 <li>

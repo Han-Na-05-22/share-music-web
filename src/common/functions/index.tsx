@@ -39,7 +39,7 @@ export const sendMusicDataFunction = async (
     await setDoc(washingtonRef, {
       data: [
         {
-          id: musicListData?.length + 1,
+          id: 1,
           type: "add",
           email: email,
           title: data?.title,
@@ -77,8 +77,8 @@ export const sendMusicDataFunction = async (
             .split(" ")
             .join("") + data?.uniqueKey
         }`,
-        // likeCount: data?.likeCount,
-        // downloadCount: data?.downloadCount,
+        likeCount: 0,
+        downloadCount: 0,
       }),
     });
   }
@@ -180,6 +180,26 @@ export const myMusicListFunction = (src: any, setData?: any) => {
     .catch((error) => {
       console.log("err", error);
     });
+
+  return setData;
+};
+
+export const getMusicUrlFunction = (src: any, setData: any, name: any) => {
+  if (!src) {
+    return;
+  }
+
+  const MusicListRef = sRef(storage, `music/${src}/`);
+
+  listAll(MusicListRef)?.then((response: any) => {
+    response?.items?.forEach((item: any) => {
+      getDownloadURL(item)?.then((url) => {
+        if (item?._location?.path_ === `music/${src}/${name}`) {
+          return setData(url);
+        }
+      });
+    });
+  });
 
   return setData;
 };

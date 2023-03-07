@@ -18,11 +18,24 @@ import Login from "components/Login";
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
-
+import {
+  isMusicDetailState,
+  musicDetailState,
+  musicDetailUrlState,
+} from "components/MusicDetail/state";
+import MusicDetail from "components/MusicDetail";
+import * as functions from "../../common/functions";
 // todo : top, new 등 리스트가 없을 때 에러처리, 404 page(완)
 
 const Home = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
+  const [musicDetailData, setMusicDetailData] =
+    useRecoilState<any>(musicDetailState);
+  const [musicDetailUrl, setMusicDetailUrl] =
+    useRecoilState<any>(musicDetailUrlState);
+
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -85,9 +98,7 @@ const Home = () => {
       };
     }
   };
-  console.log("musicList?.length !== 0", musicList?.length !== 0);
-  console.log("musicList?.length", musicList?.length);
-  console.log("musicList", musicList);
+
   return (
     <HomeContainer>
       <div className="tabel-container">
@@ -120,7 +131,13 @@ const Home = () => {
                 <tr
                   key={idx}
                   onClick={() => {
-                    console.log("ddd");
+                    setIsDetailData(true);
+                    setMusicDetailData(item);
+                    functions.getMusicUrlFunction(
+                      item?.email,
+                      setMusicDetailUrl,
+                      item?.mp3
+                    );
                   }}
                 >
                   <td>{idx + 1}</td>
@@ -172,12 +189,7 @@ const Home = () => {
             musicList
               ?.slice(offset, offset + limit)
               ?.map((item: any, idx: number) => (
-                <tr
-                  key={idx}
-                  onClick={() => {
-                    console.log("ddd");
-                  }}
-                >
+                <tr key={idx} onClick={() => {}}>
                   <td>{idx + 1}</td>
                   <td>
                     <img src={item?.img} alt="" />
@@ -273,6 +285,7 @@ const Home = () => {
         <Login></Login>
         <Record isPlay={isPlay} onClickPlay={handleChangePlay} />
       </div> */}
+      {isDetailData && <MusicDetail detailData={musicDetailData}></MusicDetail>}
     </HomeContainer>
   );
 };

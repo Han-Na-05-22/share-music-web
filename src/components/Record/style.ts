@@ -5,54 +5,52 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   position: relative;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  border-radius: 50%;
-  cursor: pointer;
-
-  &:hover {
-    .record-content {
-      opacity: 0.5;
-    }
-
-    svg {
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      position: absolute;
-      display: block;
-      opacity: 0.5;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid red;
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
   }
 
-  .record-content {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
+  .about-music {
+    color: ${({ theme }) => theme.colors.BlackColor};
 
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
+    strong,
+    span,
+    p {
+      color: inherit;
     }
   }
 
-  .pause {
-  }
+  .rhap_container {
+    border: 3px solid red;
+    width: 50%;
+    height: 150px;
+    .rhap_main.rhap_stacked {
+      .rhap_controls-section {
+        border: 2px solid blue;
 
-  .play {
-  }
+        .rhap_additional-controls {
+          border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+          color: ${({ theme }) => theme.colors.BlackColor};
+          background: ${({ theme }) => theme.colors.BlackColor};
+        }
+        .rhap_main-controls {
+          border: 1px solid ${({ theme }) => theme.colors.BlackColor};
 
-  svg {
-    display: none;
-  }
-
-  .circle {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: ${({ theme }) => theme.colors.ButtonText};
-    width: 75px;
-    height: 75px;
-    border-radius: inherit;
+          button {
+            background: ${({ theme }) => theme.colors.BlackColor};
+          }
+        }
+        .rhap_volume-controls {
+          border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+          background: ${({ theme }) => theme.colors.BlackColor};
+        }
+      }
+    }
   }
 `;

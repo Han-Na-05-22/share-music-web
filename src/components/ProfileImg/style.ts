@@ -24,7 +24,7 @@ export const ProfileImgContainer = styled.div<ProfileImgStyleProps>`
     svg {
       border: none;
       border-radius: 100px;
-      color: #000;
+      color: ${({ theme }) => theme.colors.BlackColor};
 
       path {
         stroke: ${({ theme }) => theme.colors.HoverText};

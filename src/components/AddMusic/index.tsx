@@ -14,7 +14,8 @@ import { userInfo } from "components/Login/state";
 import Loading from "components/Loading";
 import BasicSelect from "components/BasicSelect";
 import { GenreList } from "utility/data";
-
+import moment from "moment";
+import "moment/locale/ko";
 const AddMusic = ({
   className,
   width = "1150px",
@@ -27,24 +28,18 @@ const AddMusic = ({
     img: "",
     mp3: "",
     title: "",
-    genre: "",
+    genre: "POP",
     singer: "",
     explanation: "",
     mpName: "",
     uniqueKey: new Date()?.getTime(),
-    date: new Date(),
+    date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
-
-  console.log("form", form);
 
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
 
   const [isCompleted, setIsCompleted] = useState<string>("none");
-
-  console.log("isCompleted", isCompleted);
-  console.log("musicList", musicList);
-  console.log("myMusicList", myMusicList);
 
   const handleChangeSelect = (event: any) => {
     const { name } = event.target;
@@ -124,10 +119,10 @@ const AddMusic = ({
         title: "",
         singer: "",
         explanation: "",
-        genre: "",
+        genre: "POP",
         mpName: "",
         uniqueKey: new Date()?.getTime(),
-        date: new Date(),
+        date: moment().format("YYYY-MM-DD HH:mm:ss"),
       });
     }
   }, [isCompleted]);

@@ -1,5 +1,5 @@
 import styled from "styled-components";
 
-export const MusicContainer = styled.div`
+export const MusicTableContainer = styled.div`
   border: 2px solid red;
 `;

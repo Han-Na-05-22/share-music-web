@@ -10,9 +10,9 @@ import { GenreContainer } from "./style";
 const Genre = ({ className, onClick }: GenreProps) => {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState<any>(userInfo);
-  console.log("user", user?.email);
+
   const [isGenre, setIsGenre] = useRecoilState<any>(genreState);
-  console.log("isGenre", isGenre);
+
   return (
     <GenreContainer className={className}>
       <strong className="title">장르</strong>
@@ -24,9 +24,8 @@ const Genre = ({ className, onClick }: GenreProps) => {
               if (!user?.email) {
                 alert("로그인 후 이용해주세요.");
               }
-
               setIsGenre(item?.name);
-              navigate(`/music/${item?.name}`);
+              // navigate(`/music/${item?.name}`);
             }}
             width="100px"
             btnType="submit"

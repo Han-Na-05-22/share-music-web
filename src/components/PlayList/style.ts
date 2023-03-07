@@ -11,7 +11,7 @@ export const PlayListContainer = styled.div`
 
     strong {
       border: 3px solid red;
-      color: #000;
+      color: ${({ theme }) => theme.colors.BlackColor};
     }
 
     .rhap_container {
@@ -22,20 +22,20 @@ export const PlayListContainer = styled.div`
           border: 2px solid blue;
 
           .rhap_additional-controls {
-            border: 1px solid #000;
-            color: #000;
-            background: #000;
+            border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+            color: ${({ theme }) => theme.colors.BlackColor};
+            background: ${({ theme }) => theme.colors.BlackColor};
           }
           .rhap_main-controls {
-            border: 1px solid #000;
+            border: 1px solid ${({ theme }) => theme.colors.BlackColor};
 
             button {
-              background: #000;
+              background: ${({ theme }) => theme.colors.BlackColor};
             }
           }
           .rhap_volume-controls {
-            border: 1px solid #000;
-            background: #000;
+            border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+            background: ${({ theme }) => theme.colors.BlackColor};
           }
         }
       }
