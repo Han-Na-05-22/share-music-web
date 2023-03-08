@@ -7,7 +7,6 @@ export const TableGroupContainer = styled.div`
     position: absolute;
     left: 15px;
     top: -20px;
-    z-index: 1000;
   }
 `;
 export const TabelContainer = styled.table`

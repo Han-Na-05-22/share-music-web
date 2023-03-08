@@ -17,29 +17,16 @@ function App() {
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
 
-  const getUserInfo = async () => {
-    const querySnapshot = await getDocs(collection(firestore, "users"));
-    const getUserInfo: any = sessionStorage?.getItem(
-      `firebase:authUser:${process.env.REACT_APP_FIREBASE_API_KEY}:[DEFAULT]`
-    );
-    querySnapshot?.forEach((doc: any) => {
-      if (
-        doc?.id === auth?.currentUser?.uid.replace('"', "") ||
-        doc?.id === getUserInfo?.uid
-      ) {
-        return setUser(doc?.data()?.userInfo);
-      }
-    });
-  };
   console.log("auth", auth);
   console.log("user", user);
   console.log("myMusicList", myMusicList);
   console.log("musicList", musicList);
   useEffect(() => {
-    getUserInfo();
+    functions.getUserDataFunction(setUser);
     functions.getMusicListDataFunction(setMusicList);
   }, []);
 
+  // todo : 삭제 예정
   // useEffect(() => {
   //   if (user?.email) {
   //     setMyMusicList(

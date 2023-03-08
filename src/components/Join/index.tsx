@@ -34,6 +34,8 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const phoneRegex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
   // 회원가입
 
+  // 회원가입 시 Cloud Firestore에 해당 user 정보를 저장
+  // todo : user 정보 저장은 공통 함수로 만들 것 ★
   const signin = async (event: any, { email, password }: any) => {
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -106,153 +108,151 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   };
 
   return (
-    <Overlay>
-      <JoinContainer className={className} width={width} height={height}>
-        <div className="user-infos">
-          <div className="user-img users">
-            <ProfileImg
-              name="img"
-              file={form.img}
-              onChange={handleChangeImg}
-              onClickDelete={deleteImg}
-            />
-          </div>
-          <div className="user-name-id users">
-            <TextInput
-              width="350px"
-              name="name"
-              value={form?.name}
-              isError={isClicked && form?.name?.length === 0}
-              errorMsg={"이름을 입력해주세요."}
-              label="이름"
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  name: e.target.value,
-                });
-              }}
-            ></TextInput>
-            <TextInput
-              width="350px"
-              name="email"
-              value={form?.email}
-              label="아이디"
-              isError={isClicked && form?.email?.length <= 5}
-              errorMsg={"아이디를 5글자 이상 입력해주세요."}
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  email: e.target.value,
-                });
-              }}
-            ></TextInput>
-          </div>
-
-          <TextInput
-            name="password"
-            type="password"
-            width="800px"
-            isError={
-              isClicked &&
-              form?.password?.length <= 8 &&
-              !passwordRegex?.test(form?.password)
-            }
-            errorMsg={
-              "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
-            }
-            value={form?.password}
-            label="비밀번호"
-            onChange={(e) => {
-              setForm({
-                ...form,
-                password: e.target.value,
-              });
-            }}
-          ></TextInput>
-          <TextInput
-            name="rePassword"
-            type="password"
-            width="800px"
-            value={form?.rePassword}
-            isError={
-              isClicked &&
-              (form?.password !== form?.rePassword ||
-                form?.rePassword?.length === 0)
-            }
-            errorMsg={"비밀번호가 같지 않습니다."}
-            label="비밀번호 확인"
-            onChange={(e) => {
-              setForm({
-                ...form,
-                rePassword: e.target.value,
-              });
-            }}
-          ></TextInput>
-
-          <div className="user-phone-nickName users">
-            <TextInput
-              name="phoneNumber"
-              type="text"
-              width="350px"
-              value={form?.phoneNumber}
-              label="휴대폰"
-              isError={isClicked && !phoneRegex?.test(form?.phoneNumber)}
-              errorMsg={"하이픈을 포함한 숫자 11자리를 입력해주세요."}
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  phoneNumber: e.target.value,
-                });
-              }}
-            ></TextInput>
-
-            <TextInput
-              name="nickName"
-              width="350px"
-              type="text"
-              value={form?.nickName}
-              label="닉네임"
-              isError={isClicked && form?.nickName?.length === 0}
-              errorMsg={"닉네임을 입력해주세요."}
-              onChange={(e) => {
-                setForm({
-                  ...form,
-                  nickName: e.target.value,
-                });
-              }}
-            ></TextInput>
-          </div>
-          <div className="btn-container">
-            <Button
-              btnType="cancel"
-              onClick={() => {
-                setJoinStateDate(false);
-              }}
-            >
-              취소
-            </Button>
-            <Button
-              marginLeft="15px"
-              btnType={
-                form?.name?.length !== 0 &&
-                form?.nickName?.length !== 0 &&
-                form?.rePassword?.length !== 0 &&
-                form?.password === form?.rePassword &&
-                form?.password?.length >= 8 &&
-                passwordRegex?.test(form?.password) &&
-                form?.email?.length >= 5 &&
-                phoneRegex?.test(form?.phoneNumber)
-                  ? "submit"
-                  : "none"
-              }
-              onClick={(e) => signin(e, form)}
-            >
-              확인
-            </Button>
-          </div>
+    <JoinContainer className={className} width={width} height={height}>
+      <div className="user-infos">
+        <div className="user-img users">
+          <ProfileImg
+            name="img"
+            file={form.img}
+            onChange={handleChangeImg}
+            onClickDelete={deleteImg}
+          />
         </div>
-      </JoinContainer>
-    </Overlay>
+        <div className="user-name-id users">
+          <TextInput
+            width="350px"
+            name="name"
+            value={form?.name}
+            isError={isClicked && form?.name?.length === 0}
+            errorMsg={"이름을 입력해주세요."}
+            label="이름"
+            onChange={(e) => {
+              setForm({
+                ...form,
+                name: e.target.value,
+              });
+            }}
+          ></TextInput>
+          <TextInput
+            width="350px"
+            name="email"
+            value={form?.email}
+            label="아이디"
+            isError={isClicked && form?.email?.length <= 5}
+            errorMsg={"아이디를 5글자 이상 입력해주세요."}
+            onChange={(e) => {
+              setForm({
+                ...form,
+                email: e.target.value,
+              });
+            }}
+          ></TextInput>
+        </div>
+
+        <TextInput
+          name="password"
+          type="password"
+          width="800px"
+          isError={
+            isClicked &&
+            form?.password?.length <= 8 &&
+            !passwordRegex?.test(form?.password)
+          }
+          errorMsg={
+            "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
+          }
+          value={form?.password}
+          label="비밀번호"
+          onChange={(e) => {
+            setForm({
+              ...form,
+              password: e.target.value,
+            });
+          }}
+        ></TextInput>
+        <TextInput
+          name="rePassword"
+          type="password"
+          width="800px"
+          value={form?.rePassword}
+          isError={
+            isClicked &&
+            (form?.password !== form?.rePassword ||
+              form?.rePassword?.length === 0)
+          }
+          errorMsg={"비밀번호가 같지 않습니다."}
+          label="비밀번호 확인"
+          onChange={(e) => {
+            setForm({
+              ...form,
+              rePassword: e.target.value,
+            });
+          }}
+        ></TextInput>
+
+        <div className="user-phone-nickName users">
+          <TextInput
+            name="phoneNumber"
+            type="text"
+            width="350px"
+            value={form?.phoneNumber}
+            label="휴대폰"
+            isError={isClicked && !phoneRegex?.test(form?.phoneNumber)}
+            errorMsg={"하이픈을 포함한 숫자 11자리를 입력해주세요."}
+            onChange={(e) => {
+              setForm({
+                ...form,
+                phoneNumber: e.target.value,
+              });
+            }}
+          ></TextInput>
+
+          <TextInput
+            name="nickName"
+            width="350px"
+            type="text"
+            value={form?.nickName}
+            label="닉네임"
+            isError={isClicked && form?.nickName?.length === 0}
+            errorMsg={"닉네임을 입력해주세요."}
+            onChange={(e) => {
+              setForm({
+                ...form,
+                nickName: e.target.value,
+              });
+            }}
+          ></TextInput>
+        </div>
+        <div className="btn-container">
+          <Button
+            btnType="cancel"
+            onClick={() => {
+              setJoinStateDate(false);
+            }}
+          >
+            취소
+          </Button>
+          <Button
+            marginLeft="15px"
+            btnType={
+              form?.name?.length !== 0 &&
+              form?.nickName?.length !== 0 &&
+              form?.rePassword?.length !== 0 &&
+              form?.password === form?.rePassword &&
+              form?.password?.length >= 8 &&
+              passwordRegex?.test(form?.password) &&
+              form?.email?.length >= 5 &&
+              phoneRegex?.test(form?.phoneNumber)
+                ? "submit"
+                : "none"
+            }
+            onClick={(e) => signin(e, form)}
+          >
+            확인
+          </Button>
+        </div>
+      </div>
+    </JoinContainer>
   );
 };
 

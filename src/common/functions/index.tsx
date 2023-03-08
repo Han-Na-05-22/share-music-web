@@ -17,9 +17,9 @@ import {
   getMetadata,
 } from "firebase/storage";
 import moment from "moment";
-import { firestore, storage } from "service/firebase";
+import { auth, firestore, storage } from "service/firebase";
 
-// 데이터베이스에 저장된 음원리스트들을 불러오기 위한 함수
+// 데이터베이스에 저장된 모든 음원리스트들을 불러오기 위한 함수(Cloud Firestore)
 export const getMusicListDataFunction = async (setMusicListData: any) => {
   const querySnapshot = await getDocs(collection(firestore, "music"));
   let array: any = "";
@@ -29,7 +29,7 @@ export const getMusicListDataFunction = async (setMusicListData: any) => {
   });
 };
 
-// 음악 추가 시  데이터베이스에 해당 음원 정보 저장
+// 음악 추가 시  데이터베이스에 해당 음원 정보 저장(Cloud Firestore)
 export const sendMusicDataFunction = async (
   email: string,
   data: any,
@@ -91,8 +91,8 @@ export const sendMusicDataFunction = async (
   }
 };
 
-// 좋아요 또는 다운로드 클릭 시 count 및 클릭한 user 정보 DB에 저장하는 함수
-// todo : 좋아요만 구현됨. 다운로드 해야함! (완)
+// 좋아요 또는 다운로드 클릭 시 count 및 클릭한 user 정보 DB에 저장하는 함수(Cloud Firestore)
+
 export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
   const washingtonRef = doc(firestore, "music", "musicList");
 
@@ -103,6 +103,7 @@ export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
   await updateDoc(washingtonRef, { data: date });
 };
 
+// 음원 등록하기 함수(Storage)
 export const addMusicFunction = (
   file: any,
   src: any,
@@ -169,6 +170,7 @@ export const addMusicFunction = (
   );
 };
 
+// 내가 등록한 음원리스트들을 불러오는 함수(Storage)
 export const myMusicListFunction = (src: any, setData?: any) => {
   if (!src) {
     return;
@@ -203,6 +205,7 @@ export const myMusicListFunction = (src: any, setData?: any) => {
   return setData;
 };
 
+// 음원 상세보기 오디오 URL (Storage)
 export const getMusicUrlFunction = (src: any, setData: any, name: any) => {
   if (!src) {
     return;
@@ -221,4 +224,51 @@ export const getMusicUrlFunction = (src: any, setData: any, name: any) => {
   });
 
   return setData;
+};
+
+// user 정보 수정
+// todo : ★ 해당 기호 있는 todo 찾아서 아래 함수 사용할 것.
+export const sendUserDataFunction = async (
+  uid: any,
+  data: any,
+  user: any,
+  setUser?: any
+) => {
+  console.log("uid", uid);
+  console.log("useruser", user);
+  console.log("data", data);
+  try {
+    const washingtonRef = doc(firestore, "users", uid);
+    await setDoc(washingtonRef, {
+      userInfo: {
+        profile: user?.profile,
+        name: data?.name,
+        nickName: data?.nickName,
+        email: user?.email,
+        phoneNumber: data?.phoneNumber,
+        creationTime: user?.creationTime,
+      },
+    });
+
+    await alert("수정이 완료되었습니다.");
+    getUserDataFunction(setUser);
+  } catch (err) {
+    console.log("err : ", err);
+    alert("수정에 실패하였습니다.");
+  }
+};
+
+export const getUserDataFunction = async (setUser: any) => {
+  const querySnapshot = await getDocs(collection(firestore, "users"));
+  const getUserInfo: any = sessionStorage?.getItem(
+    `firebase:authUser:${process.env.REACT_APP_FIREBASE_API_KEY}:[DEFAULT]`
+  );
+  querySnapshot?.forEach((doc: any) => {
+    if (
+      doc?.id === auth?.currentUser?.uid?.replace("", "") ||
+      doc?.id === getUserInfo?.uid
+    ) {
+      return setUser(doc?.data()?.userInfo);
+    }
+  });
 };

@@ -13,6 +13,7 @@ import { auth } from "service/firebase";
 import Join from "components/Join";
 import { useRecoilState } from "recoil";
 import { loginState } from "./state";
+import Overlay from "components/Overlay";
 
 interface LoginFormProps {
   email: string;
@@ -111,7 +112,11 @@ const Login = ({ className }: LoginProps) => {
           </Button>
         </LoginContainer>
       </Box>
-      {loginStateDate?.isJoin && <Join></Join>}
+      {loginStateDate?.isJoin && (
+        <Overlay>
+          <Join></Join>
+        </Overlay>
+      )}
     </>
   );
 };
