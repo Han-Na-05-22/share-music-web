@@ -14,6 +14,7 @@ import {
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
 import * as functions from "../../common/functions";
+import LeftContent from "common/layout/LeftContent";
 
 const Home = () => {
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -26,8 +27,8 @@ const Home = () => {
     useRecoilState<any>(musicDetailUrlState);
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
-  const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
 
   const offset = (page - 1) * limit;
 
@@ -43,8 +44,10 @@ const Home = () => {
 
   return (
     <HomeContainer>
+      <LeftContent></LeftContent>
       <div className="tabel-container">
         <Tabel
+          tableBtnText={"TOP"}
           theadData={[
             {
               title: "순위",
@@ -108,6 +111,7 @@ const Home = () => {
       </div>
       <div className="tabel-container">
         <Tabel
+          tableBtnText={"NEW"}
           theadData={[
             {
               title: "순위",

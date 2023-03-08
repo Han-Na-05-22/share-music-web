@@ -1,4 +1,15 @@
 import styled from "styled-components";
+
+export const TableGroupContainer = styled.div`
+  position: relative;
+  padding-top: 40px;
+  .table-header-btn {
+    position: absolute;
+    left: 15px;
+    top: -20px;
+    z-index: 1000;
+  }
+`;
 export const TabelContainer = styled.table`
   width: 550px;
   border-collapse: collapse;

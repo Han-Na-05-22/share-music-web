@@ -26,32 +26,52 @@ const Record = ({
     useRecoilState<any>(musicDetailUrlState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
+
   const [isPlay, setIsPlay] = useState<boolean>(false);
   console.log("musicDetailData", musicDetailData);
   console.log("isPlay", isPlay);
 
   console.log("musicList", musicList);
 
-  const onChangeCountData = async () => {
+  const onChangeCountData = async (type: string) => {
     const result = musicList?.map((item: any) => {
       if (item.id === musicDetailData?.id) {
         return {
           ...item,
-          likeCount: musicDetailData?.likeCount + 1,
-          likedClickList: [
-            ...item?.likedClickList,
-            {
-              email: user?.email,
-              updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
-            },
-          ],
+
+          likeCount:
+            type === "like" ? musicDetailData?.likeCount + 1 : item?.likeCount,
+          likedClickList:
+            type === "like"
+              ? [
+                  ...item?.likedClickList,
+                  {
+                    email: user?.email,
+                    updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  },
+                ]
+              : item?.likedClickList,
+
+          downloadCount:
+            type === "download"
+              ? musicDetailData?.downloadCount + 1
+              : item?.downloadCount,
+          downloadClickList:
+            type === "download"
+              ? [
+                  ...item?.downloadClickList,
+                  {
+                    email: user?.email,
+                    updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  },
+                ]
+              : item?.downloadClickList,
         };
       }
       return {
         ...item,
       };
     });
-
     console.log("result", result);
     await setMusicList(result);
   };
@@ -59,6 +79,17 @@ const Record = ({
   useEffect(() => {
     functions.sendUpdateLikeDownloadCountFunction(musicList);
   }, [musicList]);
+
+  console.log(
+    "test",
+    musicList
+      ?.find((item: any) => item?.id === musicDetailData?.id)
+      ?.downloadClickList?.find((i: any) => {
+        return i?.email === user?.email;
+      })?.email === user?.email
+  );
+
+  console.log("musicDetailData?.email", user?.email);
   return (
     <RecordContainer className={className} width={width} height={height}>
       <div className="add-date">
@@ -93,8 +124,8 @@ const Record = ({
             ) : (
               <SVG
                 src="/svg/term_heart.svg"
-                onClick={async () => {
-                  await onChangeCountData();
+                onClick={() => {
+                  onChangeCountData("like");
                 }}
               />
             )}
@@ -110,11 +141,16 @@ const Record = ({
             {musicList
               ?.find((item: any) => item?.id === musicDetailData?.id)
               ?.downloadClickList?.find((i: any) => {
-                return i?.email === musicDetailData?.email;
-              })?.email === musicDetailData?.email ? (
+                return i?.email === user?.email;
+              })?.email === user?.email ? (
               <SVG src="/svg/download.svg" />
             ) : (
-              <SVG src="/svg/term_download.svg" />
+              <SVG
+                src="/svg/term_download.svg"
+                onClick={async () => {
+                  onChangeCountData("download");
+                }}
+              />
             )}
 
             <strong>

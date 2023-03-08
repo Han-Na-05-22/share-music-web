@@ -1,5 +1,5 @@
-import { MainProps } from "./interface";
-import { MainContainer } from "./style";
+import { LeftContentProps } from "./interface";
+import { LeftContentContainer } from "./style";
 import { auth, firestore } from "service/firebase";
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
@@ -10,11 +10,12 @@ import ProfileImg from "components/ProfileImg";
 import { doc, setDoc } from "firebase/firestore";
 import { musicListState, myMusic } from "components/AddMusic/state";
 import Genre from "components/Genre";
+import { useNavigate } from "react-router-dom";
 
-const Main = ({ children, className }: MainProps) => {
+const LeftContent = ({ className }: LeftContentProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
-
+  const navigate = useNavigate();
   const getUserId = auth?.currentUser?.uid.replace('"', "");
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const handleChangeImg = (event: any) => {
@@ -54,7 +55,7 @@ const Main = ({ children, className }: MainProps) => {
     musicList?.filter((item: any) => item?.email === user?.email)?.length
   );
   return (
-    <MainContainer className={className}>
+    <LeftContentContainer className={className}>
       {user?.email ? (
         <div className="my-content left">
           <Box>
@@ -66,7 +67,12 @@ const Main = ({ children, className }: MainProps) => {
               마이뮤직
             </Button>
             <div className="my-profile">
-              <strong className="my-page-btn" onClick={() => {}}>
+              <strong
+                className="my-page-btn"
+                onClick={() => {
+                  navigate("/mypage");
+                }}
+              >
                 마이페이지
               </strong>
               <ProfileImg
@@ -119,9 +125,8 @@ const Main = ({ children, className }: MainProps) => {
           <Genre></Genre>
         </div>
       )}
-      {children}
-    </MainContainer>
+    </LeftContentContainer>
   );
 };
 
-export default Main;
+export default LeftContent;

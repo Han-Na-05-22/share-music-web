@@ -92,7 +92,7 @@ export const sendMusicDataFunction = async (
 };
 
 // 좋아요 또는 다운로드 클릭 시 count 및 클릭한 user 정보 DB에 저장하는 함수
-// todo : 좋아요만 구현됨. 다운로드 해야함!
+// todo : 좋아요만 구현됨. 다운로드 해야함! (완)
 export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
   const washingtonRef = doc(firestore, "music", "musicList");
 

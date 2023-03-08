@@ -11,11 +11,9 @@ export const HomeContainer = styled.div`
   }
 
   .left {
-    border: 1px solid red;
   }
 
   .right {
-    border: 1px solid red;
   }
 
   .tabel-container {

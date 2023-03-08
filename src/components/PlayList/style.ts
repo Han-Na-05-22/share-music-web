@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const PlayListContainer = styled.div`
-  border: 2px solid red;
   width: 100%;
   height: 100%;
 
@@ -10,13 +9,10 @@ export const PlayListContainer = styled.div`
     height: 100%;
 
     strong {
-      border: 3px solid red;
       color: ${({ theme }) => theme.colors.BlackColor};
     }
 
     .rhap_container {
-      border: 3px solid red;
-
       .rhap_main.rhap_stacked {
         .rhap_controls-section {
           border: 2px solid blue;
