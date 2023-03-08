@@ -13,10 +13,25 @@ import TextInput from "components/TextInput";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, firestore } from "service/firebase";
 import * as functions from "../../common/functions";
-// todo : 내정보(아이디 제외하고 모두 수정 가능!(완) 단 사용중인 닉네임이 있을 경우 중복된 닉네임 안내 모달 창 띄워주기), 내음악(수정, 삭제 및 상세보기), 플레이리스트(드래그 앤 드롭 기능 및 삭제 및 상세보기)
+import {
+  isMusicDetailState,
+  musicDetailState,
+  musicDetailUrlState,
+} from "components/MusicDetail/state";
+import MusicDetail from "components/MusicDetail";
+// todo : 내정보(아이디 제외하고 모두 수정 가능!(완) 단 사용중인 닉네임이 있을 경우 중복된 닉네임 안내 모달 창 띄워주기), 내음악(수정, 삭제 및 상세보기(완)), 플레이리스트(드래그 앤 드롭 기능 및 삭제 및 상세보기)
 
 const MyPage = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
+  const [musicDetailData, setMusicDetailData] =
+    useRecoilState<any>(musicDetailState);
+  const [musicDetailUrl, setMusicDetailUrl] =
+    useRecoilState<any>(musicDetailUrlState);
+  console.log("musicDetailUrl", musicDetailUrl);
+  console.log("isDetailData", isDetailData);
+  console.log("musicDetailData", musicDetailData);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   console.log("myMusicList", myMusicList);
   const [form, setForm] = useState<any>({
@@ -225,17 +240,34 @@ const MyPage = () => {
             },
           ]}
         >
-          {myMusicList?.length !== undefined || myMusicList?.length !== 0 ? (
-            myMusicList
+          {musicList?.length !== undefined ? (
+            musicList
+              ?.filter((i: any) => i?.email === user?.email)
               ?.slice(offset, offset + limit)
               ?.map((item: any, idx: number) => (
-                <tr key={idx} onClick={() => {}}>
+                <tr
+                  key={idx}
+                  onClick={() => {
+                    !user?.email
+                      ? alert("로그인 후 이용해주세요")
+                      : setIsDetailData({
+                          isDetail: true,
+                          isLocation: "mypage",
+                        });
+                    setMusicDetailData(item);
+                    functions.getMusicUrlFunction(
+                      item?.email,
+                      setMusicDetailUrl,
+                      item?.mp3
+                    );
+                  }}
+                >
                   <td>{idx + 1}</td>
                   <td>
-                    <img src={item.meta?.customMetadata?.img} alt="" />
+                    <img src={item?.img} alt="" />
                   </td>
-                  <td>{item?.meta?.customMetadata?.title}</td>
-                  <td>{item.meta?.customMetadata?.singer}</td>
+                  <td>{item?.title}</td>
+                  <td>{item?.singer}</td>
                   <td>
                     <SVG src="/svg/term_edit.svg" />
                   </td>
@@ -311,6 +343,9 @@ const MyPage = () => {
           handleChangePage={handleChangePage}
         />
       </div>
+      {isDetailData?.isDetail && isDetailData?.isLocation === "mypage" && (
+        <MusicDetail detailData={musicDetailData}></MusicDetail>
+      )}
     </MyPageContainer>
   );
 };

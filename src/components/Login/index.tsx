@@ -50,68 +50,67 @@ const Login = ({ className }: LoginProps) => {
 
   return (
     <>
-      <Box>
-        <LoginContainer className={className}>
-          <Button
-            className="join-btn"
-            btnType="submit"
-            onClick={() =>
-              setLoginStateDate({
-                ...loginStateDate,
-                isJoin: true,
-              })
-            }
-          >
-            회원가입
-          </Button>
-          <TextInput
-            name="email"
-            value={form?.email}
-            label="Email"
-            isError={form?.email?.length <= 5 && loginStateDate?.isLogin}
-            errorMsg={"아이디를 5글자 이상 입력해주세요."}
-            onChange={(e) => {
-              setForm({
-                ...form,
-                email: e.target.value,
-              });
-            }}
-          ></TextInput>
-          <TextInput
-            name="password"
-            type="password"
-            isError={
-              form?.password?.length <= 8 &&
-              !passwordRegex?.test(form?.password) &&
-              loginStateDate?.isLogin
-            }
-            errorMsg={
-              "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
-            }
-            value={form?.password}
-            label="Password"
-            onChange={(e) => {
-              setForm({
-                ...form,
-                password: e.target.value,
-              });
-            }}
-          ></TextInput>
-          <Button
-            marginLeft="15px"
-            btnType="submit"
-            onClick={() => {
-              login(form);
-              setLoginStateDate({
-                ...loginStateDate,
-                isLogin: true,
-              });
-            }}
-          >
-            로그인
-          </Button>
-        </LoginContainer>
-      </Box>
+      <LoginContainer className={className}>
+        <Button
+          className="join-btn"
+          btnType="submit"
+          onClick={() =>
+            setLoginStateDate({
+              ...loginStateDate,
+              isJoin: true,
+            })
+          }
+        >
+          회원가입
+        </Button>
+        <TextInput
+          name="email"
+          value={form?.email}
+          label="Email"
+          isError={form?.email?.length <= 5 && loginStateDate?.isLogin}
+          errorMsg={"아이디를 5글자 이상 입력해주세요."}
+          onChange={(e) => {
+            setForm({
+              ...form,
+              email: e.target.value,
+            });
+          }}
+        ></TextInput>
+        <TextInput
+          name="password"
+          type="password"
+          isError={
+            form?.password?.length <= 8 &&
+            !passwordRegex?.test(form?.password) &&
+            loginStateDate?.isLogin
+          }
+          errorMsg={
+            "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
+          }
+          value={form?.password}
+          label="Password"
+          onChange={(e) => {
+            setForm({
+              ...form,
+              password: e.target.value,
+            });
+          }}
+        ></TextInput>
+        <Button
+          marginLeft="15px"
+          btnType="submit"
+          onClick={() => {
+            login(form);
+            setLoginStateDate({
+              ...loginStateDate,
+              isLogin: true,
+            });
+          }}
+        >
+          로그인
+        </Button>
+      </LoginContainer>
+
       {loginStateDate?.isJoin && (
         <Overlay>
           <Join></Join>

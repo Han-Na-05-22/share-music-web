@@ -22,6 +22,7 @@ const Record = ({
 }: RecordProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
   const [musicDetailData, setMusicDetailData] =
@@ -79,15 +80,6 @@ const Record = ({
   useEffect(() => {
     functions.sendUpdateLikeDownloadCountFunction(musicList);
   }, [musicList]);
-
-  console.log(
-    "test",
-    musicList
-      ?.find((item: any) => item?.id === musicDetailData?.id)
-      ?.downloadClickList?.find((i: any) => {
-        return i?.email === user?.email;
-      })?.email === user?.email
-  );
 
   console.log("musicDetailData?.email", user?.email);
   return (

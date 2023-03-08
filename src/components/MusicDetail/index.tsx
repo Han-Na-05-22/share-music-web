@@ -22,7 +22,10 @@ const MusicDetail = ({
         <Button
           btnType={"submit"}
           onClick={async () => {
-            setIsDetailData(false);
+            setIsDetailData({
+              isDetail: false,
+              isLocation: "",
+            });
           }}
         >
           확인

@@ -11,5 +11,8 @@ export const musicDetailUrlState = atom({
 });
 export const isMusicDetailState = atom({
   key: "isMusicDetailStateData",
-  default: false,
+  default: {
+    isDetail: false,
+    isLocation: "",
+  },
 });

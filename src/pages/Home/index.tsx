@@ -44,7 +44,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <LeftContent></LeftContent>
+      <LeftContent className="left-container"></LeftContent>
       <div className="tabel-container">
         <Tabel
           tableBtnText={"TOP"}
@@ -78,7 +78,10 @@ const Home = () => {
                   onClick={() => {
                     !user?.email
                       ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData(true);
+                      : setIsDetailData({
+                          isDetail: true,
+                          isLocation: "home",
+                        });
                     setMusicDetailData(item);
                     functions.getMusicUrlFunction(
                       item?.email,
@@ -174,7 +177,9 @@ const Home = () => {
         />
       </div>
 
-      {isDetailData && <MusicDetail detailData={musicDetailData}></MusicDetail>}
+      {isDetailData?.isDetail && isDetailData?.isLocation === "home" && (
+        <MusicDetail detailData={musicDetailData}></MusicDetail>
+      )}
     </HomeContainer>
   );
 };

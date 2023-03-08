@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const MyPageContainer = styled.div`
-  border: 2px solid red;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -12,8 +11,8 @@ export const MyPageContainer = styled.div`
     min-width: 550px;
     padding: 80px 20px;
     position: relative;
-    border: 2px solid red;
-
+    background: ${({ theme }) => theme.colors.ModalColor};
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     .my-info-btn {
       position: absolute;
       left: 15px;
@@ -25,7 +24,6 @@ export const MyPageContainer = styled.div`
       width: 100%;
       height: 100%;
       position: relative;
-      border: 2px solid blue;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -41,6 +39,28 @@ export const MyPageContainer = styled.div`
 
       .my-info-submit {
         border: 2px solid red;
+      }
+    }
+  }
+
+  .tabel-container {
+    background: ${({ theme }) => theme.colors.ModalColor};
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  @media screen and (max-width: 1660px) {
+    .my-info-container {
+      width: 30%;
+      min-width: 30%;
+    }
+
+    .tabel-container {
+      width: 30%;
+
+      button {
+      }
+      table {
+        width: 100%;
       }
     }
   }

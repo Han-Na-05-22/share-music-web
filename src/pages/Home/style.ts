@@ -23,4 +23,29 @@ export const HomeContainer = styled.div`
     padding-bottom: 20px;
     position: relative;
   }
+
+  @media screen and (max-width: 1660px) {
+    .left-container {
+      width: 30%;
+      .left {
+        width: 100%;
+        section {
+          width: 100%;
+        }
+
+        & > div {
+          width: 100%;
+        }
+      }
+    }
+    .tabel-container {
+      width: 35%;
+
+      button {
+      }
+      table {
+        width: 100%;
+      }
+    }
+  }
 `;

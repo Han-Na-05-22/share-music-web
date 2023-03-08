@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LeftContentContainer = styled.main`
+export const LeftContentContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -75,5 +75,8 @@ export const LeftContentContainer = styled.main`
       cursor: pointer;
       color: ${({ theme }) => theme.colors.DefaultText};
     }
+  }
+
+  @media screen and (max-width: 1660px) {
   }
 `;
