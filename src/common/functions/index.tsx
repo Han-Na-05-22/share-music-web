@@ -1,5 +1,6 @@
 import { async } from "@firebase/util";
 import {
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
@@ -15,6 +16,7 @@ import {
   ref,
   getMetadata,
 } from "firebase/storage";
+import moment from "moment";
 import { firestore, storage } from "service/firebase";
 
 // 데이터베이스에 저장된 음원리스트들을 불러오기 위한 함수
@@ -55,7 +57,10 @@ export const sendMusicDataFunction = async (
               .join("") + data?.uniqueKey
           }`,
           likeCount: 0,
+          likedClickList: [{ email: "", updateTiem: "" }],
+
           downloadCount: 0,
+          downloadClickList: [{ email: "", updateTiem: "" }],
         },
       ],
     });
@@ -78,10 +83,24 @@ export const sendMusicDataFunction = async (
             .join("") + data?.uniqueKey
         }`,
         likeCount: 0,
+        likedClickList: [{ email: "", updateTiem: "" }],
         downloadCount: 0,
+        downloadClickList: [{ email: "", updateTiem: "" }],
       }),
     });
   }
+};
+
+// 좋아요 또는 다운로드 클릭 시 count 및 클릭한 user 정보 DB에 저장하는 함수
+// todo : 좋아요만 구현됨. 다운로드 해야함!
+export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
+  const washingtonRef = doc(firestore, "music", "musicList");
+
+  await updateDoc(washingtonRef, {
+    data: arrayRemove(),
+  });
+
+  await updateDoc(washingtonRef, { data: date });
 };
 
 export const addMusicFunction = (

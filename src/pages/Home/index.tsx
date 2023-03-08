@@ -90,8 +90,8 @@ const Home = () => {
                   </td>
                   <td>{item?.title}</td>
                   <td>{item?.singer}</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td>{item?.likeCount}</td>
+                  <td>{item?.downloadCount}</td>
                 </tr>
               ))
           ) : (
@@ -153,8 +153,8 @@ const Home = () => {
                   </td>
                   <td>{item?.title}</td>
                   <td>{item?.singer}</td>
-                  <td>0</td>
-                  <td>0</td>
+                  <td>{item?.likeCount}</td>
+                  <td>{item?.downloadCount}</td>
                 </tr>
               ))
           ) : (

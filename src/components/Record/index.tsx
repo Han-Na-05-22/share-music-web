@@ -10,20 +10,55 @@ import {
 } from "components/MusicDetail/state";
 import { useRecoilState } from "recoil";
 import moment from "moment";
-
+import { userInfo } from "components/Login/state";
+import * as functions from "../../common/functions";
+import { musicListState } from "components/AddMusic/state";
+import { async } from "@firebase/util";
 const Record = ({
   className,
   width = "100%",
   height = "100%",
   onClick,
 }: RecordProps) => {
+  const [user, setUser] = useRecoilState<any>(userInfo);
+  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
   const [isPlay, setIsPlay] = useState<boolean>(false);
+  console.log("musicDetailData", musicDetailData);
   console.log("isPlay", isPlay);
 
+  console.log("musicList", musicList);
+
+  const onChangeCountData = async () => {
+    const result = musicList?.map((item: any) => {
+      if (item.id === musicDetailData?.id) {
+        return {
+          ...item,
+          likeCount: musicDetailData?.likeCount + 1,
+          likedClickList: [
+            ...item?.likedClickList,
+            {
+              email: user?.email,
+              updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+            },
+          ],
+        };
+      }
+      return {
+        ...item,
+      };
+    });
+
+    console.log("result", result);
+    await setMusicList(result);
+  };
+
+  useEffect(() => {
+    functions.sendUpdateLikeDownloadCountFunction(musicList);
+  }, [musicList]);
   return (
     <RecordContainer className={className} width={width} height={height}>
       <div className="add-date">
@@ -49,12 +84,45 @@ const Record = ({
         {/* <span>{musicDetailData?.email?.split("@")[0]} </span> */}
         <div className="like-download-counts">
           <div className="like-download like">
-            <SVG src="/svg/heart.svg" />
-            <strong>{musicDetailData?.likeCount}</strong>
+            {musicList
+              ?.find((item: any) => item?.id === musicDetailData?.id)
+              ?.likedClickList?.find((i: any) => {
+                return i?.email === musicDetailData?.email;
+              })?.email === musicDetailData?.email ? (
+              <SVG src="/svg/heart.svg" />
+            ) : (
+              <SVG
+                src="/svg/term_heart.svg"
+                onClick={async () => {
+                  await onChangeCountData();
+                }}
+              />
+            )}
+
+            <strong>
+              {
+                musicList?.find((item: any) => item?.id === musicDetailData?.id)
+                  ?.likeCount
+              }
+            </strong>
           </div>
           <div className="like-download download">
-            <SVG src="/svg/download.svg" />
-            <strong>{musicDetailData?.downloadCount}</strong>
+            {musicList
+              ?.find((item: any) => item?.id === musicDetailData?.id)
+              ?.downloadClickList?.find((i: any) => {
+                return i?.email === musicDetailData?.email;
+              })?.email === musicDetailData?.email ? (
+              <SVG src="/svg/download.svg" />
+            ) : (
+              <SVG src="/svg/term_download.svg" />
+            )}
+
+            <strong>
+              {
+                musicList?.find((item: any) => item?.id === musicDetailData?.id)
+                  ?.downloadCount
+              }
+            </strong>
           </div>
         </div>
       </div>
