@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import {
   arrayRemove,
   arrayUnion,
@@ -16,7 +15,6 @@ import {
   ref,
   getMetadata,
 } from "firebase/storage";
-import moment from "moment";
 import { auth, firestore, storage } from "service/firebase";
 
 // 데이터베이스에 저장된 모든 음원리스트들을 불러오기 위한 함수(Cloud Firestore)
@@ -26,6 +24,20 @@ export const getMusicListDataFunction = async (setMusicListData: any) => {
   querySnapshot?.forEach((doc: any) => {
     array = doc?.data()?.data;
     return setMusicListData(array);
+  });
+};
+
+// 모든 user 정보를 불러오기 위한 함수
+export const getUsersListDataFunction = async (setUsersData: any) => {
+  const querySnapshot = await getDocs(collection(firestore, "users"));
+
+  let array: any = "";
+  console.log("array", array);
+  querySnapshot?.forEach((doc: any) => {
+    console.log(" doc?.data()?.data", doc?.data()?.userInfo);
+    array = [...array, doc?.data()?.userInfo];
+    console.log("array", array);
+    return setUsersData(array);
   });
 };
 
@@ -58,7 +70,6 @@ export const sendMusicDataFunction = async (
           }`,
           likeCount: 0,
           likedClickList: [{ email: "", updateTiem: "" }],
-
           downloadCount: 0,
           downloadClickList: [{ email: "", updateTiem: "" }],
         },
@@ -234,9 +245,6 @@ export const sendUserDataFunction = async (
   user: any,
   setUser?: any
 ) => {
-  console.log("uid", uid);
-  console.log("useruser", user);
-  console.log("data", data);
   try {
     const washingtonRef = doc(firestore, "users", uid);
     await setDoc(washingtonRef, {
@@ -258,6 +266,7 @@ export const sendUserDataFunction = async (
   }
 };
 
+// 로그인 한 user 정보를 불러오기 위한 함수
 export const getUserDataFunction = async (setUser: any) => {
   const querySnapshot = await getDocs(collection(firestore, "users"));
   const getUserInfo: any = sessionStorage?.getItem(

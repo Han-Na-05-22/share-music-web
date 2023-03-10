@@ -29,10 +29,6 @@ const Record = ({
     useRecoilState<any>(musicDetailState);
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
-  console.log("musicDetailData", musicDetailData);
-  console.log("isPlay", isPlay);
-
-  console.log("musicList", musicList);
 
   const onChangeCountData = async (type: string) => {
     const result = musicList?.map((item: any) => {
@@ -73,7 +69,7 @@ const Record = ({
         ...item,
       };
     });
-    console.log("result", result);
+
     await setMusicList(result);
   };
 
@@ -81,7 +77,6 @@ const Record = ({
     functions.sendUpdateLikeDownloadCountFunction(musicList);
   }, [musicList]);
 
-  console.log("musicDetailData?.email", user?.email);
   return (
     <RecordContainer className={className} width={width} height={height}>
       <div className="add-date">
@@ -110,8 +105,8 @@ const Record = ({
             {musicList
               ?.find((item: any) => item?.id === musicDetailData?.id)
               ?.likedClickList?.find((i: any) => {
-                return i?.email === musicDetailData?.email;
-              })?.email === musicDetailData?.email ? (
+                return i?.email === user?.email;
+              })?.email === user?.email ? (
               <SVG src="/svg/heart.svg" />
             ) : (
               <SVG

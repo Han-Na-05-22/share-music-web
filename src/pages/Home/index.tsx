@@ -16,6 +16,7 @@ import MusicDetail from "components/MusicDetail";
 import * as functions from "../../common/functions";
 import LeftContent from "common/layout/LeftContent";
 
+// todo : 하트 상세보기 다른 유저가 클릭하면 더이상 클릭 안되는 버그 수정!!! 중요!!!(버그) (완료)
 const Home = () => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);

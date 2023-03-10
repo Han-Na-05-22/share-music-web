@@ -19,8 +19,9 @@ import {
   musicDetailUrlState,
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
-// todo : 내정보(아이디 제외하고 모두 수정 가능!(완) 단 사용중인 닉네임이 있을 경우 중복된 닉네임 안내 모달 창 띄워주기), 내음악(수정, 삭제 및 상세보기(완)), 플레이리스트(드래그 앤 드롭 기능 및 삭제 및 상세보기)
+// todo : 내정보(아이디 제외하고 모두 수정 가능!(비밀번호 변경 제외하고 완료) 단 사용중인 닉네임이 있을 경우 중복된 닉네임 안내 모달 창 띄워주기(완)), 내음악(수정, 삭제 및 상세보기(완)), 플레이리스트(드래그 앤 드롭 기능 및 삭제 및 상세보기)
 
+// todo : 모든 user 정보를 불러오는 함수 필요(완)
 const MyPage = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [isDetailData, setIsDetailData] =
@@ -29,11 +30,11 @@ const MyPage = () => {
     useRecoilState<any>(musicDetailState);
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
-  console.log("musicDetailUrl", musicDetailUrl);
-  console.log("isDetailData", isDetailData);
-  console.log("musicDetailData", musicDetailData);
+  const [usersListData, setUserListData] = useState<any[]>();
+
+  console.log("usersListData", usersListData);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
-  console.log("myMusicList", myMusicList);
+
   const [form, setForm] = useState<any>({
     profile: "",
     name: "",
@@ -42,7 +43,10 @@ const MyPage = () => {
     phoneNumber: "",
     nickName: "",
   });
-
+  console.log(
+    "userList의 닉네임!",
+    usersListData?.filter((item: any) => item?.nickName === form?.nickName)
+  );
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
@@ -58,7 +62,7 @@ const MyPage = () => {
     }
   };
   const getUserId = auth?.currentUser?.uid.replace('"', "");
-  console.log("getUserId", getUserId);
+
   //todo : 공통함수
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
@@ -103,6 +107,8 @@ const MyPage = () => {
 
       functions?.myMusicListFunction(`music/${user?.email}/`, setMyMusicList);
     }
+
+    functions?.getUsersListDataFunction(setUserListData);
   }, []);
 
   return (
@@ -208,7 +214,15 @@ const MyPage = () => {
             className="my-info-submit"
             btnType="submit"
             onClick={() => {
-              functions.sendUserDataFunction(getUserId, form, user, setUser);
+              if (
+                usersListData?.filter(
+                  (item: any) => item?.nickName === form?.nickName
+                )
+              ) {
+                alert("이미 사용중인 닉네임 입니다.");
+              } else {
+                functions.sendUserDataFunction(getUserId, form, user, setUser);
+              }
             }}
           >
             수정

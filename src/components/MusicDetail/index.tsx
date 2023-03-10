@@ -12,7 +12,6 @@ const MusicDetail = ({
   height = "750px",
   detailData,
 }: MusicDetailProps) => {
-  console.log("detailData", detailData);
   const [isDetailData, setIsDetailData] =
     useRecoilState<any>(isMusicDetailState);
   return (

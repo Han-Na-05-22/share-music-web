@@ -109,7 +109,8 @@ const AddMusic = ({
 
     setMyMusicList(functions?.myMusicListFunction);
   };
-
+  console.log("form", form);
+  console.log("musicList", musicList);
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);

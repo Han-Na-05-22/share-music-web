@@ -50,10 +50,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
       profile: "",
     });
   };
-  console.log(
-    "musicListTest",
-    musicList?.filter((item: any) => item?.email === user?.email)?.length
-  );
+
   return (
     <LeftContentContainer className={className}>
       {user?.email ? (
