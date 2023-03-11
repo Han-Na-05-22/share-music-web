@@ -70,6 +70,8 @@ export const LeftContentContainer = styled.div`
 
     strong {
       position: absolute;
+      width: 75px;
+      height: 16px;
       bottom: 15px;
       right: 15px;
       cursor: pointer;

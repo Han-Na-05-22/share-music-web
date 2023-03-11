@@ -16,8 +16,6 @@ import MusicDetail from "components/MusicDetail";
 import * as functions from "../../common/functions";
 import LeftContent from "common/layout/LeftContent";
 
-// todo : 하트 상세보기 다른 유저가 클릭하면 더이상 클릭 안되는 버그 수정!!! 중요!!!(버그) (완료)
-// todo : new는 date 기준으로 정렬, 인기순은 좋아요가 많은 순으로 정렬(완)
 const Home = () => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
@@ -43,14 +41,6 @@ const Home = () => {
       return;
     }
   };
-
-  console.log(
-    "인기순 정렬!",
-    musicList
-      ?.slice(offset, offset + limit)
-      ?.sort((a: any, b: any) => a?.date - b?.date)
-      ?.map((item: any, idx: number) => item)
-  );
 
   return (
     <HomeContainer>
@@ -157,7 +147,10 @@ const Home = () => {
                   onClick={() => {
                     !user?.email
                       ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData(true);
+                      : setIsDetailData({
+                          isDetail: true,
+                          isLocation: "home",
+                        });
                     setMusicDetailData(item);
                     functions.getMusicUrlFunction(
                       item?.email,
