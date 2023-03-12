@@ -22,6 +22,7 @@ import { GenreList } from "utility/data";
 import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
+
 const AddMusic = ({
   className,
   width = "1150px",
@@ -33,17 +34,17 @@ const AddMusic = ({
     useRecoilState<any>(currentMusicState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [form, setForm] = useState<AddMusicFormProps>({
-    img: isEdit === "edit" ? currentMusic?.img : "",
+    img: "",
     mp3: "",
-    title: isEdit === "edit" ? currentMusic?.title : "",
-    genre: "POP",
-    singer: isEdit === "edit" ? currentMusic?.singer : "",
-    explanation: isEdit === "edit" ? currentMusic?.explanation : "",
+    title: "",
+    genre: "",
+    singer: "",
+    explanation: "",
     mpName: "",
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
-
+  console.log("currentMusic", currentMusic);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
 
@@ -84,7 +85,7 @@ const AddMusic = ({
   };
 
   // todo :수정필요!!
-  const handleChangeImg = (event: any) => {
+  const handleChangeMusicImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
     const fr = new FileReader();
@@ -97,7 +98,7 @@ const AddMusic = ({
         if (typeof fr.result === "string") {
           formData.append("file", file);
 
-          if (name === "mp3" && isEdit !== "edit") {
+          if (name === "mp3") {
             return setForm({
               ...form,
               [name]: fr.result,
@@ -106,19 +107,8 @@ const AddMusic = ({
             });
           }
 
-          if (name === "img" && isEdit !== "edit") {
+          if (name === "img") {
             return setForm({ ...form, [name]: fr.result });
-          }
-
-          if (name === "img" && isEdit === "edit") {
-            return setCurrentMusic({
-              ...currentMusic,
-              test: "aaaa",
-              img: file.name
-                .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-                .split(" ")
-                .join(""),
-            });
           }
         }
       };
@@ -161,7 +151,12 @@ const AddMusic = ({
     setMyMusicList(functions?.myMusicListFunction);
   };
   console.log("form", form);
-
+  console.log(
+    "fewfew",
+    musicList
+      ?.filter((i: any) => i?.id !== currentMusic?.id)
+      ?.concat(currentMusic)
+  );
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);
@@ -171,7 +166,7 @@ const AddMusic = ({
         title: "",
         singer: "",
         explanation: "",
-        genre: "POP",
+        genre: "",
         mpName: "",
         uniqueKey: new Date()?.getTime(),
         date: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -179,20 +174,23 @@ const AddMusic = ({
     }
   }, [isCompleted]);
 
-  // currentMusic
   return (
     <Overlay>
       <AddMusicContainer className={className} height={height} width={width}>
         <div className="music-infos">
           <div className="music-img musics">
-            <ProfileImg
-              name="img"
-              file={isEdit !== "edit" ? form?.img : currentMusic?.img}
-              isError={form?.img?.length === 0}
-              errMsg={"이미지를 등록해 주세요."}
-              onChange={handleChangeImg}
-              onClickDelete={deleteImg}
-            />
+            {isEdit !== "edit" ? (
+              <ProfileImg
+                name="img"
+                file={form?.img}
+                isError={form?.img?.length === 0}
+                errMsg={"이미지를 등록해 주세요."}
+                onChange={(e) => handleChangeMusicImg(e)}
+                onClickDelete={deleteImg}
+              />
+            ) : (
+              <img src={currentMusic?.img} alt="" />
+            )}
           </div>
 
           <div className="music-mp3 musics">
@@ -215,7 +213,7 @@ const AddMusic = ({
                   className="add-mp3-input"
                   value={undefined}
                   label="음원등록"
-                  onChange={handleChangeImg}
+                  onChange={(e) => handleChangeMusicImg(e)}
                 ></TextInput>
               </>
             ) : (
@@ -225,6 +223,7 @@ const AddMusic = ({
             <BasicSelect
               selectData={GenreList}
               name="genre"
+              value={isEdit === "edit" ? currentMusic?.genre : "POP"}
               onChange={handleChangeSelect}
             ></BasicSelect>
           </div>
@@ -234,7 +233,7 @@ const AddMusic = ({
               name="title"
               value={isEdit !== "edit" ? form?.title : currentMusic?.title}
               label="제목"
-              isError={form?.title?.length === 0}
+              isError={isEdit !== "edit" && form?.title?.length === 0}
               errorMsg={"제목을 입력해주세요."}
               onChange={(e) => {
                 handleChangeInput(e);
@@ -245,7 +244,7 @@ const AddMusic = ({
               name="singer"
               value={isEdit !== "edit" ? form?.singer : currentMusic?.singer}
               label="가수"
-              isError={form?.singer?.length === 0}
+              isError={isEdit !== "edit" && form?.singer?.length === 0}
               errorMsg={"가수명을 입력해주세요."}
               onChange={(e) => {
                 handleChangeInput(e);
@@ -256,7 +255,7 @@ const AddMusic = ({
             <Textarea
               label="설명"
               name="explanation"
-              isError={form?.explanation?.length === 0}
+              isError={isEdit !== "edit" && form?.explanation?.length === 0}
               errorMsg={"설명글을 입력해주세요."}
               value={
                 isEdit !== "edit"
@@ -281,18 +280,30 @@ const AddMusic = ({
             <Button
               marginLeft="15px"
               btnType={
-                form?.img?.length !== 0 &&
-                form?.mp3?.length !== 0 &&
-                form?.title?.length !== 0 &&
-                form?.singer?.length !== 0 &&
-                form?.explanation?.length !== 0 &&
-                form?.mpName?.length !== 0
+                isEdit === "edit" ||
+                (form?.img?.length !== 0 &&
+                  form?.mp3?.length !== 0 &&
+                  form?.title?.length !== 0 &&
+                  form?.singer?.length !== 0 &&
+                  form?.explanation?.length !== 0 &&
+                  form?.mpName?.length !== 0)
                   ? "submit"
                   : "none"
               }
               onClick={async () => {
-                await functions.getMusicListDataFunction(setMusicList);
-                addMusicData();
+                if (isEdit === "edit") {
+                  await functions.sendUpdateLikeDownloadCountFunction(
+                    musicList
+                      ?.filter((i: any) => i?.id !== currentMusic?.id)
+                      ?.concat(currentMusic)
+                  );
+                  alert("수정이 완료되었습니다.");
+                  setIsEdit("");
+                  functions.getMusicListDataFunction(setMusicList);
+                } else {
+                  await functions.getMusicListDataFunction(setMusicList);
+                  addMusicData();
+                }
               }}
             >
               {isEdit === "edit" ? "수정" : "등록"}

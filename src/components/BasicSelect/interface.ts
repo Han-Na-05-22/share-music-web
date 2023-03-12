@@ -3,4 +3,5 @@ export interface BasicSelectPorps {
   onChange: any;
   name: string;
   selectData: any;
+  value: string;
 }

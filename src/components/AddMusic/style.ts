@@ -35,6 +35,12 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
   .music-img {
     width: 100px;
     height: 100px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 100px;
+    }
   }
 
   .music-name {

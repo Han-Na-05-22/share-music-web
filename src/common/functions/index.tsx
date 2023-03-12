@@ -248,7 +248,7 @@ export const sendUserDataFunction = async (
     const washingtonRef = doc(firestore, "users", uid);
     await setDoc(washingtonRef, {
       userInfo: {
-        profile: user?.profile,
+        profile: data?.profile,
         name: data?.name,
         nickName: data?.nickName,
         email: user?.email,

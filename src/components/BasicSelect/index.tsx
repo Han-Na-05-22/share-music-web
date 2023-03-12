@@ -6,6 +6,7 @@ export default function BasicSelect({
   className,
   onChange,
   name,
+  value,
   selectData,
 }: BasicSelectPorps) {
   return (
@@ -13,6 +14,7 @@ export default function BasicSelect({
       className={className}
       name={name}
       id={name}
+      value={value}
       onChange={onChange}
     >
       {selectData?.map((item: any, idx: number) => (
