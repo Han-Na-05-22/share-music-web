@@ -94,11 +94,25 @@ const LeftContent = ({ className }: LeftContentProps) => {
                 </li>
                 <li>
                   <span>좋아요</span>
-                  <span>122</span>
+                  <span>
+                    {musicList
+                      ?.filter((i: any) => i?.email === user?.email)
+                      ?.map((a: any) => a?.likeCount)
+                      ?.reduce((sum: number, currValue: number) => {
+                        return sum + currValue;
+                      })}
+                  </span>
                 </li>
                 <li>
-                  <span>다운로드</span>
-                  <span>300</span>
+                  <span>리스너 수</span>
+                  <span>
+                    {musicList
+                      ?.filter((i: any) => i?.email === user?.email)
+                      ?.map((a: any) => a?.downloadCount)
+                      ?.reduce((sum: number, currValue: number) => {
+                        return sum + currValue;
+                      })}
+                  </span>
                 </li>
               </ul>
               <strong

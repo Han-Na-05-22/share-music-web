@@ -24,7 +24,7 @@ export const HomeContainer = styled.div`
     position: relative;
   }
 
-  @media screen and (max-width: 1660px) {
+  /* @media screen and (max-width: 1660px) {
     .left-container {
       width: 30%;
       .left {
@@ -47,5 +47,5 @@ export const HomeContainer = styled.div`
         width: 100%;
       }
     }
-  }
+  } */
 `;
