@@ -17,7 +17,7 @@ const MusicTable = () => {
     useRecoilState<string>(selectFilterState);
   const offset = (page - 1) * limit;
   console.log("selectFilter", selectFilter);
-  // todo : 공통함수
+
   const handleChangePage = (page: any) => {
     if (musicList?.length < 10) {
       page = 1;

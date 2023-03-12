@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.div`
   display: flex;
-  gap: 0 50px;
+  gap: 0 100px;
   position: relative;
 
   .input-test {

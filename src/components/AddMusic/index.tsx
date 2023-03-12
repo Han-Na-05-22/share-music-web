@@ -84,7 +84,6 @@ const AddMusic = ({
     }
   };
 
-  // todo :수정필요!!
   const handleChangeMusicImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -122,7 +121,6 @@ const AddMusic = ({
     });
   };
 
-  // todo : 합칠 것
   const getUserId = auth?.currentUser?.uid.replace('"', "");
 
   const addMusicData = async () => {
@@ -223,7 +221,7 @@ const AddMusic = ({
             <BasicSelect
               selectData={GenreList}
               name="genre"
-              value={isEdit === "edit" ? currentMusic?.genre : "POP"}
+              value={isEdit === "edit" ? currentMusic?.genre : form?.genre}
               onChange={handleChangeSelect}
             ></BasicSelect>
           </div>

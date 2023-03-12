@@ -4,7 +4,7 @@ export const UserInfoContainer = styled.div`
   height: 100%;
   width: 550px;
   min-width: 550px;
-  padding: 80px 20px;
+  padding: 40px 20px;
   position: relative;
   background: ${({ theme }) => theme.colors.ModalColor};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -33,7 +33,6 @@ export const UserInfoContainer = styled.div`
     }
 
     .my-info-submit {
-      border: 2px solid red;
     }
   }
 `;

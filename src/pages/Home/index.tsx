@@ -16,6 +16,8 @@ import MusicDetail from "components/MusicDetail";
 import * as functions from "../../common/functions";
 import LeftContent from "common/layout/LeftContent";
 
+// todo : 큰 틀로 플레이리스트, 장르별 상세보기, 검색 기능, 드앤드, 기능 정도만 구현하면 대부분 완성! (이미지 용량!!)
+
 const Home = () => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);

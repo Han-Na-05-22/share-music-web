@@ -24,8 +24,7 @@ import AddMusic from "components/AddMusic";
 import { currentMusicState } from "components/Record/state";
 import UserInfo from "components/UserInfo";
 
-// todo :내정보 비밀번호 변경
-// todo : 내음악 수정(완) 및 삭제(완), 마이플레이리스트 삭제 드래그 앤 드롭 기능 구현
+// todo :내정보 비밀번호 변경, 마이플레이리스트 삭제 드래그 앤 드롭 기능
 
 const MyPage = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
@@ -62,7 +61,6 @@ const MyPage = () => {
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
 
-  // todo : 공통함수
   const handleChangePage = (page: any) => {
     if (musicList?.length < 10) {
       page = 1;
@@ -72,7 +70,6 @@ const MyPage = () => {
     }
   };
 
-  // todo : 공통함수
   // 내 음악 삭제
   const deleteMusicData = useCallback(async (mp3: string, data: any) => {
     const washingtonRef = doc(firestore, "music", "musicList");

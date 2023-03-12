@@ -12,10 +12,14 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1;
   }
 
+  html{
+
+  }
+
   body{
     width: 100vw;
     height: 100vh;
-    padding:40px;
+    padding:40px 50px;
   }
 
   #root,.App{

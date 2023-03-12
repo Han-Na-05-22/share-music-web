@@ -5,9 +5,8 @@ export const MusicTableContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: ${({ theme }) => theme.colors.BlackColor};
-  padding: 40px;
+  height: 100%;
 
   .music-top {
     width: 100%;
@@ -26,6 +25,9 @@ export const MusicTableContainer = styled.div`
 
   .tabel-container {
     width: 100%;
+    position: relative;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 0px 40px;
 
     .table-header-btn {
       display: none;

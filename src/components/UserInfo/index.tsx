@@ -47,7 +47,6 @@ const UserInfo = ({ className }: UserInfoProps) => {
     }
   };
 
-  // todo : 공통함수
   const deleteImg = () => {
     setUser({
       ...user,

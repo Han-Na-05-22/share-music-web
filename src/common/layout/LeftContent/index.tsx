@@ -95,23 +95,31 @@ const LeftContent = ({ className }: LeftContentProps) => {
                 <li>
                   <span>좋아요</span>
                   <span>
-                    {musicList
-                      ?.filter((i: any) => i?.email === user?.email)
-                      ?.map((a: any) => a?.likeCount)
-                      ?.reduce((sum: number, currValue: number) => {
-                        return sum + currValue;
-                      })}
+                    {musicList?.filter(
+                      (item: any) => item?.email === user?.email
+                    )?.length !== 0
+                      ? musicList
+                          ?.filter((i: any) => i?.email === user?.email)
+                          ?.map((a: any) => a?.likeCount)
+                          ?.reduce((sum: number, currValue: number) => {
+                            return sum + currValue;
+                          })
+                      : "0"}
                   </span>
                 </li>
                 <li>
                   <span>리스너 수</span>
                   <span>
-                    {musicList
-                      ?.filter((i: any) => i?.email === user?.email)
-                      ?.map((a: any) => a?.downloadCount)
-                      ?.reduce((sum: number, currValue: number) => {
-                        return sum + currValue;
-                      })}
+                    {musicList?.filter(
+                      (item: any) => item?.email === user?.email
+                    )?.length !== 0
+                      ? musicList
+                          ?.filter((i: any) => i?.email === user?.email)
+                          ?.map((a: any) => a?.downloadCount)
+                          ?.reduce((sum: number, currValue: number) => {
+                            return sum + currValue;
+                          })
+                      : "0"}
                   </span>
                 </li>
               </ul>

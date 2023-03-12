@@ -4,10 +4,11 @@ export const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  position: absolute;
   bottom: 0px;
   transform: translateX(-50%);
   left: 50%;
+  bottom: 40px;
   margin-top: 20px;
 
   button {
