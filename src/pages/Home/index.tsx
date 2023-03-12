@@ -118,7 +118,7 @@ const Home = () => {
           tableBtnText={"NEW"}
           theadData={[
             {
-              title: "순위",
+              title: "순번",
             },
             {
               title: "음원",

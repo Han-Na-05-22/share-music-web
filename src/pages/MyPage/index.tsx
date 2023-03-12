@@ -106,7 +106,7 @@ const MyPage = () => {
           tableBtnText={"내 음악"}
           theadData={[
             {
-              title: "순위",
+              title: "순번",
             },
             {
               title: "음원",
@@ -198,7 +198,7 @@ const MyPage = () => {
           tableBtnText={"플레이리스트"}
           theadData={[
             {
-              title: "순위",
+              title: "순번",
             },
             {
               title: "음원",

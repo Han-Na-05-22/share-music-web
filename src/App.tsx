@@ -4,6 +4,7 @@ import { musicListState, myMusic } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import { collection, getDocs } from "firebase/firestore";
 import Home from "pages/Home";
+import MusicTable from "pages/MusicTable";
 import MyPage from "pages/MyPage";
 import NotFound from "pages/NotFound";
 import { useEffect, useState } from "react";
@@ -30,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/musicTable" element={<MusicTable />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Container>

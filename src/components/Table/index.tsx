@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import { userInfo } from "components/Login/state";
+import { selectFilterState } from "pages/MusicTable/state";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { TabelProps } from "./interface";
@@ -15,6 +16,8 @@ const Tabel = ({
 }: TabelProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const navigate = useNavigate();
+  const [selectFilter, setSelectFilter] =
+    useRecoilState<string>(selectFilterState);
   return (
     <TableGroupContainer>
       <Button
@@ -22,7 +25,10 @@ const Tabel = ({
         height="60px"
         btnType="submit"
         onClick={() => {
-          !user?.email ? alert("로그인 후 이용해주세요"!) : navigate("/");
+          !user?.email
+            ? alert("로그인 후 이용해주세요"!)
+            : navigate("/musicTable");
+          setSelectFilter(tableBtnText);
         }}
       >
         {tableBtnText}

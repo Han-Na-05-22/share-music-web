@@ -24,7 +24,7 @@ const Genre = ({ className, onClick }: GenreProps) => {
               !user?.email
                 ? alert("로그인 후 이용해주세요.")
                 : setIsGenre(item?.name);
-              // navigate(`/music/${item?.name}`);
+              navigate("/musicTable");
             }}
             width="100px"
             btnType="submit"
