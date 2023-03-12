@@ -14,6 +14,7 @@ const MusicDetail = ({
 }: MusicDetailProps) => {
   const [isDetailData, setIsDetailData] =
     useRecoilState<any>(isMusicDetailState);
+
   return (
     <Overlay>
       <MusicDetailContainer className={className} width={width} height={height}>

@@ -1,16 +1,20 @@
-import { musicListState, myMusic } from "components/AddMusic/state";
+import {
+  checkEditMusicState,
+  musicListState,
+  myMusic,
+} from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import Pagination from "components/Pagination";
 import Tabel from "components/Table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { MyPageContainer } from "./style";
 import SVG from "react-inlinesvg";
 import Button from "components/Button";
 import ProfileImg from "components/ProfileImg";
 import TextInput from "components/TextInput";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, firestore } from "service/firebase";
+import { arrayRemove, doc, setDoc, updateDoc } from "firebase/firestore";
+import { auth, firestore, storage } from "service/firebase";
 import * as functions from "../../common/functions";
 import {
   isMusicDetailState,
@@ -18,11 +22,13 @@ import {
   musicDetailUrlState,
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
+import { deleteObject, ref } from "firebase/storage";
+import AddMusic from "components/AddMusic";
+import { currentMusicState } from "components/Record/state";
 
-// todo :내정보 비밀번호 변경, 내음악(수정, 삭제), 플레이리스트(내가 등록한 음악 및 다운로드 버튼 누른 음악리스트들 불러오기 및 드래그 앤 드롭 기능 및 삭제 및 상세보기)
-// todo : 플레이리스트는 내음악(최근 등록순) + 내가 다운로드 클릭한 음악(다운로드 클릭한 날짜 순)을 합친 후 날짜 최신순으로 정렬!
+// todo :내정보 비밀번호 변경
+// todo : 내음악 수정(작업중) 및 삭제(완), 마이플레이리스트 삭제 드래그 앤 드롭 기능 구현
 
-// 내 플레이리스트를 따로 db에 저장할까? musicList에서 filter로 불러올까?
 const MyPage = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [isDetailData, setIsDetailData] =
@@ -32,10 +38,13 @@ const MyPage = () => {
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
   const [usersListData, setUserListData] = useState<any[]>();
+  const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
+  const [currentMusic, setCurrentMusic] =
+    useRecoilState<any>(currentMusicState);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
-  console.log("usersListData", usersListData);
+
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
-  console.log("myMusicList", myMusicList);
 
   let getDownloadMusicList: any = "";
   const getDownloadMusicData = () => {
@@ -50,7 +59,7 @@ const MyPage = () => {
       });
   };
   getDownloadMusicData();
-  console.log("getDownloadMusicList", getDownloadMusicList);
+
   const [form, setForm] = useState<any>({
     profile: "",
     name: "",
@@ -59,12 +68,7 @@ const MyPage = () => {
     phoneNumber: "",
     nickName: "",
   });
-  console.log(
-    "testtt",
-    getDownloadMusicList?.concat(
-      musicList?.filter((item: any) => item?.email === user?.email)
-    )
-  );
+
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
@@ -106,6 +110,27 @@ const MyPage = () => {
       };
     }
   };
+
+  // todo : 공통함수
+  // 내 음악 삭제
+  const deleteMusicData = useCallback(async (mp3: string, data: any) => {
+    const washingtonRef = doc(firestore, "music", "musicList");
+    const desertRef = ref(storage, `music/${user?.email}/${mp3}`);
+    await updateDoc(washingtonRef, {
+      data: arrayRemove(data),
+    });
+
+    deleteObject(desertRef)
+      .then(() => {
+        // File deleted successfully
+        alert("삭제가 완료되었습니다.");
+        functions.getMusicListDataFunction(setMusicList);
+      })
+      .catch((error) => {
+        console.log("err:", error);
+        alert("삭제에 실패하였습니다.");
+      });
+  }, []);
 
   // todo : 공통함수
   const deleteImg = () => {
@@ -286,6 +311,7 @@ const MyPage = () => {
                           isDetail: true,
                           isLocation: "mypage",
                         });
+                    setIsEdit("");
                     setMusicDetailData(item);
                     functions.getMusicUrlFunction(
                       item?.email,
@@ -301,10 +327,28 @@ const MyPage = () => {
                   <td>{item?.title}</td>
                   <td>{item?.singer}</td>
                   <td>
-                    <SVG src="/svg/term_edit.svg" />
+                    <SVG
+                      src="/svg/term_edit.svg"
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        setCurrentMusic(item);
+                        setIsDetailData({
+                          isDetail: true,
+                          isLocation: "clickedEdit",
+                        });
+                        setIsEdit("edit");
+                      }}
+                    />
                   </td>
                   <td>
-                    <SVG src="/svg/term_delete.svg" />
+                    <SVG
+                      src="/svg/term_delete.svg"
+                      onClick={async (e) => {
+                        e.stopPropagation();
+
+                        await deleteMusicData(item?.mp3, item);
+                      }}
+                    />
                   </td>
                 </tr>
               ))
@@ -339,12 +383,9 @@ const MyPage = () => {
             {
               title: "",
             },
-            {
-              title: "",
-            },
           ]}
         >
-          {musicList?.length !== undefined ? (
+          {musicList?.length !== undefined && getDownloadMusicList ? (
             getDownloadMusicList
               ?.concat(
                 musicList?.filter((item: any) => item?.email === user?.email)
@@ -374,9 +415,7 @@ const MyPage = () => {
                   </td>
                   <td>{item?.title}</td>
                   <td>{item?.singer}</td>
-                  <td>
-                    <SVG src="/svg/term_edit.svg" />
-                  </td>
+
                   <td>
                     <SVG src="/svg/term_delete.svg" />
                   </td>
@@ -394,8 +433,13 @@ const MyPage = () => {
           handleChangePage={handleChangePage}
         />
       </div>
-      {isDetailData?.isDetail && isDetailData?.isLocation === "mypage" && (
-        <MusicDetail detailData={musicDetailData}></MusicDetail>
+      {isDetailData?.isDetail &&
+        isDetailData?.isLocation === "mypage" &&
+        isEdit !== "edit" && (
+          <MusicDetail detailData={musicDetailData}></MusicDetail>
+        )}
+      {isDetailData?.isLocation === "clickedEdit" && isEdit === "edit" && (
+        <AddMusic></AddMusic>
       )}
     </MyPageContainer>
   );

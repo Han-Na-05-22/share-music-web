@@ -61,7 +61,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
               btnType="submit"
               onClick={() => {}}
             >
-              마이뮤직
+              플레이리스트
             </Button>
             <div className="my-profile">
               <strong

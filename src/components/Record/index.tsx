@@ -13,7 +13,7 @@ import moment from "moment";
 import { userInfo } from "components/Login/state";
 import * as functions from "../../common/functions";
 import { musicListState } from "components/AddMusic/state";
-import { async } from "@firebase/util";
+
 const Record = ({
   className,
   width = "100%",
@@ -22,7 +22,6 @@ const Record = ({
 }: RecordProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
   const [musicDetailData, setMusicDetailData] =

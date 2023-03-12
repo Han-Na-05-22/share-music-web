@@ -8,7 +8,12 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
-import { musicListState, myMusic, myMusicAddState } from "./state";
+import {
+  checkEditMusicState,
+  musicListState,
+  myMusic,
+  myMusicAddState,
+} from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
 import Loading from "components/Loading";
@@ -16,6 +21,7 @@ import BasicSelect from "components/BasicSelect";
 import { GenreList } from "utility/data";
 import moment from "moment";
 import "moment/locale/ko";
+import { currentMusicState } from "components/Record/state";
 const AddMusic = ({
   className,
   width = "1150px",
@@ -23,14 +29,16 @@ const AddMusic = ({
 }: AddMusicProps) => {
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-
+  const [currentMusic, setCurrentMusic] =
+    useRecoilState<any>(currentMusicState);
+  const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [form, setForm] = useState<AddMusicFormProps>({
-    img: "",
+    img: isEdit === "edit" ? currentMusic?.img : "",
     mp3: "",
-    title: "",
+    title: isEdit === "edit" ? currentMusic?.title : "",
     genre: "POP",
-    singer: "",
-    explanation: "",
+    singer: isEdit === "edit" ? currentMusic?.singer : "",
+    explanation: isEdit === "edit" ? currentMusic?.explanation : "",
     mpName: "",
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -44,9 +52,38 @@ const AddMusic = ({
   const handleChangeSelect = (event: any) => {
     const { name } = event.target;
     const isSelected = event.target.options[event.target.selectedIndex].value;
-    setForm({ ...form, [name]: isSelected });
+
+    if (isEdit !== "edit") {
+      setForm({ ...form, [name]: isSelected });
+    }
+
+    if (isEdit === "edit") {
+      setCurrentMusic({
+        ...currentMusic,
+        [name]: isSelected,
+      });
+    }
   };
 
+  const handleChangeInput = (event: any) => {
+    const { name } = event.target;
+
+    if (isEdit !== "edit") {
+      setForm({
+        ...form,
+        [name]: event.target.value,
+      });
+    }
+
+    if (isEdit === "edit") {
+      setCurrentMusic({
+        ...currentMusic,
+        [name]: event.target.value,
+      });
+    }
+  };
+
+  // todo :수정필요!!
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -60,7 +97,7 @@ const AddMusic = ({
         if (typeof fr.result === "string") {
           formData.append("file", file);
 
-          if (name === "mp3") {
+          if (name === "mp3" && isEdit !== "edit") {
             return setForm({
               ...form,
               [name]: fr.result,
@@ -68,7 +105,21 @@ const AddMusic = ({
               formData: file,
             });
           }
-          return setForm({ ...form, [name]: fr.result });
+
+          if (name === "img" && isEdit !== "edit") {
+            return setForm({ ...form, [name]: fr.result });
+          }
+
+          if (name === "img" && isEdit === "edit") {
+            return setCurrentMusic({
+              ...currentMusic,
+              test: "aaaa",
+              img: file.name
+                .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+                .split(" ")
+                .join(""),
+            });
+          }
         }
       };
     }
@@ -110,7 +161,7 @@ const AddMusic = ({
     setMyMusicList(functions?.myMusicListFunction);
   };
   console.log("form", form);
-  console.log("musicList", musicList);
+
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);
@@ -127,6 +178,8 @@ const AddMusic = ({
       });
     }
   }, [isCompleted]);
+
+  // currentMusic
   return (
     <Overlay>
       <AddMusicContainer className={className} height={height} width={width}>
@@ -134,7 +187,7 @@ const AddMusic = ({
           <div className="music-img musics">
             <ProfileImg
               name="img"
-              file={form.img}
+              file={isEdit !== "edit" ? form?.img : currentMusic?.img}
               isError={form?.img?.length === 0}
               errMsg={"이미지를 등록해 주세요."}
               onChange={handleChangeImg}
@@ -143,25 +196,32 @@ const AddMusic = ({
           </div>
 
           <div className="music-mp3 musics">
-            <p
-              className={
-                form?.mp3?.length === 0 ? "mp3-error mp3s" : "mp3-name mp3s"
-              }
-            >
-              {form?.mp3?.length === 0
-                ? "음원을 업로드 해주세요"
-                : form?.mpName}
-            </p>
-            <TextInput
-              width="150px"
-              name="mp3"
-              accept="audio/*"
-              type="file"
-              className="add-mp3-input"
-              value={undefined}
-              label="음원등록"
-              onChange={handleChangeImg}
-            ></TextInput>
+            {isEdit !== "edit" ? (
+              <>
+                <p
+                  className={
+                    form?.mp3?.length === 0 ? "mp3-error mp3s" : "mp3-name mp3s"
+                  }
+                >
+                  {form?.mp3?.length === 0
+                    ? "음원을 업로드 해주세요"
+                    : form?.mpName}
+                </p>
+                <TextInput
+                  width="150px"
+                  name="mp3"
+                  accept="audio/*"
+                  type="file"
+                  className="add-mp3-input"
+                  value={undefined}
+                  label="음원등록"
+                  onChange={handleChangeImg}
+                ></TextInput>
+              </>
+            ) : (
+              <p className="music-name">음원 : {currentMusic?.mp3}</p>
+            )}
+
             <BasicSelect
               selectData={GenreList}
               name="genre"
@@ -172,29 +232,23 @@ const AddMusic = ({
             <TextInput
               width="450px"
               name="title"
-              value={form?.title}
+              value={isEdit !== "edit" ? form?.title : currentMusic?.title}
               label="제목"
               isError={form?.title?.length === 0}
               errorMsg={"제목을 입력해주세요."}
               onChange={(e) => {
-                setForm({
-                  ...form,
-                  title: e.target.value,
-                });
+                handleChangeInput(e);
               }}
             ></TextInput>
             <TextInput
               width="300px"
               name="singer"
-              value={form?.singer}
+              value={isEdit !== "edit" ? form?.singer : currentMusic?.singer}
               label="가수"
               isError={form?.singer?.length === 0}
               errorMsg={"가수명을 입력해주세요."}
               onChange={(e) => {
-                setForm({
-                  ...form,
-                  singer: e.target.value,
-                });
+                handleChangeInput(e);
               }}
             ></TextInput>
           </div>
@@ -204,12 +258,13 @@ const AddMusic = ({
               name="explanation"
               isError={form?.explanation?.length === 0}
               errorMsg={"설명글을 입력해주세요."}
-              value={form?.explanation}
+              value={
+                isEdit !== "edit"
+                  ? form?.explanation
+                  : currentMusic?.explanation
+              }
               onChange={(e) => {
-                setForm({
-                  ...form,
-                  explanation: e.target.value,
-                });
+                handleChangeInput(e);
               }}
             ></Textarea>
           </div>
@@ -218,6 +273,7 @@ const AddMusic = ({
               btnType="cancel"
               onClick={() => {
                 setIsAddMuisc(false);
+                setIsEdit("");
               }}
             >
               취소
@@ -239,7 +295,7 @@ const AddMusic = ({
                 addMusicData();
               }}
             >
-              확인
+              {isEdit === "edit" ? "수정" : "등록"}
             </Button>
           </div>
         </div>

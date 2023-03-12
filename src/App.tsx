@@ -17,23 +17,11 @@ function App() {
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
 
-  console.log("auth", auth);
-  console.log("user", user);
-  console.log("myMusicList", myMusicList);
-  console.log("musicList", musicList);
   useEffect(() => {
     functions.getUserDataFunction(setUser);
     functions.getMusicListDataFunction(setMusicList);
   }, []);
 
-  // todo : 삭제 예정
-  // useEffect(() => {
-  //   if (user?.email) {
-  //     setMyMusicList(
-  //       functions?.myMusicListFunction(`music/${user?.email}/`, setMyMusicList)
-  //     );
-  //   }
-  // }, [user]);
   return (
     <div className="App">
       <Container>

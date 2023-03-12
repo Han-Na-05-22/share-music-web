@@ -32,11 +32,10 @@ export const getUsersListDataFunction = async (setUsersData: any) => {
   const querySnapshot = await getDocs(collection(firestore, "users"));
 
   let array: any = "";
-  console.log("array", array);
+
   querySnapshot?.forEach((doc: any) => {
-    console.log(" doc?.data()?.data", doc?.data()?.userInfo);
     array = [...array, doc?.data()?.userInfo];
-    console.log("array", array);
+
     return setUsersData(array);
   });
 };

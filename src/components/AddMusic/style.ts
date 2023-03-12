@@ -37,6 +37,15 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     height: 100px;
   }
 
+  .music-name {
+    color: ${({ theme }) => theme.colors.DefaultText};
+    width: 800px;
+    text-align: center;
+    height: 50px;
+    padding-left: 150px;
+    line-height: 50px;
+  }
+
   .music-title-singer {
   }
 
