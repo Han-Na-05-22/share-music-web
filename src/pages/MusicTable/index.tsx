@@ -18,7 +18,7 @@ import * as functions from "../../common/functions";
 import MusicDetail from "components/MusicDetail";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
-
+// todo : 수정 필요
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -32,7 +32,7 @@ const MusicTable = () => {
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
   const offset = (page - 1) * limit;
-  console.log("selectFilter", selectFilter);
+
   const [isDetailData, setIsDetailData] =
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
@@ -61,7 +61,7 @@ const MusicTable = () => {
       setAddMusicPlayer([id]);
     } else {
       addMusicPlayer?.includes(id)
-        ? setAddMusicPlayer(addMusicPlayer.filter((item: any) => item !== id))
+        ? setAddMusicPlayer(addMusicPlayer?.filter((item: any) => item !== id))
         : setAddMusicPlayer((prev: any) => [...prev, id]);
     }
   };
@@ -80,11 +80,11 @@ const MusicTable = () => {
       const result = musicList?.filter(
         (item: any) => item?.genre === selectFilter
       );
-      console.log("result", result);
+
       setMusicList(result);
     }
   }, [selectFilter]);
-  console.log("musicList", musicList);
+
   return (
     <MusicTableContainer>
       <div className="music-top">
@@ -134,6 +134,12 @@ const MusicTable = () => {
             {
               title: (
                 <CheckBox
+                  className={
+                    musicList?.length !== 0 &&
+                    myMusicPlayList?.length !== musicList?.length
+                      ? "label-all"
+                      : "disabled-label-all"
+                  }
                   onClick={(e) => {
                     e.stopPropagation();
                     onCheckedAllMusic();
@@ -141,9 +147,9 @@ const MusicTable = () => {
                   onChange={() => {}}
                   checked={
                     addMusicPlayer?.length + myMusicPlayList?.length ===
-                      musicList?.length ||
-                    addMusicPlayer?.length + myMusicPlayList?.length ===
-                      musicList?.length + myMusicPlayList?.length
+                      musicList?.length &&
+                    musicList?.length !== 0 &&
+                    myMusicPlayList?.length !== musicList?.length
                       ? true
                       : false
                   }

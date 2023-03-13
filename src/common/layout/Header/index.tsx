@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { userInfo } from "components/Login/state";
 import * as functions from "../../functions";
 import { selectFilterState } from "pages/MusicTable/state";
+import { useEffect } from "react";
 const Header = () => {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -15,13 +16,19 @@ const Header = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
+
+  useEffect(() => {
+    if (selectFilter === "") {
+      functions.getMusicListDataFunction(setMusicList);
+    }
+  }, [selectFilter]);
+
   return (
     <>
       <HeaderContainer>
         <h1
           onClick={async () => {
-            await functions.getMusicListDataFunction(setMusicList);
-            setSelectFilter("");
+            await setSelectFilter("");
             navigate("/");
           }}
         >

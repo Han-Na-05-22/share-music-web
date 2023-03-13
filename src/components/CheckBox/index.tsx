@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { CheckBoxProps } from "./interface";
 import { CheckBoxContainer } from "./style";
 

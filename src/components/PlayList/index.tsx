@@ -30,7 +30,7 @@ const PlayList = ({ className, children, playListData }: PlayListProps) => {
   };
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
-  console.log("musicDetailUrl", musicDetailUrl);
+
   const [isDetailData, setIsDetailData] =
     useRecoilState<any>(isMusicDetailState);
 

@@ -110,5 +110,16 @@ export const LeftContentContainer = styled.div`
         font-size: 14px;
       }
     }
+
+    .file-upload {
+      svg {
+        position: absolute;
+        top: 41%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 75px;
+        height: 75px;
+      }
+    }
   }
 `;

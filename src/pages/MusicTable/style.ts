@@ -135,7 +135,15 @@ export const MusicTableContainer = styled.div`
         width: 100%;
         height: 100%;
       }
-
+      .label-all {
+        opacity: 1;
+      }
+      .disabled-label-all {
+        opacity: 0.32;
+        label {
+          cursor: not-allowed;
+        }
+      }
       thead,
       tbody {
         tr {

@@ -40,7 +40,7 @@ const MyPage = () => {
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
-  console.log("myMusicPlayList", myMusicPlayList);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
 

@@ -134,10 +134,19 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
         height: 50px;
       }
 
+      .file-upload {
+        svg {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
       svg {
-        width: 100%;
-        height: 50px;
+        top: -5px;
+        right: 20px;
         transform: translate(0%);
+        width: 20px;
+        height: 20px;
       }
 
       img {
@@ -158,6 +167,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       height: 35px;
       padding-left: 0px;
       line-height: 35px;
+      font-size: 12px;
     }
 
     .music-title-singer {

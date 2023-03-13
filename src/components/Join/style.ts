@@ -60,10 +60,22 @@ export const JoinContainer = styled.div<JoinStyleProps>`
         div {
           width: 50px;
           height: 50px;
+
+          .file-upload {
+            svg {
+              transform: translate(0%);
+              top: 0px;
+              left: 0px;
+              width: 50px;
+              height: 50px;
+            }
+          }
           svg {
+            top: -5px;
+            right: 0px;
             transform: translate(0%);
-            width: 50px;
-            height: 50px;
+            width: 20px;
+            height: 20px;
           }
         }
       }

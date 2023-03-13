@@ -18,7 +18,7 @@ function App() {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-  console.log("myMusicPlayList", myMusicPlayList);
+
   let getDownloadMusicList: any = "";
   const getDownloadMusicData = () => {
     musicList
@@ -31,7 +31,7 @@ function App() {
         });
       });
   };
-  console.log("getDownloadMusicList", getDownloadMusicList);
+
   useEffect(() => {
     functions.getUserDataFunction(setUser);
     functions.getMusicListDataFunction(setMusicList);

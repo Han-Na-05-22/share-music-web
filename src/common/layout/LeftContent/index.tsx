@@ -58,7 +58,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
       profile: "",
     });
   };
-  console.log("myMusicPlayList", myMusicPlayList);
+
   return (
     <LeftContentContainer className={className}>
       {user?.email ? (
