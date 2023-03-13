@@ -6,12 +6,14 @@ const CheckBox = ({
   name,
   checked,
   value,
+  disabled,
   onChange,
   onClick,
 }: CheckBoxProps) => {
   return (
     <CheckBoxContainer className={className} onClick={onClick}>
       <input
+        disabled={disabled}
         type="checkbox"
         onChange={onChange}
         name={name}
@@ -19,7 +21,10 @@ const CheckBox = ({
         value={value}
         checked={checked}
       />
-      <label htmlFor={name}></label>
+      <label
+        htmlFor={name}
+        className={disabled ? "disabled-label" : "label"}
+      ></label>
     </CheckBoxContainer>
   );
 };

@@ -3,20 +3,69 @@ import Tabel from "components/Table";
 import { useRecoilState } from "recoil";
 import { MusicTableContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "components/Pagination";
 import { selectFilterState } from "./state";
 import CheckBox from "components/CheckBox";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
+import {
+  isMusicDetailState,
+  musicDetailState,
+  musicDetailUrlState,
+} from "components/MusicDetail/state";
+import * as functions from "../../common/functions";
+import MusicDetail from "components/MusicDetail";
+import { async } from "@firebase/util";
+import { myMusicPlayListState } from "pages/MyPage/state";
+import BasicSelect from "components/BasicSelect";
+import { userInfo } from "components/Login/state";
+
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [user, setUser] = useRecoilState<any>(userInfo);
+  const [search, setSearch] = useState<any>("");
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
+  const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
+  const [myMusicPlayList, setMyMusicPlayList] =
+    useRecoilState<any>(myMusicPlayListState);
   const offset = (page - 1) * limit;
   console.log("selectFilter", selectFilter);
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
+  const [musicDetailData, setMusicDetailData] =
+    useRecoilState<any>(musicDetailState);
+  const [musicDetailUrl, setMusicDetailUrl] =
+    useRecoilState<any>(musicDetailUrlState);
+
+  const onCheckedAllMusic = () => {
+    if (
+      (addMusicPlayer?.length !== 0 &&
+        addMusicPlayer.length + myMusicPlayList?.length ===
+          musicList?.length) ||
+      (addMusicPlayer?.length !== 0 &&
+        addMusicPlayer.length + myMusicPlayList?.length ===
+          musicList?.length + myMusicPlayList?.length)
+    ) {
+      setAddMusicPlayer([]);
+    } else {
+      const result = musicList?.map((item: any, i: number) => item.id);
+      setAddMusicPlayer(result);
+    }
+  };
+
+  const onCheckedMusic = (id: number) => {
+    if (addMusicPlayer?.length === 0) {
+      setAddMusicPlayer([id]);
+    } else {
+      addMusicPlayer?.includes(id)
+        ? setAddMusicPlayer(addMusicPlayer.filter((item: any) => item !== id))
+        : setAddMusicPlayer((prev: any) => [...prev, id]);
+    }
+  };
 
   const handleChangePage = (page: any) => {
     if (musicList?.length < 10) {
@@ -33,15 +82,27 @@ const MusicTable = () => {
           <TextInput
             width="220px"
             name="search"
-            value={""}
+            value={search}
+            placeholder="노래 제목을 입력해주세요."
+            onChange={(e: any) => {
+              e.preventDefault();
+              setSearch(e.target.value);
+            }}
             label=""
-            onChange={(e) => {}}
           ></TextInput>
           <Button
             fontSize="18px"
             className="my-info-submit"
             btnType="submit"
-            onClick={() => {}}
+            onClick={() => {
+              if (search?.length === 0) {
+                functions.getMusicListDataFunction(setMusicList);
+              } else {
+                setMusicList(
+                  musicList?.filter((i: any) => i?.title === search)
+                );
+              }
+            }}
           >
             검색
           </Button>
@@ -61,7 +122,23 @@ const MusicTable = () => {
           tableBtnText={selectFilter}
           theadData={[
             {
-              title: "",
+              title: (
+                <CheckBox
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onCheckedAllMusic();
+                  }}
+                  onChange={() => {}}
+                  checked={
+                    addMusicPlayer.length + myMusicPlayList?.length ===
+                      musicList?.length ||
+                    addMusicPlayer.length + myMusicPlayList?.length ===
+                      musicList?.length + myMusicPlayList?.length
+                      ? true
+                      : false
+                  }
+                ></CheckBox>
+              ),
             },
             {
               title: selectFilter === "TOP" ? "순위" : "순번",
@@ -100,13 +177,37 @@ const MusicTable = () => {
               ?.slice(offset, offset + limit)
               ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
               ?.map((item: any, idx: number) => (
-                <tr key={idx} onClick={() => {}}>
+                <tr
+                  key={item?.id}
+                  onClick={(event: any) => {
+                    setIsDetailData({
+                      isDetail: true,
+                      isLocation: "musicTable",
+                    });
+                    setMusicDetailData(item);
+                    functions.getMusicUrlFunction(
+                      item?.email,
+                      setMusicDetailUrl,
+                      item?.mp3
+                    );
+                  }}
+                >
                   <td>
                     <CheckBox
-                      onChange={() => {}}
-                      name="checked"
-                      value={true}
-                      checked={true}
+                      disabled={
+                        myMusicPlayList?.find((i: any) => i?.id === item?.id)
+                          ? true
+                          : false
+                      }
+                      onClick={async (e: any) => {
+                        e.stopPropagation();
+                        onCheckedMusic(item?.id);
+                      }}
+                      checked={
+                        addMusicPlayer?.find((id: any) => id === item.id)
+                          ? true
+                          : false
+                      }
                     ></CheckBox>
                   </td>
                   <td>{idx + 1}</td>
@@ -121,7 +222,16 @@ const MusicTable = () => {
                   <td>{item?.email?.split("@")[0]}</td>
                   <td>{item?.date}</td>
                   <td>
-                    <SVG src="/svg/term_heart.svg" />,
+                    <SVG
+                      src="/svg/term_heart.svg"
+                      className={
+                        item?.likedClickList?.find(
+                          (i: any) => i?.email === user?.email
+                        )
+                          ? "clicked-svg"
+                          : "no-clicked-svg"
+                      }
+                    />
                   </td>
                 </tr>
               ))
@@ -137,6 +247,9 @@ const MusicTable = () => {
           handleChangePage={handleChangePage}
         />
       </div>
+      {isDetailData?.isDetail && isDetailData?.isLocation === "musicTable" && (
+        <MusicDetail detailData={musicDetailData}></MusicDetail>
+      )}
     </MusicTableContainer>
   );
 };

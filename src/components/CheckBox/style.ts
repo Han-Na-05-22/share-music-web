@@ -17,11 +17,16 @@ export const CheckBoxContainer = styled.div`
     }
   }
 
+  .disabled-label {
+    cursor: not-allowed;
+    opacity: 0.32;
+  }
+
   input[type="checkbox"] {
     display: none;
   }
 
-  input[type="checkbox"]:checked + label {
+  input[type="checkbox"]:checked + .label {
     background-image: url("/svg/checked.svg");
     border: none;
 

@@ -78,6 +78,12 @@ export const MusicTableContainer = styled.div`
           }
           &:nth-child(11) {
             width: 50px;
+
+            .clicked-svg {
+              path {
+                fill-opacity: 1;
+              }
+            }
           }
         }
       }

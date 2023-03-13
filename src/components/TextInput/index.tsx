@@ -6,6 +6,7 @@ const TextInput = ({
   onChange,
   name,
   value,
+  placeholder,
   width = "300px",
   accept,
   height = "50px",
@@ -27,6 +28,7 @@ const TextInput = ({
 
       <input
         type={type}
+        placeholder={placeholder}
         id={name}
         name={name}
         accept={accept}

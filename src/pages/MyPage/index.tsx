@@ -23,6 +23,7 @@ import { deleteObject, ref } from "firebase/storage";
 import AddMusic from "components/AddMusic";
 import { currentMusicState } from "components/Record/state";
 import UserInfo from "components/UserInfo";
+import { myMusicPlayListState } from "./state";
 
 // todo :내정보 비밀번호 변경, 마이플레이리스트 삭제 드래그 앤 드롭 기능
 
@@ -32,30 +33,16 @@ const MyPage = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
+  const [myMusicPlayList, setMyMusicPlayList] =
+    useRecoilState<any>(myMusicPlayListState);
   const [musicDetailUrl, setMusicDetailUrl] =
     useRecoilState<any>(musicDetailUrlState);
-  const [usersListData, setUserListData] = useState<any[]>();
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
-
+  console.log("myMusicPlayList", myMusicPlayList);
   const [user, setUser] = useRecoilState<any>(userInfo);
-
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
-
-  let getDownloadMusicList: any = "";
-  const getDownloadMusicData = () => {
-    musicList
-      ?.filter((item: any) => item?.email !== user?.email)
-      ?.map((i: any) => {
-        i?.downloadClickList?.filter((a: any) => {
-          if (a?.email === user?.email) {
-            return (getDownloadMusicList = [...getDownloadMusicList, i]);
-          }
-        });
-      });
-  };
-  getDownloadMusicData();
 
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
@@ -211,11 +198,8 @@ const MyPage = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined && getDownloadMusicList ? (
-            getDownloadMusicList
-              ?.concat(
-                musicList?.filter((item: any) => item?.email === user?.email)
-              )
+          {musicList?.length !== undefined && myMusicPlayList ? (
+            myMusicPlayList
               ?.slice(offset, offset + limit)
               ?.map((item: any, idx: number) => (
                 <tr

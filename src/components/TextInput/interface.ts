@@ -7,6 +7,7 @@ export interface TextInputProps {
   height?: string;
   isError?: boolean;
   accept?: string;
+  placeholder?: string;
   errorMsg?: string;
   label?: string;
   type?: string;

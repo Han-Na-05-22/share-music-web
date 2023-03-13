@@ -6,8 +6,9 @@ import { collection, getDocs } from "firebase/firestore";
 import Home from "pages/Home";
 import MusicTable from "pages/MusicTable";
 import MyPage from "pages/MyPage";
+import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { auth, firestore } from "service/firebase";
@@ -17,11 +18,37 @@ function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [myMusicPlayList, setMyMusicPlayList] =
+    useRecoilState<any>(myMusicPlayListState);
+
+  let getDownloadMusicList: any = "";
+  const getDownloadMusicData = () => {
+    musicList
+      ?.filter((item: any) => item?.email !== user?.email)
+      ?.map((i: any) => {
+        i?.downloadClickList?.filter((a: any) => {
+          if (a?.email === user?.email) {
+            return (getDownloadMusicList = [...getDownloadMusicList, i]);
+          }
+        });
+      });
+  };
+  getDownloadMusicData();
 
   useEffect(() => {
     functions.getUserDataFunction(setUser);
     functions.getMusicListDataFunction(setMusicList);
   }, []);
+
+  useEffect(() => {
+    if (getDownloadMusicList) {
+      setMyMusicPlayList(
+        getDownloadMusicList?.concat(
+          musicList?.filter((item: any) => item?.email === user?.email)
+        )
+      );
+    }
+  }, [musicList]);
 
   return (
     <div className="App">
