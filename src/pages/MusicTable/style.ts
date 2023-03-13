@@ -141,7 +141,7 @@ export const MusicTableContainer = styled.div`
         tr {
           th,
           td {
-            font-size: 10px;
+            font-size: 12px;
             &:first-child {
               width: 40px;
             }
