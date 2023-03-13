@@ -102,7 +102,6 @@ export const sendMusicDataFunction = async (
 };
 
 // 좋아요 또는 다운로드 클릭 시 count 및 클릭한 user 정보 DB에 저장하는 함수(Cloud Firestore)
-
 export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
   const washingtonRef = doc(firestore, "music", "musicList");
 

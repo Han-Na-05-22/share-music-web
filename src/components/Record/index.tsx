@@ -32,46 +32,98 @@ const Record = ({
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
   const onChangeCountData = async (type: string) => {
-    const result = musicList?.map((item: any) => {
-      if (item.id === musicDetailData?.id) {
+    if (type === "like") {
+      const result = musicList?.map((item: any) => {
+        if (item.id === musicDetailData?.id) {
+          if (
+            item?.likedClickList?.find((i: any) => i?.email === user?.email)
+          ) {
+            return {
+              ...item,
+
+              likeCount:
+                type === "like" ? item?.likeCount - 1 : item?.likeCount,
+              likedClickList:
+                type === "like"
+                  ? item?.likedClickList?.filter(
+                      (i: any) => i?.email !== user?.email
+                    )
+                  : item?.likedClickList,
+            };
+          } else {
+            return {
+              ...item,
+
+              likeCount:
+                type === "like" ? item?.likeCount + 1 : item?.likeCount,
+              likedClickList:
+                type === "like"
+                  ? [
+                      ...item?.likedClickList,
+                      {
+                        email: user?.email,
+                        updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      },
+                    ]
+                  : item?.likedClickList,
+            };
+          }
+        }
         return {
           ...item,
-
-          likeCount:
-            type === "like" ? musicDetailData?.likeCount + 1 : item?.likeCount,
-          likedClickList:
-            type === "like"
-              ? [
-                  ...item?.likedClickList,
-                  {
-                    email: user?.email,
-                    updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
-                  },
-                ]
-              : item?.likedClickList,
-
-          downloadCount:
-            type === "download"
-              ? musicDetailData?.downloadCount + 1
-              : item?.downloadCount,
-          downloadClickList:
-            type === "download"
-              ? [
-                  ...item?.downloadClickList,
-                  {
-                    email: user?.email,
-                    updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
-                  },
-                ]
-              : item?.downloadClickList,
         };
-      }
-      return {
-        ...item,
-      };
-    });
+      });
 
-    await setMusicList(result);
+      await setMusicList(result);
+    }
+    if (type === "download") {
+      const result = musicList?.map((item: any) => {
+        if (item.id === musicDetailData?.id) {
+          if (
+            item?.downloadClickList?.find((i: any) => i?.email === user?.email)
+          ) {
+            return {
+              ...item,
+
+              downloadCount:
+                type === "download"
+                  ? item?.downloadCount - 1
+                  : item?.downloadCount,
+              downloadClickList:
+                type === "download"
+                  ? item?.downloadClickList?.filter(
+                      (i: any) => i?.email !== user?.email
+                    )
+                  : item?.downloadClickList,
+            };
+          } else {
+            return {
+              ...item,
+
+              downloadCount:
+                type === "download"
+                  ? item?.downloadCount + 1
+                  : item?.downloadCount,
+              downloadClickList:
+                type === "download"
+                  ? [
+                      ...item?.downloadClickList,
+                      {
+                        email: user?.email,
+                        updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                      },
+                    ]
+                  : item?.downloadClickList,
+            };
+          }
+        }
+        return {
+          ...item,
+        };
+      });
+
+      await setMusicList(result);
+    }
   };
 
   useEffect(() => {
@@ -110,7 +162,12 @@ const Record = ({
               ?.likedClickList?.find((i: any) => {
                 return i?.email === user?.email;
               })?.email === user?.email ? (
-              <SVG src="/svg/heart.svg" />
+              <SVG
+                src="/svg/heart.svg"
+                onClick={() => {
+                  onChangeCountData("like");
+                }}
+              />
             ) : (
               <SVG
                 src="/svg/term_heart.svg"
@@ -133,7 +190,12 @@ const Record = ({
               ?.downloadClickList?.find((i: any) => {
                 return i?.email === user?.email;
               })?.email === user?.email ? (
-              <SVG src="/svg/download.svg" />
+              <SVG
+                src="/svg/download.svg"
+                onClick={async () => {
+                  onChangeCountData("download");
+                }}
+              />
             ) : (
               <SVG
                 src="/svg/term_download.svg"
