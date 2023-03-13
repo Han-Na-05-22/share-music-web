@@ -43,4 +43,64 @@ export const JoinContainer = styled.div<JoinStyleProps>`
     display: flex;
     gap: 0px 50px;
   }
+  @media screen and (max-width: 1660px) {
+    width: 300px;
+    height: 550px;
+    padding: 20px 40px;
+
+    .user-infos {
+      width: 100%;
+      gap: 10px 0px;
+      .users {
+        flex-direction: column;
+        gap: 0px 30px;
+      }
+
+      .user-img {
+        div {
+          width: 50px;
+          height: 50px;
+          svg {
+            transform: translate(0%);
+            width: 50px;
+            height: 50px;
+          }
+        }
+      }
+      label {
+        font-size: 12px;
+      }
+
+      input {
+        width: 225px;
+        height: 25px;
+      }
+      .user-name-id {
+        div {
+          margin-bottom: 5px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      .user-phone-nickname {
+      }
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 0px 10px;
+
+      button {
+        width: 75px;
+        height: 35px;
+
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 `;
