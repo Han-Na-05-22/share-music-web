@@ -1,37 +1,184 @@
 import styled from "styled-components";
 
 export const PlayListContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 650px;
+  height: 500px;
+  position: absolute;
+  z-index: 10000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 80px 50px 50px;
 
-  .paly-list-container {
+  .play-list-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
+  .slick-slider {
+    cursor: pointer;
     width: 100%;
     height: 100%;
+    position: relative;
+    .slick-arrow {
+      opacity: 0;
+      position: absolute;
 
-    strong {
-      color: ${({ theme }) => theme.colors.BlackColor};
+      /* &::before {
+        color: ${({ theme }) => theme.colors.DefaultColor};
+        opacity: 1;
+        font-size: 30px;
+      } */
     }
+    /* 
+    .slick-prev {
+      left: 30px;
+    }
+    .slick-next {
+      right: 30px;
+    } */
 
-    .rhap_container {
-      .rhap_main.rhap_stacked {
-        .rhap_controls-section {
-          border: 2px solid blue;
+    .slick-list {
+      height: 100%;
 
-          .rhap_additional-controls {
-            border: 1px solid ${({ theme }) => theme.colors.BlackColor};
-            color: ${({ theme }) => theme.colors.BlackColor};
-            background: ${({ theme }) => theme.colors.BlackColor};
-          }
-          .rhap_main-controls {
-            border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+      .slick-track {
+        height: 100%;
+        display: flex;
+        width: 100%;
 
-            button {
-              background: ${({ theme }) => theme.colors.BlackColor};
+        .slick-slide {
+          height: 100%;
+          width: 100%;
+          position: relative;
+          & > div {
+            height: 100%;
+
+            .paly-list-container {
+              width: 100%;
+              height: 100%;
+              display: flex !important;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              gap: 30px 0px;
+              position: absolute;
+              transform: translate(-50%, -50%);
+              top: 50%;
+              left: 50%;
+              /* .btn {
+                position: absolute;
+                border: 2px solid red;
+                z-index: 10000;
+              }
+
+              .prev-btn {
+                left: 15px;
+              }
+              .next-btn {
+                right: 15px;
+              } */
+              img {
+                width: 125px;
+                height: 125px;
+                border-radius: 100%;
+              }
+
+              .about-music {
+                display: flex;
+                flex-direction: column;
+                gap: 15px 0px;
+              }
+
+              strong,
+              p {
+                color: ${({ theme }) => theme.colors.BlackColor};
+              }
             }
           }
-          .rhap_volume-controls {
-            border: 1px solid ${({ theme }) => theme.colors.BlackColor};
-            background: ${({ theme }) => theme.colors.BlackColor};
+        }
+      }
+    }
+  }
+  .rhap_container {
+    padding: 0px;
+    width: 100%;
+    box-shadow: none;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.DefaultText};
+    .rhap_main.rhap_stacked {
+      .rhap_progress-section {
+        flex: none;
+        .rhap_current-time {
+        }
+
+        .rhap_progress-container {
+          .rhap_progress-bar {
+            .rhap_download-progress {
+              background: ${({ theme }) => theme.colors.DisabledColor};
+            }
+
+            .rhap_progress-indicator,
+            .rhap_progress-filled {
+              background: ${({ theme }) => theme.colors.DefaultColor};
+            }
+          }
+        }
+      }
+      .rhap_controls-section {
+        flex: none;
+        margin: 15px 0px;
+        .rhap_additional-controls {
+          border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+          color: ${({ theme }) => theme.colors.DefaultColor};
+          border: none;
+          background: ${({ theme }) => theme.colors.ModalColor};
+
+          button {
+            svg {
+              path {
+                fill: ${({ theme }) => theme.colors.DefaultColor};
+              }
+            }
+          }
+        }
+        .rhap_main-controls {
+          border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+          border: none;
+          button {
+            background: ${({ theme }) => theme.colors.ModalColor};
+
+            svg {
+              path {
+                fill: ${({ theme }) => theme.colors.DefaultColor};
+              }
+            }
+          }
+        }
+        .rhap_volume-controls {
+          border: 1px solid ${({ theme }) => theme.colors.BlackColor};
+          border: none;
+          background: ${({ theme }) => theme.colors.ModalColor};
+          button {
+            svg {
+              path {
+                fill: ${({ theme }) => theme.colors.DefaultColor};
+              }
+            }
+          }
+
+          .rhap_volume-bar-area {
+            .rhap_volume-bar {
+              background: ${({ theme }) => theme.colors.DefaultColor};
+
+              .rhap_volume-indicator {
+                background: ${({ theme }) => theme.colors.DefaultColor};
+              }
+            }
           }
         }
       }

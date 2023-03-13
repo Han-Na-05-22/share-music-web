@@ -7,17 +7,21 @@ import { HeaderContainer } from "./style";
 import { useNavigate } from "react-router-dom";
 import { userInfo } from "components/Login/state";
 import * as functions from "../../functions";
+import { selectFilterState } from "pages/MusicTable/state";
 const Header = () => {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [selectFilter, setSelectFilter] =
+    useRecoilState<string>(selectFilterState);
   return (
     <>
       <HeaderContainer>
         <h1
           onClick={async () => {
             await functions.getMusicListDataFunction(setMusicList);
+            setSelectFilter("");
             navigate("/");
           }}
         >

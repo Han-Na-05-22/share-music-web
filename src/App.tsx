@@ -18,7 +18,7 @@ function App() {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-
+  console.log("myMusicPlayList", myMusicPlayList);
   let getDownloadMusicList: any = "";
   const getDownloadMusicData = () => {
     musicList
@@ -31,19 +31,23 @@ function App() {
         });
       });
   };
-  getDownloadMusicData();
-
+  console.log("getDownloadMusicList", getDownloadMusicList);
   useEffect(() => {
     functions.getUserDataFunction(setUser);
     functions.getMusicListDataFunction(setMusicList);
   }, []);
 
   useEffect(() => {
+    getDownloadMusicData();
     if (getDownloadMusicList) {
       setMyMusicPlayList(
         getDownloadMusicList?.concat(
           musicList?.filter((item: any) => item?.email === user?.email)
         )
+      );
+    } else {
+      setMyMusicPlayList(
+        musicList?.filter((item: any) => item?.email === user?.email)
       );
     }
   }, [musicList]);

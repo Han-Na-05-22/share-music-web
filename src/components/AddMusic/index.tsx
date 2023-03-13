@@ -37,7 +37,7 @@ const AddMusic = ({
     img: "",
     mp3: "",
     title: "",
-    genre: "",
+    genre: "POP",
     singer: "",
     explanation: "",
     mpName: "",
@@ -149,12 +149,7 @@ const AddMusic = ({
     setMyMusicList(functions?.myMusicListFunction);
   };
   console.log("form", form);
-  console.log(
-    "fewfew",
-    musicList
-      ?.filter((i: any) => i?.id !== currentMusic?.id)
-      ?.concat(currentMusic)
-  );
+
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);

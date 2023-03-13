@@ -11,13 +11,21 @@ import { doc, setDoc } from "firebase/firestore";
 import { musicListState, myMusic } from "components/AddMusic/state";
 import Genre from "components/Genre";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import PlayList from "components/PlayList";
+import { myMusicPlayListState } from "pages/MyPage/state";
+import { isMusicDetailState } from "components/MusicDetail/state";
 
 const LeftContent = ({ className }: LeftContentProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
+  const [myMusicPlayList, setMyMusicPlayList] =
+    useRecoilState<any>(myMusicPlayListState);
   const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const navigate = useNavigate();
   const getUserId = auth?.currentUser?.uid.replace('"', "");
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -50,7 +58,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
       profile: "",
     });
   };
-
+  console.log("myMusicPlayList", myMusicPlayList);
   return (
     <LeftContentContainer className={className}>
       {user?.email ? (
@@ -59,7 +67,12 @@ const LeftContent = ({ className }: LeftContentProps) => {
             <Button
               className="my-music-btn"
               btnType="submit"
-              onClick={() => {}}
+              onClick={() => {
+                setIsDetailData({
+                  isDetail: true,
+                  isLocation: "playList",
+                });
+              }}
             >
               플레이리스트
             </Button>
@@ -152,6 +165,9 @@ const LeftContent = ({ className }: LeftContentProps) => {
           </Box>
           <Genre></Genre>
         </div>
+      )}
+      {isDetailData?.isLocation === "playList" && (
+        <PlayList playListData={myMusicPlayList}></PlayList>
       )}
     </LeftContentContainer>
   );

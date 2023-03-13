@@ -76,7 +76,7 @@ const MusicTable = () => {
   };
 
   useEffect(() => {
-    if (selectFilter) {
+    if (selectFilter !== "TOP" && selectFilter !== "NEW") {
       const result = musicList?.filter(
         (item: any) => item?.genre === selectFilter
       );
