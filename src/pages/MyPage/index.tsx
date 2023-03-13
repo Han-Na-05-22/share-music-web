@@ -170,7 +170,7 @@ const MyPage = () => {
           )}
         </Tabel>
         <Pagination
-          total={musicList.length}
+          total={musicList?.length}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -236,7 +236,7 @@ const MyPage = () => {
           )}
         </Tabel>
         <Pagination
-          total={musicList.length}
+          total={musicList?.length}
           limit={limit}
           page={page}
           setPage={setPage}

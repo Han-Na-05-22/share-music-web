@@ -2,16 +2,14 @@ import Container from "common/layout/Container";
 import Header from "common/layout/Header";
 import { musicListState, myMusic } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
-import { collection, getDocs } from "firebase/firestore";
 import Home from "pages/Home";
 import MusicTable from "pages/MusicTable";
 import MyPage from "pages/MyPage";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { auth, firestore } from "service/firebase";
 import * as functions from "./common/functions";
 
 function App() {

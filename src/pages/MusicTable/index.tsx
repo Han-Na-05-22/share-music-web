@@ -16,9 +16,7 @@ import {
 } from "components/MusicDetail/state";
 import * as functions from "../../common/functions";
 import MusicDetail from "components/MusicDetail";
-import { async } from "@firebase/util";
 import { myMusicPlayListState } from "pages/MyPage/state";
-import BasicSelect from "components/BasicSelect";
 import { userInfo } from "components/Login/state";
 
 const MusicTable = () => {
@@ -30,6 +28,7 @@ const MusicTable = () => {
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
+
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
   const offset = (page - 1) * limit;
@@ -44,10 +43,10 @@ const MusicTable = () => {
   const onCheckedAllMusic = () => {
     if (
       (addMusicPlayer?.length !== 0 &&
-        addMusicPlayer.length + myMusicPlayList?.length ===
+        addMusicPlayer?.length + myMusicPlayList?.length ===
           musicList?.length) ||
       (addMusicPlayer?.length !== 0 &&
-        addMusicPlayer.length + myMusicPlayList?.length ===
+        addMusicPlayer?.length + myMusicPlayList?.length ===
           musicList?.length + myMusicPlayList?.length)
     ) {
       setAddMusicPlayer([]);
@@ -75,6 +74,17 @@ const MusicTable = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    if (selectFilter) {
+      const result = musicList?.filter(
+        (item: any) => item?.genre === selectFilter
+      );
+      console.log("result", result);
+      setMusicList(result);
+    }
+  }, [selectFilter]);
+  console.log("musicList", musicList);
   return (
     <MusicTableContainer>
       <div className="music-top">
@@ -130,9 +140,9 @@ const MusicTable = () => {
                   }}
                   onChange={() => {}}
                   checked={
-                    addMusicPlayer.length + myMusicPlayList?.length ===
+                    addMusicPlayer?.length + myMusicPlayList?.length ===
                       musicList?.length ||
-                    addMusicPlayer.length + myMusicPlayList?.length ===
+                    addMusicPlayer?.length + myMusicPlayList?.length ===
                       musicList?.length + myMusicPlayList?.length
                       ? true
                       : false
@@ -172,10 +182,16 @@ const MusicTable = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined ? (
+          {musicList?.length !== undefined && musicList?.length !== 0 ? (
             musicList
               ?.slice(offset, offset + limit)
-              ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
+              ?.sort((a: any, b: any) => {
+                if (selectFilter === "TOP") {
+                  return b?.likeCount - a?.likeCount;
+                } else {
+                  return b?.id - a?.id;
+                }
+              })
               ?.map((item: any, idx: number) => (
                 <tr
                   key={item?.id}
@@ -224,6 +240,9 @@ const MusicTable = () => {
                   <td>
                     <SVG
                       src="/svg/term_heart.svg"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
                       className={
                         item?.likedClickList?.find(
                           (i: any) => i?.email === user?.email
@@ -240,7 +259,7 @@ const MusicTable = () => {
           )}
         </Tabel>
         <Pagination
-          total={musicList.length}
+          total={musicList?.length}
           limit={limit}
           page={page}
           setPage={setPage}

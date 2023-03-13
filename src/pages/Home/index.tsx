@@ -16,7 +16,7 @@ import MusicDetail from "components/MusicDetail";
 import * as functions from "../../common/functions";
 import LeftContent from "common/layout/LeftContent";
 
-// todo : 큰 틀로 플레이리스트, 장르별 상세보기, 검색 기능, 드앤드, 기능 정도만 구현하면 대부분 완성! (이미지 용량!!)
+// todo : 큰 틀로 플레이리스트, 장르별 상세보기, 검색 기능(완료), 드앤드, 좋아요 및 플레이리스트 svg 다시 클릭 시 데이터 삭제 기능 정도만 구현하면 대부분 완성! (이미지 용량!!)
 
 const Home = () => {
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -108,7 +108,7 @@ const Home = () => {
           )}
         </Tabel>
         <Pagination
-          total={musicList.length}
+          total={musicList?.length}
           limit={limit}
           page={page}
           setPage={setPage}
@@ -176,7 +176,7 @@ const Home = () => {
           )}
         </Tabel>
         <Pagination
-          total={musicList.length}
+          total={musicList?.length}
           limit={limit}
           page={page}
           setPage={setPage}

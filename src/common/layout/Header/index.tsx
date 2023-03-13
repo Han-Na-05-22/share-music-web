@@ -1,19 +1,26 @@
 import AddMusic from "components/AddMusic";
-import { myMusicAddState } from "components/AddMusic/state";
+import { musicListState, myMusicAddState } from "components/AddMusic/state";
 import Button from "components/Button";
 import SVG from "react-inlinesvg";
 import { useRecoilState } from "recoil";
 import { HeaderContainer } from "./style";
 import { useNavigate } from "react-router-dom";
 import { userInfo } from "components/Login/state";
+import * as functions from "../../functions";
 const Header = () => {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
+  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   return (
     <>
       <HeaderContainer>
-        <h1 onClick={() => navigate("/")}>
+        <h1
+          onClick={async () => {
+            await functions.getMusicListDataFunction(setMusicList);
+            navigate("/");
+          }}
+        >
           <span>MS</span>
           <SVG src="/svg/logo-svg.svg" />
           <span>Music</span>

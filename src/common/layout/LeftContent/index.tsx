@@ -85,7 +85,10 @@ const LeftContent = ({ className }: LeftContentProps) => {
                   <span>
                     {musicList?.filter(
                       (item: any) => item?.email === user?.email
-                    )?.length !== 0
+                    )?.length !== 0 &&
+                    musicList?.filter(
+                      (item: any) => item?.email === user?.email
+                    )?.length !== undefined
                       ? musicList?.filter(
                           (item: any) => item?.email === user?.email
                         )?.length
@@ -97,7 +100,10 @@ const LeftContent = ({ className }: LeftContentProps) => {
                   <span>
                     {musicList?.filter(
                       (item: any) => item?.email === user?.email
-                    )?.length !== 0
+                    )?.length !== 0 &&
+                    musicList?.filter(
+                      (item: any) => item?.email === user?.email
+                    )?.length !== undefined
                       ? musicList
                           ?.filter((i: any) => i?.email === user?.email)
                           ?.map((a: any) => a?.likeCount)
@@ -112,7 +118,10 @@ const LeftContent = ({ className }: LeftContentProps) => {
                   <span>
                     {musicList?.filter(
                       (item: any) => item?.email === user?.email
-                    )?.length !== 0
+                    )?.length !== 0 &&
+                    musicList?.filter(
+                      (item: any) => item?.email === user?.email
+                    )?.length !== undefined
                       ? musicList
                           ?.filter((i: any) => i?.email === user?.email)
                           ?.map((a: any) => a?.downloadCount)
