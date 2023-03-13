@@ -24,9 +24,11 @@ export const HomeContainer = styled.div`
     position: relative;
   }
 
-  /* @media screen and (max-width: 1660px) {
+  @media screen and (max-width: 1660px) {
+    flex-direction: column;
+    gap: 50px 0px;
+    padding-bottom: 40px;
     .left-container {
-      width: 30%;
       .left {
         width: 100%;
         section {
@@ -38,14 +40,18 @@ export const HomeContainer = styled.div`
         }
       }
     }
+
     .tabel-container {
-      width: 35%;
+      width: 100%;
 
       button {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0px;
       }
       table {
         width: 100%;
       }
     }
-  } */
+  }
 `;

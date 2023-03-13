@@ -27,4 +27,17 @@ export const HeaderContainer = styled.header`
       }
     }
   }
+
+  @media screen and (max-width: 1660px) {
+    h1 {
+      span {
+        font-size: 20px;
+      }
+
+      svg {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
 `;

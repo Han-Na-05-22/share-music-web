@@ -15,4 +15,12 @@ export const LoginContainer = styled.div`
     top: -25px;
     right: 15px;
   }
+
+  @media screen and (max-width: 1660px) {
+    padding: 40px 20px 20px;
+    height: 300px;
+
+    button {
+    }
+  }
 `;

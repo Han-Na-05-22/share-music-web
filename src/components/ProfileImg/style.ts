@@ -107,4 +107,17 @@ export const ProfileImgContainer = styled.div<ProfileImgStyleProps>`
         color: ${({ theme }) => theme.colors.DefaultRed};
       }
     `}
+
+  @media screen and (max-width: 1660px) {
+    width: 75px;
+    height: 75px;
+
+    svg {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      transform: translate(-50%, -50%);
+      width: 15px;
+    }
+  }
 `;

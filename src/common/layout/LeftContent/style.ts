@@ -80,5 +80,35 @@ export const LeftContentContainer = styled.div`
   }
 
   @media screen and (max-width: 1660px) {
+    .left {
+      height: 550px;
+      gap: 25px 0px;
+    }
+
+    .my-profile {
+      padding: 30px;
+
+      p {
+        font-size: 16px;
+      }
+
+      ul {
+        padding: 10px;
+        gap: 15px;
+
+        li {
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+
+      strong {
+        height: 16px;
+        bottom: 10px;
+        right: -15px;
+        font-size: 14px;
+      }
+    }
   }
 `;

@@ -128,4 +128,85 @@ export const TabelContainer = styled.table`
       }
     }
   }
+
+  @media screen and (max-width: 1660px) {
+    width: 100%;
+
+    thead {
+      tr {
+        padding: 0px 10px;
+        th {
+          color: inherit;
+          font-weight: bold;
+          font-size: 12px;
+        }
+        th {
+          &:first-child {
+            width: 25px;
+          }
+
+          &:nth-child(2) {
+            width: 40px;
+          }
+
+          &:nth-child(3) {
+            width: 100px;
+          }
+
+          &:nth-child(4) {
+            width: 50px;
+          }
+
+          &:nth-child(5) {
+            width: 40px;
+          }
+
+          &:nth-child(6) {
+            width: 40px;
+          }
+        }
+      }
+    }
+
+    tbody {
+      max-height: 100%;
+      min-height: 100%;
+      padding-bottom: 100px;
+
+      tr {
+        height: 70px;
+        padding: 0px 10px;
+
+        td {
+          &:first-child {
+            width: 25px;
+          }
+
+          &:nth-child(2) {
+            width: 40px;
+          }
+
+          &:nth-child(3) {
+            width: 100px;
+          }
+
+          &:nth-child(4) {
+            width: 50px;
+          }
+
+          &:nth-child(5) {
+            width: 40px;
+          }
+
+          &:nth-child(6) {
+            width: 40px;
+          }
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
 `;

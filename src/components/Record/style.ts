@@ -132,6 +132,9 @@ export const RecordContainer = styled.div<RecordStyleProps>`
           }
         }
         .rhap_main-controls {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
           border: 1px solid ${({ theme }) => theme.colors.BlackColor};
           border: none;
           button {
@@ -145,6 +148,7 @@ export const RecordContainer = styled.div<RecordStyleProps>`
           }
         }
         .rhap_volume-controls {
+          width: 100px;
           border: 1px solid ${({ theme }) => theme.colors.BlackColor};
           border: none;
           background: ${({ theme }) => theme.colors.ModalColor};

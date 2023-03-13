@@ -20,6 +20,10 @@ export const GlobalStyle = createGlobalStyle`
     width: 100vw;
     height: 100vh;
     padding:40px 50px;
+
+    @media screen and (max-width: 1660px) {
+      padding:40px 20px;
+  }
   }
 
   #root,.App{

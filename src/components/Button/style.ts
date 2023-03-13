@@ -49,4 +49,13 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
     css`
       background: ${({ theme }) => theme.colors.DisabledColor};
     `};
+
+  @media screen and (max-width: 1660px) {
+    height: 40px;
+    width: 100px;
+
+    & > span {
+      font-size: 16px;
+    }
+  }
 `;

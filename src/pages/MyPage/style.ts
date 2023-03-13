@@ -8,7 +8,6 @@ export const MyPageContainer = styled.div`
   .tabel-container {
     padding: 0px 20px;
     background: ${({ theme }) => theme.colors.ModalColor};
-
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     position: relative;
     div {
@@ -32,20 +31,22 @@ export const MyPageContainer = styled.div`
     }
   }
 
-  /* @media screen and (max-width: 1660px) {
+  @media screen and (max-width: 1660px) {
+    flex-direction: column;
+    gap: 70px 0px;
+    height: 100%;
+
     .my-info-container {
-      width: 30%;
-      min-width: 30%;
+      width: 100%;
+      min-width: 100%;
     }
 
     .tabel-container {
-      width: 30%;
-
-      button {
-      }
-      table {
-        width: 100%;
+      td {
+        svg {
+          width: 15px;
+        }
       }
     }
-  } */
+  }
 `;

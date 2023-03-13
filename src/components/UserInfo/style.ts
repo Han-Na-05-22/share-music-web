@@ -35,4 +35,43 @@ export const UserInfoContainer = styled.div`
     .my-info-submit {
     }
   }
+
+  @media screen and (max-width: 1660px) {
+    width: 100%;
+    min-width: 100%;
+
+    .my-info-edit {
+      gap: 25px 0px;
+
+      .my-name-id,
+      .my-phone-nickName {
+        input {
+          width: 125px;
+        }
+      }
+
+      label {
+        font-size: 16px;
+      }
+
+      input {
+        width: 270px;
+        font-size: 14px;
+      }
+
+      .my-img {
+      }
+
+      .my-info-submit {
+      }
+
+      .my-info-submit {
+        width: 85px;
+        min-height: 30px;
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 `;

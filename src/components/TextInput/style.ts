@@ -85,4 +85,11 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
         }
       }
     `}
+
+  @media screen and (max-width: 1660px) {
+    input {
+      width: 250px;
+      height: 35px;
+    }
+  }
 `;

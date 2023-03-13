@@ -20,6 +20,7 @@ const MusicDetail = ({
       <MusicDetailContainer className={className} width={width} height={height}>
         <Record></Record>
         <Button
+          className="close-btn"
           btnType={"submit"}
           onClick={async () => {
             setIsDetailData({

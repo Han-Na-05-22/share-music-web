@@ -149,6 +149,9 @@ export const PlayListContainer = styled.div`
         .rhap_main-controls {
           border: 1px solid ${({ theme }) => theme.colors.BlackColor};
           border: none;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
           button {
             background: ${({ theme }) => theme.colors.ModalColor};
 
@@ -162,6 +165,7 @@ export const PlayListContainer = styled.div`
         .rhap_volume-controls {
           border: 1px solid ${({ theme }) => theme.colors.BlackColor};
           border: none;
+          width: 100px;
           background: ${({ theme }) => theme.colors.ModalColor};
           button {
             svg {
@@ -177,6 +181,80 @@ export const PlayListContainer = styled.div`
 
               .rhap_volume-indicator {
                 background: ${({ theme }) => theme.colors.DefaultColor};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1660px) {
+    width: 300px;
+    height: 500px;
+    padding: 40px 30px;
+
+    .play-list-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 75px;
+      height: 35px;
+
+      span {
+        font-size: 14px;
+      }
+    }
+
+    .slick-slider {
+      .slick-list {
+        .slick-track {
+          .slick-slide {
+            & > div {
+              .paly-list-container {
+                img {
+                  width: 100px;
+                  height: 100px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .rhap_container {
+      width: 250px;
+      padding: 0px 10px;
+      .rhap_main.rhap_stacked {
+        .rhap_controls-section {
+          margin: 15px 0px;
+          .rhap_additional-controls {
+            width: 50px;
+            flex: none;
+            height: 30px;
+            button {
+              svg {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+          .rhap_main-controls {
+            width: 100px;
+            button {
+              svg {
+                width: 30px;
+                height: 30px;
+              }
+            }
+          }
+          .rhap_volume-controls {
+            width: 60px;
+            height: 40px;
+            flex: none;
+            button {
+              svg {
+                width: 20px;
               }
             }
           }

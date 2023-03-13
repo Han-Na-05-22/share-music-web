@@ -110,4 +110,139 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     display: flex;
     gap: 0 50px;
   }
+
+  @media screen and (max-width: 1660px) {
+    width: 300px;
+    height: 600px;
+    padding: 20px 30px;
+
+    .musics {
+      width: 100%;
+      gap: 40px 0px;
+    }
+
+    .music-img {
+      width: 75px;
+      height: 70px;
+
+      div {
+        height: 70px;
+      }
+
+      label {
+        width: 100%;
+        height: 50px;
+      }
+
+      svg {
+        width: 100%;
+        height: 50px;
+        transform: translate(0%);
+      }
+
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 100px;
+      }
+
+      p {
+        left: -5px;
+        bottom: -5px;
+        width: 100px;
+      }
+    }
+
+    .music-name {
+      width: 100%;
+      height: 35px;
+      padding-left: 0px;
+      line-height: 35px;
+    }
+
+    .music-title-singer {
+      display: flex;
+      flex-direction: column;
+      gap: 25px 0px;
+      margin-bottom: 15px;
+      label {
+        font-size: 12px;
+      }
+    }
+
+    .music-explan {
+      margin-left: -10px;
+      margin-bottom: 10px;
+      label {
+        font-size: 12px;
+      }
+
+      textarea {
+        width: 250px;
+        height: 50px;
+      }
+    }
+    .music-mp3 {
+      width: 250px;
+      height: 100px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      position: relative;
+      margin-bottom: 15px;
+      select {
+        position: absolute;
+        width: 100%;
+        height: 35px;
+        bottom: 0px;
+        font-size: 10px;
+        left: 0px;
+      }
+
+      .add-mp3-input {
+        margin-right: 15px;
+
+        label {
+          width: 75px;
+          font-size: 12px;
+        }
+      }
+
+      .mp3s {
+        padding-left: 10px;
+        height: 35px;
+        width: 175px;
+        line-height: 35px;
+      }
+
+      .mp3-error {
+      }
+
+      div {
+        label {
+          width: 100px;
+          height: 35px;
+          line-height: 35px;
+          font-size: 14px;
+        }
+        #mp3 {
+          display: none;
+        }
+      }
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 0 15px;
+
+      button {
+        width: 75px;
+        height: 35px;
+
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 `;
