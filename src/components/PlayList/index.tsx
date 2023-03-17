@@ -3,8 +3,6 @@ import { PlayListContainer } from "./style";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import Overlay from "components/Overlay";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useRecoilState } from "recoil";
 import { isMusicDetailState } from "components/MusicDetail/state";
 import SVG from "react-inlinesvg";
