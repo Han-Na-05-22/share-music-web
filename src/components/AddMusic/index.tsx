@@ -28,7 +28,6 @@ const AddMusic = ({
     useRecoilState<any>(currentMusicState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [form, setForm] = useState<AddMusicFormProps>({
-    id: 1,
     img: "",
     mp3: "",
     title: "",
@@ -116,8 +115,6 @@ const AddMusic = ({
     });
   };
 
-  const getUserId = auth?.currentUser?.uid.replace('"', "");
-
   const addMusicData = async () => {
     try {
       await functions?.addMusicFunction(
@@ -140,6 +137,7 @@ const AddMusic = ({
     } catch (err) {
       console.log("err", err);
     }
+    functions.getMusicListDataFunction(setMusicList);
   };
 
   useEffect(() => {

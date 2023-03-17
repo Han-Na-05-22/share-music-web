@@ -53,8 +53,7 @@ export const sendMusicDataFunction = async (
     await setDoc(washingtonRef, {
       data: [
         {
-          id: data?.id,
-          type: "add",
+          id: musicListData?.length + 1,
           email: email,
           title: data?.title,
           singer: data?.singer,
@@ -80,7 +79,6 @@ export const sendMusicDataFunction = async (
     await updateDoc(washingtonRef, {
       data: arrayUnion({
         id: musicListData?.length + 1,
-        type: "add",
         email: email,
         title: data?.title,
         singer: data?.singer,
