@@ -196,7 +196,7 @@ const AddMusic = ({
                 <TextInput
                   width="150px"
                   name="mp3"
-                  accept="audio/*"
+                  accept="audio/mp3"
                   type="file"
                   className="add-mp3-input"
                   value={undefined}

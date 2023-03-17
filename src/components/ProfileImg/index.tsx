@@ -39,6 +39,7 @@ const ProfileImg = ({
         </label>
       )}
       <input
+        accept="image/jpg, image/png, image/jpeg"
         type="file"
         value={value}
         id={file ? "file-change" : "file-upload"}
