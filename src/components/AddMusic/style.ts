@@ -64,6 +64,14 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     justify-content: space-between;
     align-items: flex-end;
 
+    .add-info {
+      position: absolute;
+      bottom: 50px;
+      left: 0px;
+      font-size: 10px;
+      color: ${({ theme }) => theme.colors.HoverText};
+    }
+
     .add-mp3-input {
       margin-right: 30px;
     }

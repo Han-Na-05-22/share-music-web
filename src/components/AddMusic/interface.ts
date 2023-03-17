@@ -9,6 +9,7 @@ export interface AddMusicStyleProps {
   height?: string;
 }
 export interface AddMusicFormProps {
+  id?: number;
   img: string;
   mp3: any;
   title: string;

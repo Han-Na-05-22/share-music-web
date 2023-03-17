@@ -44,15 +44,16 @@ export const getUsersListDataFunction = async (setUsersData: any) => {
 export const sendMusicDataFunction = async (
   email: string,
   data: any,
-  musicListData: any
+  musicListData: any,
+  url: any
 ) => {
   const washingtonRef = doc(firestore, "music", "musicList");
-
+  console.log("email", email);
   if (musicListData?.length === 0) {
     await setDoc(washingtonRef, {
       data: [
         {
-          id: 1,
+          id: data?.id,
           type: "add",
           email: email,
           title: data?.title,
@@ -61,6 +62,7 @@ export const sendMusicDataFunction = async (
           img: data?.img,
           date: data?.date,
           genre: data?.genre,
+          url: url,
           mp3: `${
             data?.formData?.name
               .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
@@ -86,6 +88,7 @@ export const sendMusicDataFunction = async (
         img: data?.img,
         date: data?.date,
         genre: data?.genre,
+        url: url,
         mp3: `${
           data?.formData?.name
             .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
@@ -124,9 +127,11 @@ export const addMusicFunction = (
     uniqueKey: string;
     img: string;
   },
-  setData?: any,
+
   setIsCompleted?: any,
-  setMusicList?: any
+  setMusicList?: any,
+  form?: any,
+  musicList?: any
 ) => {
   if (!file) {
     return;
@@ -173,67 +178,67 @@ export const addMusicFunction = (
       await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
         console.log(`완료 url: ${downloadUrl}`);
 
-        myMusicListFunction(src, setData);
+        sendMusicDataFunction(src?.split("/")[1], form, musicList, downloadUrl);
       });
     }
   );
 };
 
 // 내가 등록한 음원리스트들을 불러오는 함수(Storage)
-export const myMusicListFunction = (src: any, setData?: any) => {
-  if (!src) {
-    return;
-  }
-  const MusicListRef = sRef(storage, `${src}/`);
+// export const myMusicListFunction = (src: any, setData?: any) => {
+//   if (!src) {
+//     return;
+//   }
+//   const MusicListRef = sRef(storage, `${src}/`);
 
-  let array: any = "";
+//   let array: any = "";
 
-  listAll(MusicListRef)
-    .then((res) => {
-      res?.items?.forEach((item: any) => {
-        getDownloadURL(item)?.then((url) => {
-          const forestRef = ref(storage, `${item?._location?.path_}`);
-          getMetadata(forestRef)
-            .then((metadata) => {
-              array = [
-                ...array,
-                { url: url, path: item?._location?.path_, meta: metadata },
-              ];
-              return setData(array);
-            })
-            .catch((error) => {
-              console.log("err", error);
-            });
-        });
-      });
-    })
-    .catch((error) => {
-      console.log("err", error);
-    });
+//   listAll(MusicListRef)
+//     .then((res) => {
+//       res?.items?.forEach((item: any) => {
+//         getDownloadURL(item)?.then((url) => {
+//           const forestRef = ref(storage, `${item?._location?.path_}`);
+//           getMetadata(forestRef)
+//             .then((metadata) => {
+//               array = [
+//                 ...array,
+//                 { url: url, path: item?._location?.path_, meta: metadata },
+//               ];
+//               return array;
+//             })
+//             .catch((error) => {
+//               console.log("err", error);
+//             });
+//         });
+//       });
+//     })
+//     .catch((error) => {
+//       console.log("err", error);
+//     });
 
-  return setData;
-};
+//   return setData;
+// };
 
 // 음원 상세보기 오디오 URL (Storage)
-export const getMusicUrlFunction = (src: any, setData: any, name: any) => {
-  if (!src) {
-    return;
-  }
+// export const getMusicUrlFunction = (src: any, setData: any, name: any) => {
+//   if (!src) {
+//     return;
+//   }
 
-  const MusicListRef = sRef(storage, `music/${src}/`);
+//   const MusicListRef = sRef(storage, `music/${src}/`);
 
-  listAll(MusicListRef)?.then((response: any) => {
-    response?.items?.forEach((item: any) => {
-      getDownloadURL(item)?.then((url) => {
-        if (item?._location?.path_ === `music/${src}/${name}`) {
-          return setData(url);
-        }
-      });
-    });
-  });
+//   listAll(MusicListRef)?.then((response: any) => {
+//     response?.items?.forEach((item: any) => {
+//       getDownloadURL(item)?.then((url) => {
+//         if (item?._location?.path_ === `music/${src}/${name}`) {
+//           return setData(url);
+//         }
+//       });
+//     });
+//   });
 
-  return setData;
-};
+//   return setData;
+// };
 
 // user 정보 수정
 // todo : ★ 해당 기호 있는 todo 찾아서 아래 함수 사용할 것.

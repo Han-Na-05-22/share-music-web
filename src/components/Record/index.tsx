@@ -4,10 +4,7 @@ import SVG from "react-inlinesvg";
 import { useEffect, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import {
-  musicDetailState,
-  musicDetailUrlState,
-} from "components/MusicDetail/state";
+import { musicDetailState } from "components/MusicDetail/state";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import { userInfo } from "components/Login/state";
@@ -23,10 +20,10 @@ const Record = ({
 }: RecordProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-  const [musicDetailUrl, setMusicDetailUrl] =
-    useRecoilState<any>(musicDetailUrlState);
+
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
+  console.log("musicDetailData", musicDetailData);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -146,7 +143,7 @@ const Record = ({
 
       <AudioPlayer
         autoPlay={isPlay}
-        src={musicDetailUrl}
+        src={musicDetailData?.url}
         onPause={() => setIsPlay(false)}
         onPlay={(e) => {
           setIsPlay(true);
@@ -154,7 +151,6 @@ const Record = ({
         }}
       />
       <div className="about-music-artists">
-        {/* <span>{musicDetailData?.email?.split("@")[0]} </span> */}
         <div className="like-download-counts">
           <div className="like-download like">
             {musicList

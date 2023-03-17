@@ -8,12 +8,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
-import {
-  checkEditMusicState,
-  musicListState,
-  myMusic,
-  myMusicAddState,
-} from "./state";
+import { checkEditMusicState, musicListState, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
 import Loading from "components/Loading";
@@ -28,12 +23,12 @@ const AddMusic = ({
   width = "1150px",
   height = "780px",
 }: AddMusicProps) => {
-  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [form, setForm] = useState<AddMusicFormProps>({
+    id: 1,
     img: "",
     mp3: "",
     title: "",
@@ -136,17 +131,15 @@ const AddMusic = ({
           img: form?.img,
           uniqueKey: form?.uniqueKey,
         },
-        setMyMusicList,
-        setIsCompleted,
-        setMusicList
-      );
 
-      functions?.sendMusicDataFunction(user?.email, form, musicList);
+        setIsCompleted,
+        setMusicList,
+        form,
+        musicList
+      );
     } catch (err) {
       console.log("err", err);
     }
-
-    setMyMusicList(functions?.myMusicListFunction);
   };
 
   useEffect(() => {
@@ -197,6 +190,9 @@ const AddMusic = ({
                     ? "음원을 업로드 해주세요"
                     : form?.mpName}
                 </p>
+                <strong className="add-info">
+                  ✴︎ mp3 파일만 등록 가능합니다.
+                </strong>
                 <TextInput
                   width="150px"
                   name="mp3"

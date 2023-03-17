@@ -1,6 +1,6 @@
 import { HomeContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tabel from "components/Table";
 import Pagination from "components/Pagination";
 import { dummyData } from "utility/data";
@@ -10,7 +10,6 @@ import { musicListState } from "components/AddMusic/state";
 import {
   isMusicDetailState,
   musicDetailState,
-  musicDetailUrlState,
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
 import * as functions from "../../common/functions";
@@ -25,8 +24,6 @@ const Home = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-  const [musicDetailUrl, setMusicDetailUrl] =
-    useRecoilState<any>(musicDetailUrlState);
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [limit, setLimit] = useState<number>(10);
@@ -86,11 +83,6 @@ const Home = () => {
                           isLocation: "home",
                         });
                     setMusicDetailData(item);
-                    functions.getMusicUrlFunction(
-                      item?.email,
-                      setMusicDetailUrl,
-                      item?.mp3
-                    );
                   }}
                 >
                   <td>{idx + 1}</td>
@@ -154,11 +146,6 @@ const Home = () => {
                           isLocation: "home",
                         });
                     setMusicDetailData(item);
-                    functions.getMusicUrlFunction(
-                      item?.email,
-                      setMusicDetailUrl,
-                      item?.mp3
-                    );
                   }}
                 >
                   <td>{idx + 1}</td>

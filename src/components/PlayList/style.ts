@@ -21,90 +21,45 @@ export const PlayListContainer = styled.div`
     right: 15px;
   }
 
-  .slick-slider {
-    cursor: pointer;
+  .paly-list-container {
     width: 100%;
     height: 100%;
-    position: relative;
-    .slick-arrow {
-      opacity: 0;
-      position: absolute;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px 0px;
 
-      /* &::before {
-        color: ${({ theme }) => theme.colors.DefaultColor};
-        opacity: 1;
-        font-size: 30px;
-      } */
+    .btn {
+      position: absolute;
+      z-index: 10000;
+      cursor: pointer;
     }
-    /* 
-    .slick-prev {
+
+    .prev-btn {
       left: 30px;
     }
-    .slick-next {
+    .next-btn {
       right: 30px;
-    } */
+    }
+    img {
+      width: 125px;
+      height: 125px;
+      border-radius: 100%;
+    }
 
-    .slick-list {
-      height: 100%;
+    .about-music {
+      display: flex;
+      flex-direction: column;
+      gap: 15px 0px;
+    }
 
-      .slick-track {
-        height: 100%;
-        display: flex;
-        width: 100%;
-
-        .slick-slide {
-          height: 100%;
-          width: 100%;
-          position: relative;
-          & > div {
-            height: 100%;
-
-            .paly-list-container {
-              width: 100%;
-              height: 100%;
-              display: flex !important;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-              gap: 30px 0px;
-              position: absolute;
-              transform: translate(-50%, -50%);
-              top: 50%;
-              left: 50%;
-              /* .btn {
-                position: absolute;
-                border: 2px solid red;
-                z-index: 10000;
-              }
-
-              .prev-btn {
-                left: 15px;
-              }
-              .next-btn {
-                right: 15px;
-              } */
-              img {
-                width: 125px;
-                height: 125px;
-                border-radius: 100%;
-              }
-
-              .about-music {
-                display: flex;
-                flex-direction: column;
-                gap: 15px 0px;
-              }
-
-              strong,
-              p {
-                color: ${({ theme }) => theme.colors.BlackColor};
-              }
-            }
-          }
-        }
-      }
+    strong,
+    p {
+      color: ${({ theme }) => theme.colors.BlackColor};
     }
   }
+
   .rhap_container {
     padding: 0px;
     width: 100%;
@@ -206,22 +161,13 @@ export const PlayListContainer = styled.div`
       }
     }
 
-    .slick-slider {
-      .slick-list {
-        .slick-track {
-          .slick-slide {
-            & > div {
-              .paly-list-container {
-                img {
-                  width: 100px;
-                  height: 100px;
-                }
-              }
-            }
-          }
-        }
+    .paly-list-container {
+      img {
+        width: 100px;
+        height: 100px;
       }
     }
+
     .rhap_container {
       width: 250px;
       padding: 0px 10px;

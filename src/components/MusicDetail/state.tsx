@@ -5,10 +5,6 @@ export const musicDetailState = atom({
   default: {},
 });
 
-export const musicDetailUrlState = atom({
-  key: "musicDetailUrlStateData",
-  default: "",
-});
 export const isMusicDetailState = atom({
   key: "isMusicDetailStateData",
   default: {

@@ -1,8 +1,4 @@
-import {
-  checkEditMusicState,
-  musicListState,
-  myMusic,
-} from "components/AddMusic/state";
+import { checkEditMusicState, musicListState } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import Pagination from "components/Pagination";
 import Tabel from "components/Table";
@@ -16,7 +12,6 @@ import * as functions from "../../common/functions";
 import {
   isMusicDetailState,
   musicDetailState,
-  musicDetailUrlState,
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
 import { deleteObject, ref } from "firebase/storage";
@@ -35,14 +30,12 @@ const MyPage = () => {
     useRecoilState<any>(musicDetailState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-  const [musicDetailUrl, setMusicDetailUrl] =
-    useRecoilState<any>(musicDetailUrlState);
+
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
 
   const [user, setUser] = useRecoilState<any>(userInfo);
-  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
 
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
@@ -74,12 +67,6 @@ const MyPage = () => {
         console.log("err:", error);
         alert("삭제에 실패하였습니다.");
       });
-  }, []);
-
-  useEffect(() => {
-    if (user?.email) {
-      functions?.myMusicListFunction(`music/${user?.email}/`, setMyMusicList);
-    }
   }, []);
 
   return (
@@ -126,11 +113,6 @@ const MyPage = () => {
                         });
                     setIsEdit("");
                     setMusicDetailData(item);
-                    functions.getMusicUrlFunction(
-                      item?.email,
-                      setMusicDetailUrl,
-                      item?.mp3
-                    );
                   }}
                 >
                   <td>{idx + 1}</td>
@@ -212,11 +194,6 @@ const MyPage = () => {
                           isLocation: "mypage",
                         });
                     setMusicDetailData(item);
-                    functions.getMusicUrlFunction(
-                      item?.email,
-                      setMusicDetailUrl,
-                      item?.mp3
-                    );
                   }}
                 >
                   <td>{idx + 1}</td>

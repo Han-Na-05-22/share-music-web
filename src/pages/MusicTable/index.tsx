@@ -12,7 +12,6 @@ import Button from "components/Button";
 import {
   isMusicDetailState,
   musicDetailState,
-  musicDetailUrlState,
 } from "components/MusicDetail/state";
 import * as functions from "../../common/functions";
 import MusicDetail from "components/MusicDetail";
@@ -37,8 +36,6 @@ const MusicTable = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-  const [musicDetailUrl, setMusicDetailUrl] =
-    useRecoilState<any>(musicDetailUrlState);
 
   const onCheckedAllMusic = () => {
     if (
@@ -207,11 +204,6 @@ const MusicTable = () => {
                       isLocation: "musicTable",
                     });
                     setMusicDetailData(item);
-                    functions.getMusicUrlFunction(
-                      item?.email,
-                      setMusicDetailUrl,
-                      item?.mp3
-                    );
                   }}
                 >
                   <td>

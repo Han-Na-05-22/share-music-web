@@ -8,7 +8,7 @@ import Box from "components/Box";
 import Button from "components/Button";
 import ProfileImg from "components/ProfileImg";
 import { doc, setDoc } from "firebase/firestore";
-import { musicListState, myMusic } from "components/AddMusic/state";
+import { musicListState } from "components/AddMusic/state";
 import Genre from "components/Genre";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -20,7 +20,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
+
   const navigate = useNavigate();
   const getUserId = auth?.currentUser?.uid.replace('"', "");
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);

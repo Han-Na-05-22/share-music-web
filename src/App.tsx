@@ -1,6 +1,6 @@
 import Container from "common/layout/Container";
 import Header from "common/layout/Header";
-import { musicListState, myMusic } from "components/AddMusic/state";
+import { musicListState } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import Home from "pages/Home";
 import MusicTable from "pages/MusicTable";
@@ -14,11 +14,11 @@ import * as functions from "./common/functions";
 
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
-  const [myMusicList, setMyMusicList] = useRecoilState<any>(myMusic);
+
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-
+  console.log("myMusicPlayList", myMusicPlayList);
   let getDownloadMusicList: any = "";
   const getDownloadMusicData = () => {
     musicList
@@ -39,6 +39,7 @@ function App() {
 
   useEffect(() => {
     getDownloadMusicData();
+
     if (getDownloadMusicList) {
       setMyMusicPlayList(
         getDownloadMusicList?.concat(
@@ -51,6 +52,7 @@ function App() {
       );
     }
   }, [musicList]);
+  console.log("musicList", musicList);
 
   return (
     <div className="App">
