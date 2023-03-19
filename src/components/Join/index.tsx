@@ -81,6 +81,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       navigate("/");
     }
   };
+  console.log("isClicked", isClicked);
 
   const handleChangeImg = (event: any) => {
     const { name } = event.target;

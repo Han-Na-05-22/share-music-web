@@ -46,7 +46,7 @@ const Home = () => {
       <LeftContent className="left-container"></LeftContent>
       <div className="tabel-container">
         <Tabel
-          tableBtnText={"TOP"}
+          tableBtnText={"인기순"}
           theadData={[
             {
               title: "순위",
@@ -109,7 +109,7 @@ const Home = () => {
       </div>
       <div className="tabel-container">
         <Tabel
-          tableBtnText={"NEW"}
+          tableBtnText={"등록순"}
           theadData={[
             {
               title: "순번",

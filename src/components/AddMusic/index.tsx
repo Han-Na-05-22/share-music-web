@@ -41,7 +41,7 @@ const AddMusic = ({
   console.log("form", form);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
-
+  const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<string>("none");
 
   const handleChangeSelect = (event: any) => {
@@ -134,7 +134,10 @@ const AddMusic = ({
         form,
         musicList
       );
+
+      setIsClicked(false);
     } catch (err) {
+      setIsClicked(true);
       console.log("err", err);
     }
     functions.getMusicListDataFunction(setMusicList);
@@ -166,7 +169,7 @@ const AddMusic = ({
               <ProfileImg
                 name="img"
                 file={form?.img}
-                isError={form?.img?.length === 0}
+                isError={isClicked && form?.img?.length === 0}
                 errMsg={"이미지를 등록해 주세요."}
                 onChange={(e) => handleChangeMusicImg(e)}
                 onClickDelete={deleteImg}
@@ -181,7 +184,9 @@ const AddMusic = ({
               <>
                 <p
                   className={
-                    form?.mp3?.length === 0 ? "mp3-error mp3s" : "mp3-name mp3s"
+                    isClicked && form?.mp3?.length === 0
+                      ? "mp3-error mp3s"
+                      : "mp3-name mp3s"
                   }
                 >
                   {form?.mp3?.length === 0
@@ -219,7 +224,9 @@ const AddMusic = ({
               name="title"
               value={isEdit !== "edit" ? form?.title : currentMusic?.title}
               label="제목"
-              isError={isEdit !== "edit" && form?.title?.length === 0}
+              isError={
+                isClicked && isEdit !== "edit" && form?.title?.length === 0
+              }
               errorMsg={"제목을 입력해주세요."}
               onChange={(e) => {
                 handleChangeInput(e);
@@ -230,7 +237,9 @@ const AddMusic = ({
               name="singer"
               value={isEdit !== "edit" ? form?.singer : currentMusic?.singer}
               label="가수"
-              isError={isEdit !== "edit" && form?.singer?.length === 0}
+              isError={
+                isClicked && isEdit !== "edit" && form?.singer?.length === 0
+              }
               errorMsg={"가수명을 입력해주세요."}
               onChange={(e) => {
                 handleChangeInput(e);
@@ -241,7 +250,11 @@ const AddMusic = ({
             <Textarea
               label="설명"
               name="explanation"
-              isError={isEdit !== "edit" && form?.explanation?.length === 0}
+              isError={
+                isClicked &&
+                isEdit !== "edit" &&
+                form?.explanation?.length === 0
+              }
               errorMsg={"설명글을 입력해주세요."}
               value={
                 isEdit !== "edit"

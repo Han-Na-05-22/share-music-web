@@ -66,7 +66,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
 
     .add-info {
       position: absolute;
-      bottom: 50px;
+      bottom: -20px;
       left: 0px;
       font-size: 10px;
       color: ${({ theme }) => theme.colors.HoverText};
@@ -85,6 +85,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       display: flex;
       color: ${({ theme }) => theme.colors.DefaultText};
       border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
+      font-size: 10px;
     }
 
     .mp3-error {
@@ -208,6 +209,15 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       flex-direction: column;
       position: relative;
       margin-bottom: 15px;
+
+      .add-info {
+        position: absolute;
+        bottom: 50px;
+        left: 0px;
+        font-size: 10px;
+        color: ${({ theme }) => theme.colors.HoverText};
+      }
+
       select {
         position: absolute;
         width: 100%;
