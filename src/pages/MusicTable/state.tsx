@@ -15,3 +15,8 @@ export const selectFilterState = atom({
     "트로트" ||
     "락/메탈",
 });
+
+export const filterMusicListState = atom({
+  key: "filterMusicListStateData",
+  default: [],
+});

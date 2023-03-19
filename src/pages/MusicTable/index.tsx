@@ -5,7 +5,7 @@ import { MusicTableContainer } from "./style";
 import SVG from "react-inlinesvg";
 import { useEffect, useState } from "react";
 import Pagination from "components/Pagination";
-import { selectFilterState } from "./state";
+import { filterMusicListState, selectFilterState } from "./state";
 import CheckBox from "components/CheckBox";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
@@ -20,6 +20,9 @@ import { userInfo } from "components/Login/state";
 // todo : 수정 필요
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [filterMusicList, setFilterMusicList] =
+    useRecoilState<any>(filterMusicListState);
+  console.log("filterMusicList", filterMusicList);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [search, setSearch] = useState<any>("");
   const [limit, setLimit] = useState<number>(10);
@@ -27,7 +30,7 @@ const MusicTable = () => {
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
-
+  console.log("selectFilter", selectFilter);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
   const offset = (page - 1) * limit;
@@ -73,12 +76,17 @@ const MusicTable = () => {
   };
 
   useEffect(() => {
-    if (selectFilter !== "TOP" && selectFilter !== "NEW") {
+    if (selectFilter !== "인기순" && selectFilter !== "등록순") {
       const result = musicList?.filter(
         (item: any) => item?.genre === selectFilter
       );
+      setFilterMusicList(result);
+    }
 
-      setMusicList(result);
+    if (selectFilter === "인기순" || selectFilter === "등록순") {
+      const result = musicList?.filter((item: any) => item);
+
+      setFilterMusicList(result);
     }
   }, [selectFilter]);
 
@@ -154,7 +162,7 @@ const MusicTable = () => {
               ),
             },
             {
-              title: selectFilter === "TOP" ? "순위" : "순번",
+              title: selectFilter === "인기순" ? "순위" : "순번",
             },
             {
               title: "음원",
@@ -185,11 +193,12 @@ const MusicTable = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined && musicList?.length !== 0 ? (
-            musicList
+          {filterMusicList?.length !== undefined &&
+          filterMusicList?.length !== 0 ? (
+            filterMusicList
               ?.slice(offset, offset + limit)
               ?.sort((a: any, b: any) => {
-                if (selectFilter === "TOP") {
+                if (selectFilter === "인기순") {
                   return b?.likeCount - a?.likeCount;
                 } else {
                   return b?.id - a?.id;
