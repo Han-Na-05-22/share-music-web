@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { CheckBoxProps } from "./interface";
 import { CheckBoxContainer } from "./style";
 
@@ -11,7 +10,6 @@ const CheckBox = ({
   onChange,
   onClick,
 }: CheckBoxProps) => {
-  console.log("disabledGenreListAll", disabled);
   return (
     <CheckBoxContainer className={className} onClick={onClick}>
       <input

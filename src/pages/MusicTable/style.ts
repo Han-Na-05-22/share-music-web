@@ -81,12 +81,6 @@ export const MusicTableContainer = styled.div`
             svg {
               cursor: not-allowed;
             }
-
-            .clicked-svg {
-              path {
-                fill-opacity: 1;
-              }
-            }
           }
         }
       }

@@ -150,25 +150,29 @@ const Record = ({
       <div className="about-music-artists">
         <div className="like-download-counts">
           <div className="like-download like">
-            {musicList
-              ?.find((item: any) => item?.id === musicDetailData?.id)
-              ?.likedClickList?.find((i: any) => {
-                return i?.email === user?.email;
-              })?.email === user?.email ? (
-              <SVG
-                src="/svg/heart.svg"
-                onClick={() => {
+            <SVG
+              src={`/svg/${
+                musicList
+                  ?.find((item: any) => item?.id === musicDetailData?.id)
+                  ?.likedClickList?.find((i: any) => {
+                    return i?.email === user?.email;
+                  })?.email === user?.email
+                  ? "heart"
+                  : "/term_heart"
+              }.svg`}
+              onClick={(e: any) => {
+                if (musicDetailData?.email !== user?.email) {
                   onChangeCountData("like");
-                }}
-              />
-            ) : (
-              <SVG
-                src="/svg/term_heart.svg"
-                onClick={() => {
-                  onChangeCountData("like");
-                }}
-              />
-            )}
+                } else {
+                  e.stopPropagation();
+                }
+              }}
+              className={
+                musicDetailData?.email !== user?.email
+                  ? "clicked-svg"
+                  : "no-clicked-svg"
+              }
+            />
 
             <strong>
               {
@@ -178,25 +182,29 @@ const Record = ({
             </strong>
           </div>
           <div className="like-download download">
-            {musicList
-              ?.find((item: any) => item?.id === musicDetailData?.id)
-              ?.downloadClickList?.find((i: any) => {
-                return i?.email === user?.email;
-              })?.email === user?.email ? (
-              <SVG
-                src="/svg/download.svg"
-                onClick={async () => {
-                  await onChangeCountData("download");
-                }}
-              />
-            ) : (
-              <SVG
-                src="/svg/term_download.svg"
-                onClick={async () => {
-                  await onChangeCountData("download");
-                }}
-              />
-            )}
+            <SVG
+              src={`/svg/${
+                musicList
+                  ?.find((item: any) => item?.id === musicDetailData?.id)
+                  ?.downloadClickList?.find((i: any) => {
+                    return i?.email === user?.email;
+                  })?.email === user?.email
+                  ? "download"
+                  : "term_download"
+              }.svg`}
+              onClick={async (e: any) => {
+                if (musicDetailData?.email !== user?.email) {
+                  onChangeCountData("download");
+                } else {
+                  e.stopPropagation();
+                }
+              }}
+              className={
+                musicDetailData?.email !== user?.email
+                  ? "clicked-svg"
+                  : "no-clicked-svg"
+              }
+            />
 
             <strong>
               {

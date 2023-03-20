@@ -175,9 +175,6 @@ const MyPage = () => {
             {
               title: "가수",
             },
-            {
-              title: "",
-            },
           ]}
         >
           {myMusicPlayList?.length !== 0 &&
@@ -202,10 +199,6 @@ const MyPage = () => {
                   </td>
                   <td>{item?.title}</td>
                   <td>{item?.singer}</td>
-
-                  <td>
-                    <SVG src="/svg/term_delete.svg" />
-                  </td>
                 </tr>
               ))}
         </Tabel>

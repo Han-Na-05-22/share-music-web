@@ -44,4 +44,10 @@ export const GlobalStyle = createGlobalStyle`
     font-weight:bold;
   }
 
+
+
+  .no-clicked-svg{
+    cursor: not-allowed !important;
+  }
+
 `;

@@ -49,15 +49,17 @@ const MusicTable = () => {
     let array: any = "";
     if (
       (addMusicPlayer?.length !== 0 &&
-        addMusicPlayer?.length + myMusicPlayList?.length ===
-          musicList?.length) ||
+        addMusicPlayer?.length +
+          myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)
+            ?.length ===
+          filterMusicList?.length) ||
       (addMusicPlayer?.length !== 0 &&
         addMusicPlayer?.length + myMusicPlayList?.length ===
-          musicList?.length + myMusicPlayList?.length)
+          filterMusicList?.length)
     ) {
       setAddMusicPlayer([]);
     } else {
-      musicList?.forEach((i: any) => {
+      filterMusicList?.forEach((i: any) => {
         if (!myMusicPlayList?.map((j: any) => j?.id)?.includes(i?.id)) {
           array = [...array, i?.id];
         }
@@ -127,6 +129,14 @@ const MusicTable = () => {
     });
     functions?.sendUpdateLikeDownloadCountFunction(result);
   }, [addMusicPlayer]);
+
+  const allCheckd =
+    filterMusicList?.length === 0 ||
+    selectFilter === "내 음악" ||
+    selectFilter === "플레이리스트" ||
+    myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
+      filterMusicList?.length ||
+    musicList?.length === myMusicPlayList?.length;
 
   useEffect(() => {
     if (selectFilter !== "인기순" && selectFilter !== "등록순") {
@@ -231,7 +241,10 @@ const MusicTable = () => {
                   }
                   onClick={(e) => {
                     e.stopPropagation();
-                    onCheckedAllMusic();
+
+                    if (!allCheckd) {
+                      onCheckedAllMusic();
+                    }
                   }}
                   checked={
                     (addMusicPlayer?.length + myMusicPlayList?.length ===
@@ -274,9 +287,6 @@ const MusicTable = () => {
             },
             {
               title: "등록일",
-            },
-            {
-              title: "",
             },
           ]}
         >
