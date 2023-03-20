@@ -30,9 +30,7 @@ const ProfileImg = ({
         />
       )}
       {file && !isError ? (
-        <label htmlFor="file-change" className="file-change">
-          <SVG src="/svg/icon-pic.svg" />
-        </label>
+        <label htmlFor="file-change" className="file-change"></label>
       ) : (
         <label htmlFor="file-upload" className="file-upload">
           <SVG src="/svg/profile.svg" />

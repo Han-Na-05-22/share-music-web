@@ -13,14 +13,12 @@ import {
   isMusicDetailState,
   musicDetailState,
 } from "components/MusicDetail/state";
-import * as functions from "../../common/functions";
 import MusicDetail from "components/MusicDetail";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
-import { GenreList, GenreListAll } from "utility/data";
+import { GenreListAll } from "utility/data";
 import BasicSelect from "components/BasicSelect";
-import { async } from "@firebase/util";
-// todo : 수정 필요
+
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
@@ -45,6 +43,7 @@ const MusicTable = () => {
     useRecoilState<any>(musicDetailState);
 
   const onCheckedAllMusic = () => {
+    let array: any = "";
     if (
       (addMusicPlayer?.length !== 0 &&
         addMusicPlayer?.length + myMusicPlayList?.length ===
@@ -55,8 +54,12 @@ const MusicTable = () => {
     ) {
       setAddMusicPlayer([]);
     } else {
-      const result = musicList?.map((item: any, i: number) => item.id);
-      setAddMusicPlayer(result);
+      musicList?.forEach((i: any) => {
+        if (!myMusicPlayList?.map((j: any) => j?.id)?.includes(i?.id)) {
+          array = [...array, i?.id];
+        }
+        setAddMusicPlayer(array);
+      });
     }
   };
 
@@ -186,7 +189,6 @@ const MusicTable = () => {
                     e.stopPropagation();
                     onCheckedAllMusic();
                   }}
-                  onChange={() => {}}
                   checked={
                     addMusicPlayer?.length + myMusicPlayList?.length ===
                       musicList?.length &&
@@ -299,7 +301,9 @@ const MusicTable = () => {
                 </tr>
               ))
           ) : (
-            <p className="no-data">등록된 데이터가 없습니다.</p>
+            <tr className="no-data">
+              <td className="no-data-content">등록된 데이터가 없습니다.</td>
+            </tr>
           )}
         </Tabel>
         <Pagination

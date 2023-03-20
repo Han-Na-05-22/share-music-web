@@ -13,22 +13,12 @@ const Header = () => {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-  const [selectFilter, setSelectFilter] =
-    useRecoilState<string>(selectFilterState);
-
-  useEffect(() => {
-    if (selectFilter === "") {
-      functions.getMusicListDataFunction(setMusicList);
-    }
-  }, [selectFilter]);
 
   return (
     <>
       <HeaderContainer>
         <h1
-          onClick={async () => {
-            await setSelectFilter("");
+          onClick={() => {
             navigate("/");
           }}
         >

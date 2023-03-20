@@ -112,7 +112,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
           name="password"
           type="password"
           width="465px"
-          value={form?.pwd}
+          value={form?.pwd || ""}
           label="비밀번호"
           onChange={(e) => {
             setForm({
@@ -125,7 +125,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
           name="rePassword"
           type="password"
           width="465px"
-          value={form?.rePwd}
+          value={form?.rePwd || ""}
           label="비밀번호 확인"
           onChange={(e) => {
             setForm({
