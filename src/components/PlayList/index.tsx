@@ -10,8 +10,6 @@ import Button from "components/Button";
 import { useState } from "react";
 
 const PlayList = ({ className, children, playListData }: PlayListProps) => {
-  console.log("playListData", playListData);
-
   const [isDetailData, setIsDetailData] =
     useRecoilState<any>(isMusicDetailState);
   const [idx, setIdx] = useState<any>(0);

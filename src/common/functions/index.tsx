@@ -48,7 +48,7 @@ export const sendMusicDataFunction = async (
   url: any
 ) => {
   const washingtonRef = doc(firestore, "music", "musicList");
-  console.log("email", email);
+
   if (musicListData?.length === 0) {
     await setDoc(washingtonRef, {
       data: [

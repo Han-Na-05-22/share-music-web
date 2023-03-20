@@ -25,7 +25,7 @@ const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
-  console.log("filterMusicList", filterMusicList);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [search, setSearch] = useState<any>("");
   const [limit, setLimit] = useState<number>(10);
@@ -34,7 +34,7 @@ const MusicTable = () => {
     useRecoilState<string>(selectFilterState);
   const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
   const [filterGenre, setFilterGenre] = useState<string>("All");
-  console.log("selectFilter", selectFilter);
+
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
   const offset = (page - 1) * limit;
@@ -72,16 +72,14 @@ const MusicTable = () => {
 
   const handleChangeSelect = async (event: any) => {
     const isSelected = event.target.options[event.target.selectedIndex].value;
-    console.log("isSelected", isSelected);
+
     await setFilterGenre(isSelected);
 
     if (isSelected === "All" && search?.length === 0) {
-      console.log("ㅋㅋㅋㅋㅋㅋㅋ");
       setFilterMusicList(musicList);
     }
 
     if (isSelected === "All" && search?.length !== 0) {
-      console.log("이게 실행됨~");
       setFilterMusicList(musicList?.filter((i: any) => i?.title === search));
     }
 
@@ -115,12 +113,7 @@ const MusicTable = () => {
       setFilterMusicList(result);
     }
   }, [selectFilter]);
-  console.log("search", search);
-  console.log("filterGenre", filterGenre);
-  console.log(
-    "fwe;jgewjg",
-    GenreListAll?.find((i: any) => i?.name === selectFilter)
-  );
+
   return (
     <MusicTableContainer>
       <div className="music-top">

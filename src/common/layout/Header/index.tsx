@@ -22,7 +22,6 @@ const Header = () => {
       functions.getMusicListDataFunction(setMusicList);
     }
   }, [selectFilter]);
-  console.log("selectFilter", selectFilter);
 
   return (
     <>

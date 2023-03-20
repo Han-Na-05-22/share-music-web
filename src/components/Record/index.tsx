@@ -23,7 +23,7 @@ const Record = ({
 
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-  console.log("musicDetailData", musicDetailData);
+
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [isPlay, setIsPlay] = useState<boolean>(false);

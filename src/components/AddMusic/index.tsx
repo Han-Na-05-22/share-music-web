@@ -38,7 +38,7 @@ const AddMusic = ({
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
-  console.log("form", form);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
