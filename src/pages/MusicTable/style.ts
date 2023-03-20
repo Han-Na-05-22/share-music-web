@@ -102,6 +102,7 @@ export const MusicTableContainer = styled.div`
         gap: 0px 10px;
 
         select {
+          width: 75px;
           height: 35px;
         }
       }
@@ -199,6 +200,33 @@ export const MusicTableContainer = styled.div`
               display: none;
             }
           }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .music-top {
+      .search {
+        gap: 0px 5px;
+
+        select {
+          font-size: 10px;
+          padding-left: 5px;
+        }
+      }
+
+      input {
+        width: 100px;
+        font-size: 10px;
+        padding-left: 5px;
+      }
+
+      .my-info-submit {
+        width: 50px;
+
+        span {
+          font-size: 10px;
         }
       }
     }

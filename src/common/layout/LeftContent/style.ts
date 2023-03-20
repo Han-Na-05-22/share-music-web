@@ -81,7 +81,7 @@ export const LeftContentContainer = styled.div`
 
   @media screen and (max-width: 1660px) {
     .left {
-      height: 550px;
+      height: 325px;
       gap: 25px 0px;
     }
 

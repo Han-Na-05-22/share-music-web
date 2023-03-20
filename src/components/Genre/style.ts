@@ -21,7 +21,8 @@ export const GenreContainer = styled.div`
     height: 100%;
   }
   @media screen and (max-width: 1660px) {
-    width: 100%;
+    display: none;
+    /* width: 100%;
     height: 250px;
 
     .title {
@@ -37,6 +38,6 @@ export const GenreContainer = styled.div`
           font-size: 16px;
         }
       }
-    }
+    } */
   }
 `;
