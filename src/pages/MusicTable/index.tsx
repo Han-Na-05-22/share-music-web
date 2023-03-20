@@ -17,6 +17,9 @@ import * as functions from "../../common/functions";
 import MusicDetail from "components/MusicDetail";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
+import { GenreList, GenreListAll } from "utility/data";
+import BasicSelect from "components/BasicSelect";
+import { async } from "@firebase/util";
 // todo : 수정 필요
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
@@ -30,6 +33,7 @@ const MusicTable = () => {
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
+  const [filterGenre, setFilterGenre] = useState<string>("All");
   console.log("selectFilter", selectFilter);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
@@ -66,6 +70,28 @@ const MusicTable = () => {
     }
   };
 
+  const handleChangeSelect = async (event: any) => {
+    const isSelected = event.target.options[event.target.selectedIndex].value;
+    console.log("isSelected", isSelected);
+    await setFilterGenre(isSelected);
+
+    if (isSelected === "All" && search?.length === 0) {
+      console.log("ㅋㅋㅋㅋㅋㅋㅋ");
+      setFilterMusicList(musicList);
+    }
+
+    if (isSelected === "All" && search?.length !== 0) {
+      console.log("이게 실행됨~");
+      setFilterMusicList(musicList?.filter((i: any) => i?.title === search));
+    }
+
+    if (isSelected !== "All") {
+      setFilterMusicList(
+        musicList?.filter((item: any) => item?.genre === isSelected)
+      );
+    }
+  };
+
   const handleChangePage = (page: any) => {
     if (musicList?.length < 10) {
       page = 1;
@@ -89,11 +115,25 @@ const MusicTable = () => {
       setFilterMusicList(result);
     }
   }, [selectFilter]);
-
+  console.log("search", search);
+  console.log("filterGenre", filterGenre);
+  console.log(
+    "fwe;jgewjg",
+    GenreListAll?.find((i: any) => i?.name === selectFilter)
+  );
   return (
     <MusicTableContainer>
       <div className="music-top">
         <div className="search">
+          {!GenreListAll?.find((i: any) => i?.name === selectFilter) && (
+            <BasicSelect
+              selectData={GenreListAll}
+              name="genre"
+              value={filterGenre}
+              onChange={handleChangeSelect}
+            ></BasicSelect>
+          )}
+
           <TextInput
             width="220px"
             name="search"
@@ -111,10 +151,14 @@ const MusicTable = () => {
             btnType="submit"
             onClick={() => {
               if (search?.length === 0) {
-                functions.getMusicListDataFunction(setMusicList);
+                filterGenre === "All"
+                  ? setFilterMusicList(musicList)
+                  : setFilterMusicList(
+                      musicList?.filter((i: any) => i?.genre === filterGenre)
+                    );
               } else {
-                setMusicList(
-                  musicList?.filter((i: any) => i?.title === search)
+                setFilterMusicList(
+                  filterMusicList?.filter((i: any) => i?.title === search)
                 );
               }
             }}

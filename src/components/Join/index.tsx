@@ -1,4 +1,3 @@
-import Overlay from "components/Overlay";
 import { JoinFormProps, JoinProps } from "./interface";
 import { JoinContainer } from "./style";
 import { createUserWithEmailAndPassword } from "firebase/auth";

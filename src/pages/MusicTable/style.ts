@@ -13,7 +13,6 @@ export const MusicTableContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 40px;
 
     .search {
       display: flex;
@@ -101,6 +100,10 @@ export const MusicTableContainer = styled.div`
 
       .search {
         gap: 0px 10px;
+
+        select {
+          height: 35px;
+        }
       }
 
       input {
