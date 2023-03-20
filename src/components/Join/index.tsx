@@ -31,12 +31,24 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   const phoneRegex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
-  // 회원가입
+
+  const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
+
+  const isRegex: boolean =
+    form?.name?.length !== 0 &&
+    form?.nickName?.length !== 0 &&
+    form?.rePassword?.length !== 0 &&
+    form?.password === form?.rePassword &&
+    form?.password?.length >= 8 &&
+    passwordRegex?.test(form?.password) &&
+    emailRegex?.test(form?.email) &&
+    phoneRegex?.test(form?.phoneNumber);
 
   // 회원가입 시 Cloud Firestore에 해당 user 정보를 저장
   // todo : user 정보 저장은 공통 함수로 만들 것 ★
   const signin = async (event: any, { email, password }: any) => {
     try {
+      await isRegex;
       const { user } = await createUserWithEmailAndPassword(
         auth,
         `${email + "@music.com"}`,
@@ -105,6 +117,17 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       img: "",
     });
   };
+  console.log(
+    "test",
+    form?.name?.length !== 0 &&
+      form?.nickName?.length !== 0 &&
+      form?.rePassword?.length !== 0 &&
+      form?.password === form?.rePassword &&
+      form?.password?.length >= 8 &&
+      passwordRegex?.test(form?.password) &&
+      emailRegex?.test(form?.email) &&
+      phoneRegex?.test(form?.phoneNumber)
+  );
 
   return (
     <JoinContainer className={className} width={width} height={height}>
@@ -137,8 +160,10 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             name="email"
             value={form?.email}
             label="아이디"
-            isError={isClicked && form?.email?.length <= 5}
-            errorMsg={"아이디를 5글자 이상 입력해주세요."}
+            isError={isClicked && !emailRegex?.test(form?.email)}
+            errorMsg={
+              "아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."
+            }
             onChange={(e) => {
               setForm({
                 ...form,
@@ -233,19 +258,10 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           </Button>
           <Button
             marginLeft="15px"
-            btnType={
-              form?.name?.length !== 0 &&
-              form?.nickName?.length !== 0 &&
-              form?.rePassword?.length !== 0 &&
-              form?.password === form?.rePassword &&
-              form?.password?.length >= 8 &&
-              passwordRegex?.test(form?.password) &&
-              form?.email?.length >= 5 &&
-              phoneRegex?.test(form?.phoneNumber)
-                ? "submit"
-                : "none"
-            }
-            onClick={(e) => signin(e, form)}
+            btnType={"submit"}
+            onClick={(e) => {
+              signin(e, form);
+            }}
           >
             확인
           </Button>

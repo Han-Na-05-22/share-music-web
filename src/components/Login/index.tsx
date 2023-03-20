@@ -12,20 +12,20 @@ import {
 import { auth } from "service/firebase";
 import Join from "components/Join";
 import { useRecoilState } from "recoil";
-import { loginState } from "./state";
+import { loginState, userInfo } from "./state";
 import Overlay from "components/Overlay";
-
+import * as functions from "../../common/functions";
 interface LoginFormProps {
   email: string;
   password: string;
 }
-
+const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
 const Login = ({ className }: LoginProps) => {
   const [form, setForm] = useState<LoginFormProps>({
     email: "",
     password: "",
   });
-
+  const [user, setUser] = useRecoilState<any>(userInfo);
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
 
   const login = async ({ email, password }: LoginFormProps) => {
@@ -37,8 +37,7 @@ const Login = ({ className }: LoginProps) => {
           password
         );
 
-        alert("로그인에 성공하였습니다.");
-        window.location.reload();
+        await alert("로그인에 성공하였습니다.");
       });
     } catch (err) {
       console.log("err", err);
@@ -47,7 +46,7 @@ const Login = ({ className }: LoginProps) => {
   };
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-
+  console.log("loginStateDate", loginStateDate?.isLogin);
   return (
     <>
       <LoginContainer className={className}>
@@ -67,8 +66,8 @@ const Login = ({ className }: LoginProps) => {
           name="email"
           value={form?.email}
           label="Email"
-          isError={form?.email?.length <= 5 && loginStateDate?.isLogin}
-          errorMsg={"아이디를 5글자 이상 입력해주세요."}
+          isError={!emailRegex?.test(form?.email) && loginStateDate?.isLogin}
+          errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
           onChange={(e) => {
             setForm({
               ...form,
@@ -99,12 +98,13 @@ const Login = ({ className }: LoginProps) => {
         <Button
           marginLeft="15px"
           btnType="submit"
-          onClick={() => {
-            login(form);
+          onClick={async () => {
+            await login(form);
             setLoginStateDate({
               ...loginStateDate,
               isLogin: true,
             });
+            functions.getUserDataFunction(setUser);
           }}
         >
           로그인

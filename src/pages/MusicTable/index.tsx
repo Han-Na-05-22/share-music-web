@@ -3,7 +3,7 @@ import Tabel from "components/Table";
 import { useRecoilState } from "recoil";
 import { MusicTableContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Pagination from "components/Pagination";
 import { filterMusicListState, selectFilterState } from "./state";
 import CheckBox from "components/CheckBox";
@@ -18,6 +18,9 @@ import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
 import { GenreListAll } from "utility/data";
 import BasicSelect from "components/BasicSelect";
+import moment from "moment";
+import * as functions from "../../common/functions";
+import { async } from "@firebase/util";
 
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
@@ -102,6 +105,30 @@ const MusicTable = () => {
     }
   };
 
+  const onChangeCountData = useCallback(async () => {
+    const result = musicList?.map((item: any) => {
+      if (addMusicPlayer?.find((ac: any) => ac === item?.id)) {
+        return {
+          ...item,
+          downloadCount: item?.downloadCount + 1,
+
+          downloadClickList: [
+            ...item?.downloadClickList,
+            {
+              email: user?.email,
+              updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+            },
+          ],
+        };
+      }
+
+      return {
+        ...item,
+      };
+    });
+    functions.sendUpdateLikeDownloadCountFunction(result);
+  }, [addMusicPlayer]);
+
   useEffect(() => {
     if (selectFilter !== "인기순" && selectFilter !== "등록순") {
       const result = musicList?.filter(
@@ -115,7 +142,7 @@ const MusicTable = () => {
 
       setFilterMusicList(result);
     }
-  }, [selectFilter]);
+  }, [selectFilter, musicList]);
 
   return (
     <MusicTableContainer>
@@ -167,7 +194,11 @@ const MusicTable = () => {
           className="my-info-submit"
           fontSize="16px"
           btnType="submit"
-          onClick={() => {}}
+          onClick={async () => {
+            await onChangeCountData();
+            alert("추가되었습니다.");
+            functions.getMusicListDataFunction(setMusicList);
+          }}
         >
           플레이리스트 추가
         </Button>
@@ -179,21 +210,26 @@ const MusicTable = () => {
             {
               title: (
                 <CheckBox
-                  className={
+                  disabled={
                     musicList?.length !== 0 &&
-                    myMusicPlayList?.length !== musicList?.length
-                      ? "label-all"
-                      : "disabled-label-all"
+                    myMusicPlayList?.filter(
+                      (i: any) => i?.genre === selectFilter
+                    )?.length === filterMusicList?.length
                   }
                   onClick={(e) => {
                     e.stopPropagation();
                     onCheckedAllMusic();
                   }}
                   checked={
-                    addMusicPlayer?.length + myMusicPlayList?.length ===
+                    (addMusicPlayer?.length + myMusicPlayList?.length ===
                       musicList?.length &&
-                    musicList?.length !== 0 &&
-                    myMusicPlayList?.length !== musicList?.length
+                      musicList?.length !== 0 &&
+                      myMusicPlayList?.length !== musicList?.length) ||
+                    filterMusicList?.length ===
+                      myMusicPlayList?.filter(
+                        (i: any) => i?.genre === selectFilter
+                      )?.length +
+                        addMusicPlayer?.length
                       ? true
                       : false
                   }
@@ -263,7 +299,9 @@ const MusicTable = () => {
                       }
                       onClick={async (e: any) => {
                         e.stopPropagation();
-                        onCheckedMusic(item?.id);
+
+                        await onCheckedMusic(item?.id);
+                        await setMusicDetailData(item);
                       }}
                       checked={
                         addMusicPlayer?.find((id: any) => id === item.id)

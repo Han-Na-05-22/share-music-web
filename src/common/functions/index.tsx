@@ -11,9 +11,6 @@ import {
   ref as sRef,
   uploadBytesResumable,
   getDownloadURL,
-  listAll,
-  ref,
-  getMetadata,
 } from "firebase/storage";
 import { auth, firestore, storage } from "service/firebase";
 
@@ -181,62 +178,6 @@ export const addMusicFunction = (
     }
   );
 };
-
-// 내가 등록한 음원리스트들을 불러오는 함수(Storage)
-// export const myMusicListFunction = (src: any, setData?: any) => {
-//   if (!src) {
-//     return;
-//   }
-//   const MusicListRef = sRef(storage, `${src}/`);
-
-//   let array: any = "";
-
-//   listAll(MusicListRef)
-//     .then((res) => {
-//       res?.items?.forEach((item: any) => {
-//         getDownloadURL(item)?.then((url) => {
-//           const forestRef = ref(storage, `${item?._location?.path_}`);
-//           getMetadata(forestRef)
-//             .then((metadata) => {
-//               array = [
-//                 ...array,
-//                 { url: url, path: item?._location?.path_, meta: metadata },
-//               ];
-//               return array;
-//             })
-//             .catch((error) => {
-//               console.log("err", error);
-//             });
-//         });
-//       });
-//     })
-//     .catch((error) => {
-//       console.log("err", error);
-//     });
-
-//   return setData;
-// };
-
-// 음원 상세보기 오디오 URL (Storage)
-// export const getMusicUrlFunction = (src: any, setData: any, name: any) => {
-//   if (!src) {
-//     return;
-//   }
-
-//   const MusicListRef = sRef(storage, `music/${src}/`);
-
-//   listAll(MusicListRef)?.then((response: any) => {
-//     response?.items?.forEach((item: any) => {
-//       getDownloadURL(item)?.then((url) => {
-//         if (item?._location?.path_ === `music/${src}/${name}`) {
-//           return setData(url);
-//         }
-//       });
-//     });
-//   });
-
-//   return setData;
-// };
 
 // user 정보 수정
 // todo : ★ 해당 기호 있는 todo 찾아서 아래 함수 사용할 것.

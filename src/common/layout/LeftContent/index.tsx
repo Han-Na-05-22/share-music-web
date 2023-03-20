@@ -74,7 +74,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
                 });
               }}
             >
-              플레이리스트
+              음악 듣기
             </Button>
             <div className="my-profile">
               <strong
