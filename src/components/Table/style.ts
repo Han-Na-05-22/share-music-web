@@ -66,28 +66,6 @@ export const TabelContainer = styled.table`
     max-height: 710px;
     min-height: 700px;
 
-    .no-data {
-      letter-spacing: 0.5px;
-      color: ${({ theme }) => theme.colors.HoverText};
-      height: 710px;
-      border: none;
-      .no-data-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100% !important;
-        transform: translate(-50%, -50%);
-        color: ${({ theme }) => theme.colors.HoverText};
-      }
-
-      &:hover {
-        .no-data-content {
-          color: ${({ theme }) => theme.colors.HoverText};
-        }
-        background: none;
-        cursor: default;
-      }
-    }
     tr {
       height: 70px;
       width: 100%;

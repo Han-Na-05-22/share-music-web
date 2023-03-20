@@ -48,8 +48,8 @@ const UserInfo = ({ className }: UserInfoProps) => {
   };
 
   const deleteImg = () => {
-    setUser({
-      ...user,
+    setForm({
+      ...form,
       profile: "",
     });
   };
@@ -168,15 +168,16 @@ const UserInfo = ({ className }: UserInfoProps) => {
           className="my-info-submit"
           btnType="submit"
           onClick={() => {
-            if (
-              usersListData?.filter(
-                (item: any) => item?.nickName === form?.nickName
-              )?.length !== 0
-            ) {
-              alert("이미 사용중인 닉네임 입니다.");
-            } else {
-              functions.sendUserDataFunction(getUserId, form, user, setUser);
-            }
+            usersListData?.filter((item: any) => {
+              if (
+                item?.nickName === form?.nickName &&
+                item?.email !== user?.email
+              ) {
+                return item;
+              }
+            })?.length !== 0
+              ? alert("이미 사용중인 닉네임 입니다.")
+              : functions.sendUserDataFunction(getUserId, form, user, setUser);
           }}
         >
           수정

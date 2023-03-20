@@ -13,7 +13,7 @@ export const PlayListContainer = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  padding: 80px 50px 50px;
+  padding: 50px 50px;
 
   .play-list-btn {
     position: absolute;
@@ -28,7 +28,7 @@ export const PlayListContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px 0px;
+    gap: 20px 0px;
 
     .btn {
       position: absolute;
@@ -51,7 +51,8 @@ export const PlayListContainer = styled.div`
     .about-music {
       display: flex;
       flex-direction: column;
-      gap: 15px 0px;
+      gap: 10px 0px;
+      text-align: center;
     }
 
     strong,
@@ -166,12 +167,24 @@ export const PlayListContainer = styled.div`
         width: 100px;
         height: 100px;
       }
+
+      .about-genre {
+        font-size: 14px;
+      }
+      .about-music {
+        font-size: 12px;
+      }
     }
 
     .rhap_container {
       width: 250px;
       padding: 0px 10px;
       .rhap_main.rhap_stacked {
+        .rhap_progress-section {
+          .rhap_time {
+            font-size: 12px;
+          }
+        }
         .rhap_controls-section {
           margin: 15px 0px;
           .rhap_additional-controls {

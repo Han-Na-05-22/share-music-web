@@ -117,17 +117,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       img: "",
     });
   };
-  console.log(
-    "test",
-    form?.name?.length !== 0 &&
-      form?.nickName?.length !== 0 &&
-      form?.rePassword?.length !== 0 &&
-      form?.password === form?.rePassword &&
-      form?.password?.length >= 8 &&
-      passwordRegex?.test(form?.password) &&
-      emailRegex?.test(form?.email) &&
-      phoneRegex?.test(form?.phoneNumber)
-  );
 
   return (
     <JoinContainer className={className} width={width} height={height}>

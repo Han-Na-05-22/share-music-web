@@ -12,7 +12,6 @@ export const UserInfoContainer = styled.div`
     position: absolute;
     left: 15px;
     top: -20px;
-    z-index: 1000;
   }
 
   .my-info-edit {

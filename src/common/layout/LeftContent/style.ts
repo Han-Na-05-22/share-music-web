@@ -28,6 +28,7 @@ export const LeftContentContainer = styled.div`
       position: absolute;
       top: -25px;
       right: 15px;
+      z-index: 10;
     }
   }
 

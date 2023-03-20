@@ -72,6 +72,7 @@ const Record = ({
       });
 
       await setMusicList(result);
+      await functions?.sendUpdateLikeDownloadCountFunction(result);
     }
     if (type === "download") {
       const result = musicList?.map((item: any) => {
@@ -120,20 +121,17 @@ const Record = ({
       });
 
       await setMusicList(result);
+      await functions?.sendUpdateLikeDownloadCountFunction(result);
     }
+    await functions?.getMusicListDataFunction(setMusicList);
   };
-
-  useEffect(() => {
-    if (!selectFilter) {
-      functions.sendUpdateLikeDownloadCountFunction(musicList);
-    }
-  }, [musicList]);
 
   return (
     <RecordContainer className={className} width={width} height={height}>
       <div className="add-date">
         {moment(musicDetailData?.date).format("YYYY-MM-DD")}
       </div>
+      <div className="about-genre">{musicDetailData?.genre}</div>
       <img src={musicDetailData?.img} alt="음원 이미지" />
       <div className="about-music top">
         <strong className="title">{musicDetailData?.title} </strong>
@@ -147,7 +145,6 @@ const Record = ({
         onPause={() => setIsPlay(false)}
         onPlay={(e) => {
           setIsPlay(true);
-          console.log("onPlay");
         }}
       />
       <div className="about-music-artists">
@@ -189,14 +186,14 @@ const Record = ({
               <SVG
                 src="/svg/download.svg"
                 onClick={async () => {
-                  onChangeCountData("download");
+                  await onChangeCountData("download");
                 }}
               />
             ) : (
               <SVG
                 src="/svg/term_download.svg"
                 onClick={async () => {
-                  onChangeCountData("download");
+                  await onChangeCountData("download");
                 }}
               />
             )}

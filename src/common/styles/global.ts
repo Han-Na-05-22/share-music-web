@@ -31,5 +31,17 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
   }
 
+  .no-data {
+    color:#6C6A6A;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+  }
+
+  .about-genre {
+    color:#6C6A6A;
+    font-weight:bold;
+  }
 
 `;

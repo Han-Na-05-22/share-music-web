@@ -33,6 +33,7 @@ const PlayList = ({ className, children, playListData }: PlayListProps) => {
         {playListData?.length !== 0 && playListData?.length !== undefined ? (
           <>
             <div className="paly-list-container">
+              <div className="about-genre">{playListData[idx]?.genre}</div>
               <SVG
                 src="/svg/prev.svg"
                 className="prev-btn btn"
@@ -61,10 +62,7 @@ const PlayList = ({ className, children, playListData }: PlayListProps) => {
               />
             </div>
 
-            <AudioPlayer
-              src={playListData[idx]?.url}
-              onPlay={(e) => console.log("onPlay")}
-            />
+            <AudioPlayer src={playListData[idx]?.url} />
           </>
         ) : (
           "등록된 음악이 없습니다."

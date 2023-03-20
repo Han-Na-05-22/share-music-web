@@ -96,7 +96,8 @@ const MyPage = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined ? (
+          {musicList?.filter((i: any) => i?.email === user?.email)?.length !==
+            0 &&
             musicList
               ?.filter((i: any) => i?.email === user?.email)
               ?.slice(offset, offset + limit)
@@ -146,11 +147,10 @@ const MyPage = () => {
                     />
                   </td>
                 </tr>
-              ))
-          ) : (
-            <p className="no-data">등록된 데이터가 없습니다.</p>
-          )}
+              ))}
         </Tabel>
+        {musicList?.filter((i: any) => i?.email === user?.email)?.length ===
+          0 && <p className="no-data">등록된 데이터가 없습니다.</p>}
         <Pagination
           total={musicList?.length}
           limit={limit}
@@ -180,7 +180,7 @@ const MyPage = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined && myMusicPlayList ? (
+          {myMusicPlayList?.length !== 0 &&
             myMusicPlayList
               ?.slice(offset, offset + limit)
               ?.map((item: any, idx: number) => (
@@ -207,11 +207,11 @@ const MyPage = () => {
                     <SVG src="/svg/term_delete.svg" />
                   </td>
                 </tr>
-              ))
-          ) : (
-            <p className="no-data">등록된 데이터가 없습니다.</p>
-          )}
+              ))}
         </Tabel>
+        {myMusicPlayList?.length === 0 && (
+          <p className="no-data">등록된 데이터가 없습니다.</p>
+        )}
         <Pagination
           total={musicList?.length}
           limit={limit}

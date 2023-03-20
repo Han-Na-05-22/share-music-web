@@ -17,6 +17,7 @@ export const RecordContainer = styled.div<RecordStyleProps>`
     right: 15px;
     color: ${({ theme }) => theme.colors.DefaultText};
   }
+
   img {
     width: 125px;
     height: 125px;
@@ -39,7 +40,6 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   .about-music.top {
     width: 100%;
     display: flex;
-    /* border-bottom: 1px solid ${({ theme }) => theme.colors.DefaultText}; */
     display: flex;
     justify-content: center;
     align-items: center;

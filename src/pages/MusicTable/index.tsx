@@ -121,12 +121,11 @@ const MusicTable = () => {
           ],
         };
       }
-
       return {
         ...item,
       };
     });
-    functions.sendUpdateLikeDownloadCountFunction(result);
+    functions?.sendUpdateLikeDownloadCountFunction(result);
   }, [addMusicPlayer]);
 
   useEffect(() => {
@@ -135,6 +134,17 @@ const MusicTable = () => {
         (item: any) => item?.genre === selectFilter
       );
       setFilterMusicList(result);
+    }
+
+    if (selectFilter === "내 음악") {
+      const result = musicList?.filter(
+        (item: any) => item?.email === user?.email
+      );
+      setFilterMusicList(result);
+    }
+
+    if (selectFilter === "플레이리스트") {
+      setFilterMusicList(myMusicPlayList);
     }
 
     if (selectFilter === "인기순" || selectFilter === "등록순") {
@@ -211,10 +221,13 @@ const MusicTable = () => {
               title: (
                 <CheckBox
                   disabled={
-                    musicList?.length !== 0 &&
+                    filterMusicList?.length === 0 ||
+                    selectFilter === "내 음악" ||
+                    selectFilter === "플레이리스트" ||
                     myMusicPlayList?.filter(
                       (i: any) => i?.genre === selectFilter
-                    )?.length === filterMusicList?.length
+                    )?.length === filterMusicList?.length ||
+                    musicList?.length === myMusicPlayList?.length
                   }
                   onClick={(e) => {
                     e.stopPropagation();
@@ -222,8 +235,7 @@ const MusicTable = () => {
                   }}
                   checked={
                     (addMusicPlayer?.length + myMusicPlayList?.length ===
-                      musicList?.length &&
-                      musicList?.length !== 0 &&
+                      filterMusicList?.length &&
                       myMusicPlayList?.length !== musicList?.length) ||
                     filterMusicList?.length ===
                       myMusicPlayList?.filter(
@@ -268,8 +280,7 @@ const MusicTable = () => {
             },
           ]}
         >
-          {filterMusicList?.length !== undefined &&
-          filterMusicList?.length !== 0 ? (
+          {filterMusicList?.length !== 0 &&
             filterMusicList
               ?.slice(offset, offset + limit)
               ?.sort((a: any, b: any) => {
@@ -337,13 +348,12 @@ const MusicTable = () => {
                     />
                   </td>
                 </tr>
-              ))
-          ) : (
-            <tr className="no-data">
-              <td className="no-data-content">등록된 데이터가 없습니다.</td>
-            </tr>
-          )}
+              ))}
         </Tabel>
+        {filterMusicList?.length === 0 && (
+          <p className="no-data">등록된 데이터가 없습니다.</p>
+        )}
+
         <Pagination
           total={musicList?.length}
           limit={limit}

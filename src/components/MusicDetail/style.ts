@@ -23,12 +23,13 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
 
     & > div {
       padding: 50px 15px 0px;
-      gap: 20px 0px;
+      gap: 10px 0px;
+      font-size: 13px;
     }
 
     img {
-      width: 75px;
-      height: 75px;
+      width: 100px;
+      height: 100px;
       border-radius: 100%;
     }
 
@@ -46,6 +47,11 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
       padding: 0px 10px;
 
       .rhap_main.rhap_stacked {
+        .rhap_progress-section {
+          .rhap_time {
+            font-size: 12px;
+          }
+        }
         .rhap_controls-section {
           margin: 15px 0px;
           .rhap_additional-controls {
@@ -59,6 +65,7 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
               }
             }
           }
+
           .rhap_main-controls {
             width: 110px;
 
@@ -73,6 +80,7 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
             width: 60px;
             height: 40px;
             flex: none;
+
             button {
               svg {
                 width: 20px;

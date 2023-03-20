@@ -46,7 +46,7 @@ const Login = ({ className }: LoginProps) => {
   };
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-  console.log("loginStateDate", loginStateDate?.isLogin);
+
   return (
     <>
       <LoginContainer className={className}>
