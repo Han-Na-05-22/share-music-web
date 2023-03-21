@@ -7,21 +7,22 @@ import MusicTable from "pages/MusicTable";
 import MyPage from "pages/MyPage";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import * as functions from "./common/functions";
+import { useQuery } from "react-query";
 
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
 
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-
+  console.log("musicList", musicList);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-
+  console.log("myMusicPlayList", myMusicPlayList);
   let getDownloadMusicList: any = "";
-  const getDownloadMusicData = () => {
+  const getDownloadMusicData = useCallback(() => {
     musicList
       ?.filter((item: any) => item?.email !== user?.email)
       ?.map((i: any) => {
@@ -31,16 +32,25 @@ function App() {
           }
         });
       });
-  };
+  }, [musicList]);
+
+  const { isLoading, error, data } = useQuery<any>(
+    "getFirestoreMusicListDataList",
+    () => {
+      console.log("error", error);
+      console.log("isLoading", isLoading);
+      functions?.getMusicListDataFunction(setMusicList);
+    },
+
+    { refetchInterval: false }
+  );
 
   useEffect(() => {
     functions?.getUserDataFunction(setUser);
-    functions?.getMusicListDataFunction(setMusicList);
   }, []);
 
+  getDownloadMusicData();
   useEffect(() => {
-    getDownloadMusicData();
-
     if (getDownloadMusicList) {
       setMyMusicPlayList(
         getDownloadMusicList?.concat(

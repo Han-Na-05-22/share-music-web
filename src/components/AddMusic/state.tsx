@@ -14,3 +14,8 @@ export const checkEditMusicState = atom({
   key: "checkEditMusicStateData",
   default: "",
 });
+
+export const addMusicStorageRefData = atom({
+  key: "addMusicStorageRefDataState",
+  default: "",
+});

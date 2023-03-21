@@ -15,7 +15,9 @@ import {
 import { auth, firestore, storage } from "service/firebase";
 
 // 데이터베이스에 저장된 모든 음원리스트들을 불러오기 위한 함수(Cloud Firestore)
-export const getMusicListDataFunction = async (setMusicListData: any) => {
+export const getMusicListDataFunction = async (
+  setMusicListData: any
+): Promise<any> => {
   const querySnapshot = await getDocs(collection(firestore, "music"));
   let array: any = "";
   querySnapshot?.forEach((doc: any) => {
@@ -111,6 +113,17 @@ export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
 };
 
 // 음원 등록하기 함수(Storage)
+export const storageRef = (file: any, src: any, uniqueKey: any) => {
+  const newName = file?.name
+    .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+    .split(" ")
+    .join("");
+
+  const storageRef = sRef(storage, `${src}/` + newName + uniqueKey);
+
+  return storageRef;
+};
+
 export const addMusicFunction = (
   file: any,
   src: any,
@@ -124,18 +137,13 @@ export const addMusicFunction = (
   },
 
   setIsCompleted?: any,
-  setMusicList?: any,
   form?: any,
-  musicList?: any
+  musicList?: any,
+  isClicked?: any
 ) => {
   if (!file) {
     return;
   }
-
-  const newName = file.name
-    .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-    .split(" ")
-    .join("");
 
   const metaData = {
     contentType: file.type,
@@ -149,32 +157,32 @@ export const addMusicFunction = (
     },
   };
 
-  const storageRef = sRef(storage, `${src}/` + newName + data?.uniqueKey);
-
-  const UploadTask = uploadBytesResumable(storageRef, file, metaData);
+  const UploadTask = uploadBytesResumable(
+    storageRef(file, src, data?.uniqueKey),
+    file,
+    metaData
+  );
 
   UploadTask.on(
     "state_changed",
     async (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       setIsCompleted("loading");
-      await console.log(`Upload is ${progress}% done`);
-      if (progress === 100) {
-        alert("음원 등록이 완료되었습니다.");
-        setIsCompleted("done");
-      }
     },
     (error) => {
+      isClicked(true);
       alert("음원 등록에 실패하였습니다.");
+
       console.log(`error: image upload error ${JSON.stringify(error)}`);
     },
     async () => {
       await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
-        console.log(`완료 url: ${downloadUrl}`);
-
+        console.log(`완료 url: ${downloadUrl}
+        `);
+        setIsCompleted("done");
+        alert("음원 등록이 완료되었습니다.");
+        isClicked(false);
         sendMusicDataFunction(src?.split("/")[1], form, musicList, downloadUrl);
       });
-      getMusicListDataFunction(setMusicList);
     }
   );
 };

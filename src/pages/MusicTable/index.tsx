@@ -45,7 +45,7 @@ const MusicTable = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-  console.log("musicDetailData", musicDetailData);
+
   const onCheckedAllMusic = () => {
     let array: any = "";
     if (
