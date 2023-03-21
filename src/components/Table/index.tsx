@@ -7,6 +7,8 @@ import { TabelProps } from "./interface";
 import { TabelContainer, TableGroupContainer } from "./style";
 import * as functions from "../../common/functions";
 import { musicListState } from "components/AddMusic/state";
+import { useQuery } from "react-query";
+
 // todo : 테스트 길이가 길 경우 말줄임 적용
 
 const Tabel = ({
@@ -20,6 +22,13 @@ const Tabel = ({
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
 
+  const { isLoading, error, data } = useQuery<any>(
+    "getFirestoreMusicListDataList",
+    () => {
+      functions?.getMusicListDataFunction(setMusicList);
+    }
+  );
+
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   return (
     <TableGroupContainer>
@@ -32,7 +41,6 @@ const Tabel = ({
             ? alert("로그인 후 이용해주세요"!)
             : navigate("/musicTable");
           setSelectFilter(tableBtnText);
-          functions?.getMusicListDataFunction(setMusicList);
         }}
       >
         {tableBtnText}

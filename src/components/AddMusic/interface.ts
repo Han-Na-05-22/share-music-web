@@ -44,4 +44,5 @@ export interface addMusicDatabaseProps {
   form?: any;
   musicList?: any;
   isClicked?: any;
+  setMusicList?: any;
 }

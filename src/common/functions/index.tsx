@@ -139,7 +139,8 @@ export const addMusicFunction = (
   setIsCompleted?: any,
   form?: any,
   musicList?: any,
-  isClicked?: any
+  isClicked?: any,
+  setMusicList?: any
 ) => {
   if (!file) {
     return;
@@ -183,6 +184,7 @@ export const addMusicFunction = (
         isClicked(false);
         sendMusicDataFunction(src?.split("/")[1], form, musicList, downloadUrl);
       });
+      getMusicListDataFunction(setMusicList);
     }
   );
 };

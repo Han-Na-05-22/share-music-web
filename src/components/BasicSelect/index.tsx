@@ -7,10 +7,12 @@ export default function BasicSelect({
   onChange,
   name,
   value,
+  onClick,
   selectData,
 }: BasicSelectPorps) {
   return (
     <BasicSelectContainer
+      onClick={onClick}
       className={className}
       name={name}
       id={name}

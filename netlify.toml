@@ -1,0 +1,13 @@
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+
+[[redirects]]
+  from = "/proxy/*"
+  to = "https://eclectic-fenglisu-b7772c.netlify.app/:splat"
+  status = 200
+  force = true
+

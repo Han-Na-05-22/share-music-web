@@ -4,4 +4,5 @@ export interface BasicSelectPorps {
   name: string;
   selectData: any;
   value: string;
+  onClick?: any;
 }

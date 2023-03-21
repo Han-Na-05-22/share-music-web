@@ -34,15 +34,11 @@ function App() {
       });
   }, [musicList]);
 
-  const { isLoading, error, data } = useQuery<any>(
+  const { isLoading, error, data, refetch } = useQuery<any>(
     "getFirestoreMusicListDataList",
     () => {
-      console.log("error", error);
-      console.log("isLoading", isLoading);
       functions?.getMusicListDataFunction(setMusicList);
-    },
-
-    { refetchInterval: false }
+    }
   );
 
   useEffect(() => {

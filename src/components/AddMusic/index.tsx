@@ -26,7 +26,7 @@ import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient, useQuery } from "react-query";
 import axios from "axios";
 import { FirebaseStorage } from "firebase/storage";
 
@@ -54,7 +54,7 @@ const AddMusic = ({
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
-
+  const queryClient = useQueryClient();
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -160,7 +160,7 @@ const AddMusic = ({
     addMusicDataProps: addMusicDatabaseProps
   ): Promise<any> => {
     const { data } = await axios.post<addMusicDatabaseProps>(
-      `${musicDataRef}`,
+      `${musicDataRef?._location?.path}`,
       functions?.addMusicFunction(
         addMusicDataProps?.file,
         addMusicDataProps?.src,
@@ -168,19 +168,32 @@ const AddMusic = ({
         addMusicDataProps?.setIsCompleted,
         addMusicDataProps?.form,
         addMusicDataProps?.musicList,
-        addMusicDataProps?.isClicked
+        addMusicDataProps?.isClicked,
+        addMusicDataProps?.setMusicList
       )
     );
 
     return data;
   };
 
-  const { mutate, isLoading, isError, error, isSuccess } =
-    useMutation(addMusicData);
-  console.log("isLoading", isLoading);
-  console.log("isError", isError);
-  console.log("isSuccess", isSuccess);
-  console.log("error", error);
+  const { isLoading, error, data, refetch } = useQuery<any>(
+    "getFirestoreMusicListDataList",
+    () => {
+      functions?.getMusicListDataFunction(setMusicList);
+    }
+  );
+
+  const { mutate, status, isError, isSuccess } = useMutation(addMusicData, {
+    onSuccess: (data: any) => {
+      queryClient?.invalidateQueries("getFirestoreMusicListDataList");
+
+      refetch();
+    },
+    onError: (e: any) => {
+      console.log("error!!!", e);
+    },
+  });
+
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);
@@ -340,7 +353,7 @@ const AddMusic = ({
                   setIsEdit("");
                   functions.getMusicListDataFunction(setMusicList);
                 } else {
-                  mutate({
+                  await mutate({
                     file: form?.formData,
                     src: `music/${user?.email}`,
                     data: {
@@ -355,6 +368,7 @@ const AddMusic = ({
                     form: form,
                     musicList: musicList,
                     isClicked: setIsClicked,
+                    setMusicList: setMusicList,
                   });
                 }
               }}
