@@ -132,35 +132,35 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
 
     .music-img {
       width: 75px;
-      height: 70px;
+      height: 100px;
 
       div {
-        height: 70px;
+        height: 75px;
       }
 
       label {
         width: 100%;
-        height: 50px;
+        height: 75px;
       }
 
       .file-upload {
         svg {
-          width: 50px;
-          height: 50px;
+          width: 75px;
+          height: 75px;
         }
       }
 
       svg {
-        top: -5px;
-        right: 20px;
+        top: 0px;
+        right: 0px;
         transform: translate(0%);
         width: 20px;
         height: 20px;
       }
 
       img {
-        width: 50px;
-        height: 50px;
+        width: 75px;
+        height: 75px;
         border-radius: 100px;
       }
 
@@ -182,8 +182,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     .music-title-singer {
       display: flex;
       flex-direction: column;
-      gap: 25px 0px;
-      margin-bottom: 15px;
+      gap: 15px 0px;
       label {
         font-size: 12px;
       }
