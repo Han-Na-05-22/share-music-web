@@ -68,7 +68,7 @@ const Home = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined ? (
+          {musicList?.length !== 0 &&
             musicList
               ?.slice(offset, offset + limit)
               ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
@@ -94,11 +94,11 @@ const Home = () => {
                   <td>{item?.likeCount}</td>
                   <td>{item?.downloadCount}</td>
                 </tr>
-              ))
-          ) : (
-            <p className="no-data">등록된 데이터가 없습니다.</p>
-          )}
+              ))}
         </Tabel>
+        {musicList?.length === 0 && (
+          <p className="no-data">등록된 데이터가 없습니다.</p>
+        )}
         <Pagination
           total={musicList?.length}
           limit={limit}
@@ -131,7 +131,7 @@ const Home = () => {
             },
           ]}
         >
-          {musicList?.length !== undefined ? (
+          {musicList?.length !== 0 &&
             musicList
               ?.slice(offset, offset + limit)
               ?.sort((a: any, b: any) => a?.date - b?.date)
@@ -157,11 +157,11 @@ const Home = () => {
                   <td>{item?.likeCount}</td>
                   <td>{item?.downloadCount}</td>
                 </tr>
-              ))
-          ) : (
-            <p className="no-data">등록된 데이터가 없습니다.</p>
-          )}
+              ))}
         </Tabel>
+        {musicList?.length === 0 && (
+          <p className="no-data">등록된 데이터가 없습니다.</p>
+        )}
         <Pagination
           total={musicList?.length}
           limit={limit}

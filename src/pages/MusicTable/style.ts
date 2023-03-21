@@ -24,9 +24,13 @@ export const MusicTableContainer = styled.div`
 
   .tabel-container {
     width: 100%;
-    position: relative;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 0px 40px;
+
+    div {
+      width: 100%;
+      &:nth-child(2) {
+        bottom: 30px;
+      }
+    }
 
     .table-header-btn {
       display: none;
@@ -103,7 +107,7 @@ export const MusicTableContainer = styled.div`
 
       input {
         width: 150px;
-        font-size: 10px;
+        font-size: 12px;
       }
 
       .my-info-submit {
@@ -117,21 +121,22 @@ export const MusicTableContainer = styled.div`
     }
 
     .tabel-container {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      padding: 0px 10px;
-
       & > div {
-        padding: 0px;
+        padding: 0pc;
       }
+
       .table-header-btn {
         display: none;
       }
       table {
         width: 100%;
         height: 100%;
+
+        tbody {
+          padding-bottom: 90px;
+          max-height: 100%;
+          min-height: 100%;
+        }
       }
       .label-all {
         opacity: 1;
@@ -205,14 +210,14 @@ export const MusicTableContainer = styled.div`
         gap: 0px 5px;
 
         select {
-          font-size: 10px;
+          font-size: 12px;
           padding-left: 5px;
         }
       }
 
       input {
         width: 100px;
-        font-size: 10px;
+        font-size: 12px;
         padding-left: 5px;
       }
 

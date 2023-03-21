@@ -53,9 +53,32 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
   @media screen and (max-width: 1660px) {
     height: 40px;
     width: 100px;
+    font-size: 12px;
 
+    label {
+      font-size: 12px;
+    }
+
+    input {
+      font-size: 10px;
+    }
+
+    ul {
+      li {
+        span {
+          font-size: 12px;
+        }
+      }
+    }
+
+    span,
+    strong,
+    p,
+    b {
+      font-size: 12px;
+    }
     & > span {
-      font-size: 16px;
+      font-size: 12px;
     }
   }
 `;

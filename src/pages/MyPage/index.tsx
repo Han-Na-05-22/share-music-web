@@ -37,7 +37,7 @@ const MyPage = () => {
 
   const [user, setUser] = useRecoilState<any>(userInfo);
 
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(11);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
 

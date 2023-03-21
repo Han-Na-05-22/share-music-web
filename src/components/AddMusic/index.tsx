@@ -6,7 +6,6 @@ import TextInput from "components/TextInput";
 import * as functions from "../../common/functions";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { auth } from "service/firebase";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
 import { checkEditMusicState, musicListState, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
@@ -17,6 +16,7 @@ import { GenreList } from "utility/data";
 import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
+import imageCompression from "browser-image-compression";
 
 const AddMusic = ({
   className,
@@ -84,10 +84,15 @@ const AddMusic = ({
     const fr = new FileReader();
     const file = event.target.files[0];
 
+    const options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 100,
+    };
+
     if (file) {
       fr.readAsDataURL(file);
 
-      fr.onload = () => {
+      fr.onload = async () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);
 
@@ -101,7 +106,20 @@ const AddMusic = ({
           }
 
           if (name === "img") {
-            return setForm({ ...form, [name]: fr.result });
+            try {
+              const compressedFile = await imageCompression(file, options);
+
+              const promise =
+                imageCompression?.getDataUrlFromFile(compressedFile);
+              promise?.then((result: any) => {
+                setForm({
+                  ...form,
+                  img: result,
+                });
+              });
+            } catch (error) {
+              console.log(error);
+            }
           }
         }
       };
@@ -171,7 +189,9 @@ const AddMusic = ({
                 file={form?.img}
                 isError={isClicked && form?.img?.length === 0}
                 errMsg={"이미지를 등록해 주세요."}
-                onChange={(e) => handleChangeMusicImg(e)}
+                onChange={(e) => {
+                  handleChangeMusicImg(e);
+                }}
                 onClickDelete={deleteImg}
               />
             ) : (

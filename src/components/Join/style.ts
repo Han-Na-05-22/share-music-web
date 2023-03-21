@@ -45,7 +45,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
   }
   @media screen and (max-width: 1660px) {
     width: 300px;
-    height: 550px;
+    height: 700px;
     padding: 20px 40px;
 
     .user-infos {
@@ -85,11 +85,11 @@ export const JoinContainer = styled.div<JoinStyleProps>`
 
       input {
         width: 225px;
-        height: 25px;
+        height: 35px;
       }
       .user-name-id {
         div {
-          margin-bottom: 5px;
+          margin-bottom: 25px;
 
           &:last-child {
             margin-bottom: 0;
@@ -97,7 +97,12 @@ export const JoinContainer = styled.div<JoinStyleProps>`
         }
       }
 
-      .user-phone-nickname {
+      .user-phone-nickName {
+        & > div {
+          &:first-child {
+            margin-bottom: 25px;
+          }
+        }
       }
     }
 

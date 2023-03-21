@@ -42,11 +42,6 @@ export const PlayListContainer = styled.div`
     .next-btn {
       right: 30px;
     }
-    img {
-      width: 125px;
-      height: 125px;
-      border-radius: 100%;
-    }
 
     .about-music {
       display: flex;
@@ -156,21 +151,9 @@ export const PlayListContainer = styled.div`
       right: 15px;
       width: 75px;
       height: 35px;
-
-      span {
-        font-size: 14px;
-      }
     }
 
     .paly-list-container {
-      img {
-        width: 100px;
-        height: 100px;
-      }
-
-      .about-genre {
-        font-size: 14px;
-      }
       .about-music {
         font-size: 12px;
       }

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const CheckBoxContainer = styled.div`
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
 
   label {
     display: inline-block;
-    width: 100%;
-    height: 100%;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     border: 2px solid ${({ theme }) => theme.colors.DefaultText};
     border-radius: 3px;

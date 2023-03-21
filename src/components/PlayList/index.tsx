@@ -43,7 +43,11 @@ const PlayList = ({ className, children, playListData }: PlayListProps) => {
                     : setIdx(idx - 1);
                 }}
               />
-              <img src={playListData[idx]?.img} alt="음원 이미지" />
+              <img
+                className="music-img"
+                src={playListData[idx]?.img}
+                alt="음원 이미지"
+              />
               <div className="about-music">
                 <strong className="title">
                   제목 : {playListData[idx]?.title}{" "}

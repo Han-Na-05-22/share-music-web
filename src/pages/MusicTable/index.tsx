@@ -22,6 +22,7 @@ import moment from "moment";
 import * as functions from "../../common/functions";
 import { async } from "@firebase/util";
 
+// todo : 코드 수정 필요
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
@@ -44,7 +45,7 @@ const MusicTable = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-
+  console.log("musicDetailData", musicDetailData);
   const onCheckedAllMusic = () => {
     let array: any = "";
     if (
@@ -78,22 +79,25 @@ const MusicTable = () => {
     }
   };
 
-  const handleChangeSelect = async (event: any) => {
-    const isSelected = event.target.options[event.target.selectedIndex].value;
-
-    await setFilterGenre(isSelected);
-
-    if (isSelected === "All" && search?.length === 0) {
+  const handleChangeSelect = async (isSelected?: any) => {
+    if (search?.length === 0 && isSelected === "All") {
       setFilterMusicList(musicList);
     }
+    if (search?.length === 0 && isSelected !== "All") {
+      setFilterMusicList(
+        musicList?.filter((i: any) => i?.genre === isSelected)
+      );
+    }
 
-    if (isSelected === "All" && search?.length !== 0) {
+    if (search?.length !== 0 && isSelected === "All") {
       setFilterMusicList(musicList?.filter((i: any) => i?.title === search));
     }
 
-    if (isSelected !== "All") {
+    if (search?.length !== 0 && isSelected !== "All") {
       setFilterMusicList(
-        musicList?.filter((item: any) => item?.genre === isSelected)
+        musicList?.filter(
+          (i: any) => i?.title === search && i?.genre === isSelected
+        )
       );
     }
   };
@@ -173,7 +177,14 @@ const MusicTable = () => {
               selectData={GenreListAll}
               name="genre"
               value={filterGenre}
-              onChange={handleChangeSelect}
+              onChange={async (event: any) => {
+                await setFilterGenre(
+                  event.target.options[event.target.selectedIndex].value
+                );
+                handleChangeSelect(
+                  event.target.options[event.target.selectedIndex].value
+                );
+              }}
             ></BasicSelect>
           )}
 
@@ -192,18 +203,8 @@ const MusicTable = () => {
             fontSize="18px"
             className="my-info-submit"
             btnType="submit"
-            onClick={() => {
-              if (search?.length === 0) {
-                filterGenre === "All"
-                  ? setFilterMusicList(musicList)
-                  : setFilterMusicList(
-                      musicList?.filter((i: any) => i?.genre === filterGenre)
-                    );
-              } else {
-                setFilterMusicList(
-                  filterMusicList?.filter((i: any) => i?.title === search)
-                );
-              }
+            onClick={(e) => {
+              handleChangeSelect(filterGenre);
             }}
           >
             검색
@@ -249,7 +250,7 @@ const MusicTable = () => {
                   checked={
                     (addMusicPlayer?.length + myMusicPlayList?.length ===
                       filterMusicList?.length &&
-                      myMusicPlayList?.length !== musicList?.length) ||
+                      myMusicPlayList?.length !== filterMusicList?.length) ||
                     filterMusicList?.length ===
                       myMusicPlayList?.filter(
                         (i: any) => i?.genre === selectFilter
@@ -342,21 +343,6 @@ const MusicTable = () => {
                   <td>{item?.downloadCount}</td>
                   <td>{item?.email?.split("@")[0]}</td>
                   <td>{item?.date}</td>
-                  <td>
-                    <SVG
-                      src="/svg/term_heart.svg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                      className={
-                        item?.likedClickList?.find(
-                          (i: any) => i?.email === user?.email
-                        )
-                          ? "clicked-svg"
-                          : "no-clicked-svg"
-                      }
-                    />
-                  </td>
                 </tr>
               ))}
         </Tabel>

@@ -163,6 +163,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
         </div>
 
         <TextInput
+          className="user-password password"
           name="password"
           type="password"
           width="800px"
@@ -184,6 +185,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           }}
         ></TextInput>
         <TextInput
+          className="user-re-password password"
           name="rePassword"
           type="password"
           width="800px"

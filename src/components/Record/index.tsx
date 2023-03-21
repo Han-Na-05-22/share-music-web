@@ -132,7 +132,7 @@ const Record = ({
         {moment(musicDetailData?.date).format("YYYY-MM-DD")}
       </div>
       <div className="about-genre">{musicDetailData?.genre}</div>
-      <img src={musicDetailData?.img} alt="음원 이미지" />
+      <img className="music-img" src={musicDetailData?.img} alt="음원 이미지" />
       <div className="about-music top">
         <strong className="title">{musicDetailData?.title} </strong>
         <b>-</b>

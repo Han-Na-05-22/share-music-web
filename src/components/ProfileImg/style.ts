@@ -71,7 +71,6 @@ export const ProfileImgContainer = styled.div<ProfileImgStyleProps>`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     position: absolute;
     top: 0px;
     left: 0px;

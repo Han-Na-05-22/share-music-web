@@ -9,19 +9,13 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  padding: 70px 150px 0px;
+  padding: 70px 100px 0px;
 
   .add-date {
     position: absolute;
     top: 15px;
     right: 15px;
     color: ${({ theme }) => theme.colors.DefaultText};
-  }
-
-  img {
-    width: 125px;
-    height: 125px;
-    border-radius: 100%;
   }
 
   .about-music,
@@ -35,6 +29,10 @@ export const RecordContainer = styled.div<RecordStyleProps>`
     b {
       color: inherit;
     }
+  }
+
+  .about-music {
+    width: 100%;
   }
 
   .about-music.top {

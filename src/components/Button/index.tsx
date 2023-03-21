@@ -8,7 +8,7 @@ const Button = ({
   width = "150px",
   disabled = false,
   onClick,
-  fontSize = "20px",
+  fontSize = "18px",
   btnType = "none",
   marginLeft,
 }: ButtonProps) => {

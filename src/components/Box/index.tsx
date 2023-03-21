@@ -5,7 +5,7 @@ const Box = ({
   children,
   className,
   height = "450px",
-  width = "400px",
+  width = "350px",
 }: BoxProps) => {
   return (
     <BoxContainer className={className} height={height} width={width}>

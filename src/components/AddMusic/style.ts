@@ -85,7 +85,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       display: flex;
       color: ${({ theme }) => theme.colors.DefaultText};
       border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
-      font-size: 10px;
+      font-size: 12px;
     }
 
     .mp3-error {
@@ -223,7 +223,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
         width: 100%;
         height: 35px;
         bottom: 0px;
-        font-size: 10px;
+        font-size: 12px;
         left: 0px;
       }
 

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const LeftContentContainer = styled.div`
-  width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -90,7 +89,7 @@ export const LeftContentContainer = styled.div`
       padding: 30px;
 
       p {
-        font-size: 16px;
+        font-size: 12px;
       }
 
       ul {
@@ -99,7 +98,7 @@ export const LeftContentContainer = styled.div`
 
         li {
           span {
-            font-size: 14px;
+            font-size: 12px;
           }
         }
       }
@@ -108,7 +107,7 @@ export const LeftContentContainer = styled.div`
         height: 16px;
         bottom: 10px;
         right: -15px;
-        font-size: 14px;
+        font-size: 12px;
       }
     }
 

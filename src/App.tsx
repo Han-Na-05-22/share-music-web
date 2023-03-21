@@ -16,6 +16,7 @@ function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
 
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
 

@@ -18,11 +18,12 @@ export const GlobalStyle = createGlobalStyle`
 
   body{
     width: 100vw;
-    height: 100vh;
     padding:40px 50px;
 
     @media screen and (max-width: 1660px) {
       padding:40px 20px;
+      font-size:12px;
+
   }
   }
 
@@ -39,9 +40,13 @@ export const GlobalStyle = createGlobalStyle`
     transform:translate(-50%,-50%);
   }
 
-  .about-genre {
+  .about-genre {        
     color:#6C6A6A;
     font-weight:bold;
+
+    @media screen and (max-width: 1660px) {
+      font-size: 13px;
+    }
   }
 
 
@@ -49,5 +54,43 @@ export const GlobalStyle = createGlobalStyle`
   .no-clicked-svg{
     cursor: not-allowed !important;
   }
+
+
+  img{
+    object-fit:cover;
+  }
+
+  .music-img{
+    width:125px;
+    height: 125px;
+    border-radius: 100%;
+    
+    @media screen and (max-width: 1660px) {
+      width:100px;
+      height: 100px;
+    }
+  }
+  
+  .tabel-container {
+    position: relative;
+
+      div {
+      &:nth-child(2) {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 42.5px;
+      }
+    }
+
+    @media screen and (max-width: 1660px) {
+    div {
+      &:nth-child(2) {
+        bottom: 25px;
+      }
+
+    }
+  }
+  }
+
 
 `;

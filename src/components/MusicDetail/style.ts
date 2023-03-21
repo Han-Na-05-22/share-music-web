@@ -22,15 +22,29 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
     padding-bottom: 20px;
 
     & > div {
-      padding: 50px 15px 0px;
+      padding: 40px 15px 0px;
       gap: 10px 0px;
       font-size: 13px;
     }
 
-    img {
-      width: 100px;
-      height: 100px;
-      border-radius: 100%;
+    .add-date {
+      font-size: 10px;
+    }
+
+    .about-music {
+      strong {
+        text-align: center;
+      }
+    }
+    .about-music,
+    .about-music-artists,
+    .like-download {
+      strong,
+      span,
+      p,
+      b {
+        font-size: 10px;
+      }
     }
 
     .about-music.bottom {

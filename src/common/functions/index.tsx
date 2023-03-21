@@ -162,7 +162,6 @@ export const addMusicFunction = (
       if (progress === 100) {
         alert("음원 등록이 완료되었습니다.");
         setIsCompleted("done");
-        getMusicListDataFunction(setMusicList);
       }
     },
     (error) => {
@@ -175,6 +174,7 @@ export const addMusicFunction = (
 
         sendMusicDataFunction(src?.split("/")[1], form, musicList, downloadUrl);
       });
+      getMusicListDataFunction(setMusicList);
     }
   );
 };

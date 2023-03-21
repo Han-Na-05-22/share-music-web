@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const UserInfoContainer = styled.div`
-  height: 100%;
+  height: 890px;
   width: 550px;
   min-width: 550px;
   padding: 40px 20px;
@@ -38,7 +38,7 @@ export const UserInfoContainer = styled.div`
   @media screen and (max-width: 1660px) {
     width: 100%;
     min-width: 100%;
-
+    height: 100%;
     .my-info-edit {
       gap: 25px 0px;
 
@@ -50,15 +50,24 @@ export const UserInfoContainer = styled.div`
       }
 
       label {
-        font-size: 16px;
+        font-size: 12px;
       }
 
       input {
         width: 270px;
-        font-size: 14px;
+        font-size: 12px;
       }
 
       .my-img {
+        div {
+          label {
+            svg {
+              transform: translate(0);
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
       }
 
       .my-info-submit {
@@ -67,9 +76,6 @@ export const UserInfoContainer = styled.div`
       .my-info-submit {
         width: 85px;
         min-height: 30px;
-        span {
-          font-size: 14px;
-        }
       }
     }
   }

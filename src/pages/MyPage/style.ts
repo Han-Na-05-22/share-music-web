@@ -5,19 +5,17 @@ export const MyPageContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   height: 100%;
+
   .tabel-container {
-    padding: 0px 20px;
-    background: ${({ theme }) => theme.colors.ModalColor};
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    position: relative;
     div {
       &:nth-child(2) {
-        bottom: 40px;
+        bottom: 35px;
         position: absolute;
       }
     }
 
     tbody {
+      min-height: 800px;
       td {
         svg {
           &:hover {
@@ -39,9 +37,33 @@ export const MyPageContainer = styled.div`
     .my-info-container {
       width: 100%;
       min-width: 100%;
+      min-height: 100%;
+      max-height: 100%;
+      height: 100%;
     }
 
     .tabel-container {
+      position: relative;
+
+      tbody {
+        max-height: 100%;
+        min-height: 100%;
+      }
+
+      div {
+        &:nth-child(2) {
+          bottom: 7.5px;
+        }
+      }
+
+      tbody {
+        min-height: 100%;
+        max-height: 100%;
+      }
+      & > div {
+        padding: 20px;
+      }
+
       td {
         svg {
           width: 15px;

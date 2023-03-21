@@ -2,15 +2,26 @@ import styled from "styled-components";
 
 export const TableGroupContainer = styled.div`
   position: relative;
-  padding-top: 40px;
+  background: ${({ theme }) => theme.colors.ModalColor};
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 15px 20px;
+  width: 600px;
+
+  @media screen and (max-width: 1660px) {
+    width: 100%;
+
+    .table-header-btn {
+      left: 0px !important;
+    }
+  }
   .table-header-btn {
     position: absolute;
     left: 15px;
-    top: -20px;
+    top: -50px;
   }
 `;
 export const TabelContainer = styled.table`
-  width: 550px;
+  width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 
@@ -63,11 +74,11 @@ export const TabelContainer = styled.table`
     overflow-y: auto;
     display: inline-block;
     position: relative;
-    max-height: 710px;
-    min-height: 700px;
+    max-height: 725px;
+    min-height: 725px;
 
     tr {
-      height: 70px;
+      height: 65px;
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -87,11 +98,14 @@ export const TabelContainer = styled.table`
         color: ${({ theme }) => theme.colors.DefaultText};
         text-align: center;
         overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
 
         img {
           width: 45px;
           height: 45px;
-          object-fit: cover;
         }
 
         &:first-child {
@@ -163,10 +177,9 @@ export const TabelContainer = styled.table`
     tbody {
       max-height: 100%;
       min-height: 100%;
-      padding-bottom: 100px;
+      padding-bottom: 60px;
 
       tr {
-        height: 70px;
         padding: 0px 10px;
 
         td {

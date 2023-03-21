@@ -27,9 +27,9 @@ const Header = () => {
           <span>Music</span>
         </h1>
         <Button
-          height="75px"
+          height="70px"
           btnType="add"
-          width="200px"
+          width="175px"
           onClick={() => {
             !user?.email
               ? alert("로그인 후 이용해주세요")

@@ -84,10 +84,19 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
           color: ${({ theme }) => theme.colors.DefaultRed};
         }
       }
+      @media screen and (max-width: 1660px) {
+        p {
+          width: 300px;
+          left: -15px;
+          bottom: -5px;
+          transform: scale(0.9);
+        }
+      }
     `}
 
   @media screen and (max-width: 1660px) {
     input {
+      font-size: 12px;
       width: 250px;
       height: 35px;
     }

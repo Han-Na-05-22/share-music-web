@@ -52,4 +52,10 @@ export const TextareaContainer = styled.div<textareaStyleProps>`
         color: ${({ theme }) => theme.colors.DefaultRed};
       }
     `}
+
+  @media screen and (max-width: 1660px) {
+    textarea {
+      font-size: 12px;
+    }
+  }
 `;
