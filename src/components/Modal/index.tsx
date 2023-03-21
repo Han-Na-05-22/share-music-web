@@ -1,4 +1,3 @@
-import Button from "components/Button";
 import Overlay from "components/Overlay";
 import { ModalProps } from "./interface";
 import { ModalContainer } from "./style";

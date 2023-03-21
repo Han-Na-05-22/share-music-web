@@ -14,10 +14,10 @@ import {
 } from "firebase/storage";
 import { auth, firestore, storage } from "service/firebase";
 
-// 데이터베이스에 저장된 모든 음원리스트들을 불러오기 위한 함수(Cloud Firestore)
-export const getMusicListDataFunction = async (
-  setMusicListData: any
-): Promise<any> => {
+//* Cloud Firestore
+
+// 전체 데이터베이스 가져옴
+export const getMusicListDataFunction = async (setMusicListData: any) => {
   const querySnapshot = await getDocs(collection(firestore, "music"));
   let array: any = "";
   querySnapshot?.forEach((doc: any) => {
@@ -26,20 +26,7 @@ export const getMusicListDataFunction = async (
   });
 };
 
-// 모든 user 정보를 불러오기 위한 함수
-export const getUsersListDataFunction = async (setUsersData: any) => {
-  const querySnapshot = await getDocs(collection(firestore, "users"));
-
-  let array: any = "";
-
-  querySnapshot?.forEach((doc: any) => {
-    array = [...array, doc?.data()?.userInfo];
-
-    return setUsersData(array);
-  });
-};
-
-// 음악 추가 시  데이터베이스에 해당 음원 정보 저장(Cloud Firestore)
+// 음원 등록 함수
 export const sendMusicDataFunction = async (
   email: string,
   data: any,
@@ -101,7 +88,7 @@ export const sendMusicDataFunction = async (
   }
 };
 
-// 좋아요 또는 다운로드 클릭 시 count 및 클릭한 user 정보 DB에 저장하는 함수(Cloud Firestore)
+// 좋아요 또는 다운로드 count db 저장
 export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
   const washingtonRef = doc(firestore, "music", "musicList");
 
@@ -112,85 +99,22 @@ export const sendUpdateLikeDownloadCountFunction = async (date: any) => {
   await updateDoc(washingtonRef, { data: date });
 };
 
-// 음원 등록하기 함수(Storage)
-export const storageRef = (file: any, src: any, uniqueKey: any) => {
-  const newName = file?.name
-    .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-    .split(" ")
-    .join("");
+//* User
 
-  const storageRef = sRef(storage, `${src}/` + newName + uniqueKey);
+// 모든 user 정보 가져옴
+export const getUsersListDataFunction = async (setUsersData: any) => {
+  const querySnapshot = await getDocs(collection(firestore, "users"));
 
-  return storageRef;
+  let array: any = "";
+
+  querySnapshot?.forEach((doc: any) => {
+    array = [...array, doc?.data()?.userInfo];
+
+    return setUsersData(array);
+  });
 };
 
-export const addMusicFunction = (
-  file: any,
-  src: any,
-  data: {
-    genre: string;
-    title: string;
-    singer: string;
-    explanation: string;
-    uniqueKey: string;
-    img: string;
-  },
-
-  setIsCompleted?: any,
-  form?: any,
-  musicList?: any,
-  isClicked?: any,
-  setMusicList?: any
-) => {
-  if (!file) {
-    return;
-  }
-
-  const metaData = {
-    contentType: file.type,
-    customMetadata: {
-      genre: `${data?.genre}`,
-      mpName: `${file?.name}`,
-      title: `${data?.title}`,
-      singer: `${data?.singer}`,
-      explanation: `${data?.explanation}`,
-      img: `${data?.img}`,
-    },
-  };
-
-  const UploadTask = uploadBytesResumable(
-    storageRef(file, src, data?.uniqueKey),
-    file,
-    metaData
-  );
-
-  UploadTask.on(
-    "state_changed",
-    async (snapshot) => {
-      setIsCompleted("loading");
-    },
-    (error) => {
-      isClicked(true);
-      alert("음원 등록에 실패하였습니다.");
-
-      console.log(`error: image upload error ${JSON.stringify(error)}`);
-    },
-    async () => {
-      await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
-        console.log(`완료 url: ${downloadUrl}
-        `);
-        setIsCompleted("done");
-        alert("음원 등록이 완료되었습니다.");
-        isClicked(false);
-        sendMusicDataFunction(src?.split("/")[1], form, musicList, downloadUrl);
-      });
-      getMusicListDataFunction(setMusicList);
-    }
-  );
-};
-
-// user 정보 수정
-// todo : ★ 해당 기호 있는 todo 찾아서 아래 함수 사용할 것.
+// user 데이터 수정 함수
 export const sendUserDataFunction = async (
   uid: any,
   data: any,
@@ -213,12 +137,11 @@ export const sendUserDataFunction = async (
     await alert("수정이 완료되었습니다.");
     getUserDataFunction(setUser);
   } catch (err) {
-    console.log("err : ", err);
     alert("수정에 실패하였습니다.");
   }
 };
 
-// 로그인 한 user 정보를 불러오기 위한 함수
+// 로그인 한 user 정보 불러오기
 export const getUserDataFunction = async (setUser: any) => {
   const querySnapshot = await getDocs(collection(firestore, "users"));
   const getUserInfo: any = sessionStorage?.getItem(
@@ -232,4 +155,75 @@ export const getUserDataFunction = async (setUser: any) => {
       return setUser(doc?.data()?.userInfo);
     }
   });
+};
+
+//* Storage
+
+// mp3 파일 저장 함수
+export const addMusicFunction = (
+  file: any,
+  src: any,
+  data: {
+    genre: string;
+    title: string;
+    singer: string;
+    explanation: string;
+    uniqueKey: string;
+    img: string;
+  },
+
+  setIsCompleted?: any,
+  setMusicList?: any,
+  form?: any,
+  musicList?: any
+) => {
+  if (!file) {
+    return;
+  }
+
+  const newName = file.name
+    .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
+    .split(" ")
+    .join("");
+
+  const metaData = {
+    contentType: file.type,
+    customMetadata: {
+      genre: `${data?.genre}`,
+      mpName: `${file?.name}`,
+      title: `${data?.title}`,
+      singer: `${data?.singer}`,
+      explanation: `${data?.explanation}`,
+      img: `${data?.img}`,
+    },
+  };
+
+  const storageRef = sRef(storage, `${src}/` + newName + data?.uniqueKey);
+
+  const UploadTask = uploadBytesResumable(storageRef, file, metaData);
+
+  UploadTask.on(
+    "state_changed",
+    async (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      setIsCompleted("loading");
+      await console.log(`Upload is ${progress}% done`);
+      if (progress === 100) {
+        alert("음원 등록이 완료되었습니다.");
+        setIsCompleted("done");
+      }
+    },
+    (error) => {
+      alert("음원 등록에 실패하였습니다.");
+      console.log(`error: image upload error ${JSON.stringify(error)}`);
+    },
+    async () => {
+      await getDownloadURL(UploadTask.snapshot.ref).then((downloadUrl) => {
+        console.log(`완료 url: ${downloadUrl}`);
+
+        sendMusicDataFunction(src?.split("/")[1], form, musicList, downloadUrl);
+      });
+      getMusicListDataFunction(setMusicList);
+    }
+  );
 };

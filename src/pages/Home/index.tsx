@@ -1,9 +1,9 @@
 import { HomeContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Tabel from "components/Table";
 import Pagination from "components/Pagination";
-import { dummyData } from "utility/data";
+
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
@@ -12,10 +12,7 @@ import {
   musicDetailState,
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
-import * as functions from "../../common/functions";
 import LeftContent from "common/layout/LeftContent";
-
-// todo : 좋아요 및 플레이리스트 svg 다시 클릭 시 데이터 삭제 기능(완료) 정도만 구현하면 대부분 완성! (이미지 용량!!)
 
 const Home = () => {
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -96,7 +93,7 @@ const Home = () => {
                 </tr>
               ))}
         </Tabel>
-        {musicList?.length === 0 && (
+        {(musicList?.length === 0 || musicList === undefined) && (
           <p className="no-data">등록된 데이터가 없습니다.</p>
         )}
         <Pagination
@@ -159,7 +156,7 @@ const Home = () => {
                 </tr>
               ))}
         </Tabel>
-        {musicList?.length === 0 && (
+        {(musicList?.length === 0 || musicList === undefined) && (
           <p className="no-data">등록된 데이터가 없습니다.</p>
         )}
         <Pagination

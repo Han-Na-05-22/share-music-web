@@ -11,7 +11,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { musicListState } from "components/AddMusic/state";
 import Genre from "components/Genre";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import PlayList from "components/PlayList";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import { isMusicDetailState } from "components/MusicDetail/state";

@@ -6,17 +6,8 @@ import TextInput from "components/TextInput";
 import * as functions from "../../common/functions";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import {
-  AddMusicFormProps,
-  AddMusicProps,
-  addMusicDatabaseProps,
-} from "./interface";
-import {
-  addMusicStorageRefData,
-  checkEditMusicState,
-  musicListState,
-  myMusicAddState,
-} from "./state";
+import { AddMusicFormProps, AddMusicProps } from "./interface";
+import { checkEditMusicState, musicListState, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
 import Loading from "components/Loading";
@@ -26,19 +17,12 @@ import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
-import { useMutation, useQueryClient, useQuery } from "react-query";
-import axios from "axios";
-import { FirebaseStorage } from "firebase/storage";
 
 const AddMusic = ({
   className,
   width = "1150px",
   height = "780px",
 }: AddMusicProps) => {
-  const [musicDataRef, setMusicDataRef] = useRecoilState<any>(
-    addMusicStorageRefData
-  );
-  console.log("musicDataRef", musicDataRef);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
@@ -54,7 +38,7 @@ const AddMusic = ({
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
-  const queryClient = useQueryClient();
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -128,20 +112,13 @@ const AddMusic = ({
               const promise =
                 imageCompression?.getDataUrlFromFile(compressedFile);
               promise?.then((result: any) => {
-                setMusicDataRef(
-                  functions?.storageRef(
-                    file,
-                    `music/${user?.email}`,
-                    form?.uniqueKey
-                  )
-                );
                 setForm({
                   ...form,
                   img: result,
                 });
               });
             } catch (error) {
-              console.log(error);
+              return;
             }
           }
         }
@@ -156,43 +133,33 @@ const AddMusic = ({
     });
   };
 
-  const addMusicData = async (
-    addMusicDataProps: addMusicDatabaseProps
-  ): Promise<any> => {
-    const { data } = await axios.post<addMusicDatabaseProps>(
-      `${musicDataRef?._location?.path}`,
-      functions?.addMusicFunction(
-        addMusicDataProps?.file,
-        addMusicDataProps?.src,
-        addMusicDataProps?.data,
-        addMusicDataProps?.setIsCompleted,
-        addMusicDataProps?.form,
-        addMusicDataProps?.musicList,
-        addMusicDataProps?.isClicked,
-        addMusicDataProps?.setMusicList
-      )
-    );
+  const addMusicData = async () => {
+    try {
+      await functions?.addMusicFunction(
+        form.formData,
+        `music/${user?.email}`,
+        {
+          genre: form?.genre,
+          title: form?.title,
+          singer: form?.singer,
+          explanation: form?.explanation,
+          img: form?.img,
+          uniqueKey: form?.uniqueKey,
+        },
 
-    return data;
-  };
+        setIsCompleted,
+        setMusicList,
+        form,
+        musicList
+      );
 
-  const { isLoading, error, data, refetch } = useQuery<any>(
-    "getFirestoreMusicListDataList",
-    () => {
-      functions?.getMusicListDataFunction(setMusicList);
+      setIsClicked(false);
+    } catch (err) {
+      setIsClicked(true);
+      return;
     }
-  );
-
-  const { mutate, status, isError, isSuccess } = useMutation(addMusicData, {
-    onSuccess: (data: any) => {
-      queryClient?.invalidateQueries("getFirestoreMusicListDataList");
-
-      refetch();
-    },
-    onError: (e: any) => {
-      console.log("error!!!", e);
-    },
-  });
+    functions.getMusicListDataFunction(setMusicList);
+  };
 
   useEffect(() => {
     if (isCompleted === "done") {
@@ -353,23 +320,8 @@ const AddMusic = ({
                   setIsEdit("");
                   functions.getMusicListDataFunction(setMusicList);
                 } else {
-                  await mutate({
-                    file: form?.formData,
-                    src: `music/${user?.email}`,
-                    data: {
-                      genre: form?.genre,
-                      title: form?.title,
-                      singer: form?.singer,
-                      explanation: form?.explanation,
-                      img: form?.img,
-                      uniqueKey: form?.uniqueKey,
-                    },
-                    setIsCompleted: setIsCompleted,
-                    form: form,
-                    musicList: musicList,
-                    isClicked: setIsClicked,
-                    setMusicList: setMusicList,
-                  });
+                  await functions.getMusicListDataFunction(setMusicList);
+                  addMusicData();
                 }
               }}
             >
@@ -384,6 +336,3 @@ const AddMusic = ({
 };
 
 export default AddMusic;
-function sRef(storage: FirebaseStorage, arg1: string) {
-  throw new Error("Function not implemented.");
-}

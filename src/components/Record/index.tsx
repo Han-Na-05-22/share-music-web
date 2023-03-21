@@ -1,7 +1,7 @@
 import { RecordProps } from "./interface";
 import { RecordContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { musicDetailState } from "components/MusicDetail/state";

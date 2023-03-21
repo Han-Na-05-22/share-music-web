@@ -1,4 +1,3 @@
-import SVG from "react-inlinesvg";
 import { BasicSelectPorps } from "./interface";
 import { BasicSelectContainer } from "./style";
 

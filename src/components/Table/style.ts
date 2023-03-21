@@ -9,7 +9,7 @@ export const TableGroupContainer = styled.div`
 
   @media screen and (max-width: 1660px) {
     width: 100%;
-
+    min-height: 500px;
     .table-header-btn {
       left: 0px !important;
     }

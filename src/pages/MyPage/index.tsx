@@ -2,12 +2,12 @@ import { checkEditMusicState, musicListState } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import Pagination from "components/Pagination";
 import Tabel from "components/Table";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRecoilState } from "recoil";
 import { MyPageContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { arrayRemove, doc, setDoc, updateDoc } from "firebase/firestore";
-import { auth, firestore, storage } from "service/firebase";
+import { arrayRemove, doc, updateDoc } from "firebase/firestore";
+import { firestore, storage } from "service/firebase";
 import * as functions from "../../common/functions";
 import {
   isMusicDetailState,
@@ -64,7 +64,6 @@ const MyPage = () => {
         functions.getMusicListDataFunction(setMusicList);
       })
       .catch((error) => {
-        console.log("err:", error);
         alert("삭제에 실패하였습니다.");
       });
   }, []);
@@ -149,8 +148,11 @@ const MyPage = () => {
                 </tr>
               ))}
         </Tabel>
-        {musicList?.filter((i: any) => i?.email === user?.email)?.length ===
-          0 && <p className="no-data">등록된 데이터가 없습니다.</p>}
+        {(musicList?.filter((i: any) => i?.email === user?.email)?.length ===
+          0 ||
+          musicList === undefined) && (
+          <p className="no-data">등록된 데이터가 없습니다.</p>
+        )}
         <Pagination
           total={musicList?.length}
           limit={limit}
@@ -202,7 +204,7 @@ const MyPage = () => {
                 </tr>
               ))}
         </Tabel>
-        {myMusicPlayList?.length === 0 && (
+        {(myMusicPlayList?.length === 0 || musicList === undefined) && (
           <p className="no-data">등록된 데이터가 없습니다.</p>
         )}
         <Pagination

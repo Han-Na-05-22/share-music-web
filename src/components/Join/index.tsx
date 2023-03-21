@@ -87,7 +87,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       return user;
     } catch (err) {
       setIsClicked(true);
-      console.log("err", err);
+
       alert("회원가입에 실패하였습니다.");
       navigate("/");
     }

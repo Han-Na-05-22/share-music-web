@@ -1,7 +1,7 @@
 import { ProfileImgContainer } from "./style";
 import { ProfileImgProps } from "./interface";
 import SVG from "react-inlinesvg";
-import imageCompression from "browser-image-compression";
+
 const ProfileImg = ({
   width = "100px",
   height = "100px",

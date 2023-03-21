@@ -1,7 +1,6 @@
-import Box from "components/Box";
 import Button from "components/Button";
 import TextInput from "components/TextInput";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LoginProps } from "./interface";
 import { LoginContainer } from "./style";
 import {
@@ -15,10 +14,12 @@ import { useRecoilState } from "recoil";
 import { loginState, userInfo } from "./state";
 import Overlay from "components/Overlay";
 import * as functions from "../../common/functions";
+
 interface LoginFormProps {
   email: string;
   password: string;
 }
+
 const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
 const Login = ({ className }: LoginProps) => {
   const [form, setForm] = useState<LoginFormProps>({
@@ -40,7 +41,6 @@ const Login = ({ className }: LoginProps) => {
         await alert("로그인에 성공하였습니다.");
       });
     } catch (err) {
-      console.log("err", err);
       return alert("로그인에 실패하였습니다.");
     }
   };

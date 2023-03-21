@@ -20,9 +20,7 @@ import { GenreListAll } from "utility/data";
 import BasicSelect from "components/BasicSelect";
 import moment from "moment";
 import * as functions from "../../common/functions";
-import { async } from "@firebase/util";
 
-// todo : 코드 수정 필요
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
@@ -321,9 +319,16 @@ const MusicTable = () => {
                       }
                       onClick={async (e: any) => {
                         e.stopPropagation();
-
-                        await onCheckedMusic(item?.id);
-                        await setMusicDetailData(item);
+                        if (
+                          myMusicPlayList?.find((i: any) => i?.id === item?.id)
+                            ? true
+                            : false
+                        ) {
+                          return;
+                        } else {
+                          await onCheckedMusic(item?.id);
+                          await setMusicDetailData(item);
+                        }
                       }}
                       checked={
                         addMusicPlayer?.find((id: any) => id === item.id)
