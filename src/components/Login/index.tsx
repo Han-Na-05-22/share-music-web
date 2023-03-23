@@ -3,17 +3,13 @@ import TextInput from "components/TextInput";
 import { useState } from "react";
 import { LoginProps } from "./interface";
 import { LoginContainer } from "./style";
-import {
-  browserSessionPersistence,
-  setPersistence,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "service/firebase";
 import Join from "components/Join";
 import { useRecoilState } from "recoil";
-import { loginState, userInfo } from "./state";
+import { loginState } from "./state";
 import Overlay from "components/Overlay";
-import * as functions from "../../common/functions";
+import { useMutation, useQueryClient } from "react-query";
 
 interface LoginFormProps {
   email: string;
@@ -21,29 +17,46 @@ interface LoginFormProps {
 }
 
 const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
+
 const Login = ({ className }: LoginProps) => {
   const [form, setForm] = useState<LoginFormProps>({
     email: "",
     password: "",
   });
-  const [user, setUser] = useRecoilState<any>(userInfo);
+
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
 
-  const login = async ({ email, password }: LoginFormProps) => {
-    try {
-      await setPersistence(auth, browserSessionPersistence).then(async () => {
-        await signInWithEmailAndPassword(
-          auth,
-          `${email + "@music.com"}`,
-          password
-        );
+  const queryClient = useQueryClient();
 
-        await alert("로그인에 성공하였습니다.");
-      });
-    } catch (err) {
-      return alert("로그인에 실패하였습니다.");
+  const { mutate: loginMutation } = useMutation(
+    async ({ email, password }: LoginFormProps) => {
+      await signInWithEmailAndPassword(
+        auth,
+        `${email + "@music.com"}`,
+        password
+      );
+    },
+    {
+      onError: (error) => {
+        console.log("error : ", error);
+
+        alert("로그인에 실패하였습니다.");
+      },
+      onSuccess: async () => {
+        await sessionStorage.setItem(
+          "user",
+          JSON.stringify({
+            uid: auth?.currentUser?.uid,
+            displayName: auth?.currentUser?.displayName,
+            email: auth?.currentUser?.email,
+          })
+        );
+        queryClient.invalidateQueries("getSessUserData");
+        alert("로그인에 성공하였습니다.");
+        queryClient.invalidateQueries("getUser");
+      },
     }
-  };
+  );
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
@@ -98,13 +111,12 @@ const Login = ({ className }: LoginProps) => {
         <Button
           marginLeft="15px"
           btnType="submit"
-          onClick={async () => {
-            await login(form);
+          onClick={() => {
+            loginMutation(form);
             setLoginStateDate({
               ...loginStateDate,
               isLogin: true,
             });
-            functions.getUserDataFunction(setUser);
           }}
         >
           로그인

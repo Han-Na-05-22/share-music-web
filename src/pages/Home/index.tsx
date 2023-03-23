@@ -3,7 +3,6 @@ import SVG from "react-inlinesvg";
 import { useState } from "react";
 import Tabel from "components/Table";
 import Pagination from "components/Pagination";
-
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
@@ -13,8 +12,12 @@ import {
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
 import LeftContent from "common/layout/LeftContent";
+import { useQueryClient } from "react-query";
 
 const Home = () => {
+  const queryClient = useQueryClient();
+
+  //* QUERY 작업중
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [isDetailData, setIsDetailData] =

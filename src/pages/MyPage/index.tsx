@@ -8,7 +8,7 @@ import { MyPageContainer } from "./style";
 import SVG from "react-inlinesvg";
 import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 import { firestore, storage } from "service/firebase";
-import * as functions from "../../common/functions";
+
 import {
   isMusicDetailState,
   musicDetailState,
@@ -61,7 +61,7 @@ const MyPage = () => {
     deleteObject(desertRef)
       .then(() => {
         alert("삭제가 완료되었습니다.");
-        functions.getMusicListDataFunction(setMusicList);
+        // functions.getMusicListDataFunction(setMusicList);
       })
       .catch((error) => {
         alert("삭제에 실패하였습니다.");

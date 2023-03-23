@@ -15,6 +15,11 @@ export const PlayListContainer = styled.div`
   align-items: center;
   padding: 50px 50px;
 
+  .no-data {
+    width: 100%;
+    text-align: center;
+  }
+
   .play-list-btn {
     position: absolute;
     top: 15px;

@@ -69,7 +69,7 @@ const PlayList = ({ className, children, playListData }: PlayListProps) => {
             <AudioPlayer src={playListData[idx]?.url} />
           </>
         ) : (
-          "등록된 음악이 없습니다."
+          <p className="no-data">내 플레이리스트에 추가된 음악이 없습니다.</p>
         )}
       </PlayListContainer>
     </Overlay>

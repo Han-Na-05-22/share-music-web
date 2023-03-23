@@ -19,7 +19,6 @@ import { userInfo } from "components/Login/state";
 import { GenreListAll } from "utility/data";
 import BasicSelect from "components/BasicSelect";
 import moment from "moment";
-import * as functions from "../../common/functions";
 
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
@@ -129,7 +128,7 @@ const MusicTable = () => {
         ...item,
       };
     });
-    functions?.sendUpdateLikeDownloadCountFunction(result);
+    // functions?.sendUpdateLikeDownloadCountFunction(result);
   }, [addMusicPlayer]);
 
   const allCheckd =
@@ -216,7 +215,7 @@ const MusicTable = () => {
           onClick={async () => {
             await onChangeCountData();
             alert("추가되었습니다.");
-            functions.getMusicListDataFunction(setMusicList);
+            // functions.getMusicListDataFunction(setMusicList);
           }}
         >
           플레이리스트 추가

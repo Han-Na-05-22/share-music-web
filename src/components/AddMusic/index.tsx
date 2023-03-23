@@ -3,7 +3,6 @@ import Overlay from "components/Overlay";
 import ProfileImg from "components/ProfileImg";
 import Textarea from "components/Textarea";
 import TextInput from "components/TextInput";
-import * as functions from "../../common/functions";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { AddMusicFormProps, AddMusicProps } from "./interface";
@@ -17,6 +16,24 @@ import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
+import { useMutation, useQueryClient } from "react-query";
+import { musicApi } from "common/api/music";
+
+export interface addMusicDatabaseProps {
+  file: any;
+  src: string;
+  data: {
+    genre: string;
+    title: string;
+    singer: string;
+    explanation: string;
+    uniqueKey: string;
+    img: string;
+  };
+
+  setIsCompleted?: any;
+  getUrl?: any;
+}
 
 const AddMusic = ({
   className,
@@ -133,32 +150,34 @@ const AddMusic = ({
     });
   };
 
-  const addMusicData = async () => {
-    try {
-      await functions?.addMusicFunction(
-        form.formData,
+  const queryClient = useQueryClient();
+
+  const { mutate: addStorageMusic } = useMutation(
+    () =>
+      musicApi?.addStorageMusicData(
         `music/${user?.email}`,
-        {
-          genre: form?.genre,
-          title: form?.title,
-          singer: form?.singer,
-          explanation: form?.explanation,
-          img: form?.img,
-          uniqueKey: form?.uniqueKey,
-        },
-
-        setIsCompleted,
-        setMusicList,
         form,
+        setIsCompleted,
+        musicApi?.sendMusicData,
         musicList
-      );
+      ),
+    {
+      onError: (error) => {
+        console.log("error : ", error);
+        setIsClicked(true);
+        alert("등록에 실패하였습니다.");
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries("getMusicAllDataList");
 
-      setIsClicked(false);
-    } catch (err) {
-      setIsClicked(true);
-      return;
+        setIsClicked(false);
+      },
     }
-    functions.getMusicListDataFunction(setMusicList);
+  );
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    addStorageMusic();
   };
 
   useEffect(() => {
@@ -309,19 +328,18 @@ const AddMusic = ({
                   ? "submit"
                   : "none"
               }
-              onClick={async () => {
+              onClick={(e: any) => {
                 if (isEdit === "edit") {
-                  await functions.sendUpdateLikeDownloadCountFunction(
-                    musicList
-                      ?.filter((i: any) => i?.id !== currentMusic?.id)
-                      ?.concat(currentMusic)
-                  );
+                  // functions.sendUpdateLikeDownloadCountFunction(
+                  //   musicList
+                  //     ?.filter((i: any) => i?.id !== currentMusic?.id)
+                  //     ?.concat(currentMusic)
+                  // );
                   alert("수정이 완료되었습니다.");
                   setIsEdit("");
-                  functions.getMusicListDataFunction(setMusicList);
+                  // functions.getMusicListDataFunction(setMusicList);
                 } else {
-                  await functions.getMusicListDataFunction(setMusicList);
-                  addMusicData();
+                  handleSubmit(e);
                 }
               }}
             >

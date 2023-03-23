@@ -60,7 +60,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
 
   return (
     <LeftContentContainer className={className}>
-      {user?.email ? (
+      {auth?.currentUser ? (
         <div className="my-content left">
           <Box>
             <Button
@@ -86,11 +86,11 @@ const LeftContent = ({ className }: LeftContentProps) => {
               </strong>
               <ProfileImg
                 name="profile"
-                file={user.profile}
+                file={user?.profile || user?.photoURL}
                 onChange={handleChangeImg}
                 onClickDelete={deleteImg}
               />
-              <p>{user?.nickName} 님 환영합니다!</p>
+              <p>{user?.nickName || user?.displayName} 님 환영합니다!</p>
               <ul>
                 <li>
                   <span>등록 수</span>
@@ -147,6 +147,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
               <strong
                 onClick={() => {
                   auth?.signOut();
+                  sessionStorage?.removeItem("user");
                   window?.location?.reload();
                 }}
               >

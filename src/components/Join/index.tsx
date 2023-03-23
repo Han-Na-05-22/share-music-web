@@ -1,6 +1,6 @@
 import { JoinFormProps, JoinProps } from "./interface";
 import { JoinContainer } from "./style";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "service/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import { setDoc } from "firebase/firestore";
 import ProfileImg from "components/ProfileImg";
 import { useRecoilState } from "recoil";
 import { loginState } from "components/Login/state";
+import imageCompression from "browser-image-compression";
 
 const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     img: "",
     name: "",
     email: "",
-    password: "",
+    password: "!",
     rePassword: "",
     phoneNumber: "",
     nickName: "",
@@ -44,27 +45,28 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     emailRegex?.test(form?.email) &&
     phoneRegex?.test(form?.phoneNumber);
 
-  // 회원가입 시 Cloud Firestore에 해당 user 정보를 저장
-  // todo : user 정보 저장은 공통 함수로 만들 것 ★
-  const signin = async (event: any, { email, password }: any) => {
+  const signUp = async ({ email, password, displayName }: any) => {
     try {
       await isRegex;
-      const { user } = await createUserWithEmailAndPassword(
+      const { user }: any = await createUserWithEmailAndPassword(
         auth,
         `${email + "@music.com"}`,
         password
       );
+      await updateProfile(user, {
+        displayName: displayName,
+      });
 
-      const washingtonRef = doc(firestore, "users", user?.uid);
+      const washingtonRef = await doc(firestore, "users", user?.uid);
 
       await setDoc(washingtonRef, {
         userInfo: {
-          profile: form?.img,
+          photoURL: form?.img,
           name: form?.name,
-          nickName: form?.nickName,
-          email: auth?.currentUser?.email,
+          displayName: displayName,
+          email: `${email}@music.com`,
           phoneNumber: form?.phoneNumber,
-          creationTime: auth?.currentUser?.metadata?.creationTime,
+          creationTime: user?.metadata?.creationTime,
         },
       });
 
@@ -87,7 +89,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       return user;
     } catch (err) {
       setIsClicked(true);
-
+      console.log("err", err);
       alert("회원가입에 실패하였습니다.");
       navigate("/");
     }
@@ -99,13 +101,31 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     const fr = new FileReader();
     const file = event.target.files[0];
 
+    const options = {
+      maxSizeMB: 2,
+      maxWidthOrHeight: 100,
+    };
+
     if (file) {
       fr.readAsDataURL(file);
 
-      fr.onload = () => {
+      fr.onload = async () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);
-          setForm({ ...form, [name]: fr.result });
+          try {
+            const compressedFile = await imageCompression(file, options);
+
+            const promise =
+              imageCompression?.getDataUrlFromFile(compressedFile);
+            promise?.then((result: any) => {
+              setForm({
+                ...form,
+                [name]: result,
+              });
+            });
+          } catch (error) {
+            return;
+          }
         }
       };
     }
@@ -250,8 +270,12 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           <Button
             marginLeft="15px"
             btnType={"submit"}
-            onClick={(e) => {
-              signin(e, form);
+            onClick={() => {
+              signUp({
+                email: form?.email,
+                password: form?.password,
+                displayName: form?.nickName,
+              });
             }}
           >
             확인

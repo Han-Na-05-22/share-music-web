@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { TabelProps } from "./interface";
 import { TabelContainer, TableGroupContainer } from "./style";
-import * as functions from "../../common/functions";
+
 import { musicListState } from "components/AddMusic/state";
 
 // todo : 테스트 길이가 길 경우 말줄임 적용
@@ -32,7 +32,7 @@ const Tabel = ({
             ? alert("로그인 후 이용해주세요"!)
             : navigate("/musicTable");
           setSelectFilter(tableBtnText);
-          functions?.getMusicListDataFunction(setMusicList);
+          // functions?.getMusicListDataFunction(setMusicList);
         }}
       >
         {tableBtnText}

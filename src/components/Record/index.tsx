@@ -8,7 +8,7 @@ import { musicDetailState } from "components/MusicDetail/state";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import { userInfo } from "components/Login/state";
-import * as functions from "../../common/functions";
+
 import { musicListState } from "components/AddMusic/state";
 import { selectFilterState } from "pages/MusicTable/state";
 
@@ -72,7 +72,7 @@ const Record = ({
       });
 
       await setMusicList(result);
-      await functions?.sendUpdateLikeDownloadCountFunction(result);
+      // await functions?.sendUpdateLikeDownloadCountFunction(result);
     }
     if (type === "download") {
       const result = musicList?.map((item: any) => {
@@ -121,9 +121,9 @@ const Record = ({
       });
 
       await setMusicList(result);
-      await functions?.sendUpdateLikeDownloadCountFunction(result);
+      // await functions?.sendUpdateLikeDownloadCountFunction(result);
     }
-    await functions?.getMusicListDataFunction(setMusicList);
+    // await functions?.getMusicListDataFunction(setMusicList);
   };
 
   return (

@@ -8,7 +8,10 @@ import { useRecoilState } from "recoil";
 import { auth, firestore } from "service/firebase";
 import { UserInfoProps } from "./interface";
 import { UserInfoContainer } from "./style";
-import * as functions from "../../common/functions";
+
+import { useMutation, useQueryClient } from "react-query";
+import { userApi } from "common/api/user";
+
 const UserInfo = ({ className }: UserInfoProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [form, setForm] = useState<any>({
@@ -21,6 +24,28 @@ const UserInfo = ({ className }: UserInfoProps) => {
   });
   const [usersListData, setUserListData] = useState<any[]>();
   const getUserId = auth?.currentUser?.uid.replace('"', "");
+
+  const queryClient = useQueryClient();
+
+  const { mutate: editUser } = useMutation(
+    () => userApi?.editUserData(getUserId, form, user),
+    {
+      onError: (error) => {
+        console.log("error : ", error);
+        alert("수정에 실패하였습니다.");
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries("getUserAllList");
+        alert("수정이 완료되었습니다.");
+      },
+    }
+  );
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    editUser();
+  };
+
   const handleChangeImg = (event: any) => {
     const { name } = event.target;
     const formData = new FormData();
@@ -62,8 +87,6 @@ const UserInfo = ({ className }: UserInfoProps) => {
         phoneNumber: user?.phoneNumber,
         nickName: user?.nickName,
       });
-
-      functions?.getUsersListDataFunction(setUserListData);
     }
   }, []);
   return (
@@ -81,7 +104,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
         <div className="my-img mine">
           <ProfileImg
             name="profile"
-            file={form?.profile}
+            file={user?.profile || user?.photoURL}
             onChange={(e) => handleChangeImg(e)}
             onClickDelete={deleteImg}
           />
@@ -154,7 +177,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             name="nickName"
             width="220px"
             type="text"
-            value={form?.nickName}
+            value={user?.nickName || user?.displayName}
             label="닉네임"
             onChange={(e) => {
               setForm({
@@ -167,7 +190,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
         <Button
           className="my-info-submit"
           btnType="submit"
-          onClick={() => {
+          onClick={(e: any) => {
             usersListData?.filter((item: any) => {
               if (
                 item?.nickName === form?.nickName &&
@@ -177,7 +200,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
               }
             })?.length !== 0
               ? alert("이미 사용중인 닉네임 입니다.")
-              : functions.sendUserDataFunction(getUserId, form, user, setUser);
+              : handleSubmit(e);
           }}
         >
           수정
