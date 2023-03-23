@@ -14,13 +14,11 @@ import { auth } from "service/firebase";
 import { useQuery } from "react-query";
 import { userApi } from "common/api/user";
 import { musicApi } from "common/api/music";
-import { setPersistence } from "firebase/auth";
 
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
 
-  const getUserId = auth?.currentUser?.uid.replace('"', "");
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
 

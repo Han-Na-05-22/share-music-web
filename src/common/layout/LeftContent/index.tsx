@@ -43,7 +43,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
           await setDoc(washingtonRef, {
             userInfo: {
               ...user,
-              profile: fr.result,
+              photoURL: fr.result,
             },
           });
         }
@@ -54,7 +54,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
   const deleteImg = () => {
     setUser({
       ...user,
-      profile: "",
+      photoURL: "",
     });
   };
 
@@ -85,12 +85,12 @@ const LeftContent = ({ className }: LeftContentProps) => {
                 마이페이지
               </strong>
               <ProfileImg
-                name="profile"
-                file={user?.profile || user?.photoURL}
+                name="photoURL"
+                file={user?.photoURL}
                 onChange={handleChangeImg}
                 onClickDelete={deleteImg}
               />
-              <p>{user?.nickName || user?.displayName} 님 환영합니다!</p>
+              <p>{user?.name} 님 환영합니다!</p>
               <ul>
                 <li>
                   <span>등록 수</span>

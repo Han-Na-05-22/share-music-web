@@ -12,7 +12,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { auth, firestore, storage } from "service/firebase";
+import { firestore, storage } from "service/firebase";
 
 //* Cloud Firestore, Storage
 

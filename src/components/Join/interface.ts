@@ -16,5 +16,5 @@ export interface JoinFormProps {
   password: string;
   rePassword: string;
   phoneNumber: any;
-  nickName: string;
+  displayName: string;
 }

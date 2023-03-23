@@ -15,16 +15,12 @@ const instance = axios.create({
 //   async (error) => {
 //     if (error.message === "Network Error" || error.response.status === 401) {
 //       if (
-//         !sessionStorage.getItemgetItem(
-//           `firebase:authUser:${process.env.REACT_APP_FIREBASE_API_KEY}:[DEFAULT]`
-//         )
+//         !sessionStorage.getItem("user");
 //       ) {
 //         window.location.href = "/";
 //         return false;
 //       }
-//       sessionStorage.removeItemgetItem(
-//         `firebase:authUser:${process.env.REACT_APP_FIREBASE_API_KEY}:[DEFAULT]`
-//       );
+//       sessionStorage.removeItem("user");
 //       window.location.href = "/";
 //       return Promise.reject(error);
 //     }

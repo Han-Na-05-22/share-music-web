@@ -25,7 +25,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     password: "!",
     rePassword: "",
     phoneNumber: "",
-    nickName: "",
+    displayName: "",
   });
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -37,7 +37,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
 
   const isRegex: boolean =
     form?.name?.length !== 0 &&
-    form?.nickName?.length !== 0 &&
+    form?.displayName?.length !== 0 &&
     form?.rePassword?.length !== 0 &&
     form?.password === form?.rePassword &&
     form?.password?.length >= 8 &&
@@ -79,7 +79,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
         password: "",
         rePassword: "",
         phoneNumber: "",
-        nickName: "",
+        displayName: "",
       });
 
       alert("회원가입에 성공하였습니다.");
@@ -225,7 +225,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           }}
         ></TextInput>
 
-        <div className="user-phone-nickName users">
+        <div className="user-phone-displayName users">
           <TextInput
             name="phoneNumber"
             type="text"
@@ -243,17 +243,17 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           ></TextInput>
 
           <TextInput
-            name="nickName"
+            name="displayName"
             width="350px"
             type="text"
-            value={form?.nickName}
+            value={form?.displayName}
             label="닉네임"
-            isError={isClicked && form?.nickName?.length === 0}
+            isError={isClicked && form?.displayName?.length === 0}
             errorMsg={"닉네임을 입력해주세요."}
             onChange={(e) => {
               setForm({
                 ...form,
-                nickName: e.target.value,
+                displayName: e.target.value,
               });
             }}
           ></TextInput>
@@ -274,7 +274,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
               signUp({
                 email: form?.email,
                 password: form?.password,
-                displayName: form?.nickName,
+                displayName: form?.displayName,
               });
             }}
           >

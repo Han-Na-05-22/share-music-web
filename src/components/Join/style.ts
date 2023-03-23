@@ -35,7 +35,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
     .user-name-id {
     }
 
-    .user-phone-nickname {
+    .user-phone-displayName {
     }
   }
 
@@ -97,7 +97,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
         }
       }
 
-      .user-phone-nickName {
+      .user-phone-displayName {
         & > div {
           &:first-child {
             margin-bottom: 25px;

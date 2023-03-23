@@ -43,7 +43,7 @@ export const UserInfoContainer = styled.div`
       gap: 25px 0px;
 
       .my-name-id,
-      .my-phone-nickName {
+      .my-phone-displayName {
         input {
           width: 125px;
         }

@@ -15,14 +15,14 @@ import { userApi } from "common/api/user";
 const UserInfo = ({ className }: UserInfoProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [form, setForm] = useState<any>({
-    profile: user?.profile,
+    photoURL: user?.photoURL,
     name: user?.name,
     pwd: "",
     rePwd: "",
     phoneNumber: user?.phoneNumber,
-    nickName: user?.nickName,
+    displayName: user?.displayName,
   });
-  const [usersListData, setUserListData] = useState<any[]>();
+
   const getUserId = auth?.currentUser?.uid.replace('"', "");
 
   const queryClient = useQueryClient();
@@ -64,7 +64,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
           await setDoc(washingtonRef, {
             userInfo: {
               ...user,
-              profile: fr.result,
+              photoURL: fr.result,
             },
           });
         }
@@ -75,17 +75,17 @@ const UserInfo = ({ className }: UserInfoProps) => {
   const deleteImg = () => {
     setForm({
       ...form,
-      profile: "",
+      photoURL: "",
     });
   };
 
   useEffect(() => {
     if (user?.email) {
       setForm({
-        profile: user?.profile,
+        photoURL: user?.photoURL,
         name: user?.name,
         phoneNumber: user?.phoneNumber,
-        nickName: user?.nickName,
+        displayName: user?.displayName,
       });
     }
   }, []);
@@ -103,8 +103,8 @@ const UserInfo = ({ className }: UserInfoProps) => {
       <div className="my-info-edit">
         <div className="my-img mine">
           <ProfileImg
-            name="profile"
-            file={user?.profile || user?.photoURL}
+            name="photoURL"
+            file={user?.photoURL || user?.photoURL}
             onChange={(e) => handleChangeImg(e)}
             onClickDelete={deleteImg}
           />
@@ -158,7 +158,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
           }}
         ></TextInput>
 
-        <div className="my-phone-nickName mine">
+        <div className="my-phone-displayName mine">
           <TextInput
             name="phoneNumber"
             type="text"
@@ -174,15 +174,15 @@ const UserInfo = ({ className }: UserInfoProps) => {
           ></TextInput>
 
           <TextInput
-            name="nickName"
+            name="displayName"
             width="220px"
             type="text"
-            value={user?.nickName || user?.displayName}
+            value={user?.displayName}
             label="닉네임"
             onChange={(e) => {
               setForm({
                 ...form,
-                nickName: e.target.value,
+                displayName: e.target.value,
               });
             }}
           ></TextInput>
@@ -191,16 +191,11 @@ const UserInfo = ({ className }: UserInfoProps) => {
           className="my-info-submit"
           btnType="submit"
           onClick={(e: any) => {
-            usersListData?.filter((item: any) => {
-              if (
-                item?.nickName === form?.nickName &&
-                item?.email !== user?.email
-              ) {
-                return item;
-              }
-            })?.length !== 0
-              ? alert("이미 사용중인 닉네임 입니다.")
-              : handleSubmit(e);
+            handleSubmit(e);
+            // usersListData?.find((item: any) => item?.email === form?.email)
+            //   ?.displayName === form?.displayName
+            //   ? alert("이미 사용중인 닉네임 입니다.")
+            //   : handleSubmit(e);
           }}
         >
           수정
