@@ -18,6 +18,7 @@ import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
+import { async } from "@firebase/util";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -165,19 +166,41 @@ const AddMusic = ({
       onError: (error) => {
         console.log("error : ", error);
         setIsClicked(true);
-        alert("등록에 실패하였습니다.");
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries("getMusicAllDataList");
-
         setIsClicked(false);
+      },
+    }
+  );
+
+  const { mutate: updateMusicData } = useMutation(
+    () =>
+      musicApi?.updateMusicDataList(
+        musicList
+          ?.filter((i: any) => i?.id !== currentMusic?.id)
+          ?.concat(currentMusic)
+      ),
+    {
+      onError: (error) => {
+        console.log("error:", error);
+        alert("수정에 실패하였습니다.");
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries("getMusicAllDataList");
+        setIsEdit("");
+        alert("수정이 완료되었습니다.");
       },
     }
   );
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    addStorageMusic();
+    if (isEdit === "edit") {
+      updateMusicData();
+    } else {
+      addStorageMusic();
+    }
   };
 
   useEffect(() => {
@@ -329,18 +352,7 @@ const AddMusic = ({
                   : "none"
               }
               onClick={(e: any) => {
-                if (isEdit === "edit") {
-                  // functions.sendUpdateLikeDownloadCountFunction(
-                  //   musicList
-                  //     ?.filter((i: any) => i?.id !== currentMusic?.id)
-                  //     ?.concat(currentMusic)
-                  // );
-                  alert("수정이 완료되었습니다.");
-                  setIsEdit("");
-                  // functions.getMusicListDataFunction(setMusicList);
-                } else {
-                  handleSubmit(e);
-                }
+                handleSubmit(e);
               }}
             >
               {isEdit === "edit" ? "수정" : "등록"}

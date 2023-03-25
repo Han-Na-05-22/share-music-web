@@ -90,7 +90,7 @@ const LeftContent = ({ className }: LeftContentProps) => {
                 onChange={handleChangeImg}
                 onClickDelete={deleteImg}
               />
-              <p>{user?.name} 님 환영합니다!</p>
+              <p>{user?.displayName} 님 환영합니다!</p>
               <ul>
                 <li>
                   <span>등록 수</span>

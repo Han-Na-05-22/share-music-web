@@ -7,7 +7,7 @@ export const userApi = {
   getUserAllDataList: () => async () => {
     const querySnapshot = await getDocs(collection(firestore, "users"));
 
-    let array: any = "";
+    let array: any = [];
 
     querySnapshot?.forEach((doc: any) => {
       array = [...array, doc?.data()?.userInfo];

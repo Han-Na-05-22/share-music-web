@@ -22,7 +22,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     img: "",
     name: "",
     email: "",
-    password: "!",
+    password: "",
     rePassword: "",
     phoneNumber: "",
     displayName: "",

@@ -47,7 +47,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
   };
 
   const handleChangeImg = (event: any) => {
-    const { name } = event.target;
+    // const { name } = event.target;
     const formData = new FormData();
     const fr = new FileReader();
     const file = event.target.files[0];
@@ -58,20 +58,12 @@ const UserInfo = ({ className }: UserInfoProps) => {
       fr.onload = async () => {
         if (typeof fr.result === "string") {
           formData.append("file", file);
-          setForm({ ...form, [name]: fr.result });
-          const washingtonRef = doc(firestore, "users", `${getUserId}`);
-
-          await setDoc(washingtonRef, {
-            userInfo: {
-              ...user,
-              photoURL: fr.result,
-            },
-          });
+          setForm({ ...form, photoURL: fr.result });
         }
       };
     }
   };
-
+  console.log("from", form);
   const deleteImg = () => {
     setForm({
       ...form,
@@ -79,16 +71,6 @@ const UserInfo = ({ className }: UserInfoProps) => {
     });
   };
 
-  useEffect(() => {
-    if (user?.email) {
-      setForm({
-        photoURL: user?.photoURL,
-        name: user?.name,
-        phoneNumber: user?.phoneNumber,
-        displayName: user?.displayName,
-      });
-    }
-  }, []);
   return (
     <UserInfoContainer className={className}>
       <Button
@@ -104,7 +86,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
         <div className="my-img mine">
           <ProfileImg
             name="photoURL"
-            file={user?.photoURL || user?.photoURL}
+            file={form?.photoURL}
             onChange={(e) => handleChangeImg(e)}
             onClickDelete={deleteImg}
           />
@@ -177,7 +159,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             name="displayName"
             width="220px"
             type="text"
-            value={user?.displayName}
+            value={form?.displayName}
             label="닉네임"
             onChange={(e) => {
               setForm({

@@ -153,7 +153,7 @@ export const musicApi = {
   },
 
   // edit cloud firestore muisc
-  updateMusicDataList: () => async (date: any) => {
+  updateMusicDataList: async (date: any) => {
     const washingtonRef = doc(firestore, "music", "musicList");
 
     await updateDoc(washingtonRef, {
@@ -284,11 +284,7 @@ export const musicApi = {
     await updateDoc(washingtonRef, {
       data: arrayRemove(),
     });
-    console.log("result", result);
-    console.log("type", type);
-    console.log("musicList", musicList);
-    console.log("musicDetailData", musicDetailData);
-    console.log("user", user);
+
     await updateDoc(washingtonRef, { data: result });
   },
 };
