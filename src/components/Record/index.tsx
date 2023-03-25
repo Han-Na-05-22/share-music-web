@@ -8,9 +8,10 @@ import { musicDetailState } from "components/MusicDetail/state";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import { userInfo } from "components/Login/state";
-
 import { musicListState } from "components/AddMusic/state";
 import { selectFilterState } from "pages/MusicTable/state";
+import { musicApi } from "common/api/music";
+import { useMutation, useQueryClient } from "react-query";
 
 const Record = ({
   className,
@@ -20,111 +21,44 @@ const Record = ({
 }: RecordProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-
+  const quertyClient = useQueryClient();
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
+
+  const { mutate: updateMusicLikeCount } = useMutation(
+    () =>
+      musicApi?.updateMusicCountData("like", musicList, musicDetailData, user),
+    {
+      onError: (error) => {
+        console.log("error:", error);
+      },
+      onSuccess: async () => {
+        await quertyClient.invalidateQueries("getMusicAllDataList");
+      },
+    }
+  );
+
+  const { mutate: updateMusicDownloadCount } = useMutation(
+    () =>
+      musicApi?.updateMusicCountData(
+        "download",
+        musicList,
+        musicDetailData,
+        user
+      ),
+    {
+      onError: (error) => {
+        console.log("error: ", error);
+      },
+      onSuccess: async () => {
+        await quertyClient.invalidateQueries("getMusicAllDataList");
+      },
+    }
+  );
 
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [isPlay, setIsPlay] = useState<boolean>(false);
-
-  const onChangeCountData = async (type: string) => {
-    if (type === "like") {
-      const result = musicList?.map((item: any) => {
-        if (item.id === musicDetailData?.id) {
-          if (
-            item?.likedClickList?.find((i: any) => i?.email === user?.email)
-          ) {
-            return {
-              ...item,
-
-              likeCount:
-                type === "like" ? item?.likeCount - 1 : item?.likeCount,
-              likedClickList:
-                type === "like"
-                  ? item?.likedClickList?.filter(
-                      (i: any) => i?.email !== user?.email
-                    )
-                  : item?.likedClickList,
-            };
-          } else {
-            return {
-              ...item,
-
-              likeCount:
-                type === "like" ? item?.likeCount + 1 : item?.likeCount,
-              likedClickList:
-                type === "like"
-                  ? [
-                      ...item?.likedClickList,
-                      {
-                        email: user?.email,
-                        updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
-                      },
-                    ]
-                  : item?.likedClickList,
-            };
-          }
-        }
-        return {
-          ...item,
-        };
-      });
-
-      await setMusicList(result);
-      // await functions?.sendUpdateLikeDownloadCountFunction(result);
-    }
-    if (type === "download") {
-      const result = musicList?.map((item: any) => {
-        if (item.id === musicDetailData?.id) {
-          if (
-            item?.downloadClickList?.find((i: any) => i?.email === user?.email)
-          ) {
-            return {
-              ...item,
-
-              downloadCount:
-                type === "download"
-                  ? item?.downloadCount - 1
-                  : item?.downloadCount,
-              downloadClickList:
-                type === "download"
-                  ? item?.downloadClickList?.filter(
-                      (i: any) => i?.email !== user?.email
-                    )
-                  : item?.downloadClickList,
-            };
-          } else {
-            return {
-              ...item,
-
-              downloadCount:
-                type === "download"
-                  ? item?.downloadCount + 1
-                  : item?.downloadCount,
-              downloadClickList:
-                type === "download"
-                  ? [
-                      ...item?.downloadClickList,
-                      {
-                        email: user?.email,
-                        updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
-                      },
-                    ]
-                  : item?.downloadClickList,
-            };
-          }
-        }
-        return {
-          ...item,
-        };
-      });
-
-      await setMusicList(result);
-      // await functions?.sendUpdateLikeDownloadCountFunction(result);
-    }
-    // await functions?.getMusicListDataFunction(setMusicList);
-  };
 
   return (
     <RecordContainer className={className} width={width} height={height}>
@@ -162,7 +96,7 @@ const Record = ({
               }.svg`}
               onClick={(e: any) => {
                 if (musicDetailData?.email !== user?.email) {
-                  onChangeCountData("like");
+                  updateMusicLikeCount();
                 } else {
                   e.stopPropagation();
                 }
@@ -194,7 +128,7 @@ const Record = ({
               }.svg`}
               onClick={async (e: any) => {
                 if (musicDetailData?.email !== user?.email) {
-                  onChangeCountData("download");
+                  updateMusicDownloadCount();
                 } else {
                   e.stopPropagation();
                 }

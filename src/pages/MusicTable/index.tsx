@@ -3,7 +3,7 @@ import Tabel from "components/Table";
 import { useRecoilState } from "recoil";
 import { MusicTableContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "components/Pagination";
 import { filterMusicListState, selectFilterState } from "./state";
 import CheckBox from "components/CheckBox";
@@ -18,13 +18,13 @@ import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
 import { GenreListAll } from "utility/data";
 import BasicSelect from "components/BasicSelect";
-import moment from "moment";
+import { useMutation, useQueryClient } from "react-query";
+import { musicApi } from "common/api/music";
 
 const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
-
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [search, setSearch] = useState<any>("");
   const [limit, setLimit] = useState<number>(10);
@@ -42,6 +42,24 @@ const MusicTable = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
+  const quertyClient = useQueryClient();
+  const { mutate: updateMusicDownloadAllCount } = useMutation(
+    () =>
+      musicApi?.updateMusicCountData(
+        "download-all",
+        musicList,
+        addMusicPlayer,
+        user
+      ),
+    {
+      onError: (error) => {
+        console.log("error:", error);
+      },
+      onSuccess: async () => {
+        await quertyClient.invalidateQueries("getMusicAllDataList");
+      },
+    }
+  );
 
   const onCheckedAllMusic = () => {
     let array: any = "";
@@ -107,29 +125,6 @@ const MusicTable = () => {
       return;
     }
   };
-
-  const onChangeCountData = useCallback(async () => {
-    const result = musicList?.map((item: any) => {
-      if (addMusicPlayer?.find((ac: any) => ac === item?.id)) {
-        return {
-          ...item,
-          downloadCount: item?.downloadCount + 1,
-
-          downloadClickList: [
-            ...item?.downloadClickList,
-            {
-              email: user?.email,
-              updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
-            },
-          ],
-        };
-      }
-      return {
-        ...item,
-      };
-    });
-    // functions?.sendUpdateLikeDownloadCountFunction(result);
-  }, [addMusicPlayer]);
 
   const allCheckd =
     filterMusicList?.length === 0 ||
@@ -213,9 +208,8 @@ const MusicTable = () => {
           fontSize="16px"
           btnType="submit"
           onClick={async () => {
-            await onChangeCountData();
+            await updateMusicDownloadAllCount();
             alert("추가되었습니다.");
-            // functions.getMusicListDataFunction(setMusicList);
           }}
         >
           플레이리스트 추가
