@@ -47,7 +47,6 @@ const UserInfo = ({ className }: UserInfoProps) => {
   };
 
   const handleChangeImg = (event: any) => {
-    // const { name } = event.target;
     const formData = new FormData();
     const fr = new FileReader();
     const file = event.target.files[0];
@@ -91,9 +90,9 @@ const UserInfo = ({ className }: UserInfoProps) => {
             onClickDelete={deleteImg}
           />
         </div>
-        <div className="my-name-id mine">
+        <div className="input-container">
           <TextInput
-            width="220px"
+            width="100%"
             name="name"
             value={form?.name}
             label="이름"
@@ -105,46 +104,16 @@ const UserInfo = ({ className }: UserInfoProps) => {
             }}
           ></TextInput>
           <TextInput
-            width="220px"
+            width="100%"
             name="email"
             value={user?.email?.split("@")[0]}
             label="아이디"
             onChange={(e) => {}}
           ></TextInput>
-        </div>
-
-        <TextInput
-          name="password"
-          type="password"
-          width="465px"
-          value={form?.pwd || ""}
-          label="비밀번호"
-          onChange={(e) => {
-            setForm({
-              ...form,
-              pwd: e.target.value,
-            });
-          }}
-        ></TextInput>
-        <TextInput
-          name="rePassword"
-          type="password"
-          width="465px"
-          value={form?.rePwd || ""}
-          label="비밀번호 확인"
-          onChange={(e) => {
-            setForm({
-              ...form,
-              rePassword: e.target.value,
-            });
-          }}
-        ></TextInput>
-
-        <div className="my-phone-displayName mine">
           <TextInput
             name="phoneNumber"
             type="text"
-            width="220px"
+            width="100%"
             value={form?.phoneNumber}
             label="휴대폰"
             onChange={(e) => {
@@ -157,7 +126,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
 
           <TextInput
             name="displayName"
-            width="220px"
+            width="100%"
             type="text"
             value={form?.displayName}
             label="닉네임"
@@ -169,6 +138,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             }}
           ></TextInput>
         </div>
+
         <Button
           className="my-info-submit"
           btnType="submit"

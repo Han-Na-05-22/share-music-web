@@ -18,7 +18,6 @@ import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
-import { async } from "@firebase/util";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -194,7 +193,7 @@ const AddMusic = ({
     }
   );
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     if (isEdit === "edit") {
       updateMusicData();

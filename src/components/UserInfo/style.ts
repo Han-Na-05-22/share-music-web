@@ -4,10 +4,11 @@ export const UserInfoContainer = styled.div`
   height: 890px;
   width: 550px;
   min-width: 550px;
-  padding: 40px 20px;
+  padding: 100px 40px;
   position: relative;
   background: ${({ theme }) => theme.colors.ModalColor};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #ab9ebaff;
   .my-info-btn {
     position: absolute;
     left: 15px;
@@ -22,6 +23,30 @@ export const UserInfoContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    .input-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin: 30px 0px;
+      gap: 20px 0px;
+
+      & > div {
+        width: 100%;
+
+        &:last-child {
+          input {
+            margin-bottom: 0px;
+          }
+        }
+      }
+      input {
+        width: 100%;
+        margin: 10px 0px 20px;
+      }
+    }
 
     .my-img {
     }
@@ -39,13 +64,15 @@ export const UserInfoContainer = styled.div`
     width: 100%;
     min-width: 100%;
     height: 100%;
+
     .my-info-edit {
       gap: 25px 0px;
 
-      .my-name-id,
-      .my-phone-displayName {
-        input {
-          width: 125px;
+      .input-container {
+        width: 485px;
+
+        @media screen and (max-width: 600px) {
+          width: 250px;
         }
       }
 

@@ -295,7 +295,7 @@ const MusicTable = () => {
               ?.map((item: any, idx: number) => (
                 <tr
                   key={item?.id}
-                  onClick={(event: any) => {
+                  onClick={() => {
                     setIsDetailData({
                       isDetail: true,
                       isLocation: "musicTable",
