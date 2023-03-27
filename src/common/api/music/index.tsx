@@ -146,9 +146,8 @@ export const musicApi = {
       async () => {
         await getDownloadURL(UploadTask.snapshot.ref).then(
           async (downloadUrl) => {
-            console.log(`완료 url: ${downloadUrl}`);
+            await console.log(`완료 url: ${downloadUrl}`);
             await setData(src?.split("/")[1], data, musicList, downloadUrl);
-            window.location.reload();
           }
         );
       }
@@ -292,4 +291,14 @@ export const musicApi = {
   },
 
   // delete cloud firestore music data
+  deleteMusicData: async (data: any) => {
+    const washingtonRef = doc(firestore, "music", "musicList");
+    const desertRef = ref(storage, `music/${data?.email}/${data?.mp3}`);
+
+    await updateDoc(washingtonRef, {
+      data: arrayRemove(data),
+    });
+
+    await deleteObject(desertRef);
+  },
 };

@@ -60,7 +60,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
       };
     }
   };
-  console.log("from", form);
+
   const deleteImg = () => {
     setForm({
       ...form,
@@ -70,15 +70,6 @@ const UserInfo = ({ className }: UserInfoProps) => {
 
   return (
     <UserInfoContainer className={className}>
-      <Button
-        className="my-info-btn"
-        height="60px"
-        btnType="submit"
-        onClick={() => {}}
-      >
-        내정보
-      </Button>
-
       <div className="my-info-edit">
         <div className="my-img mine">
           <ProfileImg

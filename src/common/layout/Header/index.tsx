@@ -14,30 +14,30 @@ import Join from "components/Join";
 import Overlay from "components/Overlay";
 import Login from "components/Login";
 import { myMusicPlayListState } from "pages/MyPage/state";
-import { isMusicDetailState } from "components/MusicDetail/state";
 import { auth } from "service/firebase";
-import { faMusic } from "@fortawesome/free-solid-svg-icons";
+import { faHeadphonesSimple } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddMusic from "components/AddMusic";
 import Nav from "../Nav";
+import { navState } from "../Nav/state";
 
 const Header = () => {
   const navigate = useNavigate();
-  const iconLogo = faMusic as IconProp;
+  const iconLogo = faHeadphonesSimple as IconProp;
   const [search, setSearch] = useRecoilState<any>(searchInputState);
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [user, setUser] = useRecoilState<any>(userInfo);
 
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
+  const [navData, setNavData] = useRecoilState<any[]>(navState);
 
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
-  const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+
   const [filterGenre, setFilterGenre] = useState<string>("All");
 
   const handleChangeSelect = async (isSelected?: any) => {
@@ -73,6 +73,20 @@ const Header = () => {
               setFilterGenre("All");
               setSearch("");
               setFilterMusicList(musicList?.filter((item: any) => item));
+              setNavData(
+                navData?.map((i: any) => {
+                  if (i?.name === "Home") {
+                    return {
+                      ...i,
+                      isClicked: true,
+                    };
+                  }
+                  return {
+                    ...i,
+                    isClicked: false,
+                  };
+                })
+              );
             }}
           >
             <FontAwesomeIcon
@@ -81,6 +95,7 @@ const Header = () => {
                 e.preventDefault();
               }}
             />
+            <span>MUSIC</span>
           </h1>
           <div className="search">
             <BasicSelect
@@ -136,46 +151,36 @@ const Header = () => {
               검색
             </Button>
           </div>
-          <Button
-            height="50px"
-            btnType="add"
-            className="add-music"
-            width="125px"
-            onClick={() => {
-              !user?.email
-                ? alert("로그인 후 이용해주세요")
-                : setIsAddMuisc(true);
-            }}
-          >
-            음원 등록
-          </Button>
-        </div>
-        <div className="header-bottom">
-          <Nav></Nav>
           <div className="auth-container">
             {auth?.currentUser ? (
               <div className="auth-content">
-                <strong
-                  className="my-page-btn"
-                  onClick={() => {
-                    navigate("/mypage");
-                  }}
-                >
-                  Mypage
-                </strong>
+                <div className="auth-btn-container">
+                  <strong
+                    className="my-page-btn"
+                    onClick={() => {
+                      navigate("/mypage");
+                    }}
+                  >
+                    Mypage
+                  </strong>
 
-                <strong
-                  onClick={() => {
-                    auth?.signOut();
-                    sessionStorage?.removeItem("user");
-                    window?.location?.reload();
-                  }}
-                >
-                  Logout
-                </strong>
+                  <strong
+                    onClick={() => {
+                      auth?.signOut();
+                      sessionStorage?.removeItem("user");
+                      window?.location?.reload();
+                    }}
+                  >
+                    Logout
+                  </strong>
+                </div>
+                <div className="auth-profile">
+                  <img src={user?.photoURL} alt="" />
+                  <span>{user?.displayName} </span>
+                </div>
               </div>
             ) : (
-              <div className="auth-content">
+              <div className="auth-content join">
                 <strong
                   onClick={() =>
                     setLoginStateDate({
@@ -200,6 +205,22 @@ const Header = () => {
               </div>
             )}
           </div>
+        </div>
+        <div className="header-bottom">
+          <Nav></Nav>
+          <Button
+            height="50px"
+            btnType="add"
+            className="add-music"
+            width="125px"
+            onClick={() => {
+              !user?.email
+                ? alert("로그인 후 이용해주세요")
+                : setIsAddMuisc(true);
+            }}
+          >
+            음원 등록
+          </Button>
         </div>
       </HeaderContainer>
       {loginStateDate?.isJoin && (

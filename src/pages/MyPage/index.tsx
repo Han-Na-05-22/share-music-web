@@ -6,20 +6,17 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { MyPageContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { arrayRemove, doc, updateDoc } from "firebase/firestore";
-import { firestore, storage } from "service/firebase";
-
 import {
   isMusicDetailState,
   musicDetailState,
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
-import { deleteObject, ref } from "firebase/storage";
 import AddMusic from "components/AddMusic";
 import { currentMusicState } from "components/Record/state";
 import UserInfo from "components/UserInfo";
 import { myMusicPlayListState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
+import { musicApi } from "common/api/music";
 
 // todo :내정보 비밀번호 변경, 마이플레이리스트 삭제 드래그 앤 드롭 기능
 
@@ -31,28 +28,17 @@ const MyPage = () => {
     useRecoilState<any>(musicDetailState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
-
   const [user, setUser] = useRecoilState<any>(userInfo);
-
   const [limit, setLimit] = useState<number>(11);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
   const queryClient = useQueryClient();
 
   const { mutate: deleteMusic } = useMutation(
-    async ({ mp3, data }: any) => {
-      const washingtonRef = doc(firestore, "music", "musicList");
-      const desertRef = ref(storage, `music/${user?.email}/${mp3}`);
-      await updateDoc(washingtonRef, {
-        data: arrayRemove(data),
-      });
-
-      deleteObject(desertRef);
-    },
+    () => musicApi?.deleteMusicData(musicDetailData),
     {
       onError: (error) => {
         console.log("error:", error);
@@ -79,7 +65,6 @@ const MyPage = () => {
       <UserInfo></UserInfo>
       <div className="tabel-container">
         <Tabel
-          tableBtnText={"내 음악"}
           theadData={[
             {
               title: "순번",
@@ -146,8 +131,8 @@ const MyPage = () => {
                       src="/svg/term_delete.svg"
                       onClick={async (e) => {
                         e.stopPropagation();
-
-                        await deleteMusic(item?.mp3, item);
+                        await setMusicDetailData(item);
+                        await deleteMusic(item);
                       }}
                     />
                   </td>
@@ -169,7 +154,6 @@ const MyPage = () => {
       </div>
       <div className="tabel-container">
         <Tabel
-          tableBtnText={"플레이리스트"}
           theadData={[
             {
               title: "순번",

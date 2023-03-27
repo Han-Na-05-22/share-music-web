@@ -24,16 +24,23 @@ export const HeaderContainer = styled.header`
     & > h1 {
       display: flex;
       justify-content: center;
-      align-items: flex-end;
+      align-items: center;
       cursor: pointer;
+      gap: 0px 7.5px;
       position: absolute;
       transform: translateY(-50%);
       left: 0px;
       top: 50%;
 
+      span {
+        font-size: 20px;
+      }
       svg {
-        width: 50px;
-        height: 50px;
+        width: 25px;
+        height: 25px;
+        position: relative;
+        top: -2.5px;
+        transform: rotateZ(-5deg);
       }
     }
 
@@ -44,9 +51,58 @@ export const HeaderContainer = styled.header`
       align-items: center;
     }
 
-    .add-music {
-      position: absolute;
-      right: 0px;
+    .auth-container {
+      .auth-content.join {
+        flex-direction: row;
+        gap: 0px 15px;
+      }
+
+      .auth-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: absolute;
+        right: 0px;
+        gap: 15px 0px;
+        transform: translateY(-50%);
+        top: 50%;
+
+        strong {
+          cursor: pointer;
+          opacity: 0.8;
+          transition: 0.3s;
+
+          &:hover {
+            font-weight: bold;
+            opacity: 1;
+          }
+        }
+
+        .auth-profile {
+          display: flex;
+          gap: 0px 15px;
+          justify-content: flex-end;
+          align-items: center;
+
+          img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+          }
+
+          span {
+            font-size: 12px;
+          }
+        }
+
+        .auth-btn-container {
+          display: flex;
+          justify-content: flex-end;
+          align-items: flex-end;
+          gap: 0px 10px;
+          font-size: 10px;
+        }
+      }
     }
   }
 
@@ -58,24 +114,10 @@ export const HeaderContainer = styled.header`
     align-items: center;
     position: relative;
 
-    .auth-content {
-      display: flex;
-      gap: 0px 35px;
+    .add-music {
       position: absolute;
       right: 0px;
-      transform: translateY(-50%);
-      top: 50%;
-
-      strong {
-        cursor: pointer;
-        opacity: 0.8;
-        transition: 0.3s;
-
-        &:hover {
-          font-weight: bold;
-          opacity: 1;
-        }
-      }
+      bottom: 15px;
     }
   }
 

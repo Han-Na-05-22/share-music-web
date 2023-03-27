@@ -1,44 +1,12 @@
-import Button from "components/Button";
 import { userInfo } from "components/Login/state";
-import { selectFilterState } from "pages/MusicTable/state";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { TabelProps } from "./interface";
 import { TabelContainer, TableGroupContainer } from "./style";
-import { musicListState } from "components/AddMusic/state";
 
 // todo : 테스트 길이가 길 경우 말줄임 적용
-const Tabel = ({
-  className,
-  children,
-  theadData,
-  tableBtnText,
-}: TabelProps) => {
-  const [user, setUser] = useRecoilState<any>(userInfo);
-  const navigate = useNavigate();
-  const [selectFilter, setSelectFilter] =
-    useRecoilState<string>(selectFilterState);
-
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+const Tabel = ({ className, children, theadData }: TabelProps) => {
   return (
     <TableGroupContainer>
-      {tableBtnText !== "" && (
-        <Button
-          className="table-header-btn"
-          height="60px"
-          btnType="submit"
-          onClick={() => {
-            !user?.email
-              ? alert("로그인 후 이용해주세요"!)
-              : navigate("/musicTable");
-            setSelectFilter(tableBtnText);
-            // functions?.getMusicListDataFunction(setMusicList);
-          }}
-        >
-          {tableBtnText}
-        </Button>
-      )}
-
       <TabelContainer className={className}>
         <thead>
           <tr>

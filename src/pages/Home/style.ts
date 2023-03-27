@@ -26,20 +26,19 @@ export const HomeContainer = styled.div`
       font-weight: bold;
     }
 
-    .mySwiper {
+    .slick-slider {
       overflow: visible;
-      padding: 60px 0px 40px;
 
-      .swiper-wrapper {
+      .slick-list {
         width: 2624px;
         transition-timing-function: linear;
 
-        .swiper-slide {
+        .slick-slide {
           width: 250px;
           border-radius: 10px;
           opacity: 0.8;
           transition: 0.3s;
-
+          padding: 60px 0px 40px;
           &:hover {
             transform: translateY(-15px);
             opacity: 1;
@@ -103,21 +102,27 @@ export const HomeContainer = styled.div`
         }
       }
     }
+  }
 
-    .mySwiper2 {
+  .new-slider,
+  .popular-slider {
+    .slick-slider {
       overflow: visible;
       padding: 60px 0px 0px;
-      .swiper-wrapper {
+      .slick-list {
         height: 300px;
         transition-timing-function: linear;
-        .swiper-slide {
-          width: 300px;
+        width: 100%;
+        .slick-slide {
+          width: 250px;
           height: 100%;
           padding: 25px;
           border-radius: 10px;
           opacity: 0.8;
           transition: 0.3s;
+          margin: 0px 100px;
           background: #1b1b1bff;
+
           &:hover {
             transform: translateY(-15px);
             opacity: 1;
@@ -169,7 +174,6 @@ export const HomeContainer = styled.div`
       }
     }
   }
-
   .artist-slider {
     width: 100%;
     display: flex;

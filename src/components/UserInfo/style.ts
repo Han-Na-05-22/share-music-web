@@ -8,12 +8,6 @@ export const UserInfoContainer = styled.div`
   position: relative;
   background: ${({ theme }) => theme.colors.ModalColor};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  color: #ab9ebaff;
-  .my-info-btn {
-    position: absolute;
-    left: 15px;
-    top: -20px;
-  }
 
   .my-info-edit {
     width: 100%;
@@ -95,9 +89,6 @@ export const UserInfoContainer = styled.div`
             }
           }
         }
-      }
-
-      .my-info-submit {
       }
 
       .my-info-submit {

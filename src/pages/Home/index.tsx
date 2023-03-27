@@ -7,14 +7,12 @@ import {
   isMusicDetailState,
   musicDetailState,
 } from "components/MusicDetail/state";
-import { useQueryClient } from "react-query";
-import { myMusicPlayListState } from "pages/MyPage/state";
 import MusicDetail from "components/MusicDetail";
 import Tabel from "components/Table";
 import SVG from "react-inlinesvg";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Autoplay } from "swiper";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import {
   artistDownloadCountToptenState,
   artistLikeCountToptenState,
@@ -23,7 +21,6 @@ import {
 } from "./state";
 
 const Home = () => {
-  const queryClient = useQueryClient();
   const [musicLikeCountTopten, setMusicLikeCountTopten] = useRecoilState<any>(
     musicLikeCountToptenState
   );
@@ -36,15 +33,31 @@ const Home = () => {
 
   const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
     useRecoilState<any>(artistDownloadCountToptenState);
-  console.log("artistDownloadCountTopten", artistDownloadCountTopten);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [isDetailData, setIsDetailData] =
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-  const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<any>(myMusicPlayListState);
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 5,
+    centerMode: true,
+    centerPadding: "60px",
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    loop: true,
+    draggable: true,
+    slide: "div",
+    arrows: true,
+    pauseOnHover: true,
+    vertical: false,
+  };
 
   useEffect(() => {
     if (musicList) {
@@ -117,24 +130,10 @@ const Home = () => {
         <section className="recommend-slider">
           <h3>Recommend</h3>
 
-          <Swiper
-            modules={[Autoplay]}
-            centeredSlides={true}
-            allowTouchMove={true}
-            autoplay={{
-              delay: 0,
-              reverseDirection: false,
-            }}
-            speed={3000}
-            loop={true}
-            loopPreventsSliding={true}
-            slidesPerView={4}
-            grabCursor={true}
-            className="mySwiper"
-          >
+          <Slider {...settings}>
             {musicList?.length !== 0 &&
               musicList?.map((item: any, idx: number) => (
-                <SwiperSlide
+                <div
                   key={idx}
                   className="slider-list"
                   onClick={() => {
@@ -153,31 +152,16 @@ const Home = () => {
                   </div>
                   <div>{item?.title}</div>
                   <div className="singer">{item?.singer}</div>
-                </SwiperSlide>
+                </div>
               ))}
-          </Swiper>
+          </Slider>
         </section>
         <section className="new-slider">
           <h3>New</h3>
-          <Swiper
-            spaceBetween={100}
-            modules={[Autoplay]}
-            centeredSlides={true}
-            allowTouchMove={true}
-            autoplay={{
-              delay: 0,
-              reverseDirection: false,
-            }}
-            speed={3000}
-            loop={true}
-            loopPreventsSliding={true}
-            slidesPerView={5}
-            grabCursor={true}
-            className="mySwiper2"
-          >
+          <Slider {...settings}>
             {musicList?.length !== 0 &&
               musicNewDataList?.map((item: any, idx: number) => (
-                <SwiperSlide
+                <div
                   key={idx}
                   className="slider-list"
                   onClick={() => {
@@ -190,38 +174,22 @@ const Home = () => {
                     setMusicDetailData(item);
                   }}
                 >
-                  {" "}
                   <div className="date">{item?.date}</div>
                   <div className="test">
                     <img src={item?.img} alt="" />
                   </div>
                   <div>{item?.title}</div>
                   <div className="singer">{item?.singer}</div>
-                </SwiperSlide>
+                </div>
               ))}
-          </Swiper>
+          </Slider>
         </section>
         <section className="popular-slider">
           <h3>Top</h3>
-          <Swiper
-            spaceBetween={100}
-            modules={[Autoplay]}
-            centeredSlides={true}
-            allowTouchMove={true}
-            autoplay={{
-              delay: 0,
-              reverseDirection: false,
-            }}
-            speed={3000}
-            loop={true}
-            loopPreventsSliding={true}
-            slidesPerView={6}
-            grabCursor={true}
-            className="mySwiper2"
-          >
+          <Slider {...settings}>
             {musicList?.length !== 0 &&
               musicLikeCountTopten?.map((item: any, idx: number) => (
-                <SwiperSlide
+                <div
                   key={idx}
                   className="slider-list"
                   onClick={() => {
@@ -241,15 +209,14 @@ const Home = () => {
                   </div>
                   <div>{item?.title}</div>
                   <div className="singer">{item?.singer}</div>{" "}
-                </SwiperSlide>
+                </div>
               ))}
-          </Swiper>
+          </Slider>
         </section>
         <section className="artist-slider">
           <div className="tabel-container">
             <h4>Top Artist Like Count</h4>
             <Tabel
-              tableBtnText={""}
               theadData={[
                 {
                   title: "순위",
@@ -297,7 +264,6 @@ const Home = () => {
           <div className="tabel-container">
             <h4>Top Artist Download Count</h4>
             <Tabel
-              tableBtnText={""}
               theadData={[
                 {
                   title: "순위",

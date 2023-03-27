@@ -11,8 +11,12 @@ import {
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRecoilState } from "recoil";
 import { navState } from "./state";
-import { selectFilterState } from "pages/MusicTable/state";
+import {
+  filterMusicListState,
+  selectFilterState,
+} from "pages/MusicTable/state";
 import { myMusicPlayListState } from "pages/MyPage/state";
+import { musicListState } from "components/AddMusic/state";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -37,7 +41,7 @@ const Nav = () => {
   ];
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
-  console.log("selectFilter", selectFilter);
+
   const [navData, setNavData] = useRecoilState<any[]>(navState);
 
   return (
@@ -52,9 +56,8 @@ const Nav = () => {
                   : { ...p, isClicked: false }
               )
             );
-
+            await setSelectFilter(item?.name);
             navigate(`${item?.nav}`);
-            setSelectFilter(item?.name);
           }}
           key={idx}
           className={item?.isClicked ? "active-nav" : ""}

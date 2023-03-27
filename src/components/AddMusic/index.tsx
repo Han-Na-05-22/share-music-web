@@ -16,7 +16,7 @@ import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 import { auth } from "service/firebase";
 
@@ -45,20 +45,20 @@ const AddMusic = ({
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
+  const [user, setUser] = useRecoilState<any>(userInfo);
   const [form, setForm] = useState<AddMusicFormProps>({
-    img: "",
+    img: "/image/test-pic.jpeg",
     mp3: "",
-    title: "",
+    title: "1",
     genre: "POP",
     displayName: auth?.currentUser?.displayName,
-    singer: "",
-    explanation: "",
+    singer: "1",
+    explanation: "1",
     mpName: "",
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
 
-  const [user, setUser] = useRecoilState<any>(userInfo);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<string>("none");
@@ -169,8 +169,12 @@ const AddMusic = ({
         setIsClicked(true);
       },
       onSuccess: async () => {
-        await queryClient.invalidateQueries("getMusicAllDataList");
+        queryClient.invalidateQueries("getMusicAllDataList");
         setIsClicked(false);
+        setTimeout(function () {
+          console.log("3초후 실행됨");
+          queryClient.invalidateQueries("getMusicAllDataList");
+        }, 3500);
       },
     }
   );

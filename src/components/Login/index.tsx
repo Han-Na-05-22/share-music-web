@@ -49,8 +49,12 @@ const Login = ({ className }: LoginProps) => {
             email: auth?.currentUser?.email,
           })
         );
-        queryClient.invalidateQueries("getSessUserData");
         alert("로그인에 성공하였습니다.");
+        await queryClient.invalidateQueries("getSessUserData");
+        setLoginStateDate({
+          ...loginStateDate,
+          isLogin: false,
+        });
         queryClient.invalidateQueries("getUser");
       },
     }

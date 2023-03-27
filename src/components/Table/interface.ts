@@ -7,5 +7,4 @@ export interface TabelProps {
   className?: string;
   children: React.ReactNode;
   theadData: theadData[];
-  tableBtnText: string;
 }

@@ -29,7 +29,7 @@ function App() {
     "getUserAllList",
     userApi?.getUserAllDataList()
   );
-  console.log("myMusicPlayList", myMusicPlayList);
+
   const { isLoading: userDataLoading, data: userData } = useQuery<any>(
     "getUser",
     () => {

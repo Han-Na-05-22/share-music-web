@@ -5,7 +5,7 @@ export const MyPageContainer = styled.div`
   width: 100%;
   justify-content: space-between;
   height: 100%;
-
+  padding: 0px 0px 100px;
   .tabel-container {
     div {
       &:nth-child(2) {

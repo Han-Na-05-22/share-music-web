@@ -135,26 +135,22 @@ const MusicTable = () => {
     }
   }, [selectFilter, musicList]);
 
-  console.log("filterMusicList", filterMusicList);
-
   return (
     <MusicTableContainer>
-      <div className="music-top">
-        <Button
-          className="my-info-submit"
-          fontSize="16px"
-          btnType="submit"
-          onClick={async () => {
-            await updateMusicDownloadAllCount();
-            alert("추가되었습니다.");
-          }}
-        >
-          Playlist 추가
-        </Button>
-      </div>
+      <Button
+        className="my-info-submit"
+        fontSize="16px"
+        btnType="submit"
+        onClick={async () => {
+          await updateMusicDownloadAllCount();
+          alert("추가되었습니다.");
+        }}
+      >
+        추가
+      </Button>
+
       <div className="tabel-container">
         <Tabel
-          tableBtnText={selectFilter}
           theadData={[
             {
               title: (
@@ -223,7 +219,7 @@ const MusicTable = () => {
             filterMusicList
               ?.slice(offset, offset + limit)
               ?.sort((a: any, b: any) => {
-                if (selectFilter === "인기순") {
+                if (selectFilter === "Popular") {
                   return b?.likeCount - a?.likeCount;
                 } else {
                   return b?.id - a?.id;

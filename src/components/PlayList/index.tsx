@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import { isMusicDetailState } from "components/MusicDetail/state";
 import SVG from "react-inlinesvg";
 import Button from "components/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { userInfo } from "components/Login/state";
 import { playListIndexState } from "./state";
 
@@ -21,6 +21,12 @@ const PlayList = ({
   const [idx, setIdx] = useRecoilState<any>(playListIndexState);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [isPlay, setIsPlay] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isDetailData?.isLocation === "download") {
+      setIsPlay(false);
+    }
+  }, [isDetailData]);
 
   return (
     <PlayListContainer>

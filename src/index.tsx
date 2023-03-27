@@ -27,7 +27,7 @@ root.render(
   <React.StrictMode>
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
-        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+        <ReactQueryDevtools initialIsOpen={true} />
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <GlobalStyle />

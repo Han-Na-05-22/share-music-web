@@ -4,7 +4,10 @@ import SVG from "react-inlinesvg";
 import { useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import { musicDetailState } from "components/MusicDetail/state";
+import {
+  isMusicDetailState,
+  musicDetailState,
+} from "components/MusicDetail/state";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import { userInfo } from "components/Login/state";
@@ -56,8 +59,6 @@ const Record = ({
     }
   );
 
-  const [selectFilter, setSelectFilter] =
-    useRecoilState<string>(selectFilterState);
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
   return (
@@ -96,7 +97,9 @@ const Record = ({
               }.svg`}
               onClick={(e: any) => {
                 if (musicDetailData?.email !== user?.email) {
+                  e.preventDefault();
                   updateMusicLikeCount();
+                  setIsPlay(false);
                 } else {
                   e.stopPropagation();
                 }
@@ -128,7 +131,9 @@ const Record = ({
               }.svg`}
               onClick={async (e: any) => {
                 if (musicDetailData?.email !== user?.email) {
+                  e.preventDefault();
                   updateMusicDownloadCount();
+                  setIsPlay(false);
                 } else {
                   e.stopPropagation();
                 }

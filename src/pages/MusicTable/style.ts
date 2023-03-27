@@ -7,16 +7,18 @@ export const MusicTableContainer = styled.div`
   flex-direction: column;
   color: ${({ theme }) => theme.colors.BlackColor};
   height: 100%;
+  padding: 100px 0px;
+  position: relative;
 
-  .music-top {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .my-info-submit {
+    position: absolute;
+    top: 30px;
+    right: 40px;
   }
 
   .tabel-container {
     width: 100%;
+    height: 100%;
 
     div {
       width: 100%;
@@ -30,6 +32,7 @@ export const MusicTableContainer = styled.div`
     }
     table {
       width: 100%;
+      height: 100%;
     }
 
     thead,
@@ -85,34 +88,6 @@ export const MusicTableContainer = styled.div`
   }
 
   @media screen and (max-width: 1660px) {
-    .music-top {
-      width: 100%;
-      padding: 0px;
-
-      /* .search {
-        gap: 0px 10px;
-
-        select {
-          width: 75px;
-          height: 35px;
-        }
-      } */
-
-      input {
-        width: 150px;
-        font-size: 12px;
-      }
-
-      .my-info-submit {
-        width: 75px;
-        height: 35px;
-
-        span {
-          font-size: 12px;
-        }
-      }
-    }
-
     .tabel-container {
       & > div {
         padding: 0pc;
@@ -192,33 +167,6 @@ export const MusicTableContainer = styled.div`
               display: none;
             }
           }
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    .music-top {
-      .search {
-        gap: 0px 5px;
-
-        select {
-          font-size: 12px;
-          padding-left: 5px;
-        }
-      }
-
-      input {
-        width: 100px;
-        font-size: 12px;
-        padding-left: 5px;
-      }
-
-      .my-info-submit {
-        width: 50px;
-
-        span {
-          font-size: 10px;
         }
       }
     }
