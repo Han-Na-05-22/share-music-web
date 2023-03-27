@@ -14,11 +14,15 @@ import { auth } from "service/firebase";
 import { useQuery } from "react-query";
 import { userApi } from "common/api/user";
 import { musicApi } from "common/api/music";
+import PlayList from "components/PlayList";
+import { isMusicDetailState } from "components/MusicDetail/state";
+import Overlay from "components/Overlay";
 
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
 
@@ -93,6 +97,19 @@ function App() {
           <Route path="/musicTable" element={<MusicTable />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
+
+        <PlayList
+          className={
+            isDetailData?.isLocation === "playList" ? "detail-play-list" : ""
+          }
+          onClick={() => {
+            setIsDetailData({
+              isDetail: true,
+              isLocation: "playList",
+            });
+          }}
+          playListData={myMusicPlayList}
+        ></PlayList>
       </Container>
     </div>
   );

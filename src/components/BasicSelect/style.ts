@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const BasicSelectContainer = styled.select`
-  width: 150px;
+  width: 125px;
   height: 50px;
   border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
   padding-left: 10px;
@@ -9,5 +9,9 @@ export const BasicSelectContainer = styled.select`
 
   &:hover {
     border: 2px solid ${({ theme }) => theme.colors.HoverColor};
+  }
+  @media screen and (max-width: 1660px) {
+    height: 35px;
+    width: 100px;
   }
 `;

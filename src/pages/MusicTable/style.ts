@@ -13,13 +13,6 @@ export const MusicTableContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .search {
-      display: flex;
-      gap: 0px 25px;
-      justify-content: space-around;
-      align-items: center;
-    }
   }
 
   .tabel-container {
@@ -96,14 +89,14 @@ export const MusicTableContainer = styled.div`
       width: 100%;
       padding: 0px;
 
-      .search {
+      /* .search {
         gap: 0px 10px;
 
         select {
           width: 75px;
           height: 35px;
         }
-      }
+      } */
 
       input {
         width: 150px;

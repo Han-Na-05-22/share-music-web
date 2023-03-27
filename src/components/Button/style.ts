@@ -9,6 +9,7 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
   transition: 0.5s;
   border: none;
   margin-left: ${(props) => props.marginLeft};
+  border-radius: 5px;
 
   &:hover {
     background: ${({ theme }) => theme.colors.HoverColor};

@@ -1,8 +1,5 @@
 import { HomeContainer } from "./style";
-import SVG from "react-inlinesvg";
 import { useState } from "react";
-import Tabel from "components/Table";
-import Pagination from "components/Pagination";
 import { useRecoilState } from "recoil";
 import { userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
@@ -10,13 +7,13 @@ import {
   isMusicDetailState,
   musicDetailState,
 } from "components/MusicDetail/state";
-import MusicDetail from "components/MusicDetail";
-import LeftContent from "common/layout/LeftContent";
 import { useQueryClient } from "react-query";
+import { myMusicPlayListState } from "pages/MyPage/state";
 
 const Home = () => {
   const queryClient = useQueryClient();
-
+  const [myMusicPlayList, setMyMusicPlayList] =
+    useRecoilState<any>(myMusicPlayListState);
   //* QUERY 작업중
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
@@ -43,8 +40,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <LeftContent className="left-container"></LeftContent>
-      <div className="tabel-container">
+      {/* <div className="tabel-container">
         <Tabel
           tableBtnText={"인기순"}
           theadData={[
@@ -169,11 +165,7 @@ const Home = () => {
           setPage={setPage}
           handleChangePage={handleChangePage}
         />
-      </div>
-
-      {isDetailData?.isDetail && isDetailData?.isLocation === "home" && (
-        <MusicDetail detailData={musicDetailData}></MusicDetail>
-      )}
+      </div> */}
     </HomeContainer>
   );
 };

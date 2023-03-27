@@ -8,7 +8,7 @@ export const SquareButtonContainer = styled.button<SquareButtonStyleProps>`
   display: flex;
   font-weight: 400;
   font-size: 14px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.ButtonText};
   justify-content: center;
   align-items: center;
   background: ${({ theme }) => theme.colors.DefaultColor};

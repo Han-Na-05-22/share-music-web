@@ -6,7 +6,7 @@ export const HomeContainer = styled.div`
   gap: 0 100px;
   justify-content: space-between;
   position: relative;
-
+  padding: 0px 50px;
   .input-test {
     display: flex;
     align-items: center;
@@ -22,18 +22,6 @@ export const HomeContainer = styled.div`
     flex-direction: column;
     gap: 100px 0px;
     padding-bottom: 40px;
-    .left-container {
-      .left {
-        width: 100%;
-        section {
-          width: 100%;
-        }
-
-        & > div {
-          width: 100%;
-        }
-      }
-    }
 
     .tabel-container {
       width: 100%;

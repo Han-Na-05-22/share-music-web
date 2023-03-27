@@ -26,13 +26,11 @@ const MusicTable = () => {
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
   const [user, setUser] = useRecoilState<any>(userInfo);
-  const [search, setSearch] = useState<any>("");
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
   const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
-  const [filterGenre, setFilterGenre] = useState<string>("All");
 
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
@@ -94,29 +92,6 @@ const MusicTable = () => {
     }
   };
 
-  const handleChangeSelect = async (isSelected?: any) => {
-    if (search?.length === 0 && isSelected === "All") {
-      setFilterMusicList(musicList);
-    }
-    if (search?.length === 0 && isSelected !== "All") {
-      setFilterMusicList(
-        musicList?.filter((i: any) => i?.genre === isSelected)
-      );
-    }
-
-    if (search?.length !== 0 && isSelected === "All") {
-      setFilterMusicList(musicList?.filter((i: any) => i?.title === search));
-    }
-
-    if (search?.length !== 0 && isSelected !== "All") {
-      setFilterMusicList(
-        musicList?.filter(
-          (i: any) => i?.title === search && i?.genre === isSelected
-        )
-      );
-    }
-  };
-
   const handleChangePage = (page: any) => {
     if (musicList?.length < 10) {
       page = 1;
@@ -135,13 +110,6 @@ const MusicTable = () => {
     musicList?.length === myMusicPlayList?.length;
 
   useEffect(() => {
-    if (selectFilter !== "인기순" && selectFilter !== "등록순") {
-      const result = musicList?.filter(
-        (item: any) => item?.genre === selectFilter
-      );
-      setFilterMusicList(result);
-    }
-
     if (selectFilter === "내 음악") {
       const result = musicList?.filter(
         (item: any) => item?.email === user?.email
@@ -152,57 +120,12 @@ const MusicTable = () => {
     if (selectFilter === "플레이리스트") {
       setFilterMusicList(myMusicPlayList);
     }
-
-    if (selectFilter === "인기순" || selectFilter === "등록순") {
-      const result = musicList?.filter((item: any) => item);
-
-      setFilterMusicList(result);
-    }
   }, [selectFilter, musicList]);
+  console.log("selectFilter", selectFilter);
 
   return (
     <MusicTableContainer>
       <div className="music-top">
-        <div className="search">
-          {!GenreListAll?.find((i: any) => i?.name === selectFilter) && (
-            <BasicSelect
-              selectData={GenreListAll}
-              name="genre"
-              value={filterGenre}
-              onChange={async (event: any) => {
-                await setFilterGenre(
-                  event.target.options[event.target.selectedIndex].value
-                );
-                handleChangeSelect(
-                  event.target.options[event.target.selectedIndex].value
-                );
-              }}
-            ></BasicSelect>
-          )}
-
-          <TextInput
-            width="220px"
-            name="search"
-            value={search}
-            placeholder="노래 제목을 입력해주세요."
-            onChange={(e: any) => {
-              e.preventDefault();
-              setSearch(e.target.value);
-            }}
-            label=""
-          ></TextInput>
-          <Button
-            fontSize="18px"
-            className="my-info-submit"
-            btnType="submit"
-            onClick={(e) => {
-              handleChangeSelect(filterGenre);
-            }}
-          >
-            검색
-          </Button>
-        </div>
-
         <Button
           className="my-info-submit"
           fontSize="16px"

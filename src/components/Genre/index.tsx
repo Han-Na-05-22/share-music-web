@@ -8,6 +8,7 @@ import { GenreProps } from "./interface";
 import { genreState } from "./state";
 import { GenreContainer } from "./style";
 
+// artist 리스트로 변경하기
 const Genre = ({ className, onClick }: GenreProps) => {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState<any>(userInfo);

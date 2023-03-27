@@ -64,16 +64,16 @@ const Login = ({ className }: LoginProps) => {
     <>
       <LoginContainer className={className}>
         <Button
-          className="join-btn"
+          className="close-btn"
           btnType="submit"
           onClick={() =>
             setLoginStateDate({
               ...loginStateDate,
-              isJoin: true,
+              isLogin: false,
             })
           }
         >
-          회원가입
+          닫기
         </Button>
         <TextInput
           name="email"
@@ -122,12 +122,6 @@ const Login = ({ className }: LoginProps) => {
           로그인
         </Button>
       </LoginContainer>
-
-      {loginStateDate?.isJoin && (
-        <Overlay>
-          <Join></Join>
-        </Overlay>
-      )}
     </>
   );
 };
