@@ -18,6 +18,7 @@ import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
+import { auth } from "service/firebase";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -49,6 +50,7 @@ const AddMusic = ({
     mp3: "",
     title: "",
     genre: "POP",
+    displayName: auth?.currentUser?.displayName,
     singer: "",
     explanation: "",
     mpName: "",
@@ -212,6 +214,7 @@ const AddMusic = ({
         singer: "",
         explanation: "",
         genre: "",
+        displayName: "",
         mpName: "",
         uniqueKey: new Date()?.getTime(),
         date: moment().format("YYYY-MM-DD HH:mm:ss"),

@@ -12,9 +12,13 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRecoilState } from "recoil";
 import { navState } from "./state";
 import { selectFilterState } from "pages/MusicTable/state";
+import { myMusicPlayListState } from "pages/MyPage/state";
 
 const Nav = () => {
   const navigate = useNavigate();
+
+  const [myMusicPlayList, setMyMusicPlayList] =
+    useRecoilState<any>(myMusicPlayListState);
 
   const iconHouse = faHouse as IconProp;
   const iconPopular = faFire as IconProp;
@@ -33,9 +37,9 @@ const Nav = () => {
   ];
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
-  console.log("iconArrayiconArray", iconArray);
+  console.log("selectFilter", selectFilter);
   const [navData, setNavData] = useRecoilState<any[]>(navState);
-  console.log("navData", navData);
+
   return (
     <NavContainer>
       {navData?.map((item: any, idx: number) => (
@@ -50,6 +54,7 @@ const Nav = () => {
             );
 
             navigate(`${item?.nav}`);
+            setSelectFilter(item?.name);
           }}
           key={idx}
           className={item?.isClicked ? "active-nav" : ""}

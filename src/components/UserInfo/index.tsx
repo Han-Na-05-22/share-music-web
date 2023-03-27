@@ -2,13 +2,11 @@ import Button from "components/Button";
 import { userInfo } from "components/Login/state";
 import ProfileImg from "components/ProfileImg";
 import TextInput from "components/TextInput";
-import { doc, setDoc } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { auth, firestore } from "service/firebase";
+import { auth } from "service/firebase";
 import { UserInfoProps } from "./interface";
 import { UserInfoContainer } from "./style";
-
 import { useMutation, useQueryClient } from "react-query";
 import { userApi } from "common/api/user";
 

@@ -6,7 +6,6 @@ export const HeaderContainer = styled.header`
   align-items: center;
   flex-direction: column;
   gap: 25px 0px;
-  margin-bottom: 40px;
   padding: 40px 40px 0px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   background: #1b1b1bff;

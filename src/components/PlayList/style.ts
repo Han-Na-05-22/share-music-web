@@ -15,12 +15,13 @@ export const PlayListContainer = styled.div`
   & > div {
     width: 100%;
     height: 100px;
-    position: absolute;
+    position: fixed;
     left: 0%;
     bottom: 0%;
     background: #1b1b1bff;
     padding: 0px 40px;
     display: flex;
+    z-index: 100;
     justify-content: center;
     align-items: center;
 

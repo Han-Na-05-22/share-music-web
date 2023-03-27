@@ -5,10 +5,8 @@ import { LoginProps } from "./interface";
 import { LoginContainer } from "./style";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "service/firebase";
-import Join from "components/Join";
 import { useRecoilState } from "recoil";
 import { loginState } from "./state";
-import Overlay from "components/Overlay";
 import { useMutation, useQueryClient } from "react-query";
 
 interface LoginFormProps {

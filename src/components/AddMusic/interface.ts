@@ -13,6 +13,7 @@ export interface AddMusicFormProps {
   mp3: any;
   title: string;
   singer: string;
+  displayName: any;
   mpName?: string;
   explanation: string;
   formData?: any;

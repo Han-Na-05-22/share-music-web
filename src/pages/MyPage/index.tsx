@@ -2,7 +2,7 @@ import { checkEditMusicState, musicListState } from "components/AddMusic/state";
 import { userInfo } from "components/Login/state";
 import Pagination from "components/Pagination";
 import Tabel from "components/Table";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { MyPageContainer } from "./style";
 import SVG from "react-inlinesvg";
@@ -19,6 +19,7 @@ import AddMusic from "components/AddMusic";
 import { currentMusicState } from "components/Record/state";
 import UserInfo from "components/UserInfo";
 import { myMusicPlayListState } from "./state";
+import { useMutation, useQueryClient } from "react-query";
 
 // todo :내정보 비밀번호 변경, 마이플레이리스트 삭제 드래그 앤 드롭 기능
 
@@ -40,6 +41,29 @@ const MyPage = () => {
   const [limit, setLimit] = useState<number>(11);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteMusic } = useMutation(
+    async ({ mp3, data }: any) => {
+      const washingtonRef = doc(firestore, "music", "musicList");
+      const desertRef = ref(storage, `music/${user?.email}/${mp3}`);
+      await updateDoc(washingtonRef, {
+        data: arrayRemove(data),
+      });
+
+      deleteObject(desertRef);
+    },
+    {
+      onError: (error) => {
+        console.log("error:", error);
+        alert("삭제에 실패하였습니다.");
+      },
+      onSuccess: async () => {
+        await queryClient.invalidateQueries("getMusicAllDataList");
+        alert("삭제가 완료되었습니다.");
+      },
+    }
+  );
 
   const handleChangePage = (page: any) => {
     if (musicList?.length < 10) {
@@ -49,24 +73,6 @@ const MyPage = () => {
       return;
     }
   };
-
-  // 내 음악 삭제
-  const deleteMusicData = useCallback(async (mp3: string, data: any) => {
-    const washingtonRef = doc(firestore, "music", "musicList");
-    const desertRef = ref(storage, `music/${user?.email}/${mp3}`);
-    await updateDoc(washingtonRef, {
-      data: arrayRemove(data),
-    });
-
-    deleteObject(desertRef)
-      .then(() => {
-        alert("삭제가 완료되었습니다.");
-        // functions.getMusicListDataFunction(setMusicList);
-      })
-      .catch((error) => {
-        alert("삭제에 실패하였습니다.");
-      });
-  }, []);
 
   return (
     <MyPageContainer>
@@ -141,7 +147,7 @@ const MyPage = () => {
                       onClick={async (e) => {
                         e.stopPropagation();
 
-                        await deleteMusicData(item?.mp3, item);
+                        await deleteMusic(item?.mp3, item);
                       }}
                     />
                   </td>

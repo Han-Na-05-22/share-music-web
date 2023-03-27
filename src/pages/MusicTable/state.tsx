@@ -3,8 +3,8 @@ import { atom } from "recoil";
 export const selectFilterState = atom({
   key: "selectFilterStateData",
   default:
-    "인기순" ||
-    "등록순" ||
+    "Popular" ||
+    "New" ||
     "POP" ||
     "OST" ||
     "발라드" ||

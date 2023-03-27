@@ -16,7 +16,6 @@ import { userApi } from "common/api/user";
 import { musicApi } from "common/api/music";
 import PlayList from "components/PlayList";
 import { isMusicDetailState } from "components/MusicDetail/state";
-import Overlay from "components/Overlay";
 
 function App() {
   const [user, setUser] = useRecoilState<any>(userInfo);
@@ -25,12 +24,12 @@ function App() {
     useRecoilState<any>(isMusicDetailState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<any>(myMusicPlayListState);
-
+  console.log("musicList", musicList);
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
     "getUserAllList",
     userApi?.getUserAllDataList()
   );
-
+  console.log("myMusicPlayList", myMusicPlayList);
   const { isLoading: userDataLoading, data: userData } = useQuery<any>(
     "getUser",
     () => {
@@ -90,7 +89,6 @@ function App() {
     <div className="App">
       <Container>
         <Header />
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/mypage" element={<MyPage />} />

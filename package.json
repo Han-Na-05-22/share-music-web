@@ -27,10 +27,8 @@
     "react-scripts": "5.0.1",
     "recoil": "^0.7.6",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4",
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1",
-    "@types/react-slick": "^0.23.10"
+    "swiper": "^9.1.1",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

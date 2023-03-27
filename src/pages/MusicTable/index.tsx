@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import Pagination from "components/Pagination";
 import { filterMusicListState, selectFilterState } from "./state";
 import CheckBox from "components/CheckBox";
-import TextInput from "components/TextInput";
 import Button from "components/Button";
 import {
   isMusicDetailState,
@@ -16,8 +15,6 @@ import {
 import MusicDetail from "components/MusicDetail";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
-import { GenreListAll } from "utility/data";
-import BasicSelect from "components/BasicSelect";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 
@@ -103,25 +100,42 @@ const MusicTable = () => {
 
   const allCheckd =
     filterMusicList?.length === 0 ||
-    selectFilter === "내 음악" ||
-    selectFilter === "플레이리스트" ||
+    selectFilter === "My Music" ||
+    selectFilter === "Playlist" ||
     myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
       filterMusicList?.length ||
     musicList?.length === myMusicPlayList?.length;
 
   useEffect(() => {
-    if (selectFilter === "내 음악") {
+    if (selectFilter === "My Music") {
       const result = musicList?.filter(
         (item: any) => item?.email === user?.email
       );
       setFilterMusicList(result);
     }
 
-    if (selectFilter === "플레이리스트") {
+    if (selectFilter === "Playlist") {
       setFilterMusicList(myMusicPlayList);
     }
+
+    if (selectFilter === "New") {
+      const result = musicList
+        ?.map((item: any) => item)
+        ?.sort((a: any, b: any) => b?.date - a?.date);
+
+      setFilterMusicList(result);
+    }
+
+    if (selectFilter === "Popular") {
+      const result = musicList
+        ?.map((item: any) => item)
+        ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount);
+
+      setFilterMusicList(result);
+    }
   }, [selectFilter, musicList]);
-  console.log("selectFilter", selectFilter);
+
+  console.log("filterMusicList", filterMusicList);
 
   return (
     <MusicTableContainer>
@@ -135,7 +149,7 @@ const MusicTable = () => {
             alert("추가되었습니다.");
           }}
         >
-          플레이리스트 추가
+          Playlist 추가
         </Button>
       </div>
       <div className="tabel-container">
@@ -147,8 +161,8 @@ const MusicTable = () => {
                 <CheckBox
                   disabled={
                     filterMusicList?.length === 0 ||
-                    selectFilter === "내 음악" ||
-                    selectFilter === "플레이리스트" ||
+                    selectFilter === "My Music" ||
+                    selectFilter === "Playlist" ||
                     myMusicPlayList?.filter(
                       (i: any) => i?.genre === selectFilter
                     )?.length === filterMusicList?.length ||
@@ -177,7 +191,7 @@ const MusicTable = () => {
               ),
             },
             {
-              title: selectFilter === "인기순" ? "순위" : "순번",
+              title: selectFilter === "Popular" ? "순위" : "순번",
             },
             {
               title: "음원",

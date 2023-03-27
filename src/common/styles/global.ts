@@ -24,6 +24,9 @@ export const GlobalStyle = createGlobalStyle`
   /* background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); */
   body{
     width: 100vw;
+    height: 100%;
+    overflow-y: auto;
+    /* height: 100vh; */
     /* padding:40px 0px; */
 
     @media screen and (max-width: 1660px) {

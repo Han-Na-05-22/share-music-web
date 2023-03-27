@@ -11,9 +11,10 @@ import {
   ref as sRef,
   uploadBytesResumable,
   getDownloadURL,
+  ref,
+  deleteObject,
 } from "firebase/storage";
 import moment from "moment";
-import { useState } from "react";
 import { firestore, storage } from "service/firebase";
 
 //* Cloud Firestore, Storage
@@ -46,6 +47,7 @@ export const musicApi = {
             email: email,
             title: data?.title,
             singer: data?.singer,
+            displayName: data?.displayName,
             explanation: data?.explanation,
             img: data?.img,
             date: data?.date,
@@ -70,6 +72,7 @@ export const musicApi = {
           id: musicListData?.length + 1,
           email: email,
           title: data?.title,
+          displayName: data?.displayName,
           singer: data?.singer,
           explanation: data?.explanation,
           img: data?.img,
@@ -287,4 +290,6 @@ export const musicApi = {
 
     await updateDoc(washingtonRef, { data: result });
   },
+
+  // delete cloud firestore music data
 };

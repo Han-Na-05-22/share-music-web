@@ -5,7 +5,6 @@ export const RootContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 50px;
 
   @media screen and (max-width: 1660px) {
   }

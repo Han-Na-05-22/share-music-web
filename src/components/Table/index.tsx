@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { TabelProps } from "./interface";
 import { TabelContainer, TableGroupContainer } from "./style";
-
 import { musicListState } from "components/AddMusic/state";
 
 // todo : 테스트 길이가 길 경우 말줄임 적용
@@ -23,20 +22,23 @@ const Tabel = ({
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   return (
     <TableGroupContainer>
-      <Button
-        className="table-header-btn"
-        height="60px"
-        btnType="submit"
-        onClick={() => {
-          !user?.email
-            ? alert("로그인 후 이용해주세요"!)
-            : navigate("/musicTable");
-          setSelectFilter(tableBtnText);
-          // functions?.getMusicListDataFunction(setMusicList);
-        }}
-      >
-        {tableBtnText}
-      </Button>
+      {tableBtnText !== "" && (
+        <Button
+          className="table-header-btn"
+          height="60px"
+          btnType="submit"
+          onClick={() => {
+            !user?.email
+              ? alert("로그인 후 이용해주세요"!)
+              : navigate("/musicTable");
+            setSelectFilter(tableBtnText);
+            // functions?.getMusicListDataFunction(setMusicList);
+          }}
+        >
+          {tableBtnText}
+        </Button>
+      )}
+
       <TabelContainer className={className}>
         <thead>
           <tr>
