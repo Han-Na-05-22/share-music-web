@@ -18,8 +18,6 @@ import { myMusicPlayListState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 
-// todo :내정보 비밀번호 변경, 마이플레이리스트 삭제 드래그 앤 드롭 기능
-
 const MyPage = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [isDetailData, setIsDetailData] =
@@ -142,59 +140,6 @@ const MyPage = () => {
         {(musicList?.filter((i: any) => i?.email === user?.email)?.length ===
           0 ||
           musicList === undefined) && (
-          <p className="no-data">등록된 데이터가 없습니다.</p>
-        )}
-        <Pagination
-          total={musicList?.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          handleChangePage={handleChangePage}
-        />
-      </div>
-      <div className="tabel-container">
-        <Tabel
-          theadData={[
-            {
-              title: "순번",
-            },
-            {
-              title: "음원",
-            },
-            {
-              title: "제목",
-            },
-            {
-              title: "가수",
-            },
-          ]}
-        >
-          {myMusicPlayList?.length !== 0 &&
-            myMusicPlayList
-              ?.slice(offset, offset + limit)
-              ?.map((item: any, idx: number) => (
-                <tr
-                  key={idx}
-                  onClick={() => {
-                    !user?.email
-                      ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData({
-                          isDetail: true,
-                          isLocation: "mypage",
-                        });
-                    setMusicDetailData(item);
-                  }}
-                >
-                  <td>{idx + 1}</td>
-                  <td>
-                    <img src={item?.img} alt="" />
-                  </td>
-                  <td>{item?.title}</td>
-                  <td>{item?.singer}</td>
-                </tr>
-              ))}
-        </Tabel>
-        {(myMusicPlayList?.length === 0 || musicList === undefined) && (
           <p className="no-data">등록된 데이터가 없습니다.</p>
         )}
         <Pagination

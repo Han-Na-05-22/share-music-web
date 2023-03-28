@@ -9,6 +9,7 @@ export const HeaderContainer = styled.header`
   padding: 40px 40px 0px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
   background: #1b1b1bff;
+  position: relative;
 
   .header-top,
   .header-bottom {
@@ -51,6 +52,20 @@ export const HeaderContainer = styled.header`
       align-items: center;
     }
 
+    .add-music {
+      position: absolute;
+      right: 0px;
+    }
+  }
+
+  .header-bottom {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
     .auth-container {
       .auth-content.join {
         flex-direction: row;
@@ -78,23 +93,6 @@ export const HeaderContainer = styled.header`
           }
         }
 
-        .auth-profile {
-          display: flex;
-          gap: 0px 15px;
-          justify-content: flex-end;
-          align-items: center;
-
-          img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-          }
-
-          span {
-            font-size: 12px;
-          }
-        }
-
         .auth-btn-container {
           display: flex;
           justify-content: flex-end;
@@ -103,21 +101,6 @@ export const HeaderContainer = styled.header`
           font-size: 10px;
         }
       }
-    }
-  }
-
-  .header-bottom {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    .add-music {
-      position: absolute;
-      right: 0px;
-      bottom: 15px;
     }
   }
 

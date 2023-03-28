@@ -146,24 +146,24 @@ const Home = () => {
                     setMusicDetailData(item);
                   }}
                 >
-                  <div className="test">
-                    <img src={item?.img} alt="" />{" "}
-                    <div className="circle"></div>
+                  <img src={item?.img} alt="" />
+
+                  <div className="music-content">
+                    <span>{item?.title}</span>
+                    <span className="singer">{item?.singer}</span>
                   </div>
-                  <div>{item?.title}</div>
-                  <div className="singer">{item?.singer}</div>
                 </div>
               ))}
           </Slider>
         </section>
         <section className="new-slider">
           <h3>New</h3>
-          <Slider {...settings}>
+          <ul>
             {musicList?.length !== 0 &&
               musicNewDataList?.map((item: any, idx: number) => (
-                <div
+                <li
                   key={idx}
-                  className="slider-list"
+                  className="new-list list"
                   onClick={() => {
                     !user?.email
                       ? alert("로그인 후 이용해주세요")
@@ -174,24 +174,27 @@ const Home = () => {
                     setMusicDetailData(item);
                   }}
                 >
-                  <div className="date">{item?.date}</div>
-                  <div className="test">
+                  <span className="order">{idx + 1}</span>
+                  <div className="img-container">
                     <img src={item?.img} alt="" />
                   </div>
-                  <div>{item?.title}</div>
-                  <div className="singer">{item?.singer}</div>
-                </div>
+                  <div className="music-name">
+                    <strong>{item?.title}</strong>-
+                    <strong className="singer">{item?.singer}</strong>
+                  </div>
+                  <span className="date">{item?.date}</span>
+                </li>
               ))}
-          </Slider>
+          </ul>
         </section>
         <section className="popular-slider">
           <h3>Top</h3>
-          <Slider {...settings}>
+          <ul>
             {musicList?.length !== 0 &&
               musicLikeCountTopten?.map((item: any, idx: number) => (
-                <div
+                <li
                   key={idx}
-                  className="slider-list"
+                  className="top-list list"
                   onClick={() => {
                     !user?.email
                       ? alert("로그인 후 이용해주세요")
@@ -202,16 +205,22 @@ const Home = () => {
                     setMusicDetailData(item);
                   }}
                 >
-                  <div className="count">{item?.likeCount}</div>
-                  <div className="test">
-                    <img src={item?.img} alt="" />{" "}
-                    {/* <div className="circle"></div> */}
+                  <span className="order">{idx + 1}</span>
+                  <div className="img-container">
+                    <img src={item?.img} alt="" />
                   </div>
-                  <div>{item?.title}</div>
-                  <div className="singer">{item?.singer}</div>{" "}
-                </div>
+
+                  <div className="music-name">
+                    <strong>{item?.title}</strong>-
+                    <strong className="singer">{item?.singer}</strong>
+                  </div>
+                  <div className="like-count">
+                    <SVG src="/svg/heart.svg" />
+                    <span>{item?.likeCount}</span>
+                  </div>
+                </li>
               ))}
-          </Slider>
+          </ul>
         </section>
         <section className="artist-slider">
           <div className="tabel-container">

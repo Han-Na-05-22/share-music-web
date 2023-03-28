@@ -21,9 +21,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddMusic from "components/AddMusic";
 import Nav from "../Nav";
 import { navState } from "../Nav/state";
+import { isMusicDetailState } from "components/MusicDetail/state";
+import UserInfo from "components/UserInfo";
 
 const Header = () => {
   const navigate = useNavigate();
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
   const iconLogo = faHeadphonesSimple as IconProp;
   const [search, setSearch] = useRecoilState<any>(searchInputState);
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
@@ -72,6 +76,10 @@ const Header = () => {
               navigate("/");
               setFilterGenre("All");
               setSearch("");
+              setIsDetailData({
+                ...isDetailData,
+                isLocation: "simpleProfile",
+              });
               setFilterMusicList(musicList?.filter((item: any) => item));
               setNavData(
                 navData?.map((i: any) => {
@@ -151,6 +159,22 @@ const Header = () => {
               검색
             </Button>
           </div>
+          <Button
+            height="50px"
+            btnType="add"
+            className="add-music"
+            width="125px"
+            onClick={() => {
+              !user?.email
+                ? alert("로그인 후 이용해주세요")
+                : setIsAddMuisc(true);
+            }}
+          >
+            음원 등록
+          </Button>
+        </div>
+        <div className="header-bottom">
+          <Nav></Nav>
           <div className="auth-container">
             {auth?.currentUser ? (
               <div className="auth-content">
@@ -158,6 +182,12 @@ const Header = () => {
                   <strong
                     className="my-page-btn"
                     onClick={() => {
+                      !user?.email
+                        ? alert("로그인 후 이용해주세요")
+                        : setIsDetailData({
+                            ...isDetailData,
+                            isLocation: "mypage",
+                          });
                       navigate("/mypage");
                     }}
                   >
@@ -173,10 +203,6 @@ const Header = () => {
                   >
                     Logout
                   </strong>
-                </div>
-                <div className="auth-profile">
-                  <img src={user?.photoURL} alt="" />
-                  <span>{user?.displayName} </span>
                 </div>
               </div>
             ) : (
@@ -206,22 +232,9 @@ const Header = () => {
             )}
           </div>
         </div>
-        <div className="header-bottom">
-          <Nav></Nav>
-          <Button
-            height="50px"
-            btnType="add"
-            className="add-music"
-            width="125px"
-            onClick={() => {
-              !user?.email
-                ? alert("로그인 후 이용해주세요")
-                : setIsAddMuisc(true);
-            }}
-          >
-            음원 등록
-          </Button>
-        </div>
+        {((isDetailData?.isLocation === "simpleProfile" &&
+          isDetailData?.isLocation !== "home") ||
+          isDetailData?.isLocation === "") && <UserInfo></UserInfo>}
       </HeaderContainer>
       {loginStateDate?.isJoin && (
         <Overlay>

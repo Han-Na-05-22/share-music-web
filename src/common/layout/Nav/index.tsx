@@ -11,18 +11,10 @@ import {
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRecoilState } from "recoil";
 import { navState } from "./state";
-import {
-  filterMusicListState,
-  selectFilterState,
-} from "pages/MusicTable/state";
-import { myMusicPlayListState } from "pages/MyPage/state";
-import { musicListState } from "components/AddMusic/state";
+import { selectFilterState } from "pages/MusicTable/state";
 
 const Nav = () => {
   const navigate = useNavigate();
-
-  const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<any>(myMusicPlayListState);
 
   const iconHouse = faHouse as IconProp;
   const iconPopular = faFire as IconProp;

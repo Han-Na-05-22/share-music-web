@@ -5,6 +5,7 @@ export const TableGroupContainer = styled.div`
   /* background: ${({ theme }) => theme.colors.ModalColor}; */
   /* background: #2f026bff; */
   /* background-image: linear-gradient(to top, #5f72bd 0%, #9b23ea 100%); */
+
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 15px 20px;
   width: 600px;
@@ -90,7 +91,8 @@ export const TabelContainer = styled.table`
 
       &:hover {
         cursor: pointer;
-        background: ${({ theme }) => theme.colors.TableHoverColor};
+        background: #111111ff;
+        /* background: ${({ theme }) => theme.colors.TableHoverColor}; */
         td {
           color: ${({ theme }) => theme.colors.HoverText};
         }
