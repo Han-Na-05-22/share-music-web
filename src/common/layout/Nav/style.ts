@@ -37,10 +37,12 @@ export const NavContainer = styled.nav`
   }
 
   .active-nav {
-    border-bottom: 3px solid ${({ theme }) => theme.colors.ButtonText};
+    border-bottom: 3px solid ${({ theme }) => theme.colors.ActiveColor};
 
     span {
+      font-weight: bold;
       opacity: 1;
+      color: ${({ theme }) => theme.colors.ActiveColor};
     }
   }
 
@@ -58,6 +60,16 @@ export const NavContainer = styled.nav`
     div {
       span {
         font-size: 12px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 485px) {
+    gap: 0px 10px;
+    div {
+      padding: 10px 0px;
+      span {
+        font-size: 10px;
       }
     }
   }

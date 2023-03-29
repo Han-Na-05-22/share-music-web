@@ -44,7 +44,7 @@ export const HomeContainer = styled.div`
         width: 2624px;
 
         .slick-slide {
-          width: 300px;
+          width: 250px;
           border-radius: 10px;
           opacity: 0.8;
           transition: 0.3s;
@@ -52,15 +52,15 @@ export const HomeContainer = styled.div`
           margin: 0px 50px;
           .slider-list {
             position: relative;
-            max-width: 300px;
-            width: 300px;
+            max-width: 250px;
+            width: 250px;
             height: 200px;
             cursor: pointer;
 
             img {
               object-fit: cover;
               border-radius: 10px;
-              width: 300px;
+              width: 250px;
               height: 200px;
             }
 
@@ -75,7 +75,7 @@ export const HomeContainer = styled.div`
 
               span {
                 font-size: 12px;
-                color: #fff;
+                color: ${({ theme }) => theme.colors.DefaultText};
                 text-align: center;
                 width: 100%;
                 display: inline-block;
@@ -94,65 +94,74 @@ export const HomeContainer = styled.div`
     }
   }
 
-  .new-slider,
-  .popular-slider {
-    padding: 40px;
+  .new-top-tables {
     width: 100%;
-    ul {
-      margin-top: 50px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 15px 0px;
-
-      li {
-        border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    .new-slider,
+    .popular-slider {
+      width: 45%;
+      ul {
+        margin-top: 50px;
         width: 100%;
-        height: 100px;
         display: flex;
-        background: rgba(255, 255, 255, 0.1);
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0px 75px;
-        transition: 0.3s;
+        flex-direction: column;
+        gap: 15px 0px;
 
-        &:hover {
-          background: #1c1c1dff;
-        }
-
-        span {
-        }
-
-        .order {
-          width: 5%;
-        }
-
-        .img-container {
-          width: 15%;
-          img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-          }
-        }
-
-        .music-name {
-          width: 50%;
-          strong {
-          }
-        }
-        .date {
-          width: 15%;
-        }
-        .like-count {
-          width: 15%;
+        li {
+          border-radius: 10px;
+          width: 100%;
+          height: 100px;
           display: flex;
-          gap: 15px 0px;
+          background: rgba(255, 255, 255, 0.1);
+          cursor: pointer;
+          display: flex;
+          justify-content: space-between;
           align-items: center;
-          justify-content: center;
-          flex-direction: column;
+          padding: 0px 75px;
+          transition: 0.3s;
+
+          &:hover {
+            background: #1c1c1dff;
+          }
+
+          span {
+          }
+
+          .order {
+            width: 5%;
+          }
+
+          .img-container {
+            width: 12.5%;
+            img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+            }
+          }
+
+          .music-name {
+            width: 50%;
+            strong {
+            }
+          }
+
+          .genre {
+            width: 10%;
+          }
+          .date {
+            font-size: 12px;
+            width: 20%;
+          }
+          .like-count {
+            width: 15%;
+            display: flex;
+            gap: 0px 15px;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
     }
@@ -171,7 +180,7 @@ export const HomeContainer = styled.div`
       position: relative;
       padding-top: 50px;
       h4 {
-        top: -25px;
+        top: -40px;
         position: absolute;
       }
 

@@ -1,7 +1,7 @@
 import { musicListState, myMusicAddState } from "components/AddMusic/state";
 import Button from "components/Button";
 import { useRecoilState } from "recoil";
-import { HeaderContainer } from "./style";
+import { HeaderContainer, SimplePrpfileContainer } from "./style";
 import { useNavigate } from "react-router-dom";
 import { loginState, userInfo } from "components/Login/state";
 import TextInput from "components/TextInput";
@@ -22,7 +22,8 @@ import AddMusic from "components/AddMusic";
 import Nav from "../Nav";
 import { navState } from "../Nav/state";
 import { isMusicDetailState } from "components/MusicDetail/state";
-import UserInfo from "components/UserInfo";
+import SVG from "react-inlinesvg";
+import { faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -37,11 +38,9 @@ const Header = () => {
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [navData, setNavData] = useRecoilState<any[]>(navState);
 
-  const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<any>(myMusicPlayListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
-
+  const iconMyMusic = faRecordVinyl as IconProp;
   const [filterGenre, setFilterGenre] = useState<string>("All");
 
   const handleChangeSelect = async (isSelected?: any) => {
@@ -121,6 +120,7 @@ const Header = () => {
             ></BasicSelect>
 
             <TextInput
+              fontSize="14px"
               width="400px"
               name="search"
               value={search}
@@ -133,7 +133,7 @@ const Header = () => {
             ></TextInput>
             <Button
               fontSize="18px"
-              width="100px"
+              width="75px"
               className="my-info-submit"
               btnType="submit"
               onClick={async (e) => {
@@ -232,9 +232,62 @@ const Header = () => {
             )}
           </div>
         </div>
-        {((isDetailData?.isLocation === "simpleProfile" &&
-          isDetailData?.isLocation !== "home") ||
-          isDetailData?.isLocation === "") && <UserInfo></UserInfo>}
+        {isDetailData?.isLocation !== "mypage" && (
+          <SimplePrpfileContainer>
+            <div className="auth-profile">
+              <img src={user?.photoURL} alt="" />
+              <span>{user?.displayName} </span>
+            </div>
+            <div className="my-counts">
+              <div className="heart-count count">
+                <SVG src="/svg/heart.svg" />
+                <span>
+                  {musicList?.filter((item: any) => item?.email === user?.email)
+                    ?.length !== 0 &&
+                  musicList?.filter((item: any) => item?.email === user?.email)
+                    ?.length !== undefined
+                    ? musicList
+                        ?.filter((i: any) => i?.email === user?.email)
+                        ?.map((a: any) => a?.likeCount)
+                        ?.reduce((sum: number, currValue: number) => {
+                          return sum + currValue;
+                        })
+                    : "0"}
+                </span>
+              </div>
+              <div className="download-count count">
+                <SVG src="/svg/download.svg" />
+                <span>
+                  {musicList?.filter((item: any) => item?.email === user?.email)
+                    ?.length !== 0 &&
+                  musicList?.filter((item: any) => item?.email === user?.email)
+                    ?.length !== undefined
+                    ? musicList
+                        ?.filter((i: any) => i?.email === user?.email)
+                        ?.map((a: any) => a?.downloadCount)
+                        ?.reduce((sum: number, currValue: number) => {
+                          return sum + currValue;
+                        })
+                    : "0"}
+                </span>
+              </div>
+              <div className="my-registered-count count">
+                <FontAwesomeIcon
+                  icon={iconMyMusic}
+                  onClick={(e: any) => {
+                    e.preventDefault();
+                  }}
+                />
+                <span>
+                  {
+                    musicList?.filter((i: any) => i?.email === user?.email)
+                      ?.length
+                  }
+                </span>
+              </div>
+            </div>
+          </SimplePrpfileContainer>
+        )}
       </HeaderContainer>
       {loginStateDate?.isJoin && (
         <Overlay>

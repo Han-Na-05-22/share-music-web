@@ -45,7 +45,7 @@ const Home = () => {
     dots: false,
     infinite: true,
     speed: 1000,
-    slidesToShow: 5,
+    slidesToShow: 7,
     centerMode: true,
     centerPadding: "60px",
     slidesToScroll: 1,
@@ -156,72 +156,77 @@ const Home = () => {
               ))}
           </Slider>
         </section>
-        <section className="new-slider">
-          <h3>New</h3>
-          <ul>
-            {musicList?.length !== 0 &&
-              musicNewDataList?.map((item: any, idx: number) => (
-                <li
-                  key={idx}
-                  className="new-list list"
-                  onClick={() => {
-                    !user?.email
-                      ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData({
-                          isDetail: true,
-                          isLocation: "home",
-                        });
-                    setMusicDetailData(item);
-                  }}
-                >
-                  <span className="order">{idx + 1}</span>
-                  <div className="img-container">
-                    <img src={item?.img} alt="" />
-                  </div>
-                  <div className="music-name">
-                    <strong>{item?.title}</strong>-
-                    <strong className="singer">{item?.singer}</strong>
-                  </div>
-                  <span className="date">{item?.date}</span>
-                </li>
-              ))}
-          </ul>
-        </section>
-        <section className="popular-slider">
-          <h3>Top</h3>
-          <ul>
-            {musicList?.length !== 0 &&
-              musicLikeCountTopten?.map((item: any, idx: number) => (
-                <li
-                  key={idx}
-                  className="top-list list"
-                  onClick={() => {
-                    !user?.email
-                      ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData({
-                          isDetail: true,
-                          isLocation: "home",
-                        });
-                    setMusicDetailData(item);
-                  }}
-                >
-                  <span className="order">{idx + 1}</span>
-                  <div className="img-container">
-                    <img src={item?.img} alt="" />
-                  </div>
+        <section className="new-top-tables">
+          <div className="new-slider">
+            <h3>New</h3>
+            <ul>
+              {musicList?.length !== 0 &&
+                musicNewDataList?.map((item: any, idx: number) => (
+                  <li
+                    key={idx}
+                    className="new-list list"
+                    onClick={() => {
+                      !user?.email
+                        ? alert("로그인 후 이용해주세요")
+                        : setIsDetailData({
+                            isDetail: true,
+                            isLocation: "home",
+                          });
+                      setMusicDetailData(item);
+                    }}
+                  >
+                    <span className="order">{idx + 1}</span>
+                    <div className="img-container">
+                      <img src={item?.img} alt="" />
+                    </div>
+                    <div className="music-name">
+                      <strong>{item?.title}</strong>-
+                      <strong className="singer">{item?.singer}</strong>
+                    </div>
+                    <span className="genre">{item?.genre}</span>
+                    <span className="date">{item?.date}</span>
+                  </li>
+                ))}
+            </ul>
+          </div>
+          <div className="popular-slider">
+            <h3>Top</h3>
+            <ul>
+              {musicList?.length !== 0 &&
+                musicLikeCountTopten?.map((item: any, idx: number) => (
+                  <li
+                    key={idx}
+                    className="top-list list"
+                    onClick={() => {
+                      !user?.email
+                        ? alert("로그인 후 이용해주세요")
+                        : setIsDetailData({
+                            isDetail: true,
+                            isLocation: "home",
+                          });
+                      setMusicDetailData(item);
+                    }}
+                  >
+                    <span className="order">{idx + 1}</span>
+                    <div className="img-container">
+                      <img src={item?.img} alt="" />
+                    </div>
 
-                  <div className="music-name">
-                    <strong>{item?.title}</strong>-
-                    <strong className="singer">{item?.singer}</strong>
-                  </div>
-                  <div className="like-count">
-                    <SVG src="/svg/heart.svg" />
-                    <span>{item?.likeCount}</span>
-                  </div>
-                </li>
-              ))}
-          </ul>
+                    <div className="music-name">
+                      <strong>{item?.title}</strong>-
+                      <strong className="singer">{item?.singer}</strong>
+                    </div>
+                    <span className="genre">{item?.genre}</span>
+                    <div className="like-count">
+                      <SVG src="/svg/heart.svg" />
+                      <span>{item?.likeCount}</span>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          </div>
         </section>
+
         <section className="artist-slider">
           <div className="tabel-container">
             <h4>Top Artist Like Count</h4>

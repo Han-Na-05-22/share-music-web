@@ -6,7 +6,7 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  color: ${({ theme }) => theme.colors.DefaultText};
+  color: ${({ theme }) => theme.colors.BlackColor};
   font-size: ${(props) => props?.fontSize};
 
   &:active {
@@ -21,7 +21,7 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
     }
 
     label {
-      color: ${({ theme }) => theme.colors.HoverText};
+      color: ${({ theme }) => theme.colors.BlackColor};
     }
   }
 
@@ -32,11 +32,13 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
   }
 
   input {
-    border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
+    border: 2px solid ${({ theme }) => theme.colors.DefaultColor};
     width: ${(props) => props.width};
     height: ${(props) => props.height};
     margin: 10px 0px;
     padding-left: 10px;
+    background: ${({ theme }) => theme.colors.BgColor};
+    color: ${({ theme }) => theme.colors.DefaultText};
 
     &:focus-visible {
       outline-style: none;

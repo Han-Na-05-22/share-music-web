@@ -1,21 +1,23 @@
 const colors = {
-  DefaultColor: "#CB5DF2",
-  DisabledColor: "rgba(203, 93, 242, 0.5);",
-  ActiveColor: "#9924C2",
-  HoverColor: "#B037DA",
+  DefaultColor: "#62e4ccff",
+  DisabledColor: "rgba(98, 228,204, 0.5);",
+  ActiveColor: "#0ce2ebff",
+  HoverColor: "#0ce2ebff",
 
   TableHoverColor: "rgba(203, 93, 242, 0.25);",
 
-  DefaultText: "#C0C0C0",
-  HoverText: "#6C6A6A",
+  DefaultText: "#FFFFFF",
+  HoverText: "#FFFFFF",
   ButtonText: "#FFFFFF",
-
+  LightText: "#808593ff",
   ModalColor: "#FFFFFF",
 
   DefaultRed: "#F25D5D",
   DisabledRed: "#F25D5D",
 
   BlackColor: "#000000",
+
+  BgColor: "#1b1b1bff",
 };
 
 const theme = {

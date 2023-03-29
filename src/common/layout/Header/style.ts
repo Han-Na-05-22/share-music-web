@@ -8,7 +8,7 @@ export const HeaderContainer = styled.header`
   gap: 25px 0px;
   padding: 40px 40px 0px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-  background: #1b1b1bff;
+  background: ${({ theme }) => theme.colors.BgColor};
   position: relative;
 
   .header-top,
@@ -33,15 +33,34 @@ export const HeaderContainer = styled.header`
       left: 0px;
       top: 50%;
 
+      &:hover {
+        span {
+          color: ${({ theme }) => theme.colors.ActiveColor};
+        }
+
+        svg {
+          top: -5px;
+          path {
+            fill: ${({ theme }) => theme.colors.ActiveColor};
+          }
+        }
+      }
       span {
         font-size: 20px;
+        color: ${({ theme }) => theme.colors.DefaultColor};
       }
+
       svg {
         width: 25px;
         height: 25px;
         position: relative;
         top: -2.5px;
         transform: rotateZ(-5deg);
+        transition: 0.3s;
+
+        path {
+          fill: ${({ theme }) => theme.colors.DefaultColor};
+        }
       }
     }
 
@@ -50,6 +69,11 @@ export const HeaderContainer = styled.header`
       gap: 0px 25px;
       justify-content: space-around;
       align-items: center;
+      color: ${({ theme }) => theme.colors.DefaultText};
+
+      input {
+        margin: 0px;
+      }
     }
 
     .add-music {
@@ -135,6 +159,7 @@ export const HeaderContainer = styled.header`
 
       .add-music {
         width: 75px;
+        height: 35px;
       }
     }
 
@@ -152,25 +177,29 @@ export const HeaderContainer = styled.header`
   }
 
   @media screen and (max-width: 650px) {
+    padding: 40px 20px 0px;
     .header-top {
-      position: relative;
-      h1 {
+      & > h1 {
+        span {
+          display: none;
+        }
+
         svg {
-          width: 25px;
-          height: 25px;
+          width: 35px;
+          height: 35px;
         }
       }
 
       .search {
-        gap: 0px 10px;
+        gap: 0px 5px;
         input {
-          width: 150px;
-          padding: 0px 5px;
+          width: 125px;
+          font-size: 10px;
         }
 
         select {
-          width: 100px;
-          height: 35px;
+          font-size: 10px;
+          width: 75px;
         }
       }
 
@@ -180,9 +209,112 @@ export const HeaderContainer = styled.header`
           width: 50px;
         }
       }
-
       .add-music {
       }
+    }
+
+    .header-bottom {
+      position: relative;
+      z-index: 10000;
+    }
+    .auth-btn-container {
+      right: 0px;
+      bottom: -55px;
+      position: absolute;
+    }
+  }
+
+  @media screen and (max-width: 485px) {
+    .header-top {
+      justify-content: flex-end;
+      align-items: flex-end;
+
+      .search {
+        right: 0px;
+
+        select {
+          padding-left: 2.5px;
+          width: 60px;
+        }
+      }
+
+      .add-music {
+        bottom: -55px;
+      }
+    }
+
+    .header-bottom {
+      justify-content: center;
+      margin-top: 40px;
+    }
+  }
+`;
+
+export const SimplePrpfileContainer = styled.div`
+  position: absolute;
+  bottom: -80px;
+  width: 100%;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+
+  .auth-profile {
+    display: flex;
+    gap: 0px 15px;
+    align-items: center;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .my-counts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0px 15px;
+
+    .count {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px 0px;
+
+      svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    .my-registered-count {
+      svg {
+        path {
+          fill: #62e4ccff;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    height: 115px;
+    bottom: -115px;
+    padding: 20px 20px 0px;
+
+    .my-counts {
     }
   }
 `;
