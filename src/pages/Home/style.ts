@@ -7,18 +7,18 @@ export const HomeContainer = styled.div`
   flex-direction: column;
   height: 100%;
 
+  h3 {
+    padding: 20px 0px;
+    width: 5%;
+    border-bottom: 2px solid #ccc;
+    position: relative;
+    font-weight: bold;
+  }
+
   .recommend-slider {
     padding: 90px 40px 110px;
     width: 100%;
     overflow: hidden;
-
-    h3 {
-      padding: 20px 0px;
-      width: 5%;
-      border-bottom: 2px solid #ccc;
-      position: relative;
-      font-weight: bold;
-    }
 
     .slick-slider {
       height: 200px;
@@ -44,24 +44,31 @@ export const HomeContainer = styled.div`
         width: 2624px;
 
         .slick-slide {
-          width: 250px;
+          width: 200px;
           border-radius: 10px;
           opacity: 0.8;
           transition: 0.3s;
           padding-top: 60px;
           margin: 0px 50px;
+
           .slider-list {
             position: relative;
-            max-width: 250px;
-            width: 250px;
-            height: 200px;
+            max-width: 200px;
+            width: 200px;
+            height: 225px;
             cursor: pointer;
+            opacity: 0.8;
+            transition: 0.3s;
+            &:hover {
+              transform: translateY(-5px);
+              opacity: 1;
+            }
 
             img {
               object-fit: cover;
               border-radius: 10px;
-              width: 250px;
-              height: 200px;
+              width: 200px;
+              height: 225px;
             }
 
             .music-content {
@@ -70,13 +77,13 @@ export const HomeContainer = styled.div`
               left: 0px;
               width: 100%;
               padding: 10px;
+              max-height: 225px;
               border-radius: 10px;
               background: rgba(55, 55, 55, 0.7);
 
               span {
                 font-size: 12px;
                 color: ${({ theme }) => theme.colors.DefaultText};
-                text-align: center;
                 width: 100%;
                 display: inline-block;
                 text-align: left;
@@ -200,6 +207,230 @@ export const HomeContainer = styled.div`
             min-height: 500px;
           }
         }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1660px) {
+    .recommend-slider {
+      .slick-list {
+        .slick-slide {
+          width: 175px;
+
+          .slider-list {
+            max-width: 175px;
+            width: 175px;
+            height: 200px;
+
+            img {
+              width: 175px;
+              height: 200px;
+            }
+
+            .music-content {
+              max-height: 200px;
+
+              span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+              }
+
+              .singer {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .new-top-tables {
+      .new-slider,
+      .popular-slider {
+        width: 47.5%;
+
+        ul {
+          li {
+            padding: 0px 25px;
+
+            .order {
+              margin-right: 10px;
+            }
+
+            .img-container {
+              img {
+                width: 45px;
+                height: 45px;
+              }
+            }
+
+            .music-name {
+              width: 45%;
+              margin: 0px 10px;
+              strong {
+              }
+            }
+
+            .genre {
+              width: 15%;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 950px) {
+    h3 {
+      font-size: 12px;
+    }
+    .recommend-slider {
+      padding: 90px 20px 110px;
+
+      .slick-slider {
+        height: 125px;
+
+        .slick-arrow {
+          &::before {
+            font-size: 25px;
+          }
+        }
+
+        .slick-list {
+          .slick-slide {
+            width: 100px;
+            max-width: 100px;
+
+            .slider-list {
+              max-width: 100px;
+              width: 100px;
+              height: 125px;
+
+              img {
+                width: 100px;
+                height: 125px;
+              }
+
+              .music-content {
+                width: 100%;
+                padding: 5px;
+                max-height: 125px;
+
+                span {
+                  font-size: 10px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 1;
+                  -webkit-box-orient: vertical;
+                }
+
+                .singer {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .new-top-tables {
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      flex-direction: column;
+      padding: 20px;
+      gap: 80px 0px;
+
+      .new-slider,
+      .popular-slider {
+        width: 100%;
+
+        ul {
+          li {
+            height: 75px;
+            padding: 0px 50px;
+
+            .img-container {
+              img {
+                width: 40px;
+                height: 40px;
+              }
+            }
+
+            .date {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    .artist-slider {
+      margin-top: 40px;
+      padding: 75px 20px 150px;
+      gap: 80px 0px;
+
+      .tabel-container {
+        width: 47.5%;
+
+        h4 {
+          font-size: 12px;
+        }
+
+        & > div {
+          padding: 10px 15px 30px;
+          table {
+            thead {
+              height: 50px;
+            }
+
+            thead,
+            tbody {
+              tr {
+                height: 50px;
+                th,
+                td {
+                  font-size: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    .recommend-slider {
+      margin-top: 40px;
+    }
+
+    .new-top-tables {
+      .new-slider,
+      .popular-slider {
+        ul {
+          li {
+            padding: 0px 15px;
+
+            .genre {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .artist-slider {
+      flex-wrap: wrap;
+      flex-direction: column;
+
+      .tabel-container {
+        width: 100%;
       }
     }
   }
