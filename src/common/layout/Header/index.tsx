@@ -13,7 +13,6 @@ import { useState } from "react";
 import Join from "components/Join";
 import Overlay from "components/Overlay";
 import Login from "components/Login";
-import { myMusicPlayListState } from "pages/MyPage/state";
 import { auth } from "service/firebase";
 import { faHeadphonesSimple } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -207,27 +206,29 @@ const Header = () => {
               </div>
             ) : (
               <div className="auth-content join">
-                <strong
-                  onClick={() =>
-                    setLoginStateDate({
-                      ...loginStateDate,
-                      isLogin: true,
-                    })
-                  }
-                >
-                  Login
-                </strong>
-                <strong
-                  className="join-btn"
-                  onClick={() =>
-                    setLoginStateDate({
-                      ...loginStateDate,
-                      isJoin: true,
-                    })
-                  }
-                >
-                  Join
-                </strong>
+                <div className="auth-btn-container">
+                  <strong
+                    onClick={() =>
+                      setLoginStateDate({
+                        ...loginStateDate,
+                        isLogin: true,
+                      })
+                    }
+                  >
+                    Login
+                  </strong>
+                  <strong
+                    className="join-btn"
+                    onClick={() =>
+                      setLoginStateDate({
+                        ...loginStateDate,
+                        isJoin: true,
+                      })
+                    }
+                  >
+                    Join
+                  </strong>
+                </div>
               </div>
             )}
           </div>

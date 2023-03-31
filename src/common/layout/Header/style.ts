@@ -216,10 +216,16 @@ export const HeaderContainer = styled.header`
     .header-bottom {
       position: relative;
       z-index: 10000;
+
+      .auth-content.join {
+        .auth-btn-container {
+          bottom: -45px;
+        }
+      }
     }
     .auth-btn-container {
       right: 0px;
-      bottom: -55px;
+      bottom: -45px;
       position: absolute;
     }
   }
