@@ -10,6 +10,7 @@ export const PlayListContainer = styled.div`
     position: absolute;
     top: 15px;
     right: 15px;
+    z-index: 10000;
   }
 
   & > div {
@@ -183,14 +184,13 @@ export const PlayListContainer = styled.div`
   }
 
   .detail-play-list {
-    background: rgba(0, 0, 0, 0.5);
     position: fixed;
     width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
     z-index: 1000;
-    background-image: linear-gradient(to top, #5f72bd 0%, #9b23ea 100%);
+    background: ${({ theme }) => theme.colors.BgColor};
     flex-direction: column;
     justify-content: space-evenly;
     padding: 100px 20px 100px;
@@ -214,18 +214,6 @@ export const PlayListContainer = styled.div`
         width: 150px;
         height: 150px;
         background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
-
-        .circle {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 50px;
-          height: 50px;
-          z-index: 10;
-          background: ${({ theme }) => theme.colors.DefaultText};
-          border-radius: 100px;
-        }
       }
 
       .img-ani {
@@ -456,14 +444,13 @@ export const PlayListContainer = styled.div`
     }
 
     .detail-play-list {
-      background: rgba(0, 0, 0, 0.5);
       position: fixed;
       width: 100vw;
       height: 100vh;
       top: 0;
       left: 0;
       z-index: 1000;
-      background-image: linear-gradient(to top, #5f72bd 0%, #9b23ea 100%);
+      background: ${({ theme }) => theme.colors.BgColor};
       flex-direction: column;
       justify-content: space-evenly;
       padding: 100px 20px 100px;
@@ -488,16 +475,9 @@ export const PlayListContainer = styled.div`
           height: 150px;
           background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
 
-          .circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 50px;
-            z-index: 10;
-            background: ${({ theme }) => theme.colors.DefaultText};
-            border-radius: 100px;
+          img {
+            width: 100%;
+            height: 100%;
           }
         }
 
@@ -840,6 +820,199 @@ export const PlayListContainer = styled.div`
               .rhap_volume-bar-area {
                 width: 50px;
                 .rhap_volume-bar {
+                  .rhap_volume-indicator {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .detail-play-list {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      background: ${({ theme }) => theme.colors.BgColor};
+      flex-direction: column;
+      justify-content: space-evenly;
+      padding: 100px 20px 100px;
+
+      .paly-list-container {
+        width: 100%;
+        flex-direction: column;
+        gap: 50px 0px;
+        align-items: center;
+        cursor: default;
+
+        .about-genre {
+          display: block;
+          font-size: 20px;
+        }
+        .counts {
+          display: block;
+        }
+
+        .img-ani.ani,
+        .img-ani-paused.ani {
+          width: 150px;
+          height: 150px;
+          background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .img-ani {
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 110%;
+            height: 110%;
+            border-radius: 50%;
+            filter: blur(20px);
+            background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+            animation: rotate 3s linear infinite;
+            animation-play-state: running;
+          }
+
+          img {
+            animation: rotate 5s linear infinite;
+            animation-play-state: running;
+          }
+        }
+
+        .img-ani-paused {
+          &::before {
+            animation-play-state: paused;
+          }
+          img {
+            animation-play-state: paused;
+          }
+        }
+
+        .about-music {
+          flex-direction: column;
+          gap: 30px 0px;
+          width: 100%;
+          align-items: center;
+          strong,
+          p,
+          span {
+            font-size: 20px;
+            color: #ccc;
+          }
+
+          .title {
+            font-size: 24px;
+            color: ${({ theme }) => theme.colors.DefaultText};
+            font-weight: bold;
+          }
+
+          .counts {
+            display: flex;
+            flex-direction: column;
+            gap: 20px 0px;
+            justify-content: center;
+
+            li {
+              display: flex;
+              gap: 0px 15px;
+              justify-content: center;
+
+              svg {
+                width: 25px;
+                height: 25px;
+                opacity: 1;
+              }
+            }
+          }
+
+          .explanation {
+            padding: 10px;
+            max-width: 550px;
+            width: 100%;
+            display: inline-block;
+            min-height: 100px;
+            line-height: 1.5;
+            font-size: 18px;
+            text-align: left;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+
+            @media screen and (max-width: 600px) {
+              max-width: 300px;
+            }
+          }
+        }
+      }
+
+      .rhap_container {
+        .rhap_main.rhap_stacked {
+          flex-direction: column;
+          padding: 0px;
+          .rhap_progress-section {
+            width: 100%;
+            padding: 0px;
+            .rhap_current-time {
+            }
+
+            .rhap_progress-container {
+              .rhap_progress-bar {
+                .rhap_download-progress {
+                }
+
+                .rhap_progress-indicator,
+                .rhap_progress-filled {
+                }
+              }
+            }
+          }
+          .rhap_controls-section {
+            flex: none;
+            width: 100%;
+            padding-left: 0px;
+            .rhap_additional-controls {
+              button {
+                svg {
+                  path {
+                  }
+                }
+              }
+            }
+            .rhap_main-controls {
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%);
+              button {
+                svg {
+                  path {
+                  }
+                }
+              }
+            }
+            .rhap_volume-controls {
+              min-width: 100px;
+              width: 100px;
+              max-width: 100px;
+              button {
+                svg {
+                  path {
+                  }
+                }
+              }
+
+              .rhap_volume-bar-area {
+                width: 75px;
+                .rhap_volume-bar {
+                  width: 75px;
                   .rhap_volume-indicator {
                   }
                 }

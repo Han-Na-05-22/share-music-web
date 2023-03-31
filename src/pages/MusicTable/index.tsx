@@ -22,6 +22,7 @@ const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
+
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
@@ -133,7 +134,7 @@ const MusicTable = () => {
 
       setFilterMusicList(result);
     }
-  }, [selectFilter, musicList]);
+  }, [selectFilter, musicList, myMusicPlayList]);
 
   return (
     <MusicTableContainer>
@@ -142,8 +143,12 @@ const MusicTable = () => {
         fontSize="16px"
         btnType="submit"
         onClick={async () => {
-          await updateMusicDownloadAllCount();
-          alert("추가되었습니다.");
+          if (addMusicPlayer?.length === 0) {
+            alert("추가에 실패하였습니다.");
+          } else {
+            await updateMusicDownloadAllCount();
+            alert("추가가 완료되었습니다.");
+          }
         }}
       >
         추가
@@ -151,6 +156,7 @@ const MusicTable = () => {
 
       <div className="tabel-container">
         <Tabel
+          className={filterMusicList?.length === 0 ? "no-tabel-data" : ""}
           theadData={[
             {
               title: (

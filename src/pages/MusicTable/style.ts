@@ -29,6 +29,10 @@ export const MusicTableContainer = styled.div`
     .table-header-btn {
       display: none;
     }
+
+    .no-tabel-data {
+      height: 750px;
+    }
     table {
       width: 100%;
       height: 100%;

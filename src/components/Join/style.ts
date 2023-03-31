@@ -24,6 +24,11 @@ export const JoinContainer = styled.div<JoinStyleProps>`
     justify-content: space-between;
     flex-direction: column;
 
+    input {
+      background: ${({ theme }) => theme.colors.ModalColor};
+      color: ${({ theme }) => theme.colors.LightText};
+    }
+
     .users {
       display: flex;
       gap: 0px 100px;
@@ -86,6 +91,12 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       input {
         width: 225px;
         height: 35px;
+        border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
+
+        &:hover,
+        &:active {
+          border: 2px solid ${({ theme }) => theme.colors.DefaultColor};
+        }
       }
       .user-name-id {
         div {

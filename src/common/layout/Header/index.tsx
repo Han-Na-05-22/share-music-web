@@ -20,7 +20,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddMusic from "components/AddMusic";
 import Nav from "../Nav";
 import { navState } from "../Nav/state";
-import { isMusicDetailState } from "components/MusicDetail/state";
+import {
+  isMusicDetailState,
+  musicDetailState,
+} from "components/MusicDetail/state";
 import SVG from "react-inlinesvg";
 import { faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,7 +39,8 @@ const Header = () => {
 
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [navData, setNavData] = useRecoilState<any[]>(navState);
-
+  const [musicDetailData, setMusicDetailData] =
+    useRecoilState<any>(musicDetailState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
   const iconMyMusic = faRecordVinyl as IconProp;
@@ -235,10 +239,13 @@ const Header = () => {
         </div>
         {isDetailData?.isLocation !== "mypage" && (
           <SimplePrpfileContainer>
-            <div className="auth-profile">
-              <img src={user?.photoURL} alt="" />
-              <span>{user?.displayName} </span>
-            </div>
+            {user?.email && (
+              <div className="auth-profile">
+                <img src={user?.photoURL} alt="" />
+                <span>{user?.displayName} </span>
+              </div>
+            )}
+
             <div className="my-counts">
               <div className="heart-count count">
                 <SVG src="/svg/heart.svg" />

@@ -1,5 +1,3 @@
-import { userInfo } from "components/Login/state";
-import { useRecoilState } from "recoil";
 import { TabelProps } from "./interface";
 import { TabelContainer, TableGroupContainer } from "./style";
 

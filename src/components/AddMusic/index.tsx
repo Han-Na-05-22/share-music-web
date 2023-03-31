@@ -19,6 +19,7 @@ import imageCompression from "browser-image-compression";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 import { auth } from "service/firebase";
+import { isMusicDetailState } from "components/MusicDetail/state";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -47,13 +48,13 @@ const AddMusic = ({
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [form, setForm] = useState<AddMusicFormProps>({
-    img: "/image/test-pic.jpeg",
+    img: "",
     mp3: "",
-    title: "1",
+    title: "",
     genre: "POP",
     displayName: auth?.currentUser?.displayName,
-    singer: "1",
-    explanation: "1",
+    singer: "",
+    explanation: "",
     mpName: "",
     uniqueKey: new Date()?.getTime(),
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
@@ -62,6 +63,8 @@ const AddMusic = ({
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<string>("none");
+  const [isDetailData, setIsDetailData] =
+    useRecoilState<any>(isMusicDetailState);
 
   const handleChangeSelect = (event: any) => {
     const { name } = event.target;
@@ -172,7 +175,6 @@ const AddMusic = ({
         queryClient.invalidateQueries("getMusicAllDataList");
         setIsClicked(false);
         setTimeout(function () {
-          console.log("3초후 실행됨");
           queryClient.invalidateQueries("getMusicAllDataList");
         }, 3500);
       },
@@ -194,6 +196,10 @@ const AddMusic = ({
       onSuccess: async () => {
         await queryClient.invalidateQueries("getMusicAllDataList");
         setIsEdit("");
+        setIsDetailData({
+          ...isDetailData,
+          isDetail: false,
+        });
         alert("수정이 완료되었습니다.");
       },
     }

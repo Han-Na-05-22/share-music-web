@@ -17,14 +17,14 @@ export const TextareaContainer = styled.div<textareaStyleProps>`
       border: 2px solid ${({ theme }) => theme.colors.HoverColor};
     }
     label {
-      color: ${({ theme }) => theme.colors.HoverText};
+      color: ${({ theme }) => theme.colors.BlackColor};
     }
   }
 
   textarea {
     width: ${(props) => props.width};
     height: ${(props) => props.height};
-    color: ${({ theme }) => theme.colors.DefaultText};
+    color: ${({ theme }) => theme.colors.LightText};
     font-size: 18px;
     padding: 10px 0px 0px 10px;
     border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
@@ -32,7 +32,7 @@ export const TextareaContainer = styled.div<textareaStyleProps>`
 
   label {
     font-size: 20px;
-    color: ${({ theme }) => theme.colors.DefaultText};
+    color: ${({ theme }) => theme.colors.BlackColor};
   }
 
   ${(props) =>

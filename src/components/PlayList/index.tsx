@@ -63,7 +63,6 @@ const PlayList = ({
                 />
                 <div className={isPlay ? "img-ani ani" : "img-ani-paused ani"}>
                   <img src={playListData[idx]?.img} alt="음원 이미지" />
-                  <div className="circle"></div>
                 </div>
 
                 <div className="about-music">

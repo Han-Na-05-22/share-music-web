@@ -215,17 +215,11 @@ export const HeaderContainer = styled.header`
 
     .header-bottom {
       position: relative;
-      z-index: 10000;
-
-      .auth-content.join {
-        .auth-btn-container {
-          bottom: -45px;
-        }
-      }
+      z-index: 100;
     }
     .auth-btn-container {
       right: 0px;
-      bottom: -45px;
+      bottom: -65px;
       position: absolute;
     }
   }
@@ -252,6 +246,10 @@ export const HeaderContainer = styled.header`
     .header-bottom {
       justify-content: center;
       margin-top: 40px;
+    }
+
+    .auth-btn-container {
+      bottom: -45px;
     }
   }
 `;
@@ -284,6 +282,8 @@ export const SimplePrpfileContainer = styled.div`
   }
 
   .my-counts {
+    position: absolute;
+    right: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -321,6 +321,7 @@ export const SimplePrpfileContainer = styled.div`
     padding: 20px 20px 0px;
 
     .my-counts {
+      right: 20px;
     }
   }
 `;

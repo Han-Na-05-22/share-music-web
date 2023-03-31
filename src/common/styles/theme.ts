@@ -16,7 +16,6 @@ const colors = {
   DisabledRed: "#F25D5D",
 
   BlackColor: "#000000",
-
   BgColor: "#1b1b1bff",
   BgHover: "#1c1c1dff",
 };

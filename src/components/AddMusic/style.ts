@@ -44,18 +44,37 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
   }
 
   .music-name {
-    color: ${({ theme }) => theme.colors.DefaultText};
-    width: 800px;
+    color: ${({ theme }) => theme.colors.LightText};
     text-align: center;
+    width: 100%;
     height: 50px;
     padding-left: 150px;
     line-height: 50px;
+    border: none;
+
+    &:hover,
+    &:active {
+      border: none !important;
+    }
   }
 
   .music-title-singer {
+    input {
+      border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
+      background: ${({ theme }) => theme.colors.ModalColor};
+      color: ${({ theme }) => theme.colors.LightText};
+      font-size: 12px;
+      &:hover,
+      &:active {
+        border: 2px solid ${({ theme }) => theme.colors.DefaultColor};
+      }
+    }
   }
 
   .music-explan {
+    textarea {
+      font-size: 12px;
+    }
   }
   .music-mp3 {
     position: relative;
@@ -64,12 +83,25 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     justify-content: space-between;
     align-items: flex-end;
 
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+
+      &:hover,
+      &:active {
+        border: 2px solid ${({ theme }) => theme.colors.DefaultColor};
+      }
+    }
+
     .add-info {
       position: absolute;
       bottom: -20px;
       left: 0px;
       font-size: 10px;
-      color: ${({ theme }) => theme.colors.HoverText};
+      color: ${({ theme }) => theme.colors.LightText};
     }
 
     .add-mp3-input {
@@ -83,7 +115,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       line-height: 50px;
       position: relative;
       display: flex;
-      color: ${({ theme }) => theme.colors.DefaultText};
+      color: ${({ theme }) => theme.colors.LightText};
       border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
       font-size: 12px;
     }
@@ -107,10 +139,21 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
         cursor: pointer;
         border: none;
         background: ${({ theme }) => theme.colors.DefaultColor};
-        color: ${({ theme }) => theme.colors.ButtonText};
+        color: ${({ theme }) => theme.colors.DefaultText};
       }
       #mp3 {
         display: none;
+      }
+    }
+
+    select {
+      border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
+      background: ${({ theme }) => theme.colors.ModalColor};
+      color: ${({ theme }) => theme.colors.LightText};
+
+      &:hover,
+      &:active {
+        border: 2px solid ${({ theme }) => theme.colors.DefaultColor};
       }
     }
   }
@@ -172,11 +215,12 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
     }
 
     .music-name {
-      width: 100%;
       height: 35px;
+      width: 250px;
       padding-left: 0px;
-      line-height: 35px;
-      font-size: 12px;
+      line-height: 1.5;
+      font-size: 10px;
+      -webkit-line-clamp: 1;
     }
 
     .music-title-singer {
@@ -209,12 +253,16 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       position: relative;
       margin-bottom: 15px;
 
+      .mp3-name {
+        font-size: 10px;
+      }
+
       .add-info {
         position: absolute;
         bottom: 50px;
         left: 0px;
         font-size: 10px;
-        color: ${({ theme }) => theme.colors.HoverText};
+        color: ${({ theme }) => theme.colors.LightText};
       }
 
       select {
@@ -222,7 +270,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
         width: 100%;
         height: 35px;
         bottom: 0px;
-        font-size: 12px;
+        font-size: 10px;
         left: 0px;
       }
 
@@ -232,6 +280,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
         label {
           width: 75px;
           font-size: 12px;
+          color: ${({ theme }) => theme.colors.DefaultText};
         }
       }
 
@@ -240,6 +289,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
         height: 35px;
         width: 175px;
         line-height: 35px;
+        color: ${({ theme }) => theme.colors.LightText};
       }
 
       .mp3-error {

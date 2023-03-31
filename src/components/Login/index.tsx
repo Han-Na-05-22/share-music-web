@@ -8,6 +8,7 @@ import { auth } from "service/firebase";
 import { useRecoilState } from "recoil";
 import { loginState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormProps {
   email: string;
@@ -21,10 +22,12 @@ const Login = ({ className }: LoginProps) => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
 
   const queryClient = useQueryClient();
+  const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const { mutate: loginMutation } = useMutation(
     async ({ email, password }: LoginFormProps) => {
@@ -50,12 +53,13 @@ const Login = ({ className }: LoginProps) => {
           })
         );
         alert("로그인에 성공하였습니다.");
-        await queryClient.invalidateQueries("getSessUserData");
+        await setIsClicked(false);
         setLoginStateDate({
           ...loginStateDate,
           isLogin: false,
         });
-        queryClient.invalidateQueries("getUser");
+        navigate("/");
+        window.location.reload();
       },
     }
   );
@@ -81,7 +85,7 @@ const Login = ({ className }: LoginProps) => {
           name="email"
           value={form?.email}
           label="Email"
-          isError={!emailRegex?.test(form?.email) && loginStateDate?.isLogin}
+          isError={!emailRegex?.test(form?.email) && isClicked}
           errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
           onChange={(e) => {
             setForm({
@@ -96,7 +100,7 @@ const Login = ({ className }: LoginProps) => {
           isError={
             form?.password?.length <= 8 &&
             !passwordRegex?.test(form?.password) &&
-            loginStateDate?.isLogin
+            isClicked
           }
           errorMsg={
             "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
@@ -115,10 +119,7 @@ const Login = ({ className }: LoginProps) => {
           btnType="submit"
           onClick={() => {
             loginMutation(form);
-            setLoginStateDate({
-              ...loginStateDate,
-              isLogin: true,
-            });
+            setIsClicked(true);
           }}
         >
           로그인

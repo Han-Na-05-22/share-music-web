@@ -14,6 +14,11 @@ export const LoginContainer = styled.div`
   width: 450px;
   height: 400px;
 
+  input {
+    background: ${({ theme }) => theme.colors.ModalColor};
+    color: ${({ theme }) => theme.colors.LightText};
+  }
+
   .close-btn {
     position: absolute;
     top: -25px;

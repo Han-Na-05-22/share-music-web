@@ -21,7 +21,7 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   .about-music,
   .about-music-artists,
   .like-download {
-    color: ${({ theme }) => theme.colors.HoverText};
+    color: ${({ theme }) => theme.colors.LightText};
 
     strong,
     span,
@@ -85,6 +85,9 @@ export const RecordContainer = styled.div<RecordStyleProps>`
       width: 100%;
       min-height: 100px;
       border: 1px solid ${({ theme }) => theme.colors.DefaultText};
+      @media screen and (max-width: 1660px) {
+        min-height: 50px;
+      }
     }
   }
 
@@ -96,6 +99,10 @@ export const RecordContainer = styled.div<RecordStyleProps>`
     .rhap_main.rhap_stacked {
       .rhap_progress-section {
         flex: none;
+
+        .rhap_time {
+          color: ${({ theme }) => theme.colors.LightText};
+        }
         .rhap_current-time {
         }
 
