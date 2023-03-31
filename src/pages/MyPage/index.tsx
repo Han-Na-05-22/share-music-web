@@ -14,7 +14,6 @@ import MusicDetail from "components/MusicDetail";
 import AddMusic from "components/AddMusic";
 import { currentMusicState } from "components/Record/state";
 import UserInfo from "components/UserInfo";
-import { myMusicPlayListState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 
@@ -24,13 +23,11 @@ const MyPage = () => {
     useRecoilState<any>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
-  const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<any>(myMusicPlayListState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<any>(currentMusicState);
   const [user, setUser] = useRecoilState<any>(userInfo);
-  const [limit, setLimit] = useState<number>(11);
+  const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
   const queryClient = useQueryClient();
@@ -60,7 +57,7 @@ const MyPage = () => {
 
   return (
     <MyPageContainer>
-      <UserInfo></UserInfo>
+      <UserInfo className="user-info-container"></UserInfo>
       <div className="tabel-container">
         <Tabel
           theadData={[

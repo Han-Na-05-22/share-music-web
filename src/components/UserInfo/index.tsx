@@ -9,17 +9,10 @@ import { UserInfoProps } from "./interface";
 import { UserInfoContainer } from "./style";
 import { useMutation, useQueryClient } from "react-query";
 import { userApi } from "common/api/user";
-import { isMusicDetailState } from "components/MusicDetail/state";
-import {
-  artistDownloadCountToptenState,
-  artistLikeCountToptenState,
-} from "pages/Home/state";
-import { musicListState } from "components/AddMusic/state";
 
 const UserInfo = ({ className }: UserInfoProps) => {
   const [user, setUser] = useRecoilState<any>(userInfo);
 
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [form, setForm] = useState<any>({
     photoURL: user?.photoURL,
     name: user?.name,
@@ -28,15 +21,9 @@ const UserInfo = ({ className }: UserInfoProps) => {
     phoneNumber: user?.phoneNumber,
     displayName: user?.displayName,
   });
-  const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
-  const getUserId = auth?.currentUser?.uid.replace('"', "");
-  const [artistLikeCountTopten, setArtistLikeCountTopten] = useRecoilState<any>(
-    artistLikeCountToptenState
-  );
 
-  const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
-    useRecoilState<any>(artistDownloadCountToptenState);
+  const getUserId = auth?.currentUser?.uid.replace('"', "");
+
   const queryClient = useQueryClient();
 
   const { mutate: editUser } = useMutation(

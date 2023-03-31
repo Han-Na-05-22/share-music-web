@@ -19,11 +19,6 @@ export const navState = atom({
       isClicked: false,
     },
     {
-      name: "Artist",
-      nav: "/artistTabel",
-      isClicked: false,
-    },
-    {
       name: "My Music",
       nav: "/musicTable",
       isClicked: false,

@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
 export const UserInfoContainer = styled.div`
-  height: 890px;
-  width: 550px;
-  min-width: 550px;
-  padding: 100px 40px;
+  width: 600px;
+  min-width: 600px;
+  padding: 85px 40px;
   position: relative;
-  /* background: ${({ theme }) => theme.colors.ModalColor}; */
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
   .my-info-edit {
     width: 100%;
     height: 100%;
@@ -40,6 +39,10 @@ export const UserInfoContainer = styled.div`
         width: 100%;
         margin: 10px 0px 20px;
       }
+
+      label {
+        color: ${({ theme }) => theme.colors.DefaultText};
+      }
     }
 
     .my-img {
@@ -51,50 +54,6 @@ export const UserInfoContainer = styled.div`
     }
 
     .my-info-submit {
-    }
-  }
-
-  @media screen and (max-width: 1660px) {
-    width: 100%;
-    min-width: 100%;
-    height: 100%;
-
-    .my-info-edit {
-      gap: 25px 0px;
-
-      .input-container {
-        width: 485px;
-
-        @media screen and (max-width: 600px) {
-          width: 250px;
-        }
-      }
-
-      label {
-        font-size: 12px;
-      }
-
-      input {
-        width: 270px;
-        font-size: 12px;
-      }
-
-      .my-img {
-        div {
-          label {
-            svg {
-              transform: translate(0);
-              width: 100%;
-              height: 100%;
-            }
-          }
-        }
-      }
-
-      .my-info-submit {
-        width: 85px;
-        min-height: 30px;
-      }
     }
   }
 `;

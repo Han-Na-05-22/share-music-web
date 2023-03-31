@@ -27,7 +27,7 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
 
   label,
   input {
-    color: inherit;
+    color: ${({ theme }) => theme.colors.BlackColor};
     font-size: inherit;
   }
 

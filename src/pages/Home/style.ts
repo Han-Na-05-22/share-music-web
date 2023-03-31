@@ -130,7 +130,7 @@ export const HomeContainer = styled.div`
           transition: 0.3s;
 
           &:hover {
-            background: #1c1c1dff;
+            background: ${({ theme }) => theme.colors.BgHover};
           }
 
           span {
@@ -186,6 +186,7 @@ export const HomeContainer = styled.div`
       width: 45%;
       position: relative;
       padding-top: 50px;
+
       h4 {
         top: -40px;
         position: absolute;
@@ -195,12 +196,18 @@ export const HomeContainer = styled.div`
         border-radius: 10px;
         width: 100%;
         padding: 20px 40px 40px;
-        background: #1c1c1dff;
+        background: ${({ theme }) => theme.colors.BgHover};
         table {
           width: 100%;
 
           thead,
           tbody {
+            tr {
+              cursor: default;
+              &:hover {
+                background: ${({ theme }) => theme.colors.BgHover};
+              }
+            }
           }
           tbody {
             max-height: 100%;

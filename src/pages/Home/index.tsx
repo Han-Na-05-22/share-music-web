@@ -252,13 +252,8 @@ const Home = () => {
                   ?.map((item: any, idx: number) => (
                     <tr
                       key={idx}
-                      onClick={() => {
-                        !user?.email
-                          ? alert("로그인 후 이용해주세요")
-                          : setIsDetailData({
-                              isDetail: true,
-                              isLocation: "home",
-                            });
+                      onClick={(e: any) => {
+                        e.stopPropagation();
                       }}
                     >
                       <td>{idx + 1}</td>
@@ -303,13 +298,8 @@ const Home = () => {
                   ?.map((item: any, idx: number) => (
                     <tr
                       key={idx}
-                      onClick={() => {
-                        !user?.email
-                          ? alert("로그인 후 이용해주세요")
-                          : setIsDetailData({
-                              isDetail: true,
-                              isLocation: "home",
-                            });
+                      onClick={(e: any) => {
+                        e.stopPropagation();
                       }}
                     >
                       <td>{idx + 1}</td>
