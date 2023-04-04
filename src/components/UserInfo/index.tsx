@@ -45,7 +45,10 @@ const UserInfo = ({ className }: UserInfoProps) => {
     editUser();
   };
 
-  const handleChangeImg = (event: any) => {
+  const handleChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      return;
+    }
     const formData = new FormData();
     const fr = new FileReader();
     const file = event.target.files[0];

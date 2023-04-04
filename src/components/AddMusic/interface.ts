@@ -21,3 +21,26 @@ export interface AddMusicFormProps {
   date: any;
   uniqueKey: any;
 }
+
+interface editMusicDownloadListPrpsp {
+  email?: string;
+  updateTiem?: any;
+}
+
+export interface editMusicFormProps {
+  date?: any;
+  displayName: string;
+  downloadClickList: editMusicDownloadListPrpsp[];
+  downloadCount: number;
+  email: string;
+  explanation: string;
+  genre: string;
+  id: number;
+  img: string;
+  likeCount: number;
+  likedClickList: editMusicDownloadListPrpsp[];
+  mp3: string;
+  singer: string;
+  title: string;
+  url: string;
+}

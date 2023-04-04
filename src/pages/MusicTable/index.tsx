@@ -22,7 +22,6 @@ const MusicTable = () => {
   const [musicList, setMusicList] = useRecoilState<any>(musicListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
-
   const [user, setUser] = useRecoilState<any>(userInfo);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);

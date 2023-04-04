@@ -12,7 +12,6 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useRecoilState } from "recoil";
 import { navState } from "./state";
 import { selectFilterState } from "pages/MusicTable/state";
-import { useEffect } from "react";
 
 const Nav = () => {
   const navigate = useNavigate();

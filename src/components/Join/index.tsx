@@ -95,7 +95,11 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     }
   };
 
-  const handleChangeImg = (event: any) => {
+  const handleChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      return;
+    }
+
     const { name } = event.target;
     const formData = new FormData();
     const fr = new FileReader();
