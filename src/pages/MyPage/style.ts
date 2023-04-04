@@ -7,7 +7,7 @@ export const MyPageContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-around;
-  padding: 65px 40px 100px;
+  padding: 65px 40px 160px;
 
   .tabel-container {
     background: rgba(255, 255, 255, 0.1);
@@ -36,7 +36,7 @@ export const MyPageContainer = styled.div`
   @media screen and (max-width: 1660px) {
     display: flex;
     width: 100%;
-    padding: 75px 40px 100px;
+    padding: 75px 40px 170px;
     justify-content: space-evenly;
 
     @media screen and (max-width: 1150px) {
@@ -98,6 +98,16 @@ export const MyPageContainer = styled.div`
         }
 
         .my-img {
+          svg {
+            width: 75px;
+            height: 75px;
+            transform: translate(0);
+          }
+
+          .delete-icon {
+            width: 15px;
+            height: 15px;
+          }
         }
 
         .mine {
@@ -118,11 +128,16 @@ export const MyPageContainer = styled.div`
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       min-height: 810px;
+      position: relative;
       div {
         width: 550px;
 
         @media screen and (max-width: 1350px) {
           width: 425px;
+        }
+
+        &:nth-child(1) {
+          min-height: 810px;
         }
         &:nth-child(2) {
           bottom: 25px;
@@ -131,12 +146,25 @@ export const MyPageContainer = styled.div`
       }
 
       table {
+        tr {
+          th,
+          td {
+            &:nth-child(3) {
+              width: 200px;
+            }
+
+            &:nth-child(4) {
+              width: 100px;
+            }
+          }
+        }
       }
 
       tbody {
-        /* min-height: 800px; */
         td {
           svg {
+            height: 15px;
+            width: 15px;
             &:hover {
               path {
                 transition: 0.2s;

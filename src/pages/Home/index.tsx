@@ -198,7 +198,7 @@ const Home = () => {
                       <strong className="singer">{item?.singer}</strong>
                     </div>
                     <span className="genre">{item?.genre}</span>
-                    <span className="date">{item?.date}</span>
+                    <span className="date">{item?.date?.substr(0, 10)}</span>
                   </li>
                 ))
               ) : (
@@ -209,7 +209,7 @@ const Home = () => {
             </ul>
           </div>
           <div className="popular-slider">
-            <h3>Top</h3>
+            <h3>Top10</h3>
             <ul>
               {musicList[0]?.email !== "" ? (
                 musicLikeCountTopten?.map(

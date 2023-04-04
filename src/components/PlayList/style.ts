@@ -213,7 +213,11 @@ export const PlayListContainer = styled.div`
       .img-ani-paused.ani {
         width: 150px;
         height: 150px;
-        background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+        background-image: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0.1) 100%
+        );
       }
 
       .img-ani {
@@ -225,8 +229,12 @@ export const PlayListContainer = styled.div`
           width: 110%;
           height: 110%;
           border-radius: 50%;
-          filter: blur(20px);
-          background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+          filter: blur(15px);
+          background-image: linear-gradient(
+            to top,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0.1) 100%
+          );
           animation: rotate 3s linear infinite;
           animation-play-state: running;
         }

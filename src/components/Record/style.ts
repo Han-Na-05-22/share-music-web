@@ -15,7 +15,8 @@ export const RecordContainer = styled.div<RecordStyleProps>`
     position: absolute;
     top: 15px;
     right: 15px;
-    color: ${({ theme }) => theme.colors.DefaultText};
+    color: ${({ theme }) => theme.colors.LightText};
+    font-size: 14px;
   }
 
   .about-music,
@@ -78,7 +79,7 @@ export const RecordContainer = styled.div<RecordStyleProps>`
 
   .about-music.bottom {
     width: 100%;
-
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
     p {
       padding: 10px 0px 0px 10px;
       margin-top: 10px;

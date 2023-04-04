@@ -40,6 +40,8 @@ function App() {
     userApi?.getUserAllDataList()
   );
 
+  console.log("musicList", musicList);
+  console.log("myMusicPlayList", myMusicPlayList);
   const { isLoading: userDataLoading, data: userData } = useQuery<{
     displayName: string;
     email: string;
@@ -82,7 +84,13 @@ function App() {
 
   useEffect(() => {
     if (musicAllListData) {
-      setMusicList(musicAllListData);
+      setMusicList(
+        musicAllListData
+          ?.map((item: MusicFormProps) => {
+            return item;
+          })
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id)
+      );
     }
   }, [musicAllListData]);
 
@@ -135,6 +143,7 @@ function App() {
               isLocation: "playList",
             });
           }}
+          play={false}
           playListData={myMusicPlayList}
         ></PlayList>
       </Container>

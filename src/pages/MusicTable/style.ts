@@ -7,8 +7,9 @@ export const MusicTableContainer = styled.div`
   flex-direction: column;
   color: ${({ theme }) => theme.colors.BlackColor};
   height: 100%;
-  padding: 200px 0px;
+  padding: 200px 40px;
   position: relative;
+  border: 2px solid red;
   .my-info-submit {
     position: absolute;
     top: 110px;
@@ -18,11 +19,18 @@ export const MusicTableContainer = styled.div`
   .tabel-container {
     width: 100%;
     height: 100%;
+    background-color: ${({ theme }) => theme.colors.BgHover};
+    border-radius: 10px;
+    border: 2px solid blue;
+    padding-bottom: 60px;
 
     div {
+      box-shadow: none;
       width: 100%;
+
       &:nth-child(2) {
-        bottom: -60px;
+        bottom: -15px;
+        position: relative;
       }
     }
 

@@ -31,6 +31,7 @@ export const ButtonContainer = styled.button<ButtonStyleProps>`
     props.btnType === "none" &&
     css`
       cursor: not-allowed;
+      opacity: 0.5;
 
       &:hover {
         background: ${({ theme }) => theme.colors.DefaultColor};

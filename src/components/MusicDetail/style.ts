@@ -23,12 +23,12 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
 
     & > div {
       padding: 40px 15px 0px;
-      gap: 10px 0px;
+      gap: 5px 0px;
       font-size: 13px;
     }
 
     .add-date {
-      font-size: 10px;
+      font-size: 10px !important;
     }
 
     .about-music {
@@ -47,11 +47,17 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
       }
     }
 
+    .about-music-artists {
+      & > div {
+        margin-top: 0px !important;
+      }
+    }
+
     .about-music.bottom {
       width: 100%;
 
       p {
-        margin: 10px 0px 20px;
+        margin: 0px;
         min-height: 50px;
       }
     }
@@ -63,11 +69,11 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
       .rhap_main.rhap_stacked {
         .rhap_progress-section {
           .rhap_time {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
         .rhap_controls-section {
-          margin: 15px 0px;
+          margin: 0px;
           .rhap_additional-controls {
             width: 50px;
             flex: none;

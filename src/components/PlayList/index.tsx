@@ -17,12 +17,13 @@ const PlayList = ({
   children,
   playListData,
   onClick,
+  play = false,
 }: PlayListProps) => {
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [idx, setIdx] = useRecoilState<any>(playListIndexState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
-  const [isPlay, setIsPlay] = useState<boolean>(false);
+  const [isPlay, setIsPlay] = useState<boolean>(play);
 
   useEffect(() => {
     if (isDetailData?.isLocation === "download") {
@@ -91,6 +92,7 @@ const PlayList = ({
                   className="next-btn btn"
                   onClick={(e: any) => {
                     e.stopPropagation();
+
                     playListData?.length - 1 === idx
                       ? setIdx(0)
                       : setIdx(idx + 1);
@@ -106,6 +108,7 @@ const PlayList = ({
                 onPlay={() => {
                   setIsPlay(true);
                 }}
+                autoPlay={isPlay}
               />
             </>
           ) : (

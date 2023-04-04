@@ -3,4 +3,5 @@ export interface PlayListProps {
   children?: React.ReactNode;
   playListData?: any[];
   onClick?: any;
+  play?: boolean;
 }

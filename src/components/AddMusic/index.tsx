@@ -158,6 +158,14 @@ const AddMusic = ({
 
   const queryClient = useQueryClient();
 
+  const isRegex =
+    form?.img !== "" &&
+    form?.mp3 !== "" &&
+    form?.title !== "" &&
+    form?.singer !== "" &&
+    form?.explanation !== "" &&
+    form?.mpName !== "";
+
   const { mutate: addStorageMusic } = useMutation(
     () =>
       musicApi?.addStorageMusicData(
@@ -167,6 +175,7 @@ const AddMusic = ({
         musicApi?.sendMusicData,
         musicList
       ),
+
     {
       onError: (error) => {
         console.log("error : ", error);
@@ -211,8 +220,12 @@ const AddMusic = ({
     e.preventDefault();
     if (isEdit === "edit") {
       updateMusicData();
-    } else {
+    }
+
+    if (isEdit !== "edit" && isRegex) {
       addStorageMusic();
+    } else {
+      e.preventDefault();
     }
   };
 
@@ -237,7 +250,7 @@ const AddMusic = ({
   return (
     <Overlay>
       <AddMusicContainer className={className} height={height} width={width}>
-        <div className="music-infos">
+        <div className={isEdit !== "edit" ? "music-infos" : "music-infos edit"}>
           <div className="music-img musics">
             {isEdit !== "edit" ? (
               <ProfileImg
@@ -270,7 +283,7 @@ const AddMusic = ({
                     : form?.mpName}
                 </p>
                 <strong className="add-info">
-                  ✴︎ mp3 파일만 등록 가능합니다.
+                  mp3 파일만 등록 가능합니다.
                 </strong>
                 <TextInput
                   width="150px"
@@ -354,17 +367,7 @@ const AddMusic = ({
             </Button>
             <Button
               marginLeft="15px"
-              btnType={
-                isEdit === "edit" ||
-                (form?.img?.length !== 0 &&
-                  form?.mp3?.length !== 0 &&
-                  form?.title?.length !== 0 &&
-                  form?.singer?.length !== 0 &&
-                  form?.explanation?.length !== 0 &&
-                  form?.mpName?.length !== 0)
-                  ? "submit"
-                  : "none"
-              }
+              btnType={isEdit === "edit" || isRegex ? "submit" : "none"}
               onClick={(e: any) => {
                 handleSubmit(e);
               }}

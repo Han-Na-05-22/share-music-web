@@ -2,10 +2,6 @@ import styled from "styled-components";
 
 export const TableGroupContainer = styled.div`
   position: relative;
-  /* background: ${({ theme }) => theme.colors.ModalColor}; */
-  /* background: #2f026bff; */
-  /* background-image: linear-gradient(to top, #5f72bd 0%, #9b23ea 100%); */
-
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 15px 20px;
   width: 600px;
@@ -41,6 +37,7 @@ export const TabelContainer = styled.table`
       width: 100%;
       color: ${({ theme }) => theme.colors.HoverText};
       padding: 0px 15px;
+
       th {
         color: inherit;
         font-weight: bold;
@@ -89,10 +86,13 @@ export const TabelContainer = styled.table`
       padding: 0px 15px;
       border-bottom: 1px solid ${({ theme }) => theme.colors.DefaultText};
 
+      &:last-child {
+        border: none;
+      }
+
       &:hover {
         cursor: pointer;
         background: #111111ff;
-        /* background: ${({ theme }) => theme.colors.TableHoverColor}; */
         td {
           color: ${({ theme }) => theme.colors.HoverText};
         }

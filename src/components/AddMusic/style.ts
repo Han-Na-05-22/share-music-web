@@ -101,6 +101,8 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       bottom: -20px;
       left: 0px;
       font-size: 10px;
+      transform: scale(0.8) translateX(-15px);
+
       color: ${({ theme }) => theme.colors.LightText};
     }
 
@@ -173,9 +175,23 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       gap: 40px 0px;
     }
 
+    .music-infos.edit {
+      height: 90%;
+
+      .music-mp3 {
+        height: 75px;
+        margin-bottom: 0px;
+      }
+
+      .music-title-singer {
+        input {
+        }
+      }
+    }
+
     .music-img {
       width: 75px;
-      height: 100px;
+      height: 75px;
 
       div {
         height: 75px;
@@ -251,7 +267,6 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
       flex-wrap: wrap;
       flex-direction: column;
       position: relative;
-      margin-bottom: 15px;
 
       .mp3-name {
         font-size: 10px;

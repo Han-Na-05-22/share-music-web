@@ -1,7 +1,7 @@
 import { musicListState, myMusicAddState } from "components/AddMusic/state";
 import Button from "components/Button";
 import { useRecoilState } from "recoil";
-import { HeaderContainer, SimplePrpfileContainer } from "./style";
+import { HeaderContainer, SimpleProfileContainer } from "./style";
 import { useNavigate } from "react-router-dom";
 import { loginState, userInfo } from "components/Login/state";
 import TextInput from "components/TextInput";
@@ -211,6 +211,14 @@ const Header = () => {
                             ...isDetailData,
                             isLocation: "mypage",
                           });
+                      setNavData(
+                        navData?.map((i: any) => {
+                          return {
+                            ...i,
+                            isClicked: false,
+                          };
+                        })
+                      );
                       navigate("/mypage");
                     }}
                   >
@@ -257,11 +265,16 @@ const Header = () => {
             )}
           </div>
         </div>
-        {isDetailData?.isLocation !== "mypage" && (
-          <SimplePrpfileContainer>
+        {navData?.find((i: any) => i?.isClicked === true) !== undefined && (
+          <SimpleProfileContainer>
             {user?.email && (
               <div className="auth-profile">
-                <img src={user?.photoURL} alt="" />
+                {user?.photoURL ? (
+                  <img src={user?.photoURL} alt="" />
+                ) : (
+                  <SVG src="/svg/profile.svg" />
+                )}
+
                 <span>{user?.displayName} </span>
               </div>
             )}
@@ -323,7 +336,7 @@ const Header = () => {
                 </span>
               </div>
             </div>
-          </SimplePrpfileContainer>
+          </SimpleProfileContainer>
         )}
       </HeaderContainer>
       {loginStateDate?.isJoin && (

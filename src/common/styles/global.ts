@@ -50,11 +50,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .about-genre {        
-    color:#6C6A6A;
+    color:#808593ff;
     font-weight:bold;
 
     @media screen and (max-width: 1660px) {
-      font-size: 13px;
+      font-size: 12px;
     }
   }
 

@@ -28,7 +28,7 @@ const MusicTable = () => {
     useRecoilState<MusicFormProps[]>(filterMusicListState);
 
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(15);
   const [page, setPage] = useState<number>(1);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
@@ -115,7 +115,6 @@ const MusicTable = () => {
     myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
       filterMusicList?.length ||
     musicList?.length === myMusicPlayList?.length;
-  console.log("selectFilter", selectFilter);
 
   useEffect(() => {
     if (selectFilter === "MyMusic" && musicList[0]?.email !== "") {
@@ -149,185 +148,187 @@ const MusicTable = () => {
     }
   }, [selectFilter, musicList, myMusicPlayList]);
 
-  console.log(
-    'filterMusicList[0]?.email !== "" || filterMusicList?.length !== 0',
-    filterMusicList[0]?.email !== "" && filterMusicList[0]?.email !== undefined
-  );
   return (
-    <MusicTableContainer>
-      <Button
-        className="my-info-submit"
-        fontSize="16px"
-        btnType="submit"
-        onClick={async () => {
-          if (addMusicPlayer?.length === 0) {
-            alert("추가에 실패하였습니다.");
-          } else {
-            await updateMusicDownloadAllCount();
-            alert("추가가 완료되었습니다.");
-          }
-        }}
-      >
-        추가
-      </Button>
-
-      <div className="tabel-container">
-        <Tabel
-          className={
-            filterMusicList[0]?.email === "" || filterMusicList?.length === 0
-              ? "no-tabel-data"
-              : ""
-          }
-          theadData={[
-            {
-              title: (
-                <CheckBox
-                  disabled={
-                    filterMusicList[0]?.email === "" ||
-                    selectFilter === "MyMusic" ||
-                    selectFilter === "Playlist" ||
-                    myMusicPlayList?.filter(
-                      (i: MusicFormProps) => i?.genre === selectFilter
-                    )?.length === filterMusicList?.length ||
-                    musicList?.length === myMusicPlayList?.length
-                  }
-                  onClick={(e) => {
-                    e.stopPropagation();
-
-                    if (!allCheckd) {
-                      onCheckedAllMusic();
-                    }
-                  }}
-                  onChange={() => {}}
-                  checked={
-                    (addMusicPlayer?.length + myMusicPlayList?.length ===
-                      filterMusicList?.length &&
-                      myMusicPlayList?.length !== filterMusicList?.length) ||
-                    filterMusicList?.length ===
-                      myMusicPlayList?.filter(
-                        (i: any) => i?.genre === selectFilter
-                      )?.length +
-                        addMusicPlayer?.length
-                      ? true
-                      : false
-                  }
-                ></CheckBox>
-              ),
-            },
-            {
-              title: selectFilter === "Popular" ? "순위" : "순번",
-            },
-            {
-              title: "음원",
-            },
-            {
-              title: "제목",
-            },
-            {
-              title: "가수",
-            },
-            {
-              title: "장르",
-            },
-            {
-              title: <SVG src="/svg/heart.svg" />,
-            },
-            {
-              title: <SVG src="/svg/download.svg" />,
-            },
-            {
-              title: "소유자",
-            },
-            {
-              title: "등록일",
-            },
-          ]}
+    <>
+      <MusicTableContainer>
+        <Button
+          className="my-info-submit"
+          fontSize="16px"
+          btnType={user?.email ? "submit" : "none"}
+          onClick={async () => {
+            if (addMusicPlayer?.length === 0) {
+              alert("추가에 실패하였습니다.");
+            } else {
+              await updateMusicDownloadAllCount();
+              alert("추가가 완료되었습니다.");
+            }
+          }}
         >
-          {(filterMusicList[0]?.email !== "" &&
-            filterMusicList[0]?.title !== undefined) ||
-          filterMusicList?.length !== 0 ? (
-            filterMusicList
-              ?.slice(offset, offset + limit)
-              ?.sort((a: MusicFormProps, b: MusicFormProps) => {
-                if (selectFilter === "Popular") {
-                  return b?.likeCount - a?.likeCount;
-                } else {
-                  return b?.id - a?.id;
-                }
-              })
-              ?.map((item: MusicFormProps, idx: number) => (
-                <tr
-                  key={item?.id}
-                  onClick={() => {
-                    setIsDetailData({
-                      isDetail: true,
-                      isLocation: "musicTable",
-                    });
-                    setMusicDetailData(item);
-                  }}
-                >
-                  <td>
-                    <CheckBox
-                      disabled={
-                        myMusicPlayList?.find(
-                          (i: MusicFormProps) => i?.id === item?.id
-                        )
-                          ? true
-                          : false
+          추가
+        </Button>
+
+        <div className="tabel-container">
+          <Tabel
+            className={
+              filterMusicList[0]?.email === "" || filterMusicList?.length === 0
+                ? "no-tabel-data"
+                : ""
+            }
+            theadData={[
+              {
+                title: (
+                  <CheckBox
+                    disabled={
+                      filterMusicList[0]?.email === "" ||
+                      selectFilter === "MyMusic" ||
+                      selectFilter === "Playlist" ||
+                      myMusicPlayList?.filter(
+                        (i: MusicFormProps) => i?.genre === selectFilter
+                      )?.length === filterMusicList?.length ||
+                      musicList?.length === myMusicPlayList?.length
+                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                      if (!allCheckd) {
+                        onCheckedAllMusic();
                       }
-                      onChange={() => {}}
-                      onClick={async (e: any) => {
-                        e.stopPropagation();
-                        if (
+                    }}
+                    onChange={() => {}}
+                    checked={
+                      (addMusicPlayer?.length + myMusicPlayList?.length ===
+                        filterMusicList?.length &&
+                        myMusicPlayList?.length !== filterMusicList?.length) ||
+                      filterMusicList?.length ===
+                        myMusicPlayList?.filter(
+                          (i: any) => i?.genre === selectFilter
+                        )?.length +
+                          addMusicPlayer?.length
+                        ? true
+                        : false
+                    }
+                  ></CheckBox>
+                ),
+              },
+              {
+                title: selectFilter === "Popular" ? "순위" : "순번",
+              },
+              {
+                title: "음원",
+              },
+              {
+                title: "제목",
+              },
+              {
+                title: "가수",
+              },
+              {
+                title: "장르",
+              },
+              {
+                title: <SVG src="/svg/heart.svg" />,
+              },
+              {
+                title: <SVG src="/svg/download.svg" />,
+              },
+              {
+                title: "소유자",
+              },
+              {
+                title: "등록일",
+              },
+            ]}
+          >
+            {(filterMusicList[0]?.email !== "" &&
+              filterMusicList[0]?.title !== undefined) ||
+            filterMusicList?.length !== 0 ? (
+              filterMusicList
+                ?.slice(offset, offset + limit)
+                ?.sort((a: MusicFormProps, b: MusicFormProps) => {
+                  if (selectFilter === "Popular") {
+                    return b?.likeCount - a?.likeCount;
+                  } else {
+                    return b?.id - a?.id;
+                  }
+                })
+                ?.map((item: MusicFormProps, idx: number) => (
+                  <tr
+                    key={item?.id}
+                    onClick={() => {
+                      if (user?.email) {
+                        setIsDetailData({
+                          isDetail: true,
+                          isLocation: "musicTable",
+                        });
+                        setMusicDetailData(item);
+                      } else {
+                        alert("로그인 후 이용해주세요.");
+                      }
+                    }}
+                  >
+                    <td>
+                      <CheckBox
+                        disabled={
                           myMusicPlayList?.find(
                             (i: MusicFormProps) => i?.id === item?.id
                           )
                             ? true
                             : false
-                        ) {
-                          return;
-                        } else {
-                          await onCheckedMusic(item?.id);
-                          await setMusicDetailData(item);
                         }
-                      }}
-                      checked={
-                        addMusicPlayer?.find((id: any) => id === item.id)
-                          ? true
-                          : false
-                      }
-                    ></CheckBox>
-                  </td>
-                  <td>{idx + 1}</td>
-                  <td>
-                    <img src={item?.img} alt="" />
-                  </td>
-                  <td>{item?.title}</td>
-                  <td>{item?.singer}</td>
-                  <td>{item?.genre}</td>
-                  <td>{item?.likeCount}</td>
-                  <td>{item?.downloadCount}</td>
-                  <td>{item?.email?.split("@")[0]}</td>
-                  <td>{item?.date}</td>
-                </tr>
-              ))
-          ) : (
-            <p className="no-data">데이터가 없습니다.</p>
-          )}
-        </Tabel>
+                        onChange={() => {}}
+                        onClick={async (e: any) => {
+                          e.stopPropagation();
+                          if (
+                            myMusicPlayList?.find(
+                              (i: MusicFormProps) => i?.id === item?.id
+                            )
+                              ? true
+                              : false
+                          ) {
+                            return;
+                          } else {
+                            await onCheckedMusic(item?.id);
+                            await setMusicDetailData(item);
+                          }
+                        }}
+                        checked={
+                          addMusicPlayer?.find((id: any) => id === item.id)
+                            ? true
+                            : false
+                        }
+                      ></CheckBox>
+                    </td>
+                    <td>{idx + 1}</td>
+                    <td>
+                      <img src={item?.img} alt="" />
+                    </td>
+                    <td>{item?.title}</td>
+                    <td>{item?.singer}</td>
+                    <td>{item?.genre}</td>
+                    <td>{item?.likeCount}</td>
+                    <td>{item?.downloadCount}</td>
+                    <td>{item?.email?.split("@")[0]}</td>
+                    <td>{item?.date?.substr(0, 10)}</td>
+                  </tr>
+                ))
+            ) : (
+              <p className="no-data">데이터가 없습니다.</p>
+            )}
+          </Tabel>
 
-        <Pagination
-          total={musicList?.length}
-          limit={limit}
-          page={page}
-          setPage={setPage}
-          handleChangePage={handleChangePage}
-        />
-      </div>
-      {isDetailData?.isDetail && isDetailData?.isLocation === "musicTable" && (
-        <MusicDetail detailData={musicDetailData}></MusicDetail>
-      )}
-    </MusicTableContainer>
+          <Pagination
+            total={musicList?.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+            handleChangePage={handleChangePage}
+          />
+        </div>
+      </MusicTableContainer>
+      {isDetailData?.isDetail &&
+        isDetailData?.isLocation === "musicTable" &&
+        user?.email && <MusicDetail detailData={musicDetailData}></MusicDetail>}
+    </>
   );
 };
 

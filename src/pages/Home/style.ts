@@ -206,17 +206,22 @@ export const HomeContainer = styled.div`
       & > div {
         border-radius: 10px;
         width: 100%;
-        padding: 20px 40px 40px;
+        padding: 20px 40px;
         background: ${({ theme }) => theme.colors.BgHover};
         table {
           width: 100%;
 
           thead,
           tbody {
+            padding-bottom: 0;
             tr {
               cursor: default;
               &:hover {
                 background: ${({ theme }) => theme.colors.BgHover};
+              }
+
+              &:last-child {
+                border: none;
               }
             }
           }

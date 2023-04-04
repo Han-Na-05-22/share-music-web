@@ -254,7 +254,7 @@ export const HeaderContainer = styled.header`
   }
 `;
 
-export const SimplePrpfileContainer = styled.div`
+export const SimpleProfileContainer = styled.div`
   position: absolute;
   bottom: -80px;
   width: 100%;
@@ -270,7 +270,8 @@ export const SimplePrpfileContainer = styled.div`
     gap: 0px 15px;
     align-items: center;
 
-    img {
+    img,
+    svg {
       width: 50px;
       height: 50px;
       border-radius: 50%;
