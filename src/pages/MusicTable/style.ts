@@ -267,7 +267,9 @@ export const MusicTableContainer = styled.div`
   }
 
   @media screen and (max-width: 485px) {
+    padding: 200px 10px;
     .tabel-container {
+      padding: 0px 10px 60px;
       thead,
       tbody {
         tr {
@@ -276,7 +278,7 @@ export const MusicTableContainer = styled.div`
             font-size: 10px;
 
             &:nth-child(2) {
-              width: 40px;
+              width: 50px;
             }
 
             &:nth-child(3) {
