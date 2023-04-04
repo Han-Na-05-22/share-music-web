@@ -9,6 +9,8 @@ import Button from "components/Button";
 import { useEffect, useState } from "react";
 import { userInfo } from "components/Login/state";
 import { playListIndexState } from "./state";
+import { UserProps } from "components/Login/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const PlayList = ({
   className,
@@ -17,9 +19,9 @@ const PlayList = ({
   onClick,
 }: PlayListProps) => {
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [idx, setIdx] = useRecoilState<any>(playListIndexState);
-  const [user, setUser] = useRecoilState<any>(userInfo);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
   useEffect(() => {

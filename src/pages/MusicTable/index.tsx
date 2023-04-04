@@ -17,12 +17,16 @@ import { myMusicPlayListState } from "pages/MyPage/state";
 import { userInfo } from "components/Login/state";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
+import { UserProps } from "components/Login/interface";
+import { MusicFormProps } from "components/AddMusic/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const MusicTable = () => {
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
-  const [user, setUser] = useRecoilState<any>(userInfo);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [selectFilter, setSelectFilter] =
@@ -30,11 +34,11 @@ const MusicTable = () => {
   const [addMusicPlayer, setAddMusicPlayer] = useState<any[]>([]);
 
   const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<any>(myMusicPlayListState);
+    useRecoilState<MusicFormProps[]>(myMusicPlayListState);
   const offset = (page - 1) * limit;
 
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
   const quertyClient = useQueryClient();

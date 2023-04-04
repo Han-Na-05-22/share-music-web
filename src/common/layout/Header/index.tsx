@@ -20,27 +20,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddMusic from "components/AddMusic";
 import Nav from "../Nav";
 import { navState } from "../Nav/state";
-import {
-  isMusicDetailState,
-  musicDetailState,
-} from "components/MusicDetail/state";
+import { isMusicDetailState } from "components/MusicDetail/state";
 import SVG from "react-inlinesvg";
 import { faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
+import { UserProps } from "components/Login/interface";
+import { MusicFormProps } from "components/AddMusic/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const Header = () => {
   const navigate = useNavigate();
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const iconLogo = faHeadphonesSimple as IconProp;
   const [search, setSearch] = useRecoilState<any>(searchInputState);
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
-  const [user, setUser] = useRecoilState<any>(userInfo);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
 
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [navData, setNavData] = useRecoilState<any[]>(navState);
-  const [musicDetailData, setMusicDetailData] =
-    useRecoilState<any>(musicDetailState);
+
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<any>(filterMusicListState);
   const iconMyMusic = faRecordVinyl as IconProp;

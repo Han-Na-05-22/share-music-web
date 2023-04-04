@@ -16,36 +16,48 @@ import { userApi } from "common/api/user";
 import { musicApi } from "common/api/music";
 import PlayList from "components/PlayList";
 import { isMusicDetailState } from "components/MusicDetail/state";
+import { UserProps } from "components/Login/interface";
+import {
+  MusicCountListProps,
+  MusicFormProps,
+} from "components/AddMusic/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 function App() {
-  const [user, setUser] = useRecoilState<any>(userInfo);
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<any>(myMusicPlayListState);
-  console.log("musicList", musicList);
+    useRecoilState<MusicFormProps[]>(myMusicPlayListState);
+
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
     "getUserAllList",
     userApi?.getUserAllDataList()
   );
 
-  const { isLoading: userDataLoading, data: userData } = useQuery<any>(
-    "getUser",
-    () => {
-      return JSON.parse(sessionStorage.getItem("user") || "{}");
-    }
-  );
+  const { isLoading: userDataLoading, data: userData } = useQuery<{
+    displayName: string;
+    email: string;
+    uid: string;
+  }>("getUser", () => {
+    return JSON.parse(sessionStorage.getItem("user") || "{}");
+  });
 
   const { isLoading: musicAllListDataLoading, data: musicAllListData } =
-    useQuery<any>("getMusicAllDataList", musicApi?.getMusicAllDataList());
+    useQuery<MusicFormProps[]>(
+      "getMusicAllDataList",
+      musicApi?.getMusicAllDataList()
+    );
 
   let getDownloadMusicList: any = "";
+
   const getDownloadMusicData = () => {
     musicList
-      ?.filter((item: any) => item?.email !== user?.email)
-      ?.map((i: any) => {
-        i?.downloadClickList?.filter((a: any) => {
+      ?.filter((item: MusicFormProps) => item?.email !== user?.email)
+      ?.map((i: MusicFormProps) => {
+        i?.downloadClickList?.filter((a: MusicCountListProps) => {
           if (a?.email === user?.email) {
             return (getDownloadMusicList = [...getDownloadMusicList, i]);
           }
@@ -57,7 +69,8 @@ function App() {
     if (auth?.currentUser !== null || userData) {
       setUser(
         UserAllList?.find(
-          (i: any) => i?.email === (auth?.currentUser?.email || userData?.email)
+          (i: UserProps) =>
+            i?.email === (auth?.currentUser?.email || userData?.email)
         )
       );
     }
@@ -73,14 +86,20 @@ function App() {
     getDownloadMusicData();
 
     if (getDownloadMusicList) {
+      console.log(
+        "getDownloadMusicListgetDownloadMusicList",
+        getDownloadMusicList
+      );
       setMyMusicPlayList(
         getDownloadMusicList?.concat(
-          musicList?.filter((item: any) => item?.email === user?.email)
+          musicList?.filter(
+            (item: MusicFormProps) => item?.email === user?.email
+          )
         )
       );
     } else {
       setMyMusicPlayList(
-        musicList?.filter((item: any) => item?.email === user?.email)
+        musicList?.filter((item: MusicFormProps) => item?.email === user?.email)
       );
     }
   }, [musicList]);

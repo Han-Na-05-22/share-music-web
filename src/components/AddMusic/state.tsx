@@ -1,13 +1,32 @@
 import { atom } from "recoil";
+import { MusicFormProps } from "./interface";
 
 export const myMusicAddState = atom({
   key: "myMusicAddStateData",
   default: false,
 });
 
-export const musicListState = atom({
+export const musicListState = atom<MusicFormProps[]>({
   key: "musicListStateData",
-  default: [],
+  default: [
+    {
+      date: "",
+      displayName: "",
+      downloadClickList: [],
+      downloadCount: 0,
+      email: "",
+      explanation: "",
+      genre: "",
+      id: 0,
+      img: "",
+      likeCount: 0,
+      likedClickList: [],
+      mp3: "",
+      singer: "",
+      title: "",
+      url: "",
+    },
+  ],
 });
 
 export const checkEditMusicState = atom({

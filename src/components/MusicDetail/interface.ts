@@ -9,3 +9,8 @@ export interface MusicDetailStyleProps {
   width?: string;
   height?: string;
 }
+
+export interface MusicDetailStateProps {
+  isDetail: boolean;
+  isLocation: string;
+}

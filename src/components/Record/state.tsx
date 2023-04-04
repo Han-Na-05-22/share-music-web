@@ -1,7 +1,7 @@
-import { editMusicFormProps } from "components/AddMusic/interface";
+import { MusicFormProps } from "components/AddMusic/interface";
 import { atom } from "recoil";
 
-export const currentMusicState = atom<editMusicFormProps>({
+export const currentMusicState = atom<MusicFormProps>({
   key: "currentMusicStateData",
   default: {
     date: "",

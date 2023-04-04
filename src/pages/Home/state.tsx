@@ -1,18 +1,50 @@
+import { MusicFormProps } from "components/AddMusic/interface";
 import { atom } from "recoil";
 
-// export const myMusicPlayListState = atom({
-//   key: "myMusicPlayListStateData",
-//   default: [],
-// });
-
-export const musicLikeCountToptenState = atom({
+export const musicLikeCountToptenState = atom<MusicFormProps[]>({
   key: "musicLikeCountToptenStateData",
-  default: [],
+  default: [
+    {
+      date: "",
+      displayName: "",
+      downloadClickList: [],
+      downloadCount: 0,
+      email: "",
+      explanation: "",
+      genre: "",
+      id: 0,
+      img: "",
+      likeCount: 0,
+      likedClickList: [],
+      mp3: "",
+      singer: "",
+      title: "",
+      url: "",
+    },
+  ],
 });
 
-export const musicNewDataListState = atom({
+export const musicNewDataListState = atom<MusicFormProps[]>({
   key: "musicNewDataListStateData",
-  default: [],
+  default: [
+    {
+      date: "",
+      displayName: "",
+      downloadClickList: [],
+      downloadCount: 0,
+      email: "",
+      explanation: "",
+      genre: "",
+      id: 0,
+      img: "",
+      likeCount: 0,
+      likedClickList: [],
+      mp3: "",
+      singer: "",
+      title: "",
+      url: "",
+    },
+  ],
 });
 
 export const artistLikeCountToptenState = atom({

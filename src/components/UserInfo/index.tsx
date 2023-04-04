@@ -9,9 +9,10 @@ import { UserInfoProps } from "./interface";
 import { UserInfoContainer } from "./style";
 import { useMutation, useQueryClient } from "react-query";
 import { userApi } from "common/api/user";
+import { UserProps } from "components/Login/interface";
 
 const UserInfo = ({ className }: UserInfoProps) => {
-  const [user, setUser] = useRecoilState<any>(userInfo);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
 
   const [form, setForm] = useState<any>({
     photoURL: user?.photoURL,

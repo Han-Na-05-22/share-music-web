@@ -19,14 +19,18 @@ import {
   musicNewDataListState,
   musicLikeCountToptenState,
 } from "./state";
+import { UserProps } from "components/Login/interface";
+import { MusicFormProps } from "components/AddMusic/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const Home = () => {
-  const [musicLikeCountTopten, setMusicLikeCountTopten] = useRecoilState<any>(
-    musicLikeCountToptenState
-  );
-  const [musicNewDataList, setMusicNewDataList] = useRecoilState<any>(
-    musicNewDataListState
-  );
+  const [musicLikeCountTopten, setMusicLikeCountTopten] = useRecoilState<
+    MusicFormProps[]
+  >(musicLikeCountToptenState);
+
+  const [musicNewDataList, setMusicNewDataList] = useRecoilState<
+    MusicFormProps[]
+  >(musicNewDataListState);
   const [artistLikeCountTopten, setArtistLikeCountTopten] = useRecoilState<any>(
     artistLikeCountToptenState
   );
@@ -34,12 +38,13 @@ const Home = () => {
   const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
     useRecoilState<any>(artistDownloadCountToptenState);
 
-  const [user, setUser] = useRecoilState<any>(userInfo);
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
-    useRecoilState<any>(musicDetailState);
+    useRecoilState<MusicFormProps>(musicDetailState);
 
   const settings = {
     dots: false,
@@ -63,24 +68,27 @@ const Home = () => {
     if (musicList) {
       setMusicLikeCountTopten(
         musicList
-          ?.filter((item: any, idx: number) => idx < 10 && item)
-          ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
+          ?.filter((item: MusicFormProps, idx: number) => idx < 10 && item)
+          ?.sort(
+            (a: MusicFormProps, b: MusicFormProps) =>
+              b?.likeCount - a?.likeCount
+          )
       );
 
       setMusicNewDataList(
         musicList
-          ?.filter((item: any, idx: number) => idx < 10 && item)
-          ?.sort((a: any, b: any) => b?.date - a?.date)
+          ?.filter((item: MusicFormProps, idx: number) => idx < 10 && item)
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date)
       );
 
       setArtistLikeCountTopten([
         musicList?.reduce(function (
           accumulator: any,
           currentValue: {
-            email?: any;
-            likeCount?: any;
-            img?: any;
-            displayName?: any;
+            email: string;
+            likeCount: number;
+            img: string;
+            displayName: string;
           }
         ) {
           const count = accumulator[currentValue?.displayName]?.likeCount || 0;
@@ -101,10 +109,10 @@ const Home = () => {
         musicList?.reduce(function (
           accumulator: any,
           currentValue: {
-            email?: any;
-            downloadCount?: any;
-            img?: any;
-            displayName?: any;
+            email: string;
+            downloadCount: number;
+            img: string;
+            displayName: string;
           }
         ) {
           const count = accumulator[currentValue?.email]?.downloadCount || 0;
@@ -132,7 +140,7 @@ const Home = () => {
 
           <Slider {...settings}>
             {musicList?.length !== 0 &&
-              musicList?.map((item: any, idx: number) => (
+              musicList?.map((item: MusicFormProps, idx: number) => (
                 <div
                   key={idx}
                   className="slider-list"
@@ -161,7 +169,7 @@ const Home = () => {
             <h3>New</h3>
             <ul>
               {musicList?.length !== 0 &&
-                musicNewDataList?.map((item: any, idx: number) => (
+                musicNewDataList?.map((item: MusicFormProps, idx: number) => (
                   <li
                     key={idx}
                     className="new-list list"
@@ -193,36 +201,38 @@ const Home = () => {
             <h3>Top</h3>
             <ul>
               {musicList?.length !== 0 &&
-                musicLikeCountTopten?.map((item: any, idx: number) => (
-                  <li
-                    key={idx}
-                    className="top-list list"
-                    onClick={() => {
-                      !user?.email
-                        ? alert("로그인 후 이용해주세요")
-                        : setIsDetailData({
-                            isDetail: true,
-                            isLocation: "home",
-                          });
-                      setMusicDetailData(item);
-                    }}
-                  >
-                    <span className="order">{idx + 1}</span>
-                    <div className="img-container">
-                      <img src={item?.img} alt="" />
-                    </div>
+                musicLikeCountTopten?.map(
+                  (item: MusicFormProps, idx: number) => (
+                    <li
+                      key={idx}
+                      className="top-list list"
+                      onClick={() => {
+                        !user?.email
+                          ? alert("로그인 후 이용해주세요")
+                          : setIsDetailData({
+                              isDetail: true,
+                              isLocation: "home",
+                            });
+                        setMusicDetailData(item);
+                      }}
+                    >
+                      <span className="order">{idx + 1}</span>
+                      <div className="img-container">
+                        <img src={item?.img} alt="" />
+                      </div>
 
-                    <div className="music-name">
-                      <strong>{item?.title}</strong>-
-                      <strong className="singer">{item?.singer}</strong>
-                    </div>
-                    <span className="genre">{item?.genre}</span>
-                    <div className="like-count">
-                      <SVG src="/svg/heart.svg" />
-                      <span>{item?.likeCount}</span>
-                    </div>
-                  </li>
-                ))}
+                      <div className="music-name">
+                        <strong>{item?.title}</strong>-
+                        <strong className="singer">{item?.singer}</strong>
+                      </div>
+                      <span className="genre">{item?.genre}</span>
+                      <div className="like-count">
+                        <SVG src="/svg/heart.svg" />
+                        <span>{item?.likeCount}</span>
+                      </div>
+                    </li>
+                  )
+                )}
             </ul>
           </div>
         </section>

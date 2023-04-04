@@ -2,7 +2,7 @@ import Button from "components/Button";
 import Overlay from "components/Overlay";
 import Record from "components/Record";
 import { useRecoilState } from "recoil";
-import { MusicDetailProps } from "./interface";
+import { MusicDetailProps, MusicDetailStateProps } from "./interface";
 import { isMusicDetailState } from "./state";
 import { MusicDetailContainer } from "./style";
 
@@ -13,7 +13,7 @@ const MusicDetail = ({
   detailData,
 }: MusicDetailProps) => {
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
 
   return (
     <Overlay>

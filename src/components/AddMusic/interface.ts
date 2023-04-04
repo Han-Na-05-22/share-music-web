@@ -22,15 +22,15 @@ export interface AddMusicFormProps {
   uniqueKey: any;
 }
 
-interface editMusicDownloadListPrpsp {
+export interface MusicCountListProps {
   email?: string;
   updateTiem?: any;
 }
 
-export interface editMusicFormProps {
+export interface MusicFormProps {
   date?: any;
   displayName: string;
-  downloadClickList: editMusicDownloadListPrpsp[];
+  downloadClickList: MusicCountListProps[];
   downloadCount: number;
   email: string;
   explanation: string;
@@ -38,7 +38,7 @@ export interface editMusicFormProps {
   id: number;
   img: string;
   likeCount: number;
-  likedClickList: editMusicDownloadListPrpsp[];
+  likedClickList: MusicCountListProps[];
   mp3: string;
   singer: string;
   title: string;

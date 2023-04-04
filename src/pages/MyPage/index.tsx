@@ -16,17 +16,21 @@ import { currentMusicState } from "components/Record/state";
 import UserInfo from "components/UserInfo";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
+import { UserProps } from "components/Login/interface";
+import { MusicFormProps } from "components/AddMusic/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const MyPage = () => {
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<any>(musicDetailState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
-    useRecoilState<any>(currentMusicState);
-  const [user, setUser] = useRecoilState<any>(userInfo);
+    useRecoilState<MusicFormProps>(currentMusicState);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;

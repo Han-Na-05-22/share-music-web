@@ -4,17 +4,15 @@ import SVG from "react-inlinesvg";
 import { useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import {
-  isMusicDetailState,
-  musicDetailState,
-} from "components/MusicDetail/state";
 import { useRecoilState } from "recoil";
 import moment from "moment";
 import { userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
-import { selectFilterState } from "pages/MusicTable/state";
 import { musicApi } from "common/api/music";
 import { useMutation, useQueryClient } from "react-query";
+import { UserProps } from "components/Login/interface";
+import { MusicFormProps } from "components/AddMusic/interface";
+import { musicDetailState } from "components/MusicDetail/state";
 
 const Record = ({
   className,
@@ -22,11 +20,12 @@ const Record = ({
   height = "100%",
   onClick,
 }: RecordProps) => {
-  const [user, setUser] = useRecoilState<any>(userInfo);
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [user, setUser] = useRecoilState<UserProps>(userInfo);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
   const quertyClient = useQueryClient();
   const [musicDetailData, setMusicDetailData] =
-    useRecoilState<any>(musicDetailState);
+    useRecoilState<MusicFormProps>(musicDetailState);
 
   const { mutate: updateMusicLikeCount } = useMutation(
     () =>

@@ -5,11 +5,7 @@ import Textarea from "components/Textarea";
 import TextInput from "components/TextInput";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import {
-  AddMusicFormProps,
-  AddMusicProps,
-  editMusicFormProps,
-} from "./interface";
+import { AddMusicFormProps, AddMusicProps, MusicFormProps } from "./interface";
 import { checkEditMusicState, musicListState, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
@@ -20,11 +16,12 @@ import moment from "moment";
 import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
 import imageCompression from "browser-image-compression";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 import { auth } from "service/firebase";
 import { isMusicDetailState } from "components/MusicDetail/state";
 import { UserProps } from "components/Login/interface";
+import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -47,9 +44,10 @@ const AddMusic = ({
   width = "1150px",
   height = "780px",
 }: AddMusicProps) => {
-  const [musicList, setMusicList] = useRecoilState<any>(musicListState);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
   const [currentMusic, setCurrentMusic] =
-    useRecoilState<editMusicFormProps>(currentMusicState);
+    useRecoilState<MusicFormProps>(currentMusicState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
   const [form, setForm] = useState<AddMusicFormProps>({
@@ -65,12 +63,11 @@ const AddMusic = ({
     date: moment().format("YYYY-MM-DD HH:mm:ss"),
   });
 
-  console.log("currentMusic", currentMusic);
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<string>("none");
   const [isDetailData, setIsDetailData] =
-    useRecoilState<any>(isMusicDetailState);
+    useRecoilState<MusicDetailStateProps>(isMusicDetailState);
 
   const handleChangeSelect = (event: any) => {
     const { name } = event.target;
