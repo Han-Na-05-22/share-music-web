@@ -73,7 +73,9 @@ const UserInfo = ({ className }: UserInfoProps) => {
           <ProfileImg
             name="photoURL"
             file={form?.photoURL}
-            onChange={(e) => handleChangeImg(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeImg(e)
+            }
             onClickDelete={() => userFunction?.deleteImg(setForm, "photoURL")}
           />
         </div>
@@ -83,7 +85,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             name="name"
             value={form?.name}
             label="이름"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 name: e.target.value,
@@ -95,7 +97,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             name="email"
             value={user?.email?.split("@")[0]}
             label="아이디"
-            onChange={(e) => {}}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
           ></TextInput>
           <TextInput
             name="phoneNumber"
@@ -103,7 +105,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             width="100%"
             value={form?.phoneNumber}
             label="휴대폰"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 phoneNumber: e.target.value,
@@ -117,7 +119,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             type="text"
             value={form?.displayName}
             label="닉네임"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 displayName: e.target.value,
@@ -129,12 +131,8 @@ const UserInfo = ({ className }: UserInfoProps) => {
         <Button
           className="my-info-submit"
           btnType="submit"
-          onClick={(e: any) => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             handleSubmit(e);
-            // usersListData?.find((item: any) => item?.email === form?.email)
-            //   ?.displayName === form?.displayName
-            //   ? alert("이미 사용중인 닉네임 입니다.")
-            //   : handleSubmit(e);
           }}
         >
           수정

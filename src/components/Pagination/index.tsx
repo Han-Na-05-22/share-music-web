@@ -9,6 +9,7 @@ const Pagination = ({
   limit,
   page = 1,
   setPage,
+  onCheckedBtn,
   handleChangePage,
 }: PaginationProps) => {
   const numPages = total && limit ? Math?.ceil(total / limit) : 0;
@@ -27,7 +28,10 @@ const Pagination = ({
   return (
     <PaginationContainer>
       <SquareButton
-        onClick={() => setPage(page - 1)}
+        onClick={() => {
+          setPage(page - 1);
+          onCheckedBtn();
+        }}
         disabled={page === 1}
         className="prev-btn"
       >
@@ -39,7 +43,10 @@ const Pagination = ({
         ?.map((_: any, idx: number) => (
           <SquareButton
             key={idx + 1}
-            onClick={() => setPage(idx + 1)}
+            onClick={() => {
+              setPage(idx + 1);
+              onCheckedBtn();
+            }}
             className={idx + 1 === page ? "btn-num-active" : "btn-num"}
             active={idx + 1 === page}
           >
@@ -48,7 +55,10 @@ const Pagination = ({
         ))}
 
       <SquareButton
-        onClick={() => setPage(page + 1)}
+        onClick={() => {
+          onCheckedBtn();
+          setPage(page + 1);
+        }}
         disabled={page === numPages}
         className="next-btn"
       >

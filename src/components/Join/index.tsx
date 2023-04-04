@@ -155,7 +155,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             isError={isClicked && form?.name?.length === 0}
             errorMsg={"이름을 입력해주세요."}
             label="이름"
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 name: e.target.value,
@@ -171,7 +171,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             errorMsg={
               "아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."
             }
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 email: e.target.value,
@@ -195,7 +195,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           }
           value={form?.password}
           label="비밀번호"
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setForm({
               ...form,
               password: e.target.value,
@@ -215,7 +215,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           }
           errorMsg={"비밀번호가 같지 않습니다."}
           label="비밀번호 확인"
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setForm({
               ...form,
               rePassword: e.target.value,
@@ -232,7 +232,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             label="휴대폰"
             isError={isClicked && !phoneRegex?.test(form?.phoneNumber)}
             errorMsg={"하이픈을 포함한 숫자 11자리를 입력해주세요."}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 phoneNumber: e.target.value,
@@ -248,7 +248,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             label="닉네임"
             isError={isClicked && form?.displayName?.length === 0}
             errorMsg={"닉네임을 입력해주세요."}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setForm({
                 ...form,
                 displayName: e.target.value,

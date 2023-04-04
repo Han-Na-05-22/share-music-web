@@ -107,7 +107,7 @@ const MyPage = () => {
                     setMusicDetailData(item);
                   }}
                 >
-                  <td>{idx + 1}</td>
+                  <td>{page === 1 ? idx + 1 : idx + 1 + (page - 1) * 10}</td>
                   <td>
                     <img src={item?.img} alt="" />
                   </td>
@@ -116,7 +116,9 @@ const MyPage = () => {
                   <td>
                     <SVG
                       src="/svg/term_edit.svg"
-                      onClick={async (e) => {
+                      onClick={async (
+                        e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                      ) => {
                         e.stopPropagation();
                         setCurrentMusic(item);
                         setIsDetailData({
@@ -130,7 +132,9 @@ const MyPage = () => {
                   <td>
                     <SVG
                       src="/svg/term_delete.svg"
-                      onClick={async (e) => {
+                      onClick={async (
+                        e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                      ) => {
                         e.stopPropagation();
                         await setMusicDetailData(item);
                         await deleteMusic(item);
@@ -146,7 +150,10 @@ const MyPage = () => {
           <p className="no-data">등록된 데이터가 없습니다.</p>
         )}
         <Pagination
-          total={musicList?.length}
+          total={
+            musicList?.filter((i: MusicFormProps) => i?.email === user?.email)
+              ?.length
+          }
           limit={limit}
           page={page}
           setPage={setPage}

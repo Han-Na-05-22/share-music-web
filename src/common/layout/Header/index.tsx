@@ -121,7 +121,7 @@ const Header = () => {
               selectData={GenreListAll}
               name="genre"
               value={filterGenre}
-              onChange={async (event: any) => {
+              onChange={async (event: React.ChangeEvent<HTMLSelectElement>) => {
                 await setFilterGenre(
                   event.target.options[event.target.selectedIndex].value
                 );
@@ -137,7 +137,7 @@ const Header = () => {
               name="search"
               value={search}
               placeholder="노래 제목을 입력해주세요."
-              onChange={(e: any) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.preventDefault();
                 setSearch(e.target.value);
               }}

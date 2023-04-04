@@ -4,4 +4,5 @@ export interface PaginationProps {
   page?: number;
   setPage?: any;
   handleChangePage?: (page: any) => void | undefined;
+  onCheckedBtn?: any;
 }

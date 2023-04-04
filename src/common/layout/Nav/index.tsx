@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { NavContainer } from "./style";
 import { useRecoilState } from "recoil";
 import { navState } from "./state";
-import { selectFilterState } from "pages/MusicTable/state";
+import { addMusicPlayerState, selectFilterState } from "pages/MusicTable/state";
 import { filterGenreState, searchInputState } from "components/TextInput/state";
 
 const Nav = () => {
@@ -16,12 +16,13 @@ const Nav = () => {
   const [search, setSearch] = useRecoilState<string>(searchInputState);
   const [filterGenre, setFilterGenre] =
     useRecoilState<string>(filterGenreState);
-
+  const [addMusicPlayer, setAddMusicPlayer] =
+    useRecoilState<any[]>(addMusicPlayerState);
   return (
     <NavContainer>
       {navData?.map((item: any, idx: number) => (
         <div
-          onClick={async (e: any) => {
+          onClick={async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
             await setNavData(
               navData?.map((p) =>
                 p.name === item?.name
@@ -32,6 +33,7 @@ const Nav = () => {
             await setSelectFilter(item?.name);
             setSearch("");
             setFilterGenre("All");
+            setAddMusicPlayer([]);
             navigate(`${item?.nav}`);
           }}
           key={idx}

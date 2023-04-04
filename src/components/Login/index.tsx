@@ -87,7 +87,7 @@ const Login = ({ className }: LoginProps) => {
           label="Email"
           isError={!emailRegex?.test(form?.email) && isClicked}
           errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setForm({
               ...form,
               email: e.target.value,
@@ -107,7 +107,7 @@ const Login = ({ className }: LoginProps) => {
           }
           value={form?.password}
           label="Password"
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setForm({
               ...form,
               password: e.target.value,

@@ -9,7 +9,7 @@ export const MusicTableContainer = styled.div`
   height: 100%;
   padding: 200px 40px;
   position: relative;
-  border: 2px solid red;
+
   .my-info-submit {
     position: absolute;
     top: 110px;
@@ -21,12 +21,15 @@ export const MusicTableContainer = styled.div`
     height: 100%;
     background-color: ${({ theme }) => theme.colors.BgHover};
     border-radius: 10px;
-    border: 2px solid blue;
     padding-bottom: 60px;
 
     div {
       box-shadow: none;
       width: 100%;
+
+      &:nth-child(1) {
+        min-height: 100%;
+      }
 
       &:nth-child(2) {
         bottom: -15px;
@@ -99,6 +102,7 @@ export const MusicTableContainer = styled.div`
 
   @media screen and (max-width: 1660px) {
     .tabel-container {
+      padding: 0px 40px 60px;
       & > div {
         padding: 0px;
       }
@@ -153,6 +157,9 @@ export const MusicTableContainer = styled.div`
   }
 
   @media screen and (max-width: 950px) {
+    .tabel-container {
+      padding: 0px 20px 60px;
+    }
     thead,
     tbody {
       tr {
@@ -161,6 +168,7 @@ export const MusicTableContainer = styled.div`
         td {
           &:first-child {
             div {
+              line-height: 25px;
               label {
                 width: 15px;
                 height: 15px;
@@ -185,7 +193,7 @@ export const MusicTableContainer = styled.div`
     flex-direction: column;
     color: ${({ theme }) => theme.colors.BlackColor};
     height: 100%;
-    padding: 200px 0px;
+    padding: 200px 20px;
     position: relative;
 
     .my-info-submit {
@@ -204,6 +212,10 @@ export const MusicTableContainer = styled.div`
 
             &:first-child {
               width: 40px;
+
+              div {
+                line-height: 30px;
+              }
             }
 
             &:nth-child(2) {

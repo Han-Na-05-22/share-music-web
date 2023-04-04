@@ -94,7 +94,7 @@ const Record = ({
                   ? "heart"
                   : "/term_heart"
               }.svg`}
-              onClick={(e: any) => {
+              onClick={(e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>) => {
                 if (musicDetailData?.email !== user?.email) {
                   e.preventDefault();
                   updateMusicLikeCount();
@@ -129,7 +129,9 @@ const Record = ({
                   ? "download"
                   : "term_download"
               }.svg`}
-              onClick={async (e: any) => {
+              onClick={async (
+                e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+              ) => {
                 if (musicDetailData?.email !== user?.email) {
                   e.preventDefault();
                   updateMusicDownloadCount();
@@ -147,8 +149,9 @@ const Record = ({
 
             <strong>
               {
-                musicList?.find((item: any) => item?.id === musicDetailData?.id)
-                  ?.downloadCount
+                musicList?.find(
+                  (item: MusicFormProps) => item?.id === musicDetailData?.id
+                )?.downloadCount
               }
             </strong>
           </div>

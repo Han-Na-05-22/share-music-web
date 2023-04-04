@@ -292,6 +292,11 @@ export const HomeContainer = styled.div`
             .music-name {
               width: 45%;
               margin: 0px 10px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
               strong {
               }
             }
@@ -299,6 +304,10 @@ export const HomeContainer = styled.div`
             .genre {
               width: 15%;
               margin-right: 10px;
+            }
+
+            .date {
+              width: 30%;
             }
           }
         }

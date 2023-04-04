@@ -282,7 +282,9 @@ const Home = () => {
                       idx < 10 && (
                         <tr
                           key={idx}
-                          onClick={(e: any) => {
+                          onClick={(
+                            e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                          ) => {
                             e.stopPropagation();
                           }}
                         >
@@ -339,7 +341,9 @@ const Home = () => {
                       idx < 10 && (
                         <tr
                           key={idx}
-                          onClick={(e: any) => {
+                          onClick={(
+                            e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                          ) => {
                             e.stopPropagation();
                           }}
                         >

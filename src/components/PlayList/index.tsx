@@ -57,7 +57,9 @@ const PlayList = ({
                 <SVG
                   src="/svg/prev.svg"
                   className="prev-btn btn"
-                  onClick={(e: any) => {
+                  onClick={(
+                    e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                  ) => {
                     e.stopPropagation();
                     idx === 0
                       ? setIdx(playListData?.length - 1)
@@ -90,7 +92,9 @@ const PlayList = ({
                 <SVG
                   src="/svg/next.svg"
                   className="next-btn btn"
-                  onClick={(e: any) => {
+                  onClick={(
+                    e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                  ) => {
                     e.stopPropagation();
 
                     playListData?.length - 1 === idx

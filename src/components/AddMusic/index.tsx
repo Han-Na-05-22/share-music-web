@@ -258,7 +258,7 @@ const AddMusic = ({
                 file={form?.img}
                 isError={isClicked && form?.img?.length === 0}
                 errMsg={"이미지를 등록해 주세요."}
-                onChange={(e) => {
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   handleChangeMusicImg(e);
                 }}
                 onClickDelete={() => userFunction?.deleteImg(setForm, "img")}
@@ -293,7 +293,9 @@ const AddMusic = ({
                   className="add-mp3-input"
                   value={undefined}
                   label="음원등록"
-                  onChange={(e) => handleChangeMusicImg(e)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleChangeMusicImg(e)
+                  }
                 ></TextInput>
               </>
             ) : (
@@ -317,7 +319,7 @@ const AddMusic = ({
                 isClicked && isEdit !== "edit" && form?.title?.length === 0
               }
               errorMsg={"제목을 입력해주세요."}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangeInput(e);
               }}
             ></TextInput>
@@ -330,7 +332,7 @@ const AddMusic = ({
                 isClicked && isEdit !== "edit" && form?.singer?.length === 0
               }
               errorMsg={"가수명을 입력해주세요."}
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleChangeInput(e);
               }}
             ></TextInput>
@@ -350,7 +352,7 @@ const AddMusic = ({
                   ? form?.explanation
                   : currentMusic?.explanation
               }
-              onChange={(e) => {
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 handleChangeInput(e);
               }}
             ></Textarea>
