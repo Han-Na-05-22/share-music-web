@@ -5,11 +5,13 @@ import { HeaderContainer, SimplePrpfileContainer } from "./style";
 import { useNavigate } from "react-router-dom";
 import { loginState, userInfo } from "components/Login/state";
 import TextInput from "components/TextInput";
-import { searchInputState } from "components/TextInput/state";
-import { filterMusicListState } from "pages/MusicTable/state";
+import { filterGenreState, searchInputState } from "components/TextInput/state";
+import {
+  filterMusicListState,
+  selectFilterState,
+} from "pages/MusicTable/state";
 import BasicSelect from "components/BasicSelect";
 import { GenreListAll } from "utility/data";
-import { useState } from "react";
 import Join from "components/Join";
 import Overlay from "components/Overlay";
 import Login from "components/Login";
@@ -33,6 +35,8 @@ const Header = () => {
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const iconLogo = faHeadphonesSimple as IconProp;
   const [search, setSearch] = useRecoilState<string>(searchInputState);
+  const [filterGenre, setFilterGenre] =
+    useRecoilState<string>(filterGenreState);
   const [loginStateDate, setLoginStateDate] =
     useRecoilState<LoginStateProps>(loginState);
   const [musicList, setMusicList] =
@@ -41,11 +45,11 @@ const Header = () => {
 
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [navData, setNavData] = useRecoilState<any[]>(navState);
-
+  const [selectFilter, setSelectFilter] =
+    useRecoilState<string>(selectFilterState);
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<MusicFormProps[]>(filterMusicListState);
   const iconMyMusic = faRecordVinyl as IconProp;
-  const [filterGenre, setFilterGenre] = useState<string>("All");
 
   const handleChangeSelect = async (isSelected?: any) => {
     if (search?.length === 0 && isSelected === "All") {
@@ -145,10 +149,20 @@ const Header = () => {
               className="my-info-submit"
               btnType="submit"
               onClick={async (e) => {
-                await handleChangeSelect(filterGenre);
+                // await handleChangeSelect(filterGenre);
 
                 search === ""
-                  ? alert("노래 제목을 입력해주세요.")
+                  ? setFilterMusicList(
+                      musicList?.filter((item: MusicFormProps) => {
+                        if (item?.genre === filterGenre) {
+                          return item;
+                        }
+
+                        if (filterGenre === "All") {
+                          return item;
+                        }
+                      })
+                    )
                   : setFilterMusicList(
                       musicList?.filter((item: MusicFormProps) => {
                         if (filterGenre === "All") {
@@ -161,7 +175,8 @@ const Header = () => {
                         }
                       })
                     );
-                search !== "" && navigate("/musicTable");
+                setSelectFilter("search");
+                navigate("/musicTable");
               }}
             >
               검색

@@ -22,6 +22,7 @@ import { auth } from "service/firebase";
 import { isMusicDetailState } from "components/MusicDetail/state";
 import { UserProps } from "components/Login/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
+import { userFunction } from "common/api/user";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -155,13 +156,6 @@ const AddMusic = ({
     }
   };
 
-  const deleteImg = () => {
-    setForm({
-      ...form,
-      img: "",
-    });
-  };
-
   const queryClient = useQueryClient();
 
   const { mutate: addStorageMusic } = useMutation(
@@ -182,8 +176,9 @@ const AddMusic = ({
         queryClient.invalidateQueries("getMusicAllDataList");
         setIsClicked(false);
         setTimeout(function () {
+          console.log("실행됨!");
           queryClient.invalidateQueries("getMusicAllDataList");
-        }, 3500);
+        }, 4000);
       },
     }
   );
@@ -253,7 +248,7 @@ const AddMusic = ({
                 onChange={(e) => {
                   handleChangeMusicImg(e);
                 }}
-                onClickDelete={deleteImg}
+                onClickDelete={() => userFunction?.deleteImg(setForm, "img")}
               />
             ) : (
               <img src={currentMusic?.img} alt="" />

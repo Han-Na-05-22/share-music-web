@@ -8,7 +8,7 @@ import MyPage from "pages/MyPage";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
 import { useQuery } from "react-query";
@@ -22,9 +22,11 @@ import {
   MusicFormProps,
 } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
+import { navState } from "common/layout/Nav/state";
 
 function App() {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
+  const [navData, setNavData] = useRecoilState<any[]>(navState);
   const [userAll, setUserAll] = useRecoilState<UserProps[]>(allUserInfo);
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
@@ -32,7 +34,7 @@ function App() {
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<MusicFormProps[]>(myMusicPlayListState);
-
+  const navigate = useNavigate();
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
     "getUserAllList",
     userApi?.getUserAllDataList()
@@ -101,6 +103,16 @@ function App() {
       );
     }
   }, [musicList]);
+
+  useEffect(() => {
+    navigate(
+      navData?.find((i: any) => {
+        if (i?.name === "Home" && i?.isClicked) {
+          return i;
+        }
+      })?.nav
+    );
+  }, []);
 
   return (
     <div className="App">

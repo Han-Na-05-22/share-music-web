@@ -19,7 +19,7 @@ const CheckBox = ({
         name={name}
         id={name}
         value={value}
-        checked={checked}
+        checked={checked || false}
       />
       <label
         htmlFor={name}

@@ -50,7 +50,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
   }
   @media screen and (max-width: 1660px) {
     width: 300px;
-    height: 700px;
+    height: 600px;
     padding: 20px 40px;
 
     .user-infos {
@@ -58,7 +58,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       gap: 10px 0px;
       .users {
         flex-direction: column;
-        gap: 0px 30px;
+        gap: 0px 15px;
       }
 
       .user-img {
@@ -79,8 +79,8 @@ export const JoinContainer = styled.div<JoinStyleProps>`
             top: -5px;
             right: 0px;
             transform: translate(0%);
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
           }
         }
       }
@@ -90,7 +90,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
 
       input {
         width: 225px;
-        height: 35px;
+        height: 30px;
         border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
 
         &:hover,
@@ -100,7 +100,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       }
       .user-name-id {
         div {
-          margin-bottom: 25px;
+          margin-bottom: 10px;
 
           &:last-child {
             margin-bottom: 0;
@@ -111,7 +111,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       .user-phone-displayName {
         & > div {
           &:first-child {
-            margin-bottom: 25px;
+            margin-bottom: 10px;
           }
         }
       }
@@ -122,8 +122,8 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       gap: 0px 10px;
 
       button {
-        width: 75px;
-        height: 35px;
+        width: 70px;
+        height: 30px;
 
         span {
           font-size: 14px;

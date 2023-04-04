@@ -42,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .no-data {
-    color:#6C6A6A;
+    color:#fff;
     position: absolute;
     top:50%;
     left:50%;

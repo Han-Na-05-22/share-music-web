@@ -34,7 +34,7 @@ const Home = () => {
   const [artistLikeCountTopten, setArtistLikeCountTopten] = useRecoilState<any>(
     artistLikeCountToptenState
   );
-  console.log("userAll", userAll);
+
   const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
     useRecoilState<any>(artistDownloadCountToptenState);
 
@@ -131,7 +131,7 @@ const Home = () => {
       ]);
     }
   }, [musicList]);
-  console.log("musicLikeCountTopten", musicList);
+
   return (
     <HomeContainer>
       <>
@@ -139,33 +139,36 @@ const Home = () => {
           <h3>Recommend</h3>
 
           <Slider {...settings}>
-            {musicList[0].email !== "" ? (
-              musicList?.map((item: MusicFormProps, idx: number) => (
-                <div
-                  key={idx}
-                  className="slider-list"
-                  onClick={() => {
-                    !user?.email
-                      ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData({
-                          isDetail: true,
-                          isLocation: "home",
-                        });
-                    setMusicDetailData(item);
-                  }}
-                >
-                  <img src={item?.img} alt="" />
+            {musicList[0].email !== "" &&
+              musicList?.map(
+                (item: MusicFormProps, idx: number) =>
+                  idx < 10 && (
+                    <div
+                      key={idx}
+                      className="slider-list"
+                      onClick={() => {
+                        !user?.email
+                          ? alert("로그인 후 이용해주세요")
+                          : setIsDetailData({
+                              isDetail: true,
+                              isLocation: "home",
+                            });
+                        setMusicDetailData(item);
+                      }}
+                    >
+                      <img src={item?.img} alt="" />
 
-                  <div className="music-content">
-                    <span>{item?.title}</span>
-                    <span className="singer">{item?.singer}</span>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p className="no-data">데이터가 없습니다.</p>
-            )}
+                      <div className="music-content">
+                        <span>{item?.title}</span>
+                        <span className="singer">{item?.singer}</span>
+                      </div>
+                    </div>
+                  )
+              )}
           </Slider>
+          {musicList[0].email === "" && (
+            <p className="no-recommend-data">데이터가 없습니다.</p>
+          )}
         </section>
         <section className="new-top-tables">
           <div className="new-slider">
@@ -252,7 +255,7 @@ const Home = () => {
 
         <section className="artist-slider">
           <div className="tabel-container">
-            <h4>Top Artist Like Count</h4>
+            <h4>⭐️ Top10 Artist Like</h4>
             <Tabel
               theadData={[
                 {
@@ -270,27 +273,35 @@ const Home = () => {
               ]}
             >
               {userAll?.length !== 0 &&
+              musicList[0]?.email !== "" &&
               artistLikeCountTopten[0] !== undefined ? (
                 Object?.values(artistLikeCountTopten[0])
                   ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
-                  ?.map((item: any, idx: number) => (
-                    <tr
-                      key={idx}
-                      onClick={(e: any) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <td>{idx + 1}</td>
-                      <td>
-                        <img src={item?.img} alt="" />
-                      </td>
-                      <td>{item?.displayName}</td>
-                      <td>{item?.likeCount}</td>
-                    </tr>
-                  ))
+                  ?.map(
+                    (item: any, idx: number) =>
+                      idx < 10 && (
+                        <tr
+                          key={idx}
+                          onClick={(e: any) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <td>{idx + 1}</td>
+                          <td>
+                            <img src={item?.img} alt="" />
+                          </td>
+                          <td>{item?.displayName}</td>
+                          <td>{item?.likeCount}</td>
+                        </tr>
+                      )
+                  )
                   ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
               ) : (
-                <p className="no-data">데이터가 없습니다.</p>
+                <tr>
+                  <td>
+                    <p className="no-data">데이터가 없습니다.</p>
+                  </td>
+                </tr>
               )}
             </Tabel>
             {(musicList?.length === 0 || musicList === undefined) && (
@@ -298,7 +309,7 @@ const Home = () => {
             )}
           </div>
           <div className="tabel-container">
-            <h4>Top Artist Download Count</h4>
+            <h4>⭐️ Top10 Artist Download</h4>
             <Tabel
               theadData={[
                 {
@@ -317,29 +328,37 @@ const Home = () => {
               ]}
             >
               {userAll?.length !== 0 &&
+              musicList[0]?.email !== "" &&
               artistDownloadCountTopten[0] !== undefined ? (
                 Object?.values(artistDownloadCountTopten[0])
                   ?.sort(
                     (a: any, b: any) => b?.downloadCount - a?.downloadCount
                   )
-                  ?.map((item: any, idx: number) => (
-                    <tr
-                      key={idx}
-                      onClick={(e: any) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <td>{idx + 1}</td>
-                      <td>
-                        <img src={item?.img} alt="" />
-                      </td>
-                      <td>{item?.displayName}</td>
-                      <td>{item?.downloadCount}</td>
-                    </tr>
-                  ))
+                  ?.map(
+                    (item: any, idx: number) =>
+                      idx < 10 && (
+                        <tr
+                          key={idx}
+                          onClick={(e: any) => {
+                            e.stopPropagation();
+                          }}
+                        >
+                          <td>{idx + 1}</td>
+                          <td>
+                            <img src={item?.img} alt="" />
+                          </td>
+                          <td>{item?.displayName}</td>
+                          <td>{item?.downloadCount}</td>
+                        </tr>
+                      )
+                  )
                   ?.sort((a: any, b: any) => b?.date - a?.date)
               ) : (
-                <p className="no-data">데이터가 없습니다.</p>
+                <tr>
+                  <td>
+                    <p className="no-data">데이터가 없습니다.</p>
+                  </td>
+                </tr>
               )}
             </Tabel>
             {(musicList?.length === 0 || musicList === undefined) && (

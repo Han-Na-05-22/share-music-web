@@ -30,3 +30,9 @@ export const userApi = {
     });
   },
 };
+
+export const userFunction = {
+  deleteImg: (setForm: any, name: any) => {
+    setForm((prev: any) => ({ ...prev, [name]: "" }));
+  },
+};

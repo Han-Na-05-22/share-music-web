@@ -8,7 +8,7 @@ import { auth } from "service/firebase";
 import { UserInfoProps } from "./interface";
 import { UserInfoContainer } from "./style";
 import { useMutation, useQueryClient } from "react-query";
-import { userApi } from "common/api/user";
+import { userApi, userFunction } from "common/api/user";
 import { UserProps } from "components/Login/interface";
 
 const UserInfo = ({ className }: UserInfoProps) => {
@@ -66,13 +66,6 @@ const UserInfo = ({ className }: UserInfoProps) => {
     }
   };
 
-  const deleteImg = () => {
-    setForm({
-      ...form,
-      photoURL: "",
-    });
-  };
-
   return (
     <UserInfoContainer className={className}>
       <div className="my-info-edit">
@@ -81,7 +74,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             name="photoURL"
             file={form?.photoURL}
             onChange={(e) => handleChangeImg(e)}
-            onClickDelete={deleteImg}
+            onClickDelete={() => userFunction?.deleteImg(setForm, "photoURL")}
           />
         </div>
         <div className="input-container">

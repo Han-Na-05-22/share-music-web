@@ -115,12 +115,14 @@ const MusicTable = () => {
     myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
       filterMusicList?.length ||
     musicList?.length === myMusicPlayList?.length;
+  console.log("selectFilter", selectFilter);
 
   useEffect(() => {
-    if (selectFilter === "MyMusic") {
+    if (selectFilter === "MyMusic" && musicList[0]?.email !== "") {
       const result = musicList?.filter(
         (item: MusicFormProps) => item?.email === user?.email
       );
+
       setFilterMusicList(result);
     }
 
@@ -146,7 +148,11 @@ const MusicTable = () => {
       setFilterMusicList(result);
     }
   }, [selectFilter, musicList, myMusicPlayList]);
-  console.log("filterMusicList", filterMusicList);
+
+  console.log(
+    'filterMusicList[0]?.email !== "" || filterMusicList?.length !== 0',
+    filterMusicList[0]?.email !== "" && filterMusicList[0]?.email !== undefined
+  );
   return (
     <MusicTableContainer>
       <Button
@@ -167,7 +173,11 @@ const MusicTable = () => {
 
       <div className="tabel-container">
         <Tabel
-          className={filterMusicList[0]?.email === "" ? "no-tabel-data" : ""}
+          className={
+            filterMusicList[0]?.email === "" || filterMusicList?.length === 0
+              ? "no-tabel-data"
+              : ""
+          }
           theadData={[
             {
               title: (
@@ -188,6 +198,7 @@ const MusicTable = () => {
                       onCheckedAllMusic();
                     }
                   }}
+                  onChange={() => {}}
                   checked={
                     (addMusicPlayer?.length + myMusicPlayList?.length ===
                       filterMusicList?.length &&
@@ -232,7 +243,9 @@ const MusicTable = () => {
             },
           ]}
         >
-          {filterMusicList[0]?.email !== "" ? (
+          {(filterMusicList[0]?.email !== "" &&
+            filterMusicList[0]?.title !== undefined) ||
+          filterMusicList?.length !== 0 ? (
             filterMusicList
               ?.slice(offset, offset + limit)
               ?.sort((a: MusicFormProps, b: MusicFormProps) => {
@@ -262,6 +275,7 @@ const MusicTable = () => {
                           ? true
                           : false
                       }
+                      onChange={() => {}}
                       onClick={async (e: any) => {
                         e.stopPropagation();
                         if (
@@ -298,7 +312,7 @@ const MusicTable = () => {
                 </tr>
               ))
           ) : (
-            <p className="no-data">등록된 데이터가 없습니다.</p>
+            <p className="no-data">데이터가 없습니다.</p>
           )}
         </Tabel>
 

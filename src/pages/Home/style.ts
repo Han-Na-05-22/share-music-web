@@ -19,6 +19,14 @@ export const HomeContainer = styled.div`
     padding: 90px 40px 110px;
     width: 100%;
     overflow: hidden;
+    position: relative;
+
+    .no-recommend-data {
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     .slick-slider {
       height: 200px;
@@ -43,6 +51,9 @@ export const HomeContainer = styled.div`
       .slick-list {
         width: 2624px;
 
+        /* .slick-track {
+          min-width: 2624px;
+        } */
         .slick-slide {
           width: 200px;
           border-radius: 10px;

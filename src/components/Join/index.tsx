@@ -13,6 +13,7 @@ import ProfileImg from "components/ProfileImg";
 import { useRecoilState } from "recoil";
 import { loginState } from "components/Login/state";
 import imageCompression from "browser-image-compression";
+import { userFunction } from "common/api/user";
 
 const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const navigate = useNavigate();
@@ -135,13 +136,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     }
   };
 
-  const deleteImg = () => {
-    setForm({
-      ...form,
-      img: "",
-    });
-  };
-
   return (
     <JoinContainer className={className} width={width} height={height}>
       <div className="user-infos">
@@ -150,7 +144,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             name="img"
             file={form.img}
             onChange={handleChangeImg}
-            onClickDelete={deleteImg}
+            onClickDelete={() => userFunction?.deleteImg(setForm, "img")}
           />
         </div>
         <div className="user-name-id users">
