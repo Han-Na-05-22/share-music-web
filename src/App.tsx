@@ -1,7 +1,7 @@
 import Container from "common/layout/Container";
 import Header from "common/layout/Header";
 import { musicListState } from "components/AddMusic/state";
-import { userInfo } from "components/Login/state";
+import { allUserInfo, userInfo } from "components/Login/state";
 import Home from "pages/Home";
 import MusicTable from "pages/MusicTable";
 import MyPage from "pages/MyPage";
@@ -25,6 +25,7 @@ import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 function App() {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
+  const [userAll, setUserAll] = useRecoilState<UserProps[]>(allUserInfo);
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
   const [isDetailData, setIsDetailData] =
@@ -66,6 +67,7 @@ function App() {
   };
 
   useEffect(() => {
+    setUserAll(UserAllList);
     if (auth?.currentUser !== null || userData) {
       setUser(
         UserAllList?.find(
@@ -86,10 +88,6 @@ function App() {
     getDownloadMusicData();
 
     if (getDownloadMusicList) {
-      console.log(
-        "getDownloadMusicListgetDownloadMusicList",
-        getDownloadMusicList
-      );
       setMyMusicPlayList(
         getDownloadMusicList?.concat(
           musicList?.filter(

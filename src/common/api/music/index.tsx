@@ -1,4 +1,8 @@
 import {
+  MusicCountListProps,
+  MusicFormProps,
+} from "components/AddMusic/interface";
+import {
   arrayRemove,
   arrayUnion,
   collection,
@@ -35,7 +39,7 @@ export const musicApi = {
     email: string,
     data: any,
     musicListData: any,
-    url: any
+    url: string
   ) => {
     const washingtonRef = doc(firestore, "music", "musicList");
 
@@ -173,7 +177,7 @@ export const musicApi = {
     musicDetailData?: any,
     user?: any
   ) => {
-    const result = musicList?.map((item: any) => {
+    const result = musicList?.map((item: MusicFormProps) => {
       if (type === "like") {
         if (item.id === musicDetailData?.id) {
           if (
@@ -218,7 +222,9 @@ export const musicApi = {
       if (type === "download") {
         if (item.id === musicDetailData?.id) {
           if (
-            item?.downloadClickList?.find((i: any) => i?.email === user?.email)
+            item?.downloadClickList?.find(
+              (i: MusicCountListProps) => i?.email === user?.email
+            )
           ) {
             return {
               ...item,
@@ -230,7 +236,7 @@ export const musicApi = {
               downloadClickList:
                 type === "download"
                   ? item?.downloadClickList?.filter(
-                      (i: any) => i?.email !== user?.email
+                      (i: MusicCountListProps) => i?.email !== user?.email
                     )
                   : item?.downloadClickList,
             };

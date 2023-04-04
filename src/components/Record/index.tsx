@@ -112,8 +112,9 @@ const Record = ({
 
             <strong>
               {
-                musicList?.find((item: any) => item?.id === musicDetailData?.id)
-                  ?.likeCount
+                musicList?.find(
+                  (item: MusicFormProps) => item?.id === musicDetailData?.id
+                )?.likeCount
               }
             </strong>
           </div>

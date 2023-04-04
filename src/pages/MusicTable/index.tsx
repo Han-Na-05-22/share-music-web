@@ -25,7 +25,8 @@ const MusicTable = () => {
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
   const [filterMusicList, setFilterMusicList] =
-    useRecoilState<any>(filterMusicListState);
+    useRecoilState<MusicFormProps[]>(filterMusicListState);
+
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
@@ -40,7 +41,7 @@ const MusicTable = () => {
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
-    useRecoilState<any>(musicDetailState);
+    useRecoilState<MusicFormProps>(musicDetailState);
   const quertyClient = useQueryClient();
   const { mutate: updateMusicDownloadAllCount } = useMutation(
     () =>
@@ -65,8 +66,9 @@ const MusicTable = () => {
     if (
       (addMusicPlayer?.length !== 0 &&
         addMusicPlayer?.length +
-          myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)
-            ?.length ===
+          myMusicPlayList?.filter(
+            (i: MusicFormProps) => i?.genre === selectFilter
+          )?.length ===
           filterMusicList?.length) ||
       (addMusicPlayer?.length !== 0 &&
         addMusicPlayer?.length + myMusicPlayList?.length ===
@@ -74,8 +76,10 @@ const MusicTable = () => {
     ) {
       setAddMusicPlayer([]);
     } else {
-      filterMusicList?.forEach((i: any) => {
-        if (!myMusicPlayList?.map((j: any) => j?.id)?.includes(i?.id)) {
+      filterMusicList?.forEach((i: MusicFormProps) => {
+        if (
+          !myMusicPlayList?.map((j: MusicFormProps) => j?.id)?.includes(i?.id)
+        ) {
           array = [...array, i?.id];
         }
         setAddMusicPlayer(array);
@@ -88,12 +92,14 @@ const MusicTable = () => {
       setAddMusicPlayer([id]);
     } else {
       addMusicPlayer?.includes(id)
-        ? setAddMusicPlayer(addMusicPlayer?.filter((item: any) => item !== id))
+        ? setAddMusicPlayer(
+            addMusicPlayer?.filter((item: number) => item !== id)
+          )
         : setAddMusicPlayer((prev: any) => [...prev, id]);
     }
   };
 
-  const handleChangePage = (page: any) => {
+  const handleChangePage = (page: number) => {
     if (musicList?.length < 10) {
       page = 1;
       return setPage(page);
@@ -103,17 +109,17 @@ const MusicTable = () => {
   };
 
   const allCheckd =
-    filterMusicList?.length === 0 ||
-    selectFilter === "My Music" ||
+    filterMusicList[0]?.email === "" ||
+    selectFilter === "MyMusic" ||
     selectFilter === "Playlist" ||
     myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
       filterMusicList?.length ||
     musicList?.length === myMusicPlayList?.length;
 
   useEffect(() => {
-    if (selectFilter === "My Music") {
+    if (selectFilter === "MyMusic") {
       const result = musicList?.filter(
-        (item: any) => item?.email === user?.email
+        (item: MusicFormProps) => item?.email === user?.email
       );
       setFilterMusicList(result);
     }
@@ -124,21 +130,23 @@ const MusicTable = () => {
 
     if (selectFilter === "New") {
       const result = musicList
-        ?.map((item: any) => item)
-        ?.sort((a: any, b: any) => b?.date - a?.date);
+        ?.map((item: MusicFormProps) => item)
+        ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date);
 
       setFilterMusicList(result);
     }
 
     if (selectFilter === "Popular") {
       const result = musicList
-        ?.map((item: any) => item)
-        ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount);
+        ?.map((item: MusicFormProps) => item)
+        ?.sort(
+          (a: MusicFormProps, b: MusicFormProps) => b?.likeCount - a?.likeCount
+        );
 
       setFilterMusicList(result);
     }
   }, [selectFilter, musicList, myMusicPlayList]);
-
+  console.log("filterMusicList", filterMusicList);
   return (
     <MusicTableContainer>
       <Button
@@ -159,17 +167,17 @@ const MusicTable = () => {
 
       <div className="tabel-container">
         <Tabel
-          className={filterMusicList?.length === 0 ? "no-tabel-data" : ""}
+          className={filterMusicList[0]?.email === "" ? "no-tabel-data" : ""}
           theadData={[
             {
               title: (
                 <CheckBox
                   disabled={
-                    filterMusicList?.length === 0 ||
-                    selectFilter === "My Music" ||
+                    filterMusicList[0]?.email === "" ||
+                    selectFilter === "MyMusic" ||
                     selectFilter === "Playlist" ||
                     myMusicPlayList?.filter(
-                      (i: any) => i?.genre === selectFilter
+                      (i: MusicFormProps) => i?.genre === selectFilter
                     )?.length === filterMusicList?.length ||
                     musicList?.length === myMusicPlayList?.length
                   }
@@ -224,17 +232,17 @@ const MusicTable = () => {
             },
           ]}
         >
-          {filterMusicList?.length !== 0 &&
+          {filterMusicList[0]?.email !== "" ? (
             filterMusicList
               ?.slice(offset, offset + limit)
-              ?.sort((a: any, b: any) => {
+              ?.sort((a: MusicFormProps, b: MusicFormProps) => {
                 if (selectFilter === "Popular") {
                   return b?.likeCount - a?.likeCount;
                 } else {
                   return b?.id - a?.id;
                 }
               })
-              ?.map((item: any, idx: number) => (
+              ?.map((item: MusicFormProps, idx: number) => (
                 <tr
                   key={item?.id}
                   onClick={() => {
@@ -248,14 +256,18 @@ const MusicTable = () => {
                   <td>
                     <CheckBox
                       disabled={
-                        myMusicPlayList?.find((i: any) => i?.id === item?.id)
+                        myMusicPlayList?.find(
+                          (i: MusicFormProps) => i?.id === item?.id
+                        )
                           ? true
                           : false
                       }
                       onClick={async (e: any) => {
                         e.stopPropagation();
                         if (
-                          myMusicPlayList?.find((i: any) => i?.id === item?.id)
+                          myMusicPlayList?.find(
+                            (i: MusicFormProps) => i?.id === item?.id
+                          )
                             ? true
                             : false
                         ) {
@@ -284,11 +296,11 @@ const MusicTable = () => {
                   <td>{item?.email?.split("@")[0]}</td>
                   <td>{item?.date}</td>
                 </tr>
-              ))}
+              ))
+          ) : (
+            <p className="no-data">등록된 데이터가 없습니다.</p>
+          )}
         </Tabel>
-        {filterMusicList?.length === 0 && (
-          <p className="no-data">등록된 데이터가 없습니다.</p>
-        )}
 
         <Pagination
           total={musicList?.length}

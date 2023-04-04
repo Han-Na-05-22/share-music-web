@@ -26,7 +26,7 @@ const MyPage = () => {
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const [musicDetailData, setMusicDetailData] =
-    useRecoilState<any>(musicDetailState);
+    useRecoilState<MusicFormProps>(musicDetailState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [currentMusic, setCurrentMusic] =
     useRecoilState<MusicFormProps>(currentMusicState);
@@ -50,7 +50,7 @@ const MyPage = () => {
     }
   );
 
-  const handleChangePage = (page: any) => {
+  const handleChangePage = (page: number) => {
     if (musicList?.length < 10) {
       page = 1;
       return setPage(page);
@@ -85,12 +85,14 @@ const MyPage = () => {
             },
           ]}
         >
-          {musicList?.filter((i: any) => i?.email === user?.email)?.length !==
-            0 &&
+          {musicList?.filter((i: MusicFormProps) => i?.email === user?.email)
+            ?.length !== 0 &&
             musicList
-              ?.filter((i: any) => i?.email === user?.email)
+              ?.filter((i: MusicFormProps) => i?.email === user?.email)
               ?.slice(offset, offset + limit)
-              ?.sort((a: any, b: any) => a?.date - b?.date)
+              ?.sort(
+                (a: MusicFormProps, b: MusicFormProps) => a?.date - b?.date
+              )
               ?.map((item: any, idx: number) => (
                 <tr
                   key={idx}
@@ -138,8 +140,8 @@ const MyPage = () => {
                 </tr>
               ))}
         </Tabel>
-        {(musicList?.filter((i: any) => i?.email === user?.email)?.length ===
-          0 ||
+        {(musicList?.filter((i: MusicFormProps) => i?.email === user?.email)
+          ?.length === 0 ||
           musicList === undefined) && (
           <p className="no-data">등록된 데이터가 없습니다.</p>
         )}

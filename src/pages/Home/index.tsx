@@ -1,7 +1,7 @@
 import { HomeContainer } from "./style";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { userInfo } from "components/Login/state";
+import { allUserInfo, userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
 import {
   isMusicDetailState,
@@ -27,14 +27,14 @@ const Home = () => {
   const [musicLikeCountTopten, setMusicLikeCountTopten] = useRecoilState<
     MusicFormProps[]
   >(musicLikeCountToptenState);
-
+  const [userAll, setUserAll] = useRecoilState<UserProps[]>(allUserInfo);
   const [musicNewDataList, setMusicNewDataList] = useRecoilState<
     MusicFormProps[]
   >(musicNewDataListState);
   const [artistLikeCountTopten, setArtistLikeCountTopten] = useRecoilState<any>(
     artistLikeCountToptenState
   );
-
+  console.log("userAll", userAll);
   const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
     useRecoilState<any>(artistDownloadCountToptenState);
 
@@ -131,7 +131,7 @@ const Home = () => {
       ]);
     }
   }, [musicList]);
-
+  console.log("musicLikeCountTopten", musicList);
   return (
     <HomeContainer>
       <>
@@ -139,7 +139,7 @@ const Home = () => {
           <h3>Recommend</h3>
 
           <Slider {...settings}>
-            {musicList?.length !== 0 &&
+            {musicList[0].email !== "" ? (
               musicList?.map((item: MusicFormProps, idx: number) => (
                 <div
                   key={idx}
@@ -161,14 +161,17 @@ const Home = () => {
                     <span className="singer">{item?.singer}</span>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <p className="no-data">데이터가 없습니다.</p>
+            )}
           </Slider>
         </section>
         <section className="new-top-tables">
           <div className="new-slider">
             <h3>New</h3>
             <ul>
-              {musicList?.length !== 0 &&
+              {musicList[0]?.email !== "" ? (
                 musicNewDataList?.map((item: MusicFormProps, idx: number) => (
                   <li
                     key={idx}
@@ -194,13 +197,18 @@ const Home = () => {
                     <span className="genre">{item?.genre}</span>
                     <span className="date">{item?.date}</span>
                   </li>
-                ))}
+                ))
+              ) : (
+                <li>
+                  <p className="no-list-data">데이터가 없습니다.</p>
+                </li>
+              )}
             </ul>
           </div>
           <div className="popular-slider">
             <h3>Top</h3>
             <ul>
-              {musicList?.length !== 0 &&
+              {musicList[0]?.email !== "" ? (
                 musicLikeCountTopten?.map(
                   (item: MusicFormProps, idx: number) => (
                     <li
@@ -232,7 +240,12 @@ const Home = () => {
                       </div>
                     </li>
                   )
-                )}
+                )
+              ) : (
+                <li>
+                  <p className="no-list-data">데이터가 없습니다.</p>
+                </li>
+              )}
             </ul>
           </div>
         </section>
@@ -256,7 +269,8 @@ const Home = () => {
                 },
               ]}
             >
-              {artistLikeCountTopten?.length !== 0 &&
+              {userAll?.length !== 0 &&
+              artistLikeCountTopten[0] !== undefined ? (
                 Object?.values(artistLikeCountTopten[0])
                   ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
                   ?.map((item: any, idx: number) => (
@@ -274,7 +288,10 @@ const Home = () => {
                       <td>{item?.likeCount}</td>
                     </tr>
                   ))
-                  ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)}
+                  ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
+              ) : (
+                <p className="no-data">데이터가 없습니다.</p>
+              )}
             </Tabel>
             {(musicList?.length === 0 || musicList === undefined) && (
               <p className="no-data">등록된 데이터가 없습니다.</p>
@@ -299,12 +316,12 @@ const Home = () => {
                 },
               ]}
             >
-              {artistDownloadCountTopten?.length !== 0 &&
+              {userAll?.length !== 0 &&
+              artistDownloadCountTopten[0] !== undefined ? (
                 Object?.values(artistDownloadCountTopten[0])
                   ?.sort(
                     (a: any, b: any) => b?.downloadCount - a?.downloadCount
                   )
-
                   ?.map((item: any, idx: number) => (
                     <tr
                       key={idx}
@@ -320,7 +337,10 @@ const Home = () => {
                       <td>{item?.downloadCount}</td>
                     </tr>
                   ))
-                  ?.sort((a: any, b: any) => b?.date - a?.date)}
+                  ?.sort((a: any, b: any) => b?.date - a?.date)
+              ) : (
+                <p className="no-data">데이터가 없습니다.</p>
+              )}
             </Tabel>
             {(musicList?.length === 0 || musicList === undefined) && (
               <p className="no-data">등록된 데이터가 없습니다.</p>

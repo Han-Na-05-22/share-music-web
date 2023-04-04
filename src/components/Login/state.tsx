@@ -13,6 +13,20 @@ export const userInfo = atom<UserProps>({
   },
 });
 
+export const allUserInfo = atom<UserProps[]>({
+  key: "allUserInfoData",
+  default: [
+    {
+      creationTime: "",
+      displayName: "",
+      email: "",
+      name: "",
+      phoneNumber: "",
+      photoURL: "",
+    },
+  ],
+});
+
 export const loginState = atom<LoginStateProps>({
   key: "loginStateData ",
   default: {
