@@ -37,7 +37,7 @@ function App() {
   const navigate = useNavigate();
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
     "getUserAllList",
-    userApi?.getUserAllDataList()
+    userApi?.getUserAllDataList(),
   );
 
   const { isLoading: userDataLoading, data: userData } = useQuery<{
@@ -51,7 +51,7 @@ function App() {
   const { isLoading: musicAllListDataLoading, data: musicAllListData } =
     useQuery<MusicFormProps[]>(
       "getMusicAllDataList",
-      musicApi?.getMusicAllDataList()
+      musicApi?.getMusicAllDataList(),
     );
 
   let getDownloadMusicList: any = "";
@@ -74,8 +74,8 @@ function App() {
       setUser(
         UserAllList?.find(
           (i: UserProps) =>
-            i?.email === (auth?.currentUser?.email || userData?.email)
-        )
+            i?.email === (auth?.currentUser?.email || userData?.email),
+        ),
       );
     }
   }, [UserAllList, userData]);
@@ -87,7 +87,7 @@ function App() {
           ?.map((item: MusicFormProps) => {
             return item;
           })
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id)
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
     }
   }, [musicAllListData]);
@@ -99,13 +99,15 @@ function App() {
       setMyMusicPlayList(
         getDownloadMusicList?.concat(
           musicList?.filter(
-            (item: MusicFormProps) => item?.email === user?.email
-          )
-        )
+            (item: MusicFormProps) => item?.email === user?.email,
+          ),
+        ),
       );
     } else {
       setMyMusicPlayList(
-        musicList?.filter((item: MusicFormProps) => item?.email === user?.email)
+        musicList?.filter(
+          (item: MusicFormProps) => item?.email === user?.email,
+        ),
       );
     }
   }, [musicList]);
@@ -116,7 +118,7 @@ function App() {
         if (i?.name === "Home" && i?.isClicked) {
           return i;
         }
-      })?.nav
+      })?.nav,
     );
   }, []);
 

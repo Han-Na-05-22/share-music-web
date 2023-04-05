@@ -32,7 +32,7 @@ const Home = () => {
     MusicFormProps[]
   >(musicNewDataListState);
   const [artistLikeCountTopten, setArtistLikeCountTopten] = useRecoilState<any>(
-    artistLikeCountToptenState
+    artistLikeCountToptenState,
   );
 
   const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
@@ -68,17 +68,17 @@ const Home = () => {
     if (musicList) {
       setMusicLikeCountTopten(
         musicList
-          ?.filter((item: MusicFormProps, idx: number) => idx < 10 && item)
+          ?.map((item: MusicFormProps) => item)
           ?.sort(
             (a: MusicFormProps, b: MusicFormProps) =>
-              b?.likeCount - a?.likeCount
-          )
+              b?.likeCount - a?.likeCount,
+          ),
       );
 
       setMusicNewDataList(
         musicList
-          ?.filter((item: MusicFormProps, idx: number) => idx < 10 && item)
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date)
+          ?.map((item: MusicFormProps) => item)
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date),
       );
 
       setArtistLikeCountTopten([
@@ -89,7 +89,7 @@ const Home = () => {
             likeCount: number;
             img: string;
             displayName: string;
-          }
+          },
         ) {
           const count = accumulator[currentValue?.displayName]?.likeCount || 0;
 
@@ -113,7 +113,7 @@ const Home = () => {
             downloadCount: number;
             img: string;
             displayName: string;
-          }
+          },
         ) {
           const count = accumulator[currentValue?.email]?.downloadCount || 0;
 
@@ -131,7 +131,7 @@ const Home = () => {
       ]);
     }
   }, [musicList]);
-
+  console.log("musicLikeCountTopten", musicLikeCountTopten);
   return (
     <HomeContainer>
       <>
@@ -163,7 +163,7 @@ const Home = () => {
                         <span className="singer">{item?.singer}</span>
                       </div>
                     </div>
-                  )
+                  ),
               )}
           </Slider>
           {musicList[0].email === "" && (
@@ -175,32 +175,37 @@ const Home = () => {
             <h3>New</h3>
             <ul>
               {musicList[0]?.email !== "" ? (
-                musicNewDataList?.map((item: MusicFormProps, idx: number) => (
-                  <li
-                    key={idx}
-                    className="new-list list"
-                    onClick={() => {
-                      !user?.email
-                        ? alert("로그인 후 이용해주세요")
-                        : setIsDetailData({
-                            isDetail: true,
-                            isLocation: "home",
-                          });
-                      setMusicDetailData(item);
-                    }}
-                  >
-                    <span className="order">{idx + 1}</span>
-                    <div className="img-container">
-                      <img src={item?.img} alt="" />
-                    </div>
-                    <div className="music-name">
-                      <strong>{item?.title}</strong>-
-                      <strong className="singer">{item?.singer}</strong>
-                    </div>
-                    <span className="genre">{item?.genre}</span>
-                    <span className="date">{item?.date?.substr(0, 10)}</span>
-                  </li>
-                ))
+                musicNewDataList?.map(
+                  (item: MusicFormProps, idx: number) =>
+                    idx < 10 && (
+                      <li
+                        key={idx}
+                        className="new-list list"
+                        onClick={() => {
+                          !user?.email
+                            ? alert("로그인 후 이용해주세요")
+                            : setIsDetailData({
+                                isDetail: true,
+                                isLocation: "home",
+                              });
+                          setMusicDetailData(item);
+                        }}
+                      >
+                        <span className="order">{idx + 1}</span>
+                        <div className="img-container">
+                          <img src={item?.img} alt="" />
+                        </div>
+                        <div className="music-name">
+                          <strong>{item?.title}</strong>-
+                          <strong className="singer">{item?.singer}</strong>
+                        </div>
+                        <span className="genre">{item?.genre}</span>
+                        <span className="date">
+                          {item?.date?.substr(0, 10)}
+                        </span>
+                      </li>
+                    ),
+                )
               ) : (
                 <li>
                   <p className="no-list-data">데이터가 없습니다.</p>
@@ -213,36 +218,37 @@ const Home = () => {
             <ul>
               {musicList[0]?.email !== "" ? (
                 musicLikeCountTopten?.map(
-                  (item: MusicFormProps, idx: number) => (
-                    <li
-                      key={idx}
-                      className="top-list list"
-                      onClick={() => {
-                        !user?.email
-                          ? alert("로그인 후 이용해주세요")
-                          : setIsDetailData({
-                              isDetail: true,
-                              isLocation: "home",
-                            });
-                        setMusicDetailData(item);
-                      }}
-                    >
-                      <span className="order">{idx + 1}</span>
-                      <div className="img-container">
-                        <img src={item?.img} alt="" />
-                      </div>
+                  (item: MusicFormProps, idx: number) =>
+                    idx < 10 && (
+                      <li
+                        key={idx}
+                        className="top-list list"
+                        onClick={() => {
+                          !user?.email
+                            ? alert("로그인 후 이용해주세요")
+                            : setIsDetailData({
+                                isDetail: true,
+                                isLocation: "home",
+                              });
+                          setMusicDetailData(item);
+                        }}
+                      >
+                        <span className="order">{idx + 1}</span>
+                        <div className="img-container">
+                          <img src={item?.img} alt="" />
+                        </div>
 
-                      <div className="music-name">
-                        <strong>{item?.title}</strong>-
-                        <strong className="singer">{item?.singer}</strong>
-                      </div>
-                      <span className="genre">{item?.genre}</span>
-                      <div className="like-count">
-                        <SVG src="/svg/heart.svg" />
-                        <span>{item?.likeCount}</span>
-                      </div>
-                    </li>
-                  )
+                        <div className="music-name">
+                          <strong>{item?.title}</strong>-
+                          <strong className="singer">{item?.singer}</strong>
+                        </div>
+                        <span className="genre">{item?.genre}</span>
+                        <div className="like-count">
+                          <SVG src="/svg/heart.svg" />
+                          <span>{item?.likeCount}</span>
+                        </div>
+                      </li>
+                    ),
                 )
               ) : (
                 <li>
@@ -283,7 +289,10 @@ const Home = () => {
                         <tr
                           key={idx}
                           onClick={(
-                            e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                            e: React.MouseEvent<
+                              HTMLTableRowElement,
+                              MouseEvent
+                            >,
                           ) => {
                             e.stopPropagation();
                           }}
@@ -295,7 +304,7 @@ const Home = () => {
                           <td>{item?.displayName}</td>
                           <td>{item?.likeCount}</td>
                         </tr>
-                      )
+                      ),
                   )
                   ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
               ) : (
@@ -334,7 +343,7 @@ const Home = () => {
               artistDownloadCountTopten[0] !== undefined ? (
                 Object?.values(artistDownloadCountTopten[0])
                   ?.sort(
-                    (a: any, b: any) => b?.downloadCount - a?.downloadCount
+                    (a: any, b: any) => b?.downloadCount - a?.downloadCount,
                   )
                   ?.map(
                     (item: any, idx: number) =>
@@ -342,7 +351,10 @@ const Home = () => {
                         <tr
                           key={idx}
                           onClick={(
-                            e: React.MouseEvent<HTMLTableRowElement, MouseEvent>
+                            e: React.MouseEvent<
+                              HTMLTableRowElement,
+                              MouseEvent
+                            >,
                           ) => {
                             e.stopPropagation();
                           }}
@@ -354,7 +366,7 @@ const Home = () => {
                           <td>{item?.displayName}</td>
                           <td>{item?.downloadCount}</td>
                         </tr>
-                      )
+                      ),
                   )
                   ?.sort((a: any, b: any) => b?.date - a?.date)
               ) : (
