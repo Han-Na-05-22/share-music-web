@@ -34,7 +34,7 @@ const Login = ({ className }: LoginProps) => {
       await signInWithEmailAndPassword(
         auth,
         `${email + "@music.com"}`,
-        password
+        password,
       );
     },
     {
@@ -50,7 +50,7 @@ const Login = ({ className }: LoginProps) => {
             uid: auth?.currentUser?.uid,
             displayName: auth?.currentUser?.displayName,
             email: auth?.currentUser?.email,
-          })
+          }),
         );
         alert("로그인에 성공하였습니다.");
         await setIsClicked(false);
@@ -61,7 +61,7 @@ const Login = ({ className }: LoginProps) => {
         navigate("/");
         window.location.reload();
       },
-    }
+    },
   );
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;

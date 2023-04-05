@@ -6,7 +6,6 @@ export const GlobalStyle = createGlobalStyle`
     margin:0px;
     box-sizing:border-box;
     color:#fff;
-    /* font-family:"arial"; */
     font-family: "Orbitron";
     font-weight:400;
     border-collapse: collapse;
@@ -16,21 +15,14 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html{
-    /* background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%); */
-
     background: #323232ff;
   }
-  /* background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%); */
-  /* background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%); */
+
   body{
     width: 100vw;
     height: 100%;
     overflow-y: auto;
-    /* height: 100vh; */
-    /* padding:40px 0px; */
-
     @media screen and (max-width: 1660px) {
-      /* padding:40px 20px; */
       font-size:12px;
 
   }

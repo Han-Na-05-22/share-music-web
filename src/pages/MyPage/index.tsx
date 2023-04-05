@@ -160,6 +160,7 @@ const MyPage = () => {
           handleChangePage={handleChangePage}
         />
       </div>
+
       {isDetailData?.isDetail &&
         isDetailData?.isLocation === "mypage" &&
         isEdit !== "edit" && (

@@ -92,7 +92,7 @@ export const TabelContainer = styled.table`
 
       &:hover {
         cursor: pointer;
-        background: #111111ff;
+        background: ${({ theme }) => theme.colors.BgHover};
         td {
           color: ${({ theme }) => theme.colors.HoverText};
         }
