@@ -149,6 +149,9 @@ export const MyPageContainer = styled.div`
         tr {
           th,
           td {
+            &:nth-child(1) {
+              width: 50px;
+            }
             &:nth-child(3) {
               width: 200px;
             }
@@ -257,10 +260,14 @@ export const MyPageContainer = styled.div`
     .tabel-container {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
+      min-height: 100%;
 
       div {
         width: 100%;
 
+        &:nth-child(1) {
+          min-height: 100%;
+        }
         &:nth-child(2) {
           bottom: 25px;
           position: absolute;
@@ -365,6 +372,7 @@ export const MyPageContainer = styled.div`
     .tabel-container {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
+      border: 2px solid red;
 
       div {
         width: 100%;
@@ -382,10 +390,23 @@ export const MyPageContainer = styled.div`
       }
 
       table {
+        tr {
+          td,
+          th {
+            margin: 0px 5px;
+            &:nth-child(1) {
+              width: 50px;
+            }
+            &:nth-child(2) {
+              width: 100px;
+            }
+          }
+        }
       }
 
       tbody {
         td {
+          font-size: 10px;
           svg {
             width: 15px;
             height: 15px;

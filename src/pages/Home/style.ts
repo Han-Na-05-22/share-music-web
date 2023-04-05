@@ -51,9 +51,6 @@ export const HomeContainer = styled.div`
       .slick-list {
         width: 2624px;
 
-        /* .slick-track {
-          min-width: 2624px;
-        } */
         .slick-slide {
           width: 200px;
           border-radius: 10px;
@@ -162,6 +159,11 @@ export const HomeContainer = styled.div`
 
           .music-name {
             width: 50%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
             strong {
             }
           }
@@ -292,11 +294,7 @@ export const HomeContainer = styled.div`
             .music-name {
               width: 45%;
               margin: 0px 10px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 1;
-              -webkit-box-orient: vertical;
+
               strong {
               }
             }
@@ -307,7 +305,7 @@ export const HomeContainer = styled.div`
             }
 
             .date {
-              width: 30%;
+              width: 35%;
             }
           }
         }

@@ -6,7 +6,7 @@ import { useRecoilState } from "recoil";
 import { isMusicDetailState } from "components/MusicDetail/state";
 import SVG from "react-inlinesvg";
 import Button from "components/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { userInfo } from "components/Login/state";
 import { playListIndexState } from "./state";
 import { UserProps } from "components/Login/interface";
@@ -24,12 +24,16 @@ const PlayList = ({
   const [idx, setIdx] = useRecoilState<any>(playListIndexState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
   const [isPlay, setIsPlay] = useState<boolean>(play);
-
+  const player = useRef<any>();
   useEffect(() => {
     if (isDetailData?.isLocation === "download") {
       setIsPlay(false);
     }
   }, [isDetailData]);
+
+  useEffect(() => {
+    player.current?.audio?.current?.pause();
+  }, [idx]);
 
   return (
     <PlayListContainer>
@@ -61,6 +65,7 @@ const PlayList = ({
                     e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
                   ) => {
                     e.stopPropagation();
+                    setIsPlay(false);
                     idx === 0
                       ? setIdx(playListData?.length - 1)
                       : setIdx(idx - 1);
@@ -96,7 +101,7 @@ const PlayList = ({
                     e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
                   ) => {
                     e.stopPropagation();
-
+                    setIsPlay(false);
                     playListData?.length - 1 === idx
                       ? setIdx(0)
                       : setIdx(idx + 1);
@@ -105,6 +110,11 @@ const PlayList = ({
               </div>
 
               <AudioPlayer
+                ref={player}
+                showDownloadProgress={true}
+                autoPlay={isPlay}
+                autoPlayAfterSrcChange={false}
+                preload={"metadata"}
                 src={playListData[idx]?.url}
                 onPause={() => {
                   setIsPlay(false);
@@ -112,7 +122,6 @@ const PlayList = ({
                 onPlay={() => {
                   setIsPlay(true);
                 }}
-                autoPlay={isPlay}
               />
             </>
           ) : (
