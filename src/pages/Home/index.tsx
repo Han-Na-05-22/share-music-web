@@ -131,7 +131,7 @@ const Home = () => {
       ]);
     }
   }, [musicList]);
-  console.log("musicLikeCountTopten", musicLikeCountTopten);
+
   return (
     <HomeContainer>
       <>

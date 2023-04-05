@@ -260,13 +260,13 @@ export const MyPageContainer = styled.div`
     .tabel-container {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
-      min-height: 100%;
-
+      height: 100%;
+      min-height: 300px;
       div {
         width: 100%;
 
         &:nth-child(1) {
-          min-height: 100%;
+          min-height: 300px;
         }
         &:nth-child(2) {
           bottom: 25px;
@@ -275,9 +275,11 @@ export const MyPageContainer = styled.div`
       }
 
       table {
+        height: 100%;
       }
 
       tbody {
+        height: 100%;
         td {
           svg {
             width: 20px;
@@ -372,7 +374,6 @@ export const MyPageContainer = styled.div`
     .tabel-container {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
-      border: 2px solid red;
 
       div {
         width: 100%;
