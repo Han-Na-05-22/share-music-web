@@ -1,7 +1,7 @@
 import {
   MusicCountListProps,
   MusicFormProps,
-} from "components/AddMusic/interface";
+} from 'components/AddMusic/interface';
 import {
   arrayRemove,
   arrayUnion,
@@ -10,24 +10,24 @@ import {
   getDocs,
   setDoc,
   updateDoc,
-} from "firebase/firestore";
+} from 'firebase/firestore';
 import {
   ref as sRef,
   uploadBytesResumable,
   getDownloadURL,
   ref,
   deleteObject,
-} from "firebase/storage";
-import moment from "moment";
-import { firestore, storage } from "service/firebase";
+} from 'firebase/storage';
+import moment from 'moment';
+import { firestore, storage } from 'service/firebase';
 
 //* Cloud Firestore, Storage
 
 export const musicApi = {
   // get Cloud Firestore all music List
   getMusicAllDataList: () => async () => {
-    const querySnapshot = await getDocs(collection(firestore, "music"));
-    let array: any = "";
+    const querySnapshot = await getDocs(collection(firestore, 'music'));
+    let array: any = '';
     querySnapshot?.forEach((doc: any) => {
       array = doc?.data()?.data;
     });
@@ -39,9 +39,9 @@ export const musicApi = {
     email: string,
     data: any,
     musicListData: any,
-    url: string
+    url: string,
   ) => {
-    const washingtonRef = doc(firestore, "music", "musicList");
+    const washingtonRef = doc(firestore, 'music', 'musicList');
 
     if (musicListData?.length === 0) {
       await setDoc(washingtonRef, {
@@ -59,14 +59,14 @@ export const musicApi = {
             url: url,
             mp3: `${
               data?.formData?.name
-                .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-                .split(" ")
-                .join("") + data?.uniqueKey
+                .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, '')
+                .split(' ')
+                .join('') + data?.uniqueKey
             }`,
             likeCount: 0,
-            likedClickList: [{ email: "", updateTiem: "" }],
+            likedClickList: [{ email: '', updateTiem: '' }],
             downloadCount: 0,
-            downloadClickList: [{ email: "", updateTiem: "" }],
+            downloadClickList: [{ email: '', updateTiem: '' }],
           },
         ],
       });
@@ -85,14 +85,14 @@ export const musicApi = {
           url: url,
           mp3: `${
             data?.formData?.name
-              .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-              .split(" ")
-              .join("") + data?.uniqueKey
+              .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, '')
+              .split(' ')
+              .join('') + data?.uniqueKey
           }`,
           likeCount: 0,
-          likedClickList: [{ email: "", updateTiem: "" }],
+          likedClickList: [{ email: '', updateTiem: '' }],
           downloadCount: 0,
-          downloadClickList: [{ email: "", updateTiem: "" }],
+          downloadClickList: [{ email: '', updateTiem: '' }],
         }),
       });
     }
@@ -104,12 +104,12 @@ export const musicApi = {
     data: any,
     setIsCompleted?: any,
     setData?: any,
-    musicList?: any
+    musicList?: any,
   ) => {
     const newName = data?.formData?.name
-      .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
-      .split(" ")
-      .join("");
+      .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, '')
+      .split(' ')
+      .join('');
 
     const metaData = {
       contentType: data?.formData?.type,
@@ -128,39 +128,39 @@ export const musicApi = {
     const UploadTask = uploadBytesResumable(
       storageRef,
       data?.formData,
-      metaData
+      metaData,
     );
 
     UploadTask.on(
-      "state_changed",
+      'state_changed',
       async (snapshot: any) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setIsCompleted("loading");
+        setIsCompleted('loading');
         console.log(`Upload is ${progress}% done`);
         if (progress === 100) {
-          alert("음원 등록이 완료되었습니다.");
-          setIsCompleted("done");
+          alert('음원 등록이 완료되었습니다.');
+          setIsCompleted('done');
         }
       },
       (error) => {
         console.log(`error: image upload error ${JSON.stringify(error)}`);
-        alert("음원 등록에 실패하였습니다.");
+        alert('음원 등록에 실패하였습니다.');
       },
       async () => {
         await getDownloadURL(UploadTask.snapshot.ref).then(
           async (downloadUrl) => {
             await console.log(`완료 url: ${downloadUrl}`);
-            await setData(src?.split("/")[1], data, musicList, downloadUrl);
-          }
+            await setData(src?.split('/')[1], data, musicList, downloadUrl);
+          },
         );
-      }
+      },
     );
   },
 
   // edit cloud firestore muisc
   updateMusicDataList: async (date: any) => {
-    const washingtonRef = doc(firestore, "music", "musicList");
+    const washingtonRef = doc(firestore, 'music', 'musicList');
 
     await updateDoc(washingtonRef, {
       data: arrayRemove(),
@@ -175,10 +175,10 @@ export const musicApi = {
     type: string,
     musicList?: any,
     musicDetailData?: any,
-    user?: any
+    user?: any,
   ) => {
     const result = musicList?.map((item: MusicFormProps) => {
-      if (type === "like") {
+      if (type === 'like') {
         if (item.id === musicDetailData?.id) {
           if (
             item?.likedClickList?.find((i: any) => i?.email === user?.email)
@@ -187,11 +187,11 @@ export const musicApi = {
               ...item,
 
               likeCount:
-                type === "like" ? item?.likeCount - 1 : item?.likeCount,
+                type === 'like' ? item?.likeCount - 1 : item?.likeCount,
               likedClickList:
-                type === "like"
+                type === 'like'
                   ? item?.likedClickList?.filter(
-                      (i: any) => i?.email !== user?.email
+                      (i: any) => i?.email !== user?.email,
                     )
                   : item?.likedClickList,
             };
@@ -200,14 +200,14 @@ export const musicApi = {
               ...item,
 
               likeCount:
-                type === "like" ? item?.likeCount + 1 : item?.likeCount,
+                type === 'like' ? item?.likeCount + 1 : item?.likeCount,
               likedClickList:
-                type === "like"
+                type === 'like'
                   ? [
-                      ...item?.likedClickList,
+                      ...(item?.likedClickList || ''),
                       {
                         email: user?.email,
-                        updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        updateTiem: moment().format('YYYY-MM-DD HH:mm:ss'),
                       },
                     ]
                   : item?.likedClickList,
@@ -219,24 +219,24 @@ export const musicApi = {
         };
       }
 
-      if (type === "download") {
+      if (type === 'download') {
         if (item.id === musicDetailData?.id) {
           if (
             item?.downloadClickList?.find(
-              (i: MusicCountListProps) => i?.email === user?.email
+              (i: MusicCountListProps) => i?.email === user?.email,
             )
           ) {
             return {
               ...item,
 
               downloadCount:
-                type === "download"
+                type === 'download'
                   ? item?.downloadCount - 1
                   : item?.downloadCount,
               downloadClickList:
-                type === "download"
+                type === 'download'
                   ? item?.downloadClickList?.filter(
-                      (i: MusicCountListProps) => i?.email !== user?.email
+                      (i: MusicCountListProps) => i?.email !== user?.email,
                     )
                   : item?.downloadClickList,
             };
@@ -245,16 +245,16 @@ export const musicApi = {
               ...item,
 
               downloadCount:
-                type === "download"
+                type === 'download'
                   ? item?.downloadCount + 1
                   : item?.downloadCount,
               downloadClickList:
-                type === "download"
+                type === 'download'
                   ? [
-                      ...item?.downloadClickList,
+                      ...(item?.downloadClickList || ''),
                       {
                         email: user?.email,
-                        updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        updateTiem: moment().format('YYYY-MM-DD HH:mm:ss'),
                       },
                     ]
                   : item?.downloadClickList,
@@ -266,17 +266,17 @@ export const musicApi = {
         };
       }
 
-      if (type === "download-all") {
+      if (type === 'download-all') {
         if (musicDetailData?.find((ac: any) => ac === item?.id)) {
           return {
             ...item,
             downloadCount: item?.downloadCount + 1,
 
             downloadClickList: [
-              ...item?.downloadClickList,
+              ...(item?.downloadClickList || ''),
               {
                 email: user?.email,
-                updateTiem: moment().format("YYYY-MM-DD HH:mm:ss"),
+                updateTiem: moment().format('YYYY-MM-DD HH:mm:ss'),
               },
             ],
           };
@@ -287,7 +287,7 @@ export const musicApi = {
       }
     });
 
-    const washingtonRef = doc(firestore, "music", "musicList");
+    const washingtonRef = doc(firestore, 'music', 'musicList');
 
     await updateDoc(washingtonRef, {
       data: arrayRemove(),
@@ -298,7 +298,7 @@ export const musicApi = {
 
   // delete cloud firestore music data
   deleteMusicData: async (data: any) => {
-    const washingtonRef = doc(firestore, "music", "musicList");
+    const washingtonRef = doc(firestore, 'music', 'musicList');
     const desertRef = ref(storage, `music/${data?.email}/${data?.mp3}`);
 
     await updateDoc(washingtonRef, {

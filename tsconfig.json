@@ -20,5 +20,11 @@
     "declarationDir": "./types",
     "baseUrl": "src"
   },
-  "include": ["src"]
+  "include": ["**/*.ts", "**/*.tsx", ".eslintrc.json"],
+  "ignorePatterns": [".eslintrc.json"],
+  "exclude": ["node_modules"],
+  "baseUrl": "src",
+  "paths": {
+    "@/*": ["./*"]
+  }
 }

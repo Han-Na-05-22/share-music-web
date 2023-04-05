@@ -40,7 +40,7 @@ export const filterMusicListState = atom<MusicFormProps[]>({
   ],
 });
 
-export const addMusicPlayerState = atom<any[]>({
+export const addMusicPlayerState = atom<Array<number>>({
   key: "addMusicPlayerStateData",
   default: [],
 });

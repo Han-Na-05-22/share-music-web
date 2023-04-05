@@ -1,28 +1,28 @@
-import Container from "common/layout/Container";
-import Header from "common/layout/Header";
-import { musicListState } from "components/AddMusic/state";
-import { allUserInfo, userInfo } from "components/Login/state";
-import Home from "pages/Home";
-import MusicTable from "pages/MusicTable";
-import MyPage from "pages/MyPage";
-import { myMusicPlayListState } from "pages/MyPage/state";
-import NotFound from "pages/NotFound";
-import { useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { auth } from "service/firebase";
-import { useQuery } from "react-query";
-import { userApi } from "common/api/user";
-import { musicApi } from "common/api/music";
-import PlayList from "components/PlayList";
-import { isMusicDetailState } from "components/MusicDetail/state";
-import { UserProps } from "components/Login/interface";
+import { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import Container from 'common/layout/Container';
+import Header from 'common/layout/Header';
+import { musicListState } from 'components/AddMusic/state';
+import { allUserInfo, userInfo } from 'components/Login/state';
+import Home from 'pages/Home';
+import MusicTable from 'pages/MusicTable';
+import MyPage from 'pages/MyPage';
+import { myMusicPlayListState } from 'pages/MyPage/state';
+import NotFound from 'pages/NotFound';
+import { auth } from 'service/firebase';
+import { useQuery } from 'react-query';
+import { userApi } from 'common/api/user';
+import { musicApi } from 'common/api/music';
+import PlayList from 'components/PlayList';
+import { isMusicDetailState } from 'components/MusicDetail/state';
+import { UserProps } from 'components/Login/interface';
 import {
   MusicCountListProps,
   MusicFormProps,
-} from "components/AddMusic/interface";
-import { MusicDetailStateProps } from "components/MusicDetail/interface";
-import { navState } from "common/layout/Nav/state";
+} from 'components/AddMusic/interface';
+import { MusicDetailStateProps } from 'components/MusicDetail/interface';
+import { navState } from 'common/layout/Nav/state';
 
 function App() {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
@@ -36,25 +36,25 @@ function App() {
     useRecoilState<MusicFormProps[]>(myMusicPlayListState);
   const navigate = useNavigate();
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
-    "getUserAllList",
-    userApi?.getUserAllDataList()
+    'getUserAllList',
+    userApi?.getUserAllDataList(),
   );
 
   const { isLoading: userDataLoading, data: userData } = useQuery<{
     displayName: string;
     email: string;
     uid: string;
-  }>("getUser", () => {
-    return JSON.parse(sessionStorage.getItem("user") || "{}");
+  }>('getUser', () => {
+    return JSON.parse(sessionStorage.getItem('user') || '{}');
   });
 
   const { isLoading: musicAllListDataLoading, data: musicAllListData } =
     useQuery<MusicFormProps[]>(
-      "getMusicAllDataList",
-      musicApi?.getMusicAllDataList()
+      'getMusicAllDataList',
+      musicApi?.getMusicAllDataList(),
     );
 
-  let getDownloadMusicList: any = "";
+  let getDownloadMusicList: any = '';
 
   const getDownloadMusicData = () => {
     musicList
@@ -74,8 +74,8 @@ function App() {
       setUser(
         UserAllList?.find(
           (i: UserProps) =>
-            i?.email === (auth?.currentUser?.email || userData?.email)
-        )
+            i?.email === (auth?.currentUser?.email || userData?.email),
+        ),
       );
     }
   }, [UserAllList, userData]);
@@ -87,7 +87,7 @@ function App() {
           ?.map((item: MusicFormProps) => {
             return item;
           })
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id)
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
     }
   }, [musicAllListData]);
@@ -99,24 +99,26 @@ function App() {
       setMyMusicPlayList(
         getDownloadMusicList?.concat(
           musicList?.filter(
-            (item: MusicFormProps) => item?.email === user?.email
-          )
-        )
+            (item: MusicFormProps) => item?.email === user?.email,
+          ),
+        ),
       );
     } else {
       setMyMusicPlayList(
-        musicList?.filter((item: MusicFormProps) => item?.email === user?.email)
+        musicList?.filter(
+          (item: MusicFormProps) => item?.email === user?.email,
+        ),
       );
     }
   }, [musicList]);
 
   useEffect(() => {
     navigate(
-      navData?.find((i: any) => {
-        if (i?.name === "Home" && i?.isClicked) {
+      navData?.find((i: { name: string; nav: string; isClicked: boolean }) => {
+        if (i?.name === 'Home' && i?.isClicked) {
           return i;
         }
-      })?.nav
+      })?.nav,
     );
   }, []);
 
@@ -133,12 +135,12 @@ function App() {
 
         <PlayList
           className={
-            isDetailData?.isLocation === "playList" ? "detail-play-list" : ""
+            isDetailData?.isLocation === 'playList' ? 'detail-play-list' : ''
           }
           onClick={() => {
             setIsDetailData({
               isDetail: true,
-              isLocation: "playList",
+              isLocation: 'playList',
             });
           }}
           play={false}

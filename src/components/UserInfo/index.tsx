@@ -1,15 +1,15 @@
-import Button from "components/Button";
-import { userInfo } from "components/Login/state";
-import ProfileImg from "components/ProfileImg";
-import TextInput from "components/TextInput";
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { auth } from "service/firebase";
-import { UserInfoProps } from "./interface";
-import { UserInfoContainer } from "./style";
-import { useMutation, useQueryClient } from "react-query";
-import { userApi, userFunction } from "common/api/user";
-import { UserProps } from "components/Login/interface";
+import Button from 'components/Button';
+import { userInfo } from 'components/Login/state';
+import ProfileImg from 'components/ProfileImg';
+import TextInput from 'components/TextInput';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { auth } from 'service/firebase';
+import { UserInfoProps } from './interface';
+import { UserInfoContainer } from './style';
+import { useMutation, useQueryClient } from 'react-query';
+import { userApi, userFunction } from 'common/api/user';
+import { UserProps } from 'components/Login/interface';
 
 const UserInfo = ({ className }: UserInfoProps) => {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
@@ -17,13 +17,13 @@ const UserInfo = ({ className }: UserInfoProps) => {
   const [form, setForm] = useState<any>({
     photoURL: user?.photoURL,
     name: user?.name,
-    pwd: "",
-    rePwd: "",
+    pwd: '',
+    rePwd: '',
     phoneNumber: user?.phoneNumber,
     displayName: user?.displayName,
   });
 
-  const getUserId = auth?.currentUser?.uid.replace('"', "");
+  const getUserId = auth?.currentUser?.uid.replace('"', '');
 
   const queryClient = useQueryClient();
 
@@ -31,14 +31,14 @@ const UserInfo = ({ className }: UserInfoProps) => {
     () => userApi?.editUserData(getUserId, form, user),
     {
       onError: (error) => {
-        console.log("error : ", error);
-        alert("수정에 실패하였습니다.");
+        console.log('error : ', error);
+        alert('수정에 실패하였습니다.');
       },
       onSuccess: () => {
-        queryClient.invalidateQueries("getUserAllList");
-        alert("수정이 완료되었습니다.");
+        queryClient.invalidateQueries('getUserAllList');
+        alert('수정이 완료되었습니다.');
       },
-    }
+    },
   );
 
   const handleSubmit = (e: any) => {
@@ -58,8 +58,8 @@ const UserInfo = ({ className }: UserInfoProps) => {
       fr.readAsDataURL(file);
 
       fr.onload = async () => {
-        if (typeof fr.result === "string") {
-          formData.append("file", file);
+        if (typeof fr.result === 'string') {
+          formData.append('file', file);
           setForm({ ...form, photoURL: fr.result });
         }
       };
@@ -76,7 +76,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChangeImg(e)
             }
-            onClickDelete={() => userFunction?.deleteImg(setForm, "photoURL")}
+            onClickDelete={() => userFunction?.deleteImg(setForm, 'photoURL')}
           />
         </div>
         <div className="input-container">
@@ -95,9 +95,11 @@ const UserInfo = ({ className }: UserInfoProps) => {
           <TextInput
             width="100%"
             name="email"
-            value={user?.email?.split("@")[0]}
+            value={user?.email?.split('@')[0]}
             label="아이디"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              ('');
+            }}
           ></TextInput>
           <TextInput
             name="phoneNumber"

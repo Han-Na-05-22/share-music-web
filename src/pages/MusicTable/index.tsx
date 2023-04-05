@@ -1,29 +1,29 @@
-import { musicListState } from "components/AddMusic/state";
-import Tabel from "components/Table";
-import { useRecoilState } from "recoil";
-import { MusicTableContainer } from "./style";
-import SVG from "react-inlinesvg";
-import { useEffect, useState } from "react";
-import Pagination from "components/Pagination";
+import { musicListState } from 'components/AddMusic/state';
+import Tabel from 'components/Table';
+import { useRecoilState } from 'recoil';
+import { MusicTableContainer } from './style';
+import SVG from 'react-inlinesvg';
+import { useEffect, useState } from 'react';
+import Pagination from 'components/Pagination';
 import {
   addMusicPlayerState,
   filterMusicListState,
   selectFilterState,
-} from "./state";
-import CheckBox from "components/CheckBox";
-import Button from "components/Button";
+} from './state';
+import CheckBox from 'components/CheckBox';
+import Button from 'components/Button';
 import {
   isMusicDetailState,
   musicDetailState,
-} from "components/MusicDetail/state";
-import MusicDetail from "components/MusicDetail";
-import { myMusicPlayListState } from "pages/MyPage/state";
-import { userInfo } from "components/Login/state";
-import { useMutation, useQueryClient } from "react-query";
-import { musicApi } from "common/api/music";
-import { UserProps } from "components/Login/interface";
-import { MusicFormProps } from "components/AddMusic/interface";
-import { MusicDetailStateProps } from "components/MusicDetail/interface";
+} from 'components/MusicDetail/state';
+import MusicDetail from 'components/MusicDetail';
+import { myMusicPlayListState } from 'pages/MyPage/state';
+import { userInfo } from 'components/Login/state';
+import { useMutation, useQueryClient } from 'react-query';
+import { musicApi } from 'common/api/music';
+import { UserProps } from 'components/Login/interface';
+import { MusicFormProps } from 'components/AddMusic/interface';
+import { MusicDetailStateProps } from 'components/MusicDetail/interface';
 
 const MusicTable = () => {
   const [musicList, setMusicList] =
@@ -49,23 +49,23 @@ const MusicTable = () => {
   const { mutate: updateMusicDownloadAllCount } = useMutation(
     () =>
       musicApi?.updateMusicCountData(
-        "download-all",
+        'download-all',
         musicList,
         addMusicPlayer,
-        user
+        user,
       ),
     {
       onError: (error) => {
-        console.log("error:", error);
+        console.log('error:', error);
       },
       onSuccess: async () => {
-        await quertyClient.invalidateQueries("getMusicAllDataList");
+        await quertyClient.invalidateQueries('getMusicAllDataList');
       },
-    }
+    },
   );
 
   const onCheckedAllMusic = () => {
-    let array: any = "";
+    let array: any = '';
     if (
       addMusicPlayer?.length !== 0 &&
       filterMusicList?.slice(offset, offset + limit)?.length ===
@@ -96,7 +96,7 @@ const MusicTable = () => {
     } else {
       addMusicPlayer?.includes(id)
         ? setAddMusicPlayer(
-            addMusicPlayer?.filter((item: number) => item !== id)
+            addMusicPlayer?.filter((item: number) => item !== id),
           )
         : setAddMusicPlayer((prev: any) => [...prev, id]);
     }
@@ -112,9 +112,9 @@ const MusicTable = () => {
   };
 
   const allCheckd =
-    filterMusicList[0]?.email === "" ||
-    selectFilter === "MyMusic" ||
-    selectFilter === "Playlist" ||
+    filterMusicList[0]?.email === '' ||
+    selectFilter === 'MyMusic' ||
+    selectFilter === 'Playlist' ||
     myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
       filterMusicList?.length ||
     musicList?.length === myMusicPlayList?.length;
@@ -135,24 +135,24 @@ const MusicTable = () => {
                 },
               ]);
             }
-          })
+          }),
         );
     }
   };
   useEffect(() => {
-    if (selectFilter === "MyMusic" && musicList[0]?.email !== "") {
+    if (selectFilter === 'MyMusic' && musicList[0]?.email !== '') {
       const result = musicList?.filter(
-        (item: MusicFormProps) => item?.email === user?.email
+        (item: MusicFormProps) => item?.email === user?.email,
       );
 
       setFilterMusicList(result);
     }
 
-    if (selectFilter === "Playlist") {
+    if (selectFilter === 'Playlist') {
       setFilterMusicList(myMusicPlayList);
     }
 
-    if (selectFilter === "New") {
+    if (selectFilter === 'New') {
       const result = musicList
         ?.map((item: MusicFormProps) => item)
         ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date);
@@ -160,11 +160,11 @@ const MusicTable = () => {
       setFilterMusicList(result);
     }
 
-    if (selectFilter === "Popular") {
+    if (selectFilter === 'Popular') {
       const result = musicList
         ?.map((item: MusicFormProps) => item)
         ?.sort(
-          (a: MusicFormProps, b: MusicFormProps) => b?.likeCount - a?.likeCount
+          (a: MusicFormProps, b: MusicFormProps) => b?.likeCount - a?.likeCount,
         );
 
       setFilterMusicList(result);
@@ -179,13 +179,13 @@ const MusicTable = () => {
         <Button
           className="my-info-submit"
           fontSize="16px"
-          btnType={user?.email ? "submit" : "none"}
+          btnType={user?.email ? 'submit' : 'none'}
           onClick={async () => {
             if (addMusicPlayer?.length === 0) {
-              alert("추가에 실패하였습니다.");
+              alert('추가에 실패하였습니다.');
             } else {
               await updateMusicDownloadAllCount();
-              alert("추가가 완료되었습니다.");
+              alert('추가가 완료되었습니다.');
             }
           }}
         >
@@ -195,28 +195,28 @@ const MusicTable = () => {
         <div className="tabel-container">
           <Tabel
             className={
-              filterMusicList[0]?.email === "" || filterMusicList?.length === 0
-                ? "no-tabel-data"
-                : ""
+              filterMusicList[0]?.email === '' || filterMusicList?.length === 0
+                ? 'no-tabel-data'
+                : ''
             }
             theadData={[
               {
                 title: (
                   <CheckBox
                     disabled={
-                      filterMusicList[0]?.email === "" ||
-                      selectFilter === "MyMusic" ||
-                      selectFilter === "Playlist" ||
+                      filterMusicList[0]?.email === '' ||
+                      selectFilter === 'MyMusic' ||
+                      selectFilter === 'Playlist' ||
                       filterMusicList?.slice(offset, offset + limit)?.length ===
                         filterMusicList
                           ?.slice(offset, offset + limit)
                           ?.filter(
-                            (i: MusicFormProps) => i?.email === user?.email
+                            (i: MusicFormProps) => i?.email === user?.email,
                           )?.length +
                           myDownloadDataLength?.length
                     }
                     onClick={(
-                      e: React.MouseEvent<HTMLTableCaptionElement, MouseEvent>
+                      e: React.MouseEvent<HTMLTableCaptionElement, MouseEvent>,
                     ) => {
                       e.stopPropagation();
 
@@ -224,21 +224,23 @@ const MusicTable = () => {
                         onCheckedAllMusic();
                       }
                     }}
-                    onChange={() => {}}
+                    onChange={() => {
+                      ('');
+                    }}
                     checked={
                       filterMusicList?.slice(offset, offset + limit)?.length ===
                         addMusicPlayer?.length +
                           filterMusicList
                             ?.slice(offset, offset + limit)
                             ?.filter(
-                              (i: MusicFormProps) => i?.email === user?.email
+                              (i: MusicFormProps) => i?.email === user?.email,
                             )?.length +
                           myDownloadDataLength?.length &&
                       filterMusicList?.slice(offset, offset + limit)?.length !==
                         filterMusicList
                           ?.slice(offset, offset + limit)
                           ?.filter(
-                            (i: MusicFormProps) => i?.email === user?.email
+                            (i: MusicFormProps) => i?.email === user?.email,
                           )?.length +
                           myDownloadDataLength?.length
                     }
@@ -246,19 +248,19 @@ const MusicTable = () => {
                 ),
               },
               {
-                title: selectFilter === "Popular" ? "순위" : "순번",
+                title: selectFilter === 'Popular' ? '순위' : '순번',
               },
               {
-                title: "음원",
+                title: '음원',
               },
               {
-                title: "제목",
+                title: '제목',
               },
               {
-                title: "가수",
+                title: '가수',
               },
               {
-                title: "장르",
+                title: '장르',
               },
               {
                 title: <SVG src="/svg/heart.svg" />,
@@ -267,20 +269,20 @@ const MusicTable = () => {
                 title: <SVG src="/svg/download.svg" />,
               },
               {
-                title: "소유자",
+                title: '소유자',
               },
               {
-                title: "등록일",
+                title: '등록일',
               },
             ]}
           >
-            {(filterMusicList[0]?.email !== "" &&
+            {(filterMusicList[0]?.email !== '' &&
               filterMusicList[0]?.title !== undefined) ||
             filterMusicList?.length !== 0 ? (
               filterMusicList
                 ?.slice(offset, offset + limit)
                 ?.sort((a: MusicFormProps, b: MusicFormProps) => {
-                  if (selectFilter === "Popular") {
+                  if (selectFilter === 'Popular') {
                     return b?.likeCount - a?.likeCount;
                   } else {
                     return b?.id - a?.id;
@@ -293,11 +295,11 @@ const MusicTable = () => {
                       if (user?.email) {
                         setIsDetailData({
                           isDetail: true,
-                          isLocation: "musicTable",
+                          isLocation: 'musicTable',
                         });
                         setMusicDetailData(item);
                       } else {
-                        alert("로그인 후 이용해주세요.");
+                        alert('로그인 후 이용해주세요.');
                       }
                     }}
                   >
@@ -305,22 +307,24 @@ const MusicTable = () => {
                       <CheckBox
                         disabled={
                           myMusicPlayList?.find(
-                            (i: MusicFormProps) => i?.id === item?.id
+                            (i: MusicFormProps) => i?.id === item?.id,
                           )
                             ? true
                             : false
                         }
-                        onChange={() => {}}
+                        onChange={() => {
+                          ('');
+                        }}
                         onClick={async (
                           e: React.MouseEvent<
                             HTMLTableCaptionElement,
                             MouseEvent
-                          >
+                          >,
                         ) => {
                           e.stopPropagation();
                           if (
                             myMusicPlayList?.find(
-                              (i: MusicFormProps) => i?.id === item?.id
+                              (i: MusicFormProps) => i?.id === item?.id,
                             )
                               ? true
                               : false
@@ -347,7 +351,7 @@ const MusicTable = () => {
                     <td>{item?.genre}</td>
                     <td>{item?.likeCount}</td>
                     <td>{item?.downloadCount}</td>
-                    <td>{item?.email?.split("@")[0]}</td>
+                    <td>{item?.email?.split('@')[0]}</td>
                     <td>{item?.date?.substr(0, 10)}</td>
                   </tr>
                 ))
@@ -367,7 +371,7 @@ const MusicTable = () => {
         </div>
       </MusicTableContainer>
       {isDetailData?.isDetail &&
-        isDetailData?.isLocation === "musicTable" &&
+        isDetailData?.isLocation === 'musicTable' &&
         user?.email && <MusicDetail detailData={musicDetailData}></MusicDetail>}
     </>
   );

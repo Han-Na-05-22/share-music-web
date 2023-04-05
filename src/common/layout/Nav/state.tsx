@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { NavProps } from "./interface";
 
 export const navState = atom({
   key: "navStateData",
