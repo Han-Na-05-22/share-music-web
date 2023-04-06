@@ -17,8 +17,36 @@ export const selectFilterState = atom({
     "락/메탈",
 });
 
+export const searchFilterState = atom<boolean>({
+  key: "searchFilterStateData",
+  default: false,
+});
+
 export const filterMusicListState = atom<MusicFormProps[]>({
   key: "filterMusicListStateData",
+  default: [
+    {
+      date: "",
+      displayName: "",
+      downloadClickList: [],
+      downloadCount: 0,
+      email: "",
+      explanation: "",
+      genre: "",
+      id: 0,
+      img: "",
+      likeCount: 0,
+      likedClickList: [],
+      mp3: "",
+      singer: "",
+      title: "",
+      url: "",
+    },
+  ],
+});
+
+export const searchMusicListState = atom<MusicFormProps[]>({
+  key: "searchMusicListStateData",
   default: [
     {
       date: "",

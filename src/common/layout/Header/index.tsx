@@ -2,12 +2,14 @@ import { musicListState, myMusicAddState } from "components/AddMusic/state";
 import Button from "components/Button";
 import { useRecoilState } from "recoil";
 import { HeaderContainer, SimpleProfileContainer } from "./style";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { loginState, userInfo } from "components/Login/state";
 import TextInput from "components/TextInput";
 import { filterGenreState, searchInputState } from "components/TextInput/state";
 import {
   filterMusicListState,
+  searchFilterState,
+  searchMusicListState,
   selectFilterState,
 } from "pages/MusicTable/state";
 import BasicSelect from "components/BasicSelect";
@@ -34,7 +36,7 @@ const Header = () => {
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
   const iconLogo = faHeadphonesSimple as IconProp;
-  const [search, setSearch] = useRecoilState<string>(searchInputState);
+  const [search, setSearch] = useRecoilState<any>(searchInputState);
   const [filterGenre, setFilterGenre] =
     useRecoilState<string>(filterGenreState);
   const [loginStateDate, setLoginStateDate] =
@@ -47,31 +49,42 @@ const Header = () => {
   const [navData, setNavData] = useRecoilState<any[]>(navState);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
+  const [searchFilter, setSearchFilter] =
+    useRecoilState<boolean>(searchFilterState);
+
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<MusicFormProps[]>(filterMusicListState);
+  const [searchMusicList, setSearchMusicList] =
+    useRecoilState<MusicFormProps[]>(searchMusicListState);
+
   const iconMyMusic = faRecordVinyl as IconProp;
+
+  const getMusicList: MusicFormProps[] = navData[0]?.isClicked
+    ? musicList
+    : filterMusicList?.map((i: any) => i);
 
   const handleChangeSelect = async (isSelected?: any) => {
     if (search?.length === 0 && isSelected === "All") {
-      setFilterMusicList(musicList);
+      setSearchMusicList(getMusicList);
     }
     if (search?.length === 0 && isSelected !== "All") {
-      setFilterMusicList(
-        musicList?.filter((i: MusicFormProps) => i?.genre === isSelected)
+      setSearchMusicList(
+        getMusicList?.filter((i: MusicFormProps) => i?.genre === isSelected),
       );
     }
 
     if (search?.length !== 0 && isSelected === "All") {
-      setFilterMusicList(
-        musicList?.filter((i: MusicFormProps) => i?.title === search)
+      setSearchMusicList(
+        getMusicList?.filter((i: MusicFormProps) => i?.title?.match(search)),
       );
     }
 
     if (search?.length !== 0 && isSelected !== "All") {
-      setFilterMusicList(
-        musicList?.filter(
-          (i: MusicFormProps) => i?.title === search && i?.genre === isSelected
-        )
+      setSearchMusicList(
+        getMusicList?.filter(
+          (i: MusicFormProps) =>
+            i?.title?.match(search) && i?.genre === isSelected,
+        ),
       );
     }
   };
@@ -85,12 +98,13 @@ const Header = () => {
               navigate("/");
               setFilterGenre("All");
               setSearch("");
+              setSearchFilter(false);
               setIsDetailData({
                 ...isDetailData,
                 isLocation: "simpleProfile",
               });
               setFilterMusicList(
-                musicList?.filter((item: MusicFormProps) => item)
+                musicList?.filter((item: MusicFormProps) => item),
               );
               setNavData(
                 navData?.map((i: any) => {
@@ -104,7 +118,7 @@ const Header = () => {
                     ...i,
                     isClicked: false,
                   };
-                })
+                }),
               );
             }}
           >
@@ -116,6 +130,7 @@ const Header = () => {
             />
             <span>MUSIC</span>
           </h1>
+
           <div className="search">
             <BasicSelect
               selectData={GenreListAll}
@@ -123,10 +138,11 @@ const Header = () => {
               value={filterGenre}
               onChange={async (event: React.ChangeEvent<HTMLSelectElement>) => {
                 await setFilterGenre(
-                  event.target.options[event.target.selectedIndex].value
+                  event.target.options[event.target.selectedIndex].value,
                 );
+                await setSearchFilter(true);
                 handleChangeSelect(
-                  event.target.options[event.target.selectedIndex].value
+                  event.target.options[event.target.selectedIndex].value,
                 );
               }}
             ></BasicSelect>
@@ -149,11 +165,9 @@ const Header = () => {
               className="my-info-submit"
               btnType="submit"
               onClick={async (e) => {
-                // await handleChangeSelect(filterGenre);
-
                 search === ""
-                  ? setFilterMusicList(
-                      musicList?.filter((item: MusicFormProps) => {
+                  ? setSearchMusicList(
+                      getMusicList?.filter((item: MusicFormProps) => {
                         if (item?.genre === filterGenre) {
                           return item;
                         }
@@ -161,21 +175,21 @@ const Header = () => {
                         if (filterGenre === "All") {
                           return item;
                         }
-                      })
+                      }),
                     )
-                  : setFilterMusicList(
-                      musicList?.filter((item: MusicFormProps) => {
+                  : setSearchMusicList(
+                      getMusicList?.filter((item: MusicFormProps) => {
                         if (filterGenre === "All") {
-                          return item?.title === search;
+                          return item?.title?.match(search);
                         } else {
                           return (
                             item?.genre === filterGenre &&
-                            item?.title === search
+                            item?.title?.match(search)
                           );
                         }
-                      })
+                      }),
                     );
-                setSelectFilter("search");
+                setSearchFilter(true);
                 navigate("/musicTable");
               }}
             >
@@ -217,7 +231,7 @@ const Header = () => {
                             ...i,
                             isClicked: false,
                           };
-                        })
+                        }),
                       );
                       navigate("/mypage");
                     }}
@@ -284,14 +298,14 @@ const Header = () => {
                 <SVG src="/svg/heart.svg" />
                 <span>
                   {musicList?.filter(
-                    (item: MusicFormProps) => item?.email === user?.email
+                    (item: MusicFormProps) => item?.email === user?.email,
                   )?.length !== 0 &&
                   musicList?.filter(
-                    (item: MusicFormProps) => item?.email === user?.email
+                    (item: MusicFormProps) => item?.email === user?.email,
                   )?.length !== undefined
                     ? musicList
                         ?.filter(
-                          (i: MusicFormProps) => i?.email === user?.email
+                          (i: MusicFormProps) => i?.email === user?.email,
                         )
                         ?.map((a: any) => a?.likeCount)
                         ?.reduce((sum: number, currValue: number) => {
@@ -304,14 +318,14 @@ const Header = () => {
                 <SVG src="/svg/download.svg" />
                 <span>
                   {musicList?.filter(
-                    (item: MusicFormProps) => item?.email === user?.email
+                    (item: MusicFormProps) => item?.email === user?.email,
                   )?.length !== 0 &&
                   musicList?.filter(
-                    (item: MusicFormProps) => item?.email === user?.email
+                    (item: MusicFormProps) => item?.email === user?.email,
                   )?.length !== undefined
                     ? musicList
                         ?.filter(
-                          (i: MusicFormProps) => i?.email === user?.email
+                          (i: MusicFormProps) => i?.email === user?.email,
                         )
                         ?.map((a: any) => a?.downloadCount)
                         ?.reduce((sum: number, currValue: number) => {
@@ -330,7 +344,7 @@ const Header = () => {
                 <span>
                   {
                     musicList?.filter(
-                      (i: MusicFormProps) => i?.email === user?.email
+                      (i: MusicFormProps) => i?.email === user?.email,
                     )?.length
                   }
                 </span>

@@ -2,12 +2,24 @@ import { useNavigate } from "react-router-dom";
 import { NavContainer } from "./style";
 import { useRecoilState } from "recoil";
 import { navState } from "./state";
-import { addMusicPlayerState, selectFilterState } from "pages/MusicTable/state";
+import {
+  addMusicPlayerState,
+  filterMusicListState,
+  searchFilterState,
+  selectFilterState,
+} from "pages/MusicTable/state";
 import { filterGenreState, searchInputState } from "components/TextInput/state";
+import { MusicFormProps } from "components/AddMusic/interface";
+import { musicListState } from "components/AddMusic/state";
 
 const Nav = () => {
   const navigate = useNavigate();
-
+  const [filterMusicList, setFilterMusicList] =
+    useRecoilState<MusicFormProps[]>(filterMusicListState);
+  const [musicList, setMusicList] =
+    useRecoilState<MusicFormProps[]>(musicListState);
+  const [searchFilter, setSearchFilter] =
+    useRecoilState<boolean>(searchFilterState);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
 
@@ -27,10 +39,15 @@ const Nav = () => {
               navData?.map((p) =>
                 p.name === item?.name
                   ? { ...p, isClicked: true }
-                  : { ...p, isClicked: false }
-              )
+                  : { ...p, isClicked: false },
+              ),
             );
+
             await setSelectFilter(item?.name);
+            setSearchFilter(false);
+            // setFilterMusicList(
+            //   musicList?.filter((item: MusicFormProps) => item),
+            // );
             setSearch("");
             setFilterGenre("All");
             setAddMusicPlayer([]);
