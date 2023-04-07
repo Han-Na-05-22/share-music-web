@@ -47,7 +47,7 @@ const MyPage = () => {
         await queryClient.invalidateQueries("getMusicAllDataList");
         alert("삭제가 완료되었습니다.");
       },
-    }
+    },
   );
 
   const handleChangePage = (page: number) => {
@@ -91,7 +91,7 @@ const MyPage = () => {
               ?.filter((i: MusicFormProps) => i?.email === user?.email)
               ?.slice(offset, offset + limit)
               ?.sort(
-                (a: MusicFormProps, b: MusicFormProps) => a?.date - b?.date
+                (a: MusicFormProps, b: MusicFormProps) => a?.date - b?.date,
               )
               ?.map((item: any, idx: number) => (
                 <tr
@@ -117,7 +117,7 @@ const MyPage = () => {
                     <SVG
                       src="/svg/term_edit.svg"
                       onClick={async (
-                        e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                        e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>,
                       ) => {
                         e.stopPropagation();
                         setCurrentMusic(item);
@@ -133,7 +133,7 @@ const MyPage = () => {
                     <SVG
                       src="/svg/term_delete.svg"
                       onClick={async (
-                        e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                        e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>,
                       ) => {
                         e.stopPropagation();
                         await setMusicDetailData(item);

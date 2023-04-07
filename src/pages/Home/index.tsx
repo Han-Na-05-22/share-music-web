@@ -1,5 +1,5 @@
 import { HomeContainer } from "./style";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { allUserInfo, userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
@@ -63,6 +63,14 @@ const Home = () => {
     pauseOnHover: true,
     vertical: false,
   };
+
+  // musicList 안에 있는 데이터 10개를 랜덤으로 가져와 저장(추천 음악리스트에 사용)
+  const recommendMusicList = musicList
+    ?.map((item: MusicFormProps) => {
+      return item;
+    })
+    ?.sort(() => 0.5 - Math.random())
+    .slice(0, 10);
 
   useEffect(() => {
     if (musicList) {
@@ -139,32 +147,29 @@ const Home = () => {
           <h3>Recommend</h3>
 
           <Slider {...settings}>
-            {musicList[0].email !== "" &&
-              musicList?.map(
-                (item: MusicFormProps, idx: number) =>
-                  idx < 10 && (
-                    <div
-                      key={idx}
-                      className="slider-list"
-                      onClick={() => {
-                        !user?.email
-                          ? alert("로그인 후 이용해주세요")
-                          : setIsDetailData({
-                              isDetail: true,
-                              isLocation: "home",
-                            });
-                        setMusicDetailData(item);
-                      }}
-                    >
-                      <img src={item?.img} alt="" />
+            {recommendMusicList &&
+              recommendMusicList?.map((item: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="slider-list"
+                  onClick={() => {
+                    !user?.email
+                      ? alert("로그인 후 이용해주세요")
+                      : setIsDetailData({
+                          isDetail: true,
+                          isLocation: "home",
+                        });
+                    setMusicDetailData(item);
+                  }}
+                >
+                  <img src={item?.img} alt="음원 이미지" />
 
-                      <div className="music-content">
-                        <span>{item?.title}</span>
-                        <span className="singer">{item?.singer}</span>
-                      </div>
-                    </div>
-                  ),
-              )}
+                  <div className="music-content">
+                    <span>{item?.title}</span>
+                    <span className="singer">{item?.singer}</span>
+                  </div>
+                </div>
+              ))}
           </Slider>
           {musicList[0].email === "" && (
             <p className="no-recommend-data">데이터가 없습니다.</p>
@@ -193,7 +198,7 @@ const Home = () => {
                       >
                         <span className="order">{idx + 1}</span>
                         <div className="img-container">
-                          <img src={item?.img} alt="" />
+                          <img src={item?.img} alt="음원 이미지" />
                         </div>
                         <div className="music-name">
                           <strong>{item?.title}</strong>-
@@ -235,7 +240,7 @@ const Home = () => {
                       >
                         <span className="order">{idx + 1}</span>
                         <div className="img-container">
-                          <img src={item?.img} alt="" />
+                          <img src={item?.img} alt="음원 이미지" />
                         </div>
 
                         <div className="music-name">

@@ -14,20 +14,20 @@ import { useRecoilState } from "recoil";
 import { loginState } from "components/Login/state";
 import imageCompression from "browser-image-compression";
 import { userFunction } from "common/api/user";
+import useInputs from "hooks/useInputs";
 
 const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const navigate = useNavigate();
 
   const [joinStateDate, setJoinStateDate] = useRecoilState<any>(loginState);
-  const [form, setForm] = useState<JoinFormProps>({
-    img: "",
-    name: "",
-    email: "",
-    password: "",
-    rePassword: "",
-    phoneNumber: "",
-    displayName: "",
-  });
+
+  const [
+    form,
+    setForm,
+    handleChangeInput,
+    handleChangeSelect,
+    handleChangeImg,
+  ] = useInputs("join");
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
@@ -52,7 +52,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       const { user }: any = await createUserWithEmailAndPassword(
         auth,
         `${email + "@music.com"}`,
-        password
+        password,
       );
       await updateProfile(user, {
         displayName: displayName,
@@ -96,46 +96,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     }
   };
 
-  const handleChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-
-    const { name } = event.target;
-    const formData = new FormData();
-    const fr = new FileReader();
-    const file = event.target.files[0];
-
-    const options = {
-      maxSizeMB: 2,
-      maxWidthOrHeight: 100,
-    };
-
-    if (file) {
-      fr.readAsDataURL(file);
-
-      fr.onload = async () => {
-        if (typeof fr.result === "string") {
-          formData.append("file", file);
-          try {
-            const compressedFile = await imageCompression(file, options);
-
-            const promise =
-              imageCompression?.getDataUrlFromFile(compressedFile);
-            promise?.then((result: any) => {
-              setForm({
-                ...form,
-                [name]: result,
-              });
-            });
-          } catch (error) {
-            return;
-          }
-        }
-      };
-    }
-  };
-
   return (
     <JoinContainer className={className} width={width} height={height}>
       <div className="user-infos">
@@ -155,12 +115,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             isError={isClicked && form?.name?.length === 0}
             errorMsg={"이름을 입력해주세요."}
             label="이름"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                name: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
           <TextInput
             width="350px"
@@ -171,12 +128,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             errorMsg={
               "아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."
             }
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                email: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
         </div>
 
@@ -195,12 +149,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           }
           value={form?.password}
           label="비밀번호"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setForm({
-              ...form,
-              password: e.target.value,
-            });
-          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChangeInput(e)
+          }
         ></TextInput>
         <TextInput
           className="user-re-password password"
@@ -215,12 +166,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           }
           errorMsg={"비밀번호가 같지 않습니다."}
           label="비밀번호 확인"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setForm({
-              ...form,
-              rePassword: e.target.value,
-            });
-          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChangeInput(e)
+          }
         ></TextInput>
 
         <div className="user-phone-displayName users">
@@ -232,12 +180,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             label="휴대폰"
             isError={isClicked && !phoneRegex?.test(form?.phoneNumber)}
             errorMsg={"하이픈을 포함한 숫자 11자리를 입력해주세요."}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                phoneNumber: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
 
           <TextInput
@@ -248,12 +193,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             label="닉네임"
             isError={isClicked && form?.displayName?.length === 0}
             errorMsg={"닉네임을 입력해주세요."}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                displayName: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
         </div>
         <div className="btn-container">
