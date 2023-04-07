@@ -8,7 +8,7 @@ import { auth } from "service/firebase";
 import { useRecoilState } from "recoil";
 import { loginState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
-import { useNavigate } from "react-router-dom";
+import useInputs from "hooks/useInputs";
 
 interface LoginFormProps {
   email: string;
@@ -18,15 +18,16 @@ interface LoginFormProps {
 const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
 
 const Login = ({ className }: LoginProps) => {
-  const [form, setForm] = useState<LoginFormProps>({
-    email: "",
-    password: "",
-  });
-  const navigate = useNavigate();
+  const [
+    form,
+    setForm,
+    handleChangeInput,
+    handleChangeSelect,
+    handleChangeImg,
+  ] = useInputs("login");
 
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
 
-  const queryClient = useQueryClient();
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
   const { mutate: loginMutation } = useMutation(
@@ -86,12 +87,9 @@ const Login = ({ className }: LoginProps) => {
           label="Email"
           isError={!emailRegex?.test(form?.email) && isClicked}
           errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setForm({
-              ...form,
-              email: e.target.value,
-            });
-          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChangeInput(e)
+          }
         ></TextInput>
         <TextInput
           name="password"
@@ -106,12 +104,9 @@ const Login = ({ className }: LoginProps) => {
           }
           value={form?.password}
           label="Password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setForm({
-              ...form,
-              password: e.target.value,
-            });
-          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleChangeInput(e)
+          }
         ></TextInput>
         <Button
           marginLeft="15px"

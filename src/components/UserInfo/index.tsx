@@ -5,23 +5,22 @@ import TextInput from "components/TextInput";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
-import { UserInfoProps } from "./interface";
+import { UserFormProps, UserInfoProps } from "./interface";
 import { UserInfoContainer } from "./style";
 import { useMutation, useQueryClient } from "react-query";
 import { userApi, userFunction } from "common/api/user";
 import { UserProps } from "components/Login/interface";
+import useInputs from "hooks/useInputs";
 
 const UserInfo = ({ className }: UserInfoProps) => {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
-
-  const [form, setForm] = useState<any>({
-    photoURL: user?.photoURL,
-    name: user?.name,
-    pwd: "",
-    rePwd: "",
-    phoneNumber: user?.phoneNumber,
-    displayName: user?.displayName,
-  });
+  const [
+    form,
+    setForm,
+    handleChangeInput,
+    handleChangeSelect,
+    handleChangeImg,
+  ] = useInputs("user");
 
   const getUserId = auth?.currentUser?.uid.replace('"', "");
 
@@ -38,32 +37,12 @@ const UserInfo = ({ className }: UserInfoProps) => {
         queryClient.invalidateQueries("getUserAllList");
         alert("수정이 완료되었습니다.");
       },
-    }
+    },
   );
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     editUser();
-  };
-
-  const handleChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-    const formData = new FormData();
-    const fr = new FileReader();
-    const file = event.target.files[0];
-
-    if (file) {
-      fr.readAsDataURL(file);
-
-      fr.onload = async () => {
-        if (typeof fr.result === "string") {
-          formData.append("file", file);
-          setForm({ ...form, photoURL: fr.result });
-        }
-      };
-    }
   };
 
   return (
@@ -85,19 +64,16 @@ const UserInfo = ({ className }: UserInfoProps) => {
             name="name"
             value={form?.name}
             label="이름"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                name: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
           <TextInput
             width="100%"
             name="email"
             value={user?.email?.split("@")[0]}
             label="아이디"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+            onChange={() => {}}
           ></TextInput>
           <TextInput
             name="phoneNumber"
@@ -105,12 +81,9 @@ const UserInfo = ({ className }: UserInfoProps) => {
             width="100%"
             value={form?.phoneNumber}
             label="휴대폰"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                phoneNumber: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
 
           <TextInput
@@ -119,12 +92,9 @@ const UserInfo = ({ className }: UserInfoProps) => {
             type="text"
             value={form?.displayName}
             label="닉네임"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setForm({
-                ...form,
-                displayName: e.target.value,
-              });
-            }}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
           ></TextInput>
         </div>
 

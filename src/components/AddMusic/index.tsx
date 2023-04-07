@@ -5,24 +5,21 @@ import Textarea from "components/Textarea";
 import TextInput from "components/TextInput";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { AddMusicFormProps, AddMusicProps, MusicFormProps } from "./interface";
+import { AddMusicProps, MusicFormProps } from "./interface";
 import { checkEditMusicState, musicListState, myMusicAddState } from "./state";
 import { AddMusicContainer } from "./style";
 import { userInfo } from "components/Login/state";
 import Loading from "components/Loading";
 import BasicSelect from "components/BasicSelect";
 import { GenreList } from "utility/data";
-import moment from "moment";
-import "moment/locale/ko";
 import { currentMusicState } from "components/Record/state";
-import imageCompression from "browser-image-compression";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
-import { auth } from "service/firebase";
 import { isMusicDetailState } from "components/MusicDetail/state";
 import { UserProps } from "components/Login/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 import { userFunction } from "common/api/user";
+import useInputs from "hooks/useInputs";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -35,7 +32,6 @@ export interface addMusicDatabaseProps {
     uniqueKey: string;
     img: string;
   };
-
   setIsCompleted?: any;
   getUrl?: any;
 }
@@ -51,110 +47,20 @@ const AddMusic = ({
     useRecoilState<MusicFormProps>(currentMusicState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
-  const [form, setForm] = useState<AddMusicFormProps>({
-    img: "",
-    mp3: "",
-    title: "",
-    genre: "POP",
-    displayName: auth?.currentUser?.displayName,
-    singer: "",
-    explanation: "",
-    mpName: "",
-    uniqueKey: new Date()?.getTime(),
-    date: moment().format("YYYY-MM-DD HH:mm:ss"),
-  });
+
+  const [
+    form,
+    setForm,
+    handleChangeInput,
+    handleChangeSelect,
+    handleChangeImg,
+  ] = useInputs("add");
 
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<string>("none");
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
-
-  const handleChangeSelect = (event: any) => {
-    const { name } = event.target;
-    const isSelected = event.target.options[event.target.selectedIndex].value;
-
-    if (isEdit !== "edit") {
-      setForm({ ...form, [name]: isSelected });
-    }
-
-    if (isEdit === "edit") {
-      setCurrentMusic({
-        ...currentMusic,
-        [name]: isSelected,
-      });
-    }
-  };
-
-  const handleChangeInput = (event: any) => {
-    const { name } = event.target;
-
-    if (isEdit !== "edit") {
-      setForm({
-        ...form,
-        [name]: event.target.value,
-      });
-    }
-
-    if (isEdit === "edit") {
-      setCurrentMusic({
-        ...currentMusic,
-        [name]: event.target.value,
-      });
-    }
-  };
-
-  const handleChangeMusicImg = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-
-    const { name } = event.target;
-    const formData = new FormData();
-    const fr = new FileReader();
-    const file = event.target.files[0];
-
-    const options = {
-      maxSizeMB: 2,
-      maxWidthOrHeight: 100,
-    };
-
-    if (file) {
-      fr.readAsDataURL(file);
-
-      fr.onload = async () => {
-        if (typeof fr.result === "string") {
-          formData.append("file", file);
-
-          if (name === "mp3") {
-            return setForm({
-              ...form,
-              [name]: fr.result,
-              mpName: file?.name,
-              formData: file,
-            });
-          }
-
-          if (name === "img") {
-            try {
-              const compressedFile = await imageCompression(file, options);
-
-              const promise =
-                imageCompression?.getDataUrlFromFile(compressedFile);
-              promise?.then((result: any) => {
-                setForm({
-                  ...form,
-                  img: result,
-                });
-              });
-            } catch (error) {
-              return;
-            }
-          }
-        }
-      };
-    }
-  };
 
   const queryClient = useQueryClient();
 
@@ -188,7 +94,7 @@ const AddMusic = ({
         setTimeout(function () {
           console.log("실행됨!");
           queryClient.invalidateQueries("getMusicAllDataList");
-        }, 4000);
+        }, 10000);
       },
     },
   );
@@ -233,18 +139,18 @@ const AddMusic = ({
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);
-      setForm({
-        img: "",
-        mp3: "",
-        title: "",
-        singer: "",
-        explanation: "",
-        genre: "",
-        displayName: "",
-        mpName: "",
-        uniqueKey: new Date()?.getTime(),
-        date: moment().format("YYYY-MM-DD HH:mm:ss"),
-      });
+      // setForm({
+      //   img: "",
+      //   mp3: "",
+      //   title: "",
+      //   singer: "",
+      //   explanation: "",
+      //   genre: "",
+      //   displayName: "",
+      //   mpName: "",
+      //   uniqueKey: new Date()?.getTime(),
+      //   date: moment().format("YYYY-MM-DD HH:mm:ss"),
+      // });
     }
   }, [isCompleted]);
 
@@ -260,12 +166,12 @@ const AddMusic = ({
                 isError={isClicked && form?.img?.length === 0}
                 errMsg={"이미지를 등록해 주세요."}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  handleChangeMusicImg(e);
+                  handleChangeImg(e);
                 }}
                 onClickDelete={() => userFunction?.deleteImg(setForm, "img")}
               />
             ) : (
-              <img src={currentMusic?.img} alt="" />
+              <img src={currentMusic?.img} alt="내가 클릭한 음원 이미지" />
             )}
           </div>
 
@@ -295,7 +201,7 @@ const AddMusic = ({
                   value={undefined}
                   label="음원등록"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    handleChangeMusicImg(e)
+                    handleChangeImg(e, isEdit)
                   }
                 ></TextInput>
               </>
@@ -307,7 +213,9 @@ const AddMusic = ({
               selectData={GenreList}
               name="genre"
               value={isEdit === "edit" ? currentMusic?.genre : form?.genre}
-              onChange={handleChangeSelect}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                handleChangeSelect(e, isEdit)
+              }
             ></BasicSelect>
           </div>
           <div className="music-title-singer musics">
@@ -320,9 +228,9 @@ const AddMusic = ({
                 isClicked && isEdit !== "edit" && form?.title?.length === 0
               }
               errorMsg={"제목을 입력해주세요."}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleChangeInput(e);
-              }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChangeInput(e, isEdit)
+              }
             ></TextInput>
             <TextInput
               width="300px"
@@ -333,9 +241,9 @@ const AddMusic = ({
                 isClicked && isEdit !== "edit" && form?.singer?.length === 0
               }
               errorMsg={"가수명을 입력해주세요."}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleChangeInput(e);
-              }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleChangeInput(e, isEdit)
+              }
             ></TextInput>
           </div>
           <div className="music-explan musics">
@@ -354,7 +262,7 @@ const AddMusic = ({
                   : currentMusic?.explanation
               }
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                handleChangeInput(e);
+                handleChangeInput(e, isEdit);
               }}
             ></Textarea>
           </div>
@@ -364,6 +272,10 @@ const AddMusic = ({
               onClick={() => {
                 setIsAddMuisc(false);
                 setIsEdit("");
+                setIsDetailData({
+                  isDetail: false,
+                  isLocation: "",
+                });
               }}
             >
               취소

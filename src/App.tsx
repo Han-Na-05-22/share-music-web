@@ -104,13 +104,13 @@ function App() {
               (item: MusicFormProps) => item?.email === user?.email,
             ),
           )
-          ?.sort((a: any, b: any) => b?.id - a?.id),
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
     } else {
       setMyMusicPlayList(
         musicList
           ?.filter((item: MusicFormProps) => item?.email === user?.email)
-          ?.sort((a: any, b: any) => b?.id - a?.id),
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
     }
   }, [musicList]);
