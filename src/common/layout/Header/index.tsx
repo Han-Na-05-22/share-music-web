@@ -284,7 +284,7 @@ const Header = () => {
             {user?.email && (
               <div className="auth-profile">
                 {user?.photoURL ? (
-                  <img src={user?.photoURL} alt="" />
+                  <img src={user?.photoURL} alt="사용자 프로필 이미지" />
                 ) : (
                   <SVG src="/svg/profile.svg" />
                 )}

@@ -2,12 +2,9 @@ import Container from "common/layout/Container";
 import Header from "common/layout/Header";
 import { musicListState } from "components/AddMusic/state";
 import { allUserInfo, userInfo } from "components/Login/state";
-import Home from "pages/Home";
-import MusicTable from "pages/MusicTable";
-import MyPage from "pages/MyPage";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
@@ -23,6 +20,10 @@ import {
 } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 import { navState } from "common/layout/Nav/state";
+import Loading from "components/Loading";
+import Home from "pages/Home";
+import MyPage from "pages/MyPage";
+import MusicTable from "pages/MusicTable";
 
 function App() {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
@@ -97,17 +98,19 @@ function App() {
 
     if (getDownloadMusicList) {
       setMyMusicPlayList(
-        getDownloadMusicList?.concat(
-          musicList?.filter(
-            (item: MusicFormProps) => item?.email === user?.email,
-          ),
-        ),
+        getDownloadMusicList
+          ?.concat(
+            musicList?.filter(
+              (item: MusicFormProps) => item?.email === user?.email,
+            ),
+          )
+          ?.sort((a: any, b: any) => b?.id - a?.id),
       );
     } else {
       setMyMusicPlayList(
-        musicList?.filter(
-          (item: MusicFormProps) => item?.email === user?.email,
-        ),
+        musicList
+          ?.filter((item: MusicFormProps) => item?.email === user?.email)
+          ?.sort((a: any, b: any) => b?.id - a?.id),
       );
     }
   }, [musicList]);
@@ -125,27 +128,29 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/musicTable" element={<MusicTable />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<Loading />}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/musicTable" element={<MusicTable />} />
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
 
-        <PlayList
-          className={
-            isDetailData?.isLocation === "playList" ? "detail-play-list" : ""
-          }
-          onClick={() => {
-            setIsDetailData({
-              isDetail: true,
-              isLocation: "playList",
-            });
-          }}
-          play={false}
-          playListData={myMusicPlayList}
-        ></PlayList>
+          <PlayList
+            className={
+              isDetailData?.isLocation === "playList" ? "detail-play-list" : ""
+            }
+            onClick={() => {
+              setIsDetailData({
+                isDetail: true,
+                isLocation: "playList",
+              });
+            }}
+            play={false}
+            playListData={myMusicPlayList}
+          ></PlayList>
+        </Suspense>
       </Container>
     </div>
   );

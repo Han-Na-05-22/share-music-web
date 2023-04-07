@@ -58,8 +58,7 @@ const Login = ({ className }: LoginProps) => {
           ...loginStateDate,
           isLogin: false,
         });
-        navigate("/");
-        window.location.reload();
+        window?.location?.replace("/");
       },
     },
   );

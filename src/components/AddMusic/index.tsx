@@ -173,7 +173,7 @@ const AddMusic = ({
         form,
         setIsCompleted,
         musicApi?.sendMusicData,
-        musicList
+        musicList,
       ),
 
     {
@@ -184,12 +184,13 @@ const AddMusic = ({
       onSuccess: async () => {
         queryClient.invalidateQueries("getMusicAllDataList");
         setIsClicked(false);
+
         setTimeout(function () {
           console.log("실행됨!");
           queryClient.invalidateQueries("getMusicAllDataList");
         }, 4000);
       },
-    }
+    },
   );
 
   const { mutate: updateMusicData } = useMutation(
@@ -197,7 +198,7 @@ const AddMusic = ({
       musicApi?.updateMusicDataList(
         musicList
           ?.filter((i: any) => i?.id !== currentMusic?.id)
-          ?.concat(currentMusic)
+          ?.concat(currentMusic),
       ),
     {
       onError: (error) => {
@@ -213,7 +214,7 @@ const AddMusic = ({
         });
         alert("수정이 완료되었습니다.");
       },
-    }
+    },
   );
 
   const handleSubmit = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

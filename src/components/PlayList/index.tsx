@@ -62,7 +62,7 @@ const PlayList = ({
                   src="/svg/prev.svg"
                   className="prev-btn btn"
                   onClick={(
-                    e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                    e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>,
                   ) => {
                     e.stopPropagation();
                     setIsPlay(false);
@@ -98,7 +98,7 @@ const PlayList = ({
                   src="/svg/next.svg"
                   className="next-btn btn"
                   onClick={(
-                    e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                    e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>,
                   ) => {
                     e.stopPropagation();
                     setIsPlay(false);
