@@ -114,7 +114,7 @@ const MusicTable = () => {
   };
 
   const handleChangePage = (page: number) => {
-    if (musicList?.length < 10) {
+    if (getMusicList?.length < 10) {
       page = 1;
       return setPage(page);
     } else {
