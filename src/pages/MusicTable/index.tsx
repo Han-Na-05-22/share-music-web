@@ -32,6 +32,8 @@ import { toastMsg } from "utility/toastMsg";
 const MusicTable = () => {
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
+
+  // 필터링된 음악리스트
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<MusicFormProps[]>(filterMusicListState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
@@ -55,6 +57,8 @@ const MusicTable = () => {
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<MusicFormProps>(musicDetailState);
   const quertyClient = useQueryClient();
+
+  // 나의 플레이리스트에 다른 유저의 음원 추가
   const { mutate: updateMusicDownloadAllCount } = useMutation(
     () =>
       musicApi?.updateMusicCountData(
@@ -76,6 +80,7 @@ const MusicTable = () => {
     ? searchMusicList
     : filterMusicList?.map((i: any) => i);
 
+  // 체크박스 전체 체크
   const onCheckedAllMusic = () => {
     let array: any = "";
     if (
@@ -102,6 +107,7 @@ const MusicTable = () => {
     }
   };
 
+  // 체크박스 개별 체크
   const onCheckedMusic = (id: number) => {
     if (addMusicPlayer?.length === 0) {
       setAddMusicPlayer([id]);
@@ -131,6 +137,7 @@ const MusicTable = () => {
       getMusicList?.length ||
     musicList?.length === myMusicPlayList?.length;
 
+  // 내 플레이리스트에 있는 다른 유저 음악들 가져오기
   const getMyDownloadData = () => {
     if (getMusicList?.length !== 0) {
       getMusicList
@@ -157,6 +164,7 @@ const MusicTable = () => {
       return;
     }
 
+    // 클릭한 메뉴에 맞게 filterMusicList에 음악리스트를 담음(인기순, 최신순, 내가 등록한 음악, 내 플레이리스트  음악)
     if (
       selectFilter === "MyMusic" &&
       musicList[0]?.email !== "" &&

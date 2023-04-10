@@ -2,7 +2,7 @@ import { musicListState, myMusicAddState } from "components/AddMusic/state";
 import Button from "components/Button";
 import { useRecoilState } from "recoil";
 import { HeaderContainer, SimpleProfileContainer } from "./style";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginState, userInfo } from "components/Login/state";
 import TextInput from "components/TextInput";
 import { filterGenreState, searchInputState } from "components/TextInput/state";
@@ -10,7 +10,6 @@ import {
   filterMusicListState,
   searchFilterState,
   searchMusicListState,
-  selectFilterState,
 } from "pages/MusicTable/state";
 import BasicSelect from "components/BasicSelect";
 import { GenreListAll } from "utility/data";
@@ -44,14 +43,10 @@ const Header = () => {
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
-
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
   const [navData, setNavData] = useRecoilState<any[]>(navState);
-  const [selectFilter, setSelectFilter] =
-    useRecoilState<string>(selectFilterState);
   const [searchFilter, setSearchFilter] =
     useRecoilState<boolean>(searchFilterState);
-
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<MusicFormProps[]>(filterMusicListState);
   const [searchMusicList, setSearchMusicList] =
@@ -280,6 +275,7 @@ const Header = () => {
             )}
           </div>
         </div>
+        {/*  Header 아래 표시되는 로그인한 user 간단 정보 */}
         {navData?.find((i: any) => i?.isClicked === true) !== undefined && (
           <SimpleProfileContainer>
             {user?.email && (

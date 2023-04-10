@@ -27,21 +27,34 @@ import MyPage from "pages/MyPage";
 import MusicTable from "pages/MusicTable";
 
 function App() {
+  // 로그인한 유저 정보
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
+
+  // nav 메뉴리스트
   const [navData, setNavData] = useRecoilState<any[]>(navState);
+
+  // 전체 user리스트
   const [userAll, setUserAll] = useRecoilState<UserProps[]>(allUserInfo);
+
+  // 전체 음악리스트
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
+
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
+
+  // 내 플레이리스트 음악
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<MusicFormProps[]>(myMusicPlayListState);
   const navigate = useNavigate();
+
+  // get 전체 user 정보
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
     "getUserAllList",
     userApi?.getUserAllDataList(),
   );
 
+  // get 현재 로그인한 user 정보
   const { isLoading: userDataLoading, data: userData } = useQuery<{
     displayName: string;
     email: string;
@@ -50,6 +63,7 @@ function App() {
     return JSON.parse(sessionStorage.getItem("user") || "{}");
   });
 
+  // get 전체 음악리스트
   const { isLoading: musicAllListDataLoading, data: musicAllListData } =
     useQuery<MusicFormProps[]>(
       "getMusicAllDataList",
@@ -101,6 +115,7 @@ function App() {
     getDownloadMusicData();
 
     if (getDownloadMusicList) {
+      // 내가 등록한 음악리스트와 플레이리스트에 추가한 다른 유저의 음악을 합침
       setMyMusicPlayList(
         getDownloadMusicList
           ?.concat(
@@ -120,6 +135,7 @@ function App() {
   }, [musicList]);
 
   useEffect(() => {
+    // 다시 랜더링될 때마다 home으로(스타일 지정되어 있음)
     navigate(
       navData?.find((i: any) => {
         if (i?.name === "Home" && i?.isClicked) {

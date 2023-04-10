@@ -24,17 +24,23 @@ import { MusicFormProps } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const Home = () => {
+  // 음악 인기순
   const [musicLikeCountTopten, setMusicLikeCountTopten] = useRecoilState<
     MusicFormProps[]
   >(musicLikeCountToptenState);
   const [userAll, setUserAll] = useRecoilState<UserProps[]>(allUserInfo);
+
+  // 음악 최신순
   const [musicNewDataList, setMusicNewDataList] = useRecoilState<
     MusicFormProps[]
   >(musicNewDataListState);
+
+  // 아티스트 인기순
   const [artistLikeCountTopten, setArtistLikeCountTopten] = useRecoilState<any>(
     artistLikeCountToptenState,
   );
 
+  // 아티스트 다운로드 순(다른 유저가 내 음악을 플레이리스트에 담은 순)
   const [artistDownloadCountTopten, setArtistDownloadCountTopten] =
     useRecoilState<any>(artistDownloadCountToptenState);
 
@@ -43,9 +49,12 @@ const Home = () => {
     useRecoilState<MusicFormProps[]>(musicListState);
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
+
+  // 내가 클릭한 음원 데이터 정보
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<MusicFormProps>(musicDetailState);
 
+  // 슬라이드 옵션 설정
   const settings = {
     dots: false,
     infinite: true,
@@ -64,10 +73,11 @@ const Home = () => {
     vertical: false,
   };
 
-  // musicList 안에 있는 데이터 10개를 랜덤으로 가져와 저장(추천 음악리스트에 사용)
+  // 랜덤 추천 음악리스트
   const [recommendMusicList, setRecommendMusicList] =
     useState<MusicFormProps[]>();
 
+  // musicList 안에 있는 데이터 10개를 랜덤으로 가져와 저장(추천 음악리스트에 사용)
   const getRecommendMusicList = useMemo(() => {
     return musicList
       ?.map((item: MusicFormProps) => {

@@ -56,6 +56,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
       {},
   );
 
+  // onChange input
   const handleChangeInput = (
     event: React.ChangeEvent<HTMLInputElement>,
     isEdit?: string,
@@ -75,6 +76,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
     });
   };
 
+  // onChange select
   const handleChangeSelect = (
     event: React.ChangeEvent<HTMLSelectElement>,
     isEdit?: string,
@@ -92,6 +94,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
     setForm({ ...form, [name]: isSelected });
   };
 
+  // onChange img
   const handleChangeImg = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       return;

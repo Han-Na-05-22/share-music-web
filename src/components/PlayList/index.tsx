@@ -12,6 +12,7 @@ import { playListIndexState } from "./state";
 import { UserProps } from "components/Login/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
+// 나의 플레이리스트(화면 하단에 고정)
 const PlayList = ({
   className,
   children,

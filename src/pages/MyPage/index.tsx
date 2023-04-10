@@ -29,6 +29,8 @@ const MyPage = () => {
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<MusicFormProps>(musicDetailState);
   const [isEdit, setIsEdit] = useRecoilState<string>(checkEditMusicState);
+
+  // 내가 수정할 음악 데이터 정보
   const [currentMusic, setCurrentMusic] =
     useRecoilState<MusicFormProps>(currentMusicState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
@@ -36,6 +38,8 @@ const MyPage = () => {
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
   const queryClient = useQueryClient();
+
+  // 내가 등록한 음악 삭제
   const { mutate: deleteMusic } = useMutation(
     () => musicApi?.deleteMusicData(musicDetailData),
     {
@@ -62,6 +66,7 @@ const MyPage = () => {
 
   return (
     <MyPageContainer>
+      {/* UserInfo 컴포넌트에 내정보 수정 기능까지 함께 구현함 */}
       <UserInfo className="user-info-container"></UserInfo>
       <div className="tabel-container">
         <Tabel

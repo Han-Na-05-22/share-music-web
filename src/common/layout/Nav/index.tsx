@@ -30,6 +30,7 @@ const Nav = () => {
     useRecoilState<string>(filterGenreState);
   const [addMusicPlayer, setAddMusicPlayer] =
     useRecoilState<any[]>(addMusicPlayerState);
+
   return (
     <NavContainer>
       {navData?.map((item: any, idx: number) => (
