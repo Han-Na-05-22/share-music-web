@@ -34,10 +34,10 @@ const Record = ({
       onError: (error) => {
         console.log("error:", error);
       },
-      onSuccess: async () => {
-        await quertyClient.invalidateQueries("getMusicAllDataList");
+      onSuccess: () => {
+        quertyClient.invalidateQueries("getMusicAllDataList");
       },
-    }
+    },
   );
 
   const { mutate: updateMusicDownloadCount } = useMutation(
@@ -46,16 +46,16 @@ const Record = ({
         "download",
         musicList,
         musicDetailData,
-        user
+        user,
       ),
     {
       onError: (error) => {
         console.log("error: ", error);
       },
-      onSuccess: async () => {
-        await quertyClient.invalidateQueries("getMusicAllDataList");
+      onSuccess: () => {
+        quertyClient.invalidateQueries("getMusicAllDataList");
       },
-    }
+    },
   );
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -113,7 +113,7 @@ const Record = ({
             <strong>
               {
                 musicList?.find(
-                  (item: MusicFormProps) => item?.id === musicDetailData?.id
+                  (item: MusicFormProps) => item?.id === musicDetailData?.id,
                 )?.likeCount
               }
             </strong>
@@ -130,7 +130,7 @@ const Record = ({
                   : "term_download"
               }.svg`}
               onClick={async (
-                e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>
+                e: React.MouseEvent<HTMLOrSVGElement, MouseEvent>,
               ) => {
                 if (musicDetailData?.email !== user?.email) {
                   e.preventDefault();
@@ -150,7 +150,7 @@ const Record = ({
             <strong>
               {
                 musicList?.find(
-                  (item: MusicFormProps) => item?.id === musicDetailData?.id
+                  (item: MusicFormProps) => item?.id === musicDetailData?.id,
                 )?.downloadCount
               }
             </strong>

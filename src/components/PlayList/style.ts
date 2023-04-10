@@ -193,7 +193,7 @@ export const PlayListContainer = styled.div`
     background: ${({ theme }) => theme.colors.BgColor};
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 100px 20px 100px;
+    padding: 100px 20px 50px;
 
     .paly-list-container {
       width: 100%;
@@ -461,7 +461,7 @@ export const PlayListContainer = styled.div`
       background: ${({ theme }) => theme.colors.BgColor};
       flex-direction: column;
       justify-content: space-evenly;
-      padding: 100px 20px 100px;
+      padding: 100px 20px 50px;
 
       .paly-list-container {
         width: 100%;
@@ -532,6 +532,7 @@ export const PlayListContainer = styled.div`
           gap: 30px 0px;
           width: 100%;
           align-items: center;
+
           strong,
           p,
           span {
@@ -856,7 +857,7 @@ export const PlayListContainer = styled.div`
       background: ${({ theme }) => theme.colors.BgColor};
       flex-direction: column;
       justify-content: space-evenly;
-      padding: 100px 20px 100px;
+      padding: 100px 20px 50px;
 
       .paly-list-container {
         width: 100%;

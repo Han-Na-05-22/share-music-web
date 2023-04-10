@@ -54,7 +54,9 @@ const PlayList = ({
           </Button>
         )}
         {user?.email ? (
-          playListData?.length !== 0 && playListData?.length !== undefined ? (
+          playListData?.length !== 0 &&
+          playListData?.length !== undefined &&
+          playListData[0]?.title !== "" ? (
             <>
               <div className="paly-list-container" onClick={onClick}>
                 <span className="about-genre">{playListData[idx]?.genre}</span>

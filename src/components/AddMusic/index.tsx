@@ -88,13 +88,16 @@ const AddMusic = ({
       onError: (error) => {
         console.log("error : ", error);
         setIsClicked(true);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
       },
       onSuccess: async () => {
         setIsClicked(false);
       },
     },
   );
-  console.log("isCompleted", isCompleted);
+
   const { mutate: updateMusicData } = useMutation(
     () =>
       musicApi?.updateMusicDataList(
@@ -136,19 +139,6 @@ const AddMusic = ({
     if (isCompleted === "done") {
       setIsAddMuisc(false);
       queryClient.invalidateQueries("getMusicAllDataList");
-
-      // setForm({
-      //   img: "",
-      //   mp3: "",
-      //   title: "",
-      //   singer: "",
-      //   explanation: "",
-      //   genre: "",
-      //   displayName: "",
-      //   mpName: "",
-      //   uniqueKey: new Date()?.getTime(),
-      //   date: moment().format("YYYY-MM-DD HH:mm:ss"),
-      // });
     }
   }, [isCompleted]);
 

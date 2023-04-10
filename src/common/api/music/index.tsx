@@ -44,11 +44,11 @@ export const musicApi = {
   ) => {
     const washingtonRef = doc(firestore, "music", "musicList");
 
-    if (musicListData?.length === 0) {
+    if (musicListData?.length === 0 || musicListData[0]?.title === "") {
       await setDoc(washingtonRef, {
         data: [
           {
-            id: musicListData?.length + 1 || 1,
+            id: musicListData?.length,
             email: email,
             title: data?.title,
             singer: data?.singer,
@@ -74,7 +74,7 @@ export const musicApi = {
     } else {
       await updateDoc(washingtonRef, {
         data: arrayUnion({
-          id: musicListData?.length + 1,
+          id: musicListData[0]?.id + 1,
           email: email,
           title: data?.title,
           displayName: data?.displayName,

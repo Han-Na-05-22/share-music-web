@@ -74,7 +74,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
       [name]: value,
     });
   };
-  console.log("form", form);
+
   const handleChangeSelect = (
     event: React.ChangeEvent<HTMLSelectElement>,
     isEdit?: string,
@@ -104,7 +104,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
 
     const options = {
       maxSizeMB: 2,
-      maxWidthOrHeight: 100,
+      maxWidthOrHeight: 200,
     };
 
     if (file) {
@@ -129,7 +129,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
             promise?.then((result: any) => {
               setForm({
                 ...form,
-                [name]: result,
+                [name]: fr.result,
               });
             });
           }

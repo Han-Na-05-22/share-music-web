@@ -208,6 +208,8 @@ export const HomeContainer = styled.div`
       & > div {
         border-radius: 10px;
         width: 100%;
+        height: 100%;
+        min-height: 300px;
         padding: 20px 40px;
         background: ${({ theme }) => theme.colors.BgHover};
         table {
@@ -229,7 +231,7 @@ export const HomeContainer = styled.div`
           }
           tbody {
             max-height: 100%;
-            min-height: 500px;
+            min-height: 200px;
           }
         }
       }
@@ -413,7 +415,7 @@ export const HomeContainer = styled.div`
         }
 
         & > div {
-          padding: 10px 15px 30px;
+          padding: 10px 15px 15px;
           table {
             thead {
               height: 50px;

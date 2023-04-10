@@ -37,7 +37,7 @@ const UserInfo = ({ className }: UserInfoProps) => {
       },
       onSuccess: () => {
         queryClient.invalidateQueries("getUserAllList");
-        toastMsg("update", "failure");
+        toastMsg("update", "success");
       },
     },
   );

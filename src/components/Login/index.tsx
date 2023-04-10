@@ -26,7 +26,7 @@ const Login = ({ className }: LoginProps) => {
     handleChangeSelect,
     handleChangeImg,
   ] = useInputs("login");
-
+  const queryClient = useQueryClient();
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
 
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -54,12 +54,15 @@ const Login = ({ className }: LoginProps) => {
           }),
         );
         toastMsg("login", "success");
-        await setIsClicked(false);
+
+        setIsClicked(false);
         setLoginStateDate({
           ...loginStateDate,
           isLogin: false,
         });
-        window?.location?.replace("/");
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
       },
     },
   );

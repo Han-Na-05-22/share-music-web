@@ -35,7 +35,7 @@ const MusicTable = () => {
   const [filterMusicList, setFilterMusicList] =
     useRecoilState<MusicFormProps[]>(filterMusicListState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
-  const [limit, setLimit] = useState<number>(15);
+  const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const [selectFilter, setSelectFilter] =
     useRecoilState<string>(selectFilterState);
@@ -295,9 +295,8 @@ const MusicTable = () => {
               },
             ]}
           >
-            {(getMusicList[0]?.email !== "" &&
-              getMusicList[0]?.title !== undefined) ||
-            getMusicList?.length !== 0 ? (
+            {getMusicList?.length !== 0 &&
+            getMusicList[0]?.email !== undefined ? (
               getMusicList
                 ?.slice(offset, offset + limit)
                 ?.sort((a: MusicFormProps, b: MusicFormProps) => {
@@ -376,15 +375,17 @@ const MusicTable = () => {
               <p className="no-data">데이터가 없습니다.</p>
             )}
           </Tabel>
-
-          <Pagination
-            total={getMusicList?.length}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-            onCheckedBtn={() => setAddMusicPlayer([])}
-            handleChangePage={handleChangePage}
-          />
+          {getMusicList?.length !== 0 &&
+            getMusicList[0]?.email !== undefined && (
+              <Pagination
+                total={getMusicList?.length}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+                onCheckedBtn={() => setAddMusicPlayer([])}
+                handleChangePage={handleChangePage}
+              />
+            )}
         </div>
       </MusicTableContainer>
       {isDetailData?.isDetail &&

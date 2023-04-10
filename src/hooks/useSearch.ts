@@ -19,7 +19,7 @@ export default function useSearch() {
     limit: 15,
     isHome: true,
   });
-  console.log("search", search);
+
   const offset = (search?.page - 1) * search?.limit;
 
   const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {

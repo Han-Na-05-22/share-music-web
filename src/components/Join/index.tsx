@@ -33,7 +33,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   const phoneRegex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
-
   const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
 
   const isRegex: boolean =
@@ -47,53 +46,37 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     phoneRegex?.test(form?.phoneNumber);
 
   const signUp = async ({ email, password, displayName }: any) => {
-    try {
-      await isRegex;
-      const { user }: any = await createUserWithEmailAndPassword(
-        auth,
-        `${email + "@music.com"}`,
-        password,
-      );
-      await updateProfile(user, {
+    const { user }: any = await createUserWithEmailAndPassword(
+      auth,
+      `${email + "@music.com"}`,
+      password,
+    );
+    await updateProfile(user, {
+      displayName: displayName,
+    });
+
+    const washingtonRef = await doc(firestore, "users", user?.uid);
+
+    await setDoc(washingtonRef, {
+      userInfo: {
+        photoURL: form?.img,
+        name: form?.name,
         displayName: displayName,
-      });
+        email: `${email}@music.com`,
+        phoneNumber: form?.phoneNumber,
+        creationTime: user?.metadata?.creationTime,
+      },
+    });
+    toastMsg("join", "success");
 
-      const washingtonRef = await doc(firestore, "users", user?.uid);
+    await auth?.signOut();
+    await sessionStorage?.removeItem("user");
 
-      await setDoc(washingtonRef, {
-        userInfo: {
-          photoURL: form?.img,
-          name: form?.name,
-          displayName: displayName,
-          email: `${email}@music.com`,
-          phoneNumber: form?.phoneNumber,
-          creationTime: user?.metadata?.creationTime,
-        },
-      });
-
-      auth?.signOut();
-
-      setForm({
-        img: "",
-        name: "",
-        email: "",
-        password: "",
-        rePassword: "",
-        phoneNumber: "",
-        displayName: "",
-      });
-
-      toastMsg("join", "success");
+    setJoinStateDate(false);
+    setIsClicked(false);
+    setTimeout(async () => {
       window.location.reload();
-      setJoinStateDate(false);
-      setIsClicked(false);
-      return user;
-    } catch (err) {
-      setIsClicked(true);
-      console.log("err", err);
-      toastMsg("join", "failure");
-      navigate("/");
-    }
+    }, 1500);
   };
 
   return (
@@ -176,10 +159,13 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             name="phoneNumber"
             type="text"
             width="350px"
-            value={form?.phoneNumber}
+            value={form?.phoneNumber
+              .replace(/[^0-9]/g, "")
+              .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
+              .replace(/(\-{1,2})$/g, "")}
             label="휴대폰"
             isError={isClicked && !phoneRegex?.test(form?.phoneNumber)}
-            errorMsg={"하이픈을 포함한 숫자 11자리를 입력해주세요."}
+            errorMsg={"휴대폰 번호를 다시 확인해주세요."}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChangeInput(e)
             }
@@ -211,11 +197,17 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             marginLeft="15px"
             btnType={"submit"}
             onClick={() => {
-              signUp({
-                email: form?.email,
-                password: form?.password,
-                displayName: form?.displayName,
-              });
+              if (isRegex) {
+                signUp({
+                  email: form?.email,
+                  password: form?.password,
+                  displayName: form?.displayName,
+                });
+              } else {
+                setIsClicked(true);
+                toastMsg("join", "failure");
+                navigate("/");
+              }
             }}
           >
             확인

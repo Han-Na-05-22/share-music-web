@@ -55,7 +55,7 @@ const Home = () => {
     centerPadding: "60px",
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
     loop: true,
     draggable: true,
     slide: "div",
@@ -76,7 +76,7 @@ const Home = () => {
       ?.sort(() => 0.5 - Math.random())
       .slice(0, 10);
   }, [musicList]);
-
+  console.log("dqwfdwqf", musicNewDataList);
   useEffect(() => {
     if (musicList) {
       setRecommendMusicList(getRecommendMusicList);
@@ -92,9 +92,9 @@ const Home = () => {
       setMusicNewDataList(
         musicList
           ?.map((item: MusicFormProps) => item)
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date),
       );
-      console.log("dafaef", musicNewDataList);
+
       setArtistLikeCountTopten([
         musicList?.reduce(function (
           accumulator: any,
@@ -272,7 +272,7 @@ const Home = () => {
 
         <section className="artist-slider">
           <div className="tabel-container">
-            <h4>⭐️ Top10 Artist Like</h4>
+            <h4>⭐️ Top7 Artist Like</h4>
             <Tabel
               theadData={[
                 {
@@ -296,7 +296,7 @@ const Home = () => {
                   ?.sort((a: any, b: any) => b?.likeCount - a?.likeCount)
                   ?.map(
                     (item: any, idx: number) =>
-                      idx < 10 && (
+                      idx < 7 && (
                         <tr
                           key={idx}
                           onClick={(
@@ -331,7 +331,7 @@ const Home = () => {
             )}
           </div>
           <div className="tabel-container">
-            <h4>⭐️ Top10 Artist Download</h4>
+            <h4>⭐️ Top7 Artist Download</h4>
             <Tabel
               theadData={[
                 {
@@ -358,7 +358,7 @@ const Home = () => {
                   )
                   ?.map(
                     (item: any, idx: number) =>
-                      idx < 10 && (
+                      idx < 7 && (
                         <tr
                           key={idx}
                           onClick={(

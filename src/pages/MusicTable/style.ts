@@ -42,7 +42,7 @@ export const MusicTableContainer = styled.div`
     }
 
     .no-tabel-data {
-      height: 750px;
+      min-height: 375px;
     }
     table {
       width: 100%;
