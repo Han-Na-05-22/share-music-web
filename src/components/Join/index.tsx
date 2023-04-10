@@ -29,8 +29,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     handleChangeImg,
   ] = useInputs("join");
 
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   const phoneRegex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
   const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
@@ -71,14 +69,13 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       toastMsg("join", "success");
 
       await auth?.signOut();
-      await sessionStorage?.removeItem("user");
 
       setJoinStateDate(false);
-      setIsClicked(false);
 
-      // window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch {
-      setIsClicked(true);
       toastMsg("join", "failure");
     }
   };
@@ -99,7 +96,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             width="350px"
             name="name"
             value={form?.name}
-            isError={isClicked && form?.name?.length === 0}
+            isError={form?.name?.length === 0}
             errorMsg={"이름을 입력해주세요."}
             label="이름"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -111,10 +108,8 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             name="email"
             value={form?.email}
             label="아이디"
-            isError={isClicked && !emailRegex?.test(form?.email)}
-            errorMsg={
-              "아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."
-            }
+            isError={!emailRegex?.test(form?.email)}
+            errorMsg={"영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChangeInput(e)
             }
@@ -127,13 +122,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           type="password"
           width="800px"
           isError={
-            isClicked &&
-            form?.password?.length <= 8 &&
-            !passwordRegex?.test(form?.password)
+            form?.password?.length <= 8 && !passwordRegex?.test(form?.password)
           }
-          errorMsg={
-            "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
-          }
+          errorMsg={"숫자 + 영문 + 특수문자를 포함한 8자리 이상 입력해주세요."}
           value={form?.password}
           label="비밀번호"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -147,9 +138,8 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           width="800px"
           value={form?.rePassword}
           isError={
-            isClicked &&
-            (form?.password !== form?.rePassword ||
-              form?.rePassword?.length === 0)
+            form?.password !== form?.rePassword ||
+            form?.rePassword?.length === 0
           }
           errorMsg={"비밀번호가 같지 않습니다."}
           label="비밀번호 확인"
@@ -168,8 +158,8 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
               .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3")
               .replace(/(\-{1,2})$/g, "")}
             label="휴대폰"
-            isError={isClicked && !phoneRegex?.test(form?.phoneNumber)}
-            errorMsg={"휴대폰 번호를 다시 확인해주세요."}
+            isError={!phoneRegex?.test(form?.phoneNumber)}
+            errorMsg={"양식은 000-0000-0000 입니다."}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChangeInput(e)
             }
@@ -181,7 +171,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             type="text"
             value={form?.displayName}
             label="닉네임"
-            isError={isClicked && form?.displayName?.length === 0}
+            isError={form?.displayName?.length === 0}
             errorMsg={"닉네임을 입력해주세요."}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChangeInput(e)

@@ -50,12 +50,27 @@ export const JoinContainer = styled.div<JoinStyleProps>`
   }
   @media screen and (max-width: 1660px) {
     width: 300px;
-    height: 600px;
+    height: 650px;
     padding: 20px 40px;
 
     .user-infos {
       width: 100%;
-      gap: 10px 0px;
+      gap: 20px 0px;
+
+      div {
+        p {
+          position: absolute;
+          bottom: -2.5px;
+          color: #999;
+        }
+        div {
+          p {
+            position: absolute;
+            bottom: -2.5px;
+            color: #999;
+          }
+        }
+      }
       .users {
         flex-direction: column;
         gap: 0px 15px;
@@ -86,6 +101,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       }
       label {
         font-size: 12px;
+        color: #444;
       }
 
       input {
@@ -100,7 +116,7 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       }
       .user-name-id {
         div {
-          margin-bottom: 10px;
+          margin-bottom: 15px;
 
           &:last-child {
             margin-bottom: 0;
