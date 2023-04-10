@@ -72,9 +72,9 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
 
       setJoinStateDate(false);
 
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1500);
     } catch {
       toastMsg("join", "failure");
     }

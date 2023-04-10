@@ -62,7 +62,7 @@ const Login = ({ className }: LoginProps) => {
         });
         setTimeout(() => {
           window.location.replace("/");
-        }, 1000);
+        }, 1500);
       },
     },
   );
