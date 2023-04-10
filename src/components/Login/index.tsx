@@ -60,9 +60,10 @@ const Login = ({ className }: LoginProps) => {
           ...loginStateDate,
           isLogin: false,
         });
-        setTimeout(() => {
-          window.location.replace("/");
-        }, 1500);
+        queryClient.invalidateQueries("getUser");
+        queryClient.invalidateQueries("getUserAllList");
+
+        window.location.replace("/");
       },
     },
   );
@@ -87,7 +88,7 @@ const Login = ({ className }: LoginProps) => {
         <TextInput
           name="email"
           value={form?.email}
-          label="아이디"
+          label="ID"
           isError={!emailRegex?.test(form?.email) && isClicked}
           errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
