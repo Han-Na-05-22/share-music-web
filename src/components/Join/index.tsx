@@ -12,9 +12,9 @@ import { setDoc } from "firebase/firestore";
 import ProfileImg from "components/ProfileImg";
 import { useRecoilState } from "recoil";
 import { loginState } from "components/Login/state";
-import imageCompression from "browser-image-compression";
 import { userFunction } from "common/api/user";
 import useInputs from "hooks/useInputs";
+import { toastMsg } from "utility/toastMsg";
 
 const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
         displayName: "",
       });
 
-      alert("회원가입에 성공하였습니다.");
+      toastMsg("join", "success");
       window.location.reload();
       setJoinStateDate(false);
       setIsClicked(false);
@@ -91,7 +91,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     } catch (err) {
       setIsClicked(true);
       console.log("err", err);
-      alert("회원가입에 실패하였습니다.");
+      toastMsg("join", "failure");
       navigate("/");
     }
   };

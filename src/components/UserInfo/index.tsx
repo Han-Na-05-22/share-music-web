@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { userApi, userFunction } from "common/api/user";
 import { UserProps } from "components/Login/interface";
 import useInputs from "hooks/useInputs";
+import { toastMsg } from "utility/toastMsg";
 
 const UserInfo = ({ className }: UserInfoProps) => {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
@@ -31,11 +32,12 @@ const UserInfo = ({ className }: UserInfoProps) => {
     {
       onError: (error) => {
         console.log("error : ", error);
-        alert("수정에 실패하였습니다.");
+
+        toastMsg("update", "failure");
       },
       onSuccess: () => {
         queryClient.invalidateQueries("getUserAllList");
-        alert("수정이 완료되었습니다.");
+        toastMsg("update", "failure");
       },
     },
   );

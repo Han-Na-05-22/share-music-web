@@ -20,6 +20,7 @@ import {
 } from "firebase/storage";
 import moment from "moment";
 import { firestore, storage } from "service/firebase";
+import { toastMsg } from "utility/toastMsg";
 
 //* Cloud Firestore, Storage
 
@@ -39,7 +40,7 @@ export const musicApi = {
     email: string,
     data: any,
     musicListData: any,
-    url: string
+    url: string,
   ) => {
     const washingtonRef = doc(firestore, "music", "musicList");
 
@@ -104,7 +105,7 @@ export const musicApi = {
     data: any,
     setIsCompleted?: any,
     setData?: any,
-    musicList?: any
+    musicList?: any,
   ) => {
     const newName = data?.formData?.name
       .replace(/[~`!#$%^&*+=\-[\]\\';,/{}()|\\":<>?]/g, "")
@@ -128,7 +129,7 @@ export const musicApi = {
     const UploadTask = uploadBytesResumable(
       storageRef,
       data?.formData,
-      metaData
+      metaData,
     );
 
     UploadTask.on(
@@ -138,23 +139,23 @@ export const musicApi = {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setIsCompleted("loading");
         console.log(`Upload is ${progress}% done`);
-        if (progress === 100) {
-          alert("음원 등록이 완료되었습니다.");
-          setIsCompleted("done");
-        }
       },
       (error) => {
         console.log(`error: image upload error ${JSON.stringify(error)}`);
-        alert("음원 등록에 실패하였습니다.");
+        toastMsg("add", "failure");
       },
       async () => {
         await getDownloadURL(UploadTask.snapshot.ref).then(
           async (downloadUrl) => {
-            await console.log(`완료 url: ${downloadUrl}`);
-            await setData(src?.split("/")[1], data, musicList, downloadUrl);
-          }
+            if (downloadUrl) {
+              await setData(src?.split("/")[1], data, musicList, downloadUrl);
+              await toastMsg("add", "success");
+              setIsCompleted("done");
+              console.log(`완료 url: ${downloadUrl}`);
+            }
+          },
         );
-      }
+      },
     );
   },
 
@@ -175,7 +176,7 @@ export const musicApi = {
     type: string,
     musicList?: any,
     musicDetailData?: any,
-    user?: any
+    user?: any,
   ) => {
     const result = musicList?.map((item: MusicFormProps) => {
       if (type === "like") {
@@ -191,7 +192,7 @@ export const musicApi = {
               likedClickList:
                 type === "like"
                   ? item?.likedClickList?.filter(
-                      (i: any) => i?.email !== user?.email
+                      (i: any) => i?.email !== user?.email,
                     )
                   : item?.likedClickList,
             };
@@ -223,7 +224,7 @@ export const musicApi = {
         if (item.id === musicDetailData?.id) {
           if (
             item?.downloadClickList?.find(
-              (i: MusicCountListProps) => i?.email === user?.email
+              (i: MusicCountListProps) => i?.email === user?.email,
             )
           ) {
             return {
@@ -236,7 +237,7 @@ export const musicApi = {
               downloadClickList:
                 type === "download"
                   ? item?.downloadClickList?.filter(
-                      (i: MusicCountListProps) => i?.email !== user?.email
+                      (i: MusicCountListProps) => i?.email !== user?.email,
                     )
                   : item?.downloadClickList,
             };

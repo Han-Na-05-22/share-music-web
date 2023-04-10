@@ -1,5 +1,5 @@
 import { HomeContainer } from "./style";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import { allUserInfo, userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
@@ -65,15 +65,21 @@ const Home = () => {
   };
 
   // musicList 안에 있는 데이터 10개를 랜덤으로 가져와 저장(추천 음악리스트에 사용)
-  const recommendMusicList = musicList
-    ?.map((item: MusicFormProps) => {
-      return item;
-    })
-    ?.sort(() => 0.5 - Math.random())
-    .slice(0, 10);
+  const [recommendMusicList, setRecommendMusicList] =
+    useState<MusicFormProps[]>();
+
+  const getRecommendMusicList = useMemo(() => {
+    return musicList
+      ?.map((item: MusicFormProps) => {
+        return item;
+      })
+      ?.sort(() => 0.5 - Math.random())
+      .slice(0, 10);
+  }, [musicList]);
 
   useEffect(() => {
     if (musicList) {
+      setRecommendMusicList(getRecommendMusicList);
       setMusicLikeCountTopten(
         musicList
           ?.map((item: MusicFormProps) => item)
@@ -86,9 +92,9 @@ const Home = () => {
       setMusicNewDataList(
         musicList
           ?.map((item: MusicFormProps) => item)
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.date - a?.date),
+          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
-
+      console.log("dafaef", musicNewDataList);
       setArtistLikeCountTopten([
         musicList?.reduce(function (
           accumulator: any,
@@ -148,7 +154,7 @@ const Home = () => {
 
           <Slider {...settings}>
             {recommendMusicList &&
-              recommendMusicList?.map((item: any, idx: number) => (
+              recommendMusicList?.map((item: MusicFormProps, idx: number) => (
                 <div
                   key={idx}
                   className="slider-list"

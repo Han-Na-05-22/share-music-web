@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { loginState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
 import useInputs from "hooks/useInputs";
+import { toastMsg } from "utility/toastMsg";
 
 interface LoginFormProps {
   email: string;
@@ -41,8 +42,7 @@ const Login = ({ className }: LoginProps) => {
     {
       onError: (error) => {
         console.log("error : ", error);
-
-        alert("로그인에 실패하였습니다.");
+        toastMsg("login", "failure");
       },
       onSuccess: async () => {
         await sessionStorage.setItem(
@@ -53,7 +53,7 @@ const Login = ({ className }: LoginProps) => {
             email: auth?.currentUser?.email,
           }),
         );
-        alert("로그인에 성공하였습니다.");
+        toastMsg("login", "success");
         await setIsClicked(false);
         setLoginStateDate({
           ...loginStateDate,

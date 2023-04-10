@@ -27,6 +27,7 @@ import { UserProps } from "components/Login/interface";
 import { MusicFormProps } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 import { navState } from "common/layout/Nav/state";
+import { toastMsg } from "utility/toastMsg";
 
 const MusicTable = () => {
   const [musicList, setMusicList] =
@@ -202,10 +203,10 @@ const MusicTable = () => {
           btnType={user?.email ? "submit" : "none"}
           onClick={async () => {
             if (addMusicPlayer?.length === 0) {
-              alert("추가에 실패하였습니다.");
+              toastMsg("add", "failure");
             } else {
               await updateMusicDownloadAllCount();
-              alert("추가가 완료되었습니다.");
+              toastMsg("add", "success");
             }
           }}
         >

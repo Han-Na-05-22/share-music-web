@@ -19,6 +19,7 @@ import { musicApi } from "common/api/music";
 import { UserProps } from "components/Login/interface";
 import { MusicFormProps } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
+import { toastMsg } from "utility/toastMsg";
 
 const MyPage = () => {
   const [musicList, setMusicList] =
@@ -35,17 +36,17 @@ const MyPage = () => {
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
   const queryClient = useQueryClient();
-
   const { mutate: deleteMusic } = useMutation(
     () => musicApi?.deleteMusicData(musicDetailData),
     {
-      onError: (error) => {
+      onError: async (error) => {
+        toastMsg("delete", "failure");
         console.log("error:", error);
-        alert("삭제에 실패하였습니다.");
       },
+
       onSuccess: async () => {
-        await queryClient.invalidateQueries("getMusicAllDataList");
-        alert("삭제가 완료되었습니다.");
+        toastMsg("delete", "success");
+        queryClient.invalidateQueries("getMusicAllDataList");
       },
     },
   );

@@ -20,6 +20,7 @@ import { UserProps } from "components/Login/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 import { userFunction } from "common/api/user";
 import useInputs from "hooks/useInputs";
+import { toastMsg } from "utility/toastMsg";
 
 export interface addMusicDatabaseProps {
   file: any;
@@ -57,6 +58,7 @@ const AddMusic = ({
   ] = useInputs("add");
 
   const [isAddMusic, setIsAddMuisc] = useRecoilState<boolean>(myMusicAddState);
+
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<string>("none");
   const [isDetailData, setIsDetailData] =
@@ -88,17 +90,11 @@ const AddMusic = ({
         setIsClicked(true);
       },
       onSuccess: async () => {
-        queryClient.invalidateQueries("getMusicAllDataList");
         setIsClicked(false);
-
-        setTimeout(function () {
-          console.log("실행됨!");
-          queryClient.invalidateQueries("getMusicAllDataList");
-        }, 10000);
       },
     },
   );
-
+  console.log("isCompleted", isCompleted);
   const { mutate: updateMusicData } = useMutation(
     () =>
       musicApi?.updateMusicDataList(
@@ -109,7 +105,7 @@ const AddMusic = ({
     {
       onError: (error) => {
         console.log("error:", error);
-        alert("수정에 실패하였습니다.");
+        toastMsg("update", "failure");
       },
       onSuccess: async () => {
         await queryClient.invalidateQueries("getMusicAllDataList");
@@ -118,7 +114,7 @@ const AddMusic = ({
           ...isDetailData,
           isDetail: false,
         });
-        alert("수정이 완료되었습니다.");
+        toastMsg("update", "success");
       },
     },
   );
@@ -139,6 +135,8 @@ const AddMusic = ({
   useEffect(() => {
     if (isCompleted === "done") {
       setIsAddMuisc(false);
+      queryClient.invalidateQueries("getMusicAllDataList");
+
       // setForm({
       //   img: "",
       //   mp3: "",

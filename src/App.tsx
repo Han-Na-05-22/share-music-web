@@ -1,6 +1,7 @@
 import Container from "common/layout/Container";
 import Header from "common/layout/Header";
 import { musicListState } from "components/AddMusic/state";
+import { ToastContainer } from "react-toastify";
 import { allUserInfo, userInfo } from "components/Login/state";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
@@ -53,6 +54,9 @@ function App() {
     useQuery<MusicFormProps[]>(
       "getMusicAllDataList",
       musicApi?.getMusicAllDataList(),
+      {
+        refetchInterval: 5000,
+      },
     );
 
   let getDownloadMusicList: any = "";
@@ -126,33 +130,50 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <Container>
-        <Suspense fallback={<Loading />}>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/musicTable" element={<MusicTable />} />
-            <Route path="/*" element={<NotFound />} />
-          </Routes>
+    <>
+      <ToastContainer
+        theme="colored"
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        limit={3}
+      />
+      <div className="App">
+        <Container>
+          <Suspense fallback={<Loading />}>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/musicTable" element={<MusicTable />} />
+              <Route path="/*" element={<NotFound />} />
+            </Routes>
 
-          <PlayList
-            className={
-              isDetailData?.isLocation === "playList" ? "detail-play-list" : ""
-            }
-            onClick={() => {
-              setIsDetailData({
-                isDetail: true,
-                isLocation: "playList",
-              });
-            }}
-            play={false}
-            playListData={myMusicPlayList}
-          ></PlayList>
-        </Suspense>
-      </Container>
-    </div>
+            <PlayList
+              className={
+                isDetailData?.isLocation === "playList"
+                  ? "detail-play-list"
+                  : ""
+              }
+              onClick={() => {
+                setIsDetailData({
+                  isDetail: true,
+                  isLocation: "playList",
+                });
+              }}
+              play={false}
+              playListData={myMusicPlayList}
+            ></PlayList>
+          </Suspense>
+        </Container>
+      </div>
+    </>
   );
 }
 
