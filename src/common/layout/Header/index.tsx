@@ -240,9 +240,10 @@ const Header = () => {
                   </strong>
 
                   <strong
-                    onClick={() => {
-                      auth?.signOut();
+                    onClick={async () => {
+                      await auth?.signOut();
                       sessionStorage?.removeItem("user");
+                      navigate(`/`);
                       window?.location?.reload();
                     }}
                   >

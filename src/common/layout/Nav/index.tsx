@@ -45,9 +45,6 @@ const Nav = () => {
 
             await setSelectFilter(item?.name);
             setSearchFilter(false);
-            // setFilterMusicList(
-            //   musicList?.filter((item: MusicFormProps) => item),
-            // );
             setSearch("");
             setFilterGenre("All");
             setAddMusicPlayer([]);
