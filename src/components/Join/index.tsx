@@ -31,7 +31,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
 
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   const phoneRegex = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
-  const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
+  const emailRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/;
 
   const isRegex: boolean =
     form?.name?.length !== 0 &&
@@ -71,10 +71,6 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       await auth?.signOut();
 
       setJoinStateDate(false);
-
-      // setTimeout(() => {
-      //   window.location.reload();
-      // }, 1500);
     } catch {
       toastMsg("join", "failure");
     }
@@ -109,7 +105,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
             value={form?.email}
             label="아이디"
             isError={!emailRegex?.test(form?.email)}
-            errorMsg={"영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
+            errorMsg={"영문 소문자 및 숫자를 포함하여 5글자 이상 입력해주세요."}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleChangeInput(e)
             }

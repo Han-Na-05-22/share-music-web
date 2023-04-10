@@ -86,7 +86,7 @@ function App() {
         });
       });
   };
-  console.log("user", user);
+
   useEffect(() => {
     setUserAll(UserAllList);
     if (auth?.currentUser !== null || userData) {

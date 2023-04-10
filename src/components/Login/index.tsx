@@ -16,7 +16,7 @@ interface LoginFormProps {
   password: string;
 }
 
-const emailRegex = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{5,}$/;
+const emailRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/;
 
 const Login = ({ className }: LoginProps) => {
   const [
@@ -60,10 +60,10 @@ const Login = ({ className }: LoginProps) => {
           ...loginStateDate,
           isLogin: false,
         });
-        queryClient.invalidateQueries("getUser");
-        queryClient.invalidateQueries("getUserAllList");
 
-        window.location.replace("/");
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1000);
       },
     },
   );
