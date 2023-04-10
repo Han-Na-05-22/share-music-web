@@ -46,37 +46,41 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     phoneRegex?.test(form?.phoneNumber);
 
   const signUp = async ({ email, password, displayName }: any) => {
-    const { user }: any = await createUserWithEmailAndPassword(
-      auth,
-      `${email + "@music.com"}`,
-      password,
-    );
-    await updateProfile(user, {
-      displayName: displayName,
-    });
-
-    const washingtonRef = await doc(firestore, "users", user?.uid);
-
-    await setDoc(washingtonRef, {
-      userInfo: {
-        photoURL: form?.img,
-        name: form?.name,
+    try {
+      const { user }: any = await createUserWithEmailAndPassword(
+        auth,
+        `${email + "@music.com"}`,
+        password,
+      );
+      await updateProfile(user, {
         displayName: displayName,
-        email: `${email}@music.com`,
-        phoneNumber: form?.phoneNumber,
-        creationTime: user?.metadata?.creationTime,
-      },
-    });
-    toastMsg("join", "success");
+      });
 
-    await auth?.signOut();
-    await sessionStorage?.removeItem("user");
+      const washingtonRef = await doc(firestore, "users", user?.uid);
 
-    setJoinStateDate(false);
-    setIsClicked(false);
-    setTimeout(async () => {
-      window.location.reload();
-    }, 1500);
+      await setDoc(washingtonRef, {
+        userInfo: {
+          photoURL: form?.img,
+          name: form?.name,
+          displayName: displayName,
+          email: `${email}@music.com`,
+          phoneNumber: form?.phoneNumber,
+          creationTime: user?.metadata?.creationTime,
+        },
+      });
+      toastMsg("join", "success");
+
+      await auth?.signOut();
+      await sessionStorage?.removeItem("user");
+
+      setJoinStateDate(false);
+      setIsClicked(false);
+
+      // window.location.reload();
+    } catch {
+      setIsClicked(true);
+      toastMsg("join", "failure");
+    }
   };
 
   return (
@@ -195,8 +199,8 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           </Button>
           <Button
             marginLeft="15px"
-            btnType={"submit"}
-            onClick={() => {
+            btnType={isRegex ? "submit" : "none"}
+            onClick={(e: any) => {
               if (isRegex) {
                 signUp({
                   email: form?.email,
@@ -204,9 +208,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
                   displayName: form?.displayName,
                 });
               } else {
-                setIsClicked(true);
-                toastMsg("join", "failure");
-                navigate("/");
+                e.stopPropagation();
               }
             }}
           >

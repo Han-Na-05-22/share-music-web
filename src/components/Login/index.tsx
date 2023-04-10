@@ -87,7 +87,7 @@ const Login = ({ className }: LoginProps) => {
         <TextInput
           name="email"
           value={form?.email}
-          label="Email"
+          label="아이디"
           isError={!emailRegex?.test(form?.email) && isClicked}
           errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
