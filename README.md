@@ -1,9 +1,9 @@
 # 🎶 Share_Music_Web
-<br />
-### * 내 음악을 다른 사람들과 공유할 수 있는 음악 공유 사이트입니다. 
-<br />
+
+### \* 내 음악을 다른 사람들과 공유할 수 있는 음악 공유 사이트입니다.
 
 ### 2023.02 ~ 2023.04
+
 <table>
   <tr>
     <td>기획</td>
@@ -21,7 +21,7 @@
     <td>한달</td>
   </tr>
 </table>
-<br />
+
 <div>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
@@ -31,30 +31,45 @@
   <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
 </div>
 
-<br /><br /><br />
-
-## Pages
+## 📑 Pages
 
 ### 🎧 Home
 
 < 로그인 전 화면 >
 
-https://user-images.githubusercontent.com/97869178/230038804-a335bc8d-e577-4962-91f9-555295d12134.mov
+<img src="https://user-images.githubusercontent.com/97869178/230828514-17822c90-99b3-40c0-b535-77965e4657ba.gif" width="1000">
 
-#### • 랜덤 추천 음악, 최근 등록된 음악 10개, 인기 Top10 음악(좋아요 순), 아티스트별 좋아요 및 다운로드 순위를 확인 할 수 있으며 Home 페이지에서 회원가입 및 로그인이 가능하며 로그인을 하지 않았을 시에는 조회만 가능합니다. <br /><br />
+#### • 랜덤 추천 음악, 최근 등록된 음악 10개, 인기 Top10 음악(좋아요 순), 아티스트별 좋아요 및 다운로드 순위를 확인 할 수 있으며 Home 페이지에서 회원가입 및 로그인이 가능하며 로그인을 하지 않았을 시에는 조회만 가능합니다.
 
+| <div align="center">회원가입</div>                                                                                            | <div align="center">로그인</div>                                                                                              |
+| ----------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://user-images.githubusercontent.com/97869178/230832913-b5c5137b-034a-4856-bd5a-e1d7e31bf18c.gif" width="500"> | <img src="https://user-images.githubusercontent.com/97869178/230832923-65a0b786-1a2a-4831-b058-29e1c6f3dddf.gif" width="500"> |
 
-
-| <div align="center">회원가입</div> | <div align="center">로그인</div> |
-| --- | --- |
-| <div></div> |  <div></div> |
-<br />
 <br />
 
+< 로그인 후 화면 >
 
+<img src="https://user-images.githubusercontent.com/97869178/230846235-d3e01c3a-3d48-4055-9a42-db86db159eed.gif" width="1000">
+
+#### • 다른 유저들이 등록한 음악들을 모두 들을 수 있고 내 개인 취저 음악을 플레이리스트에 담고 좋아요도 누를 수 있습니다.
+
+| <div align="center">음원등록</div>                                                                                                         | <div align="center">음원수정</div>                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| <img src="https://user-images.githubusercontent.com/97869178/230846232-bee5c65a-34a0-4021-9e79-a928b868a9dd.gif" width="500" height="400"> | <img src="https://user-images.githubusercontent.com/97869178/230846250-05633a46-8d92-42cc-b1df-92fe048b235a.gif" width="500" height="400"> |
+
+< 마이페이지 >
+
+<img src="https://user-images.githubusercontent.com/97869178/230846241-e53e5488-fc6e-4a99-ab41-b17b516ed480.gif" width="1000">
+
+#### • 마이페이지에서는 내 정보 수정 및 내가 등록한 음악 수정 및 삭제가 가능합니다.
+
+< 테이블 상세보기 >
+
+<video src="https://user-images.githubusercontent.com/97869178/230846265-f285a177-d247-428b-ac12-3b3c37ca6fd0.mp4" width="1000">
+
+#### • 내가 찾고 싶은 음악 제목별, 장르별, 그리고 인기순, 최신순, 내가 등록한 음악, 내 플레이리스트에 담긴 음악들을 확인 가능하며, 내 플레이리스트에 음악들을 담을 수 있습니다.
 
 ## 📁 폴더구조
-
 
 ```swift
 📦src
@@ -159,6 +174,9 @@ https://user-images.githubusercontent.com/97869178/230038804-a335bc8d-e577-4962-
  ┃ ┃ ┣ 📜index.tsx
  ┃ ┃ ┣ 📜interface.ts
  ┃ ┃ ┗ 📜style.ts
+ ┣ 📂hooks
+ ┃ ┣ 📜useInputs.ts
+ ┃ ┗ 📜useSearch.ts
  ┣ 📂pages
  ┃ ┣ 📂Home
  ┃ ┃ ┣ 📜index.tsx
@@ -175,13 +193,10 @@ https://user-images.githubusercontent.com/97869178/230038804-a335bc8d-e577-4962-
  ┃ ┣ 📂NotFound
  ┃ ┃ ┗ 📜index.tsx
  ┣ 📂service
- ┃ ┗ 📜firebase.tsx
+ ┃ ┗ 📜firebase.ts
  ┣ 📂utility
- ┃ ┗ 📜data.tsx
+ ┃ ┣ 📜data.tsx
+ ┃ ┗ 📜toastMsg.ts
  ┣ 📜App.tsx
  ┗ 📜index.tsx
 ```
-
-
-
-   

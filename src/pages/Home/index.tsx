@@ -76,7 +76,7 @@ const Home = () => {
       ?.sort(() => 0.5 - Math.random())
       .slice(0, 10);
   }, [musicList]);
-  console.log("dqwfdwqf", musicNewDataList);
+
   useEffect(() => {
     if (musicList) {
       setRecommendMusicList(getRecommendMusicList);
