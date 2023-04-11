@@ -1,5 +1,7 @@
 import styled from "styled-components";
-// todo : 중복도ㅣ는 스타일 삭제해야함
+
+// todo : 반응형 중복인 부분 삭제해야함!!
+
 export const PlayListContainer = styled.div`
   .no-data {
     width: 100%;

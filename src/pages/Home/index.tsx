@@ -1,5 +1,5 @@
 import { HomeContainer } from "./style";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import { allUserInfo, userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
