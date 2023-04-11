@@ -2,6 +2,8 @@
 
 ### \* 내 음악을 다른 사람들과 공유할 수 있는 음악 공유 사이트입니다.
 
+#### (음원등록 할 때 필요한 mp3 파일은 share-music-web/public/image/Soulicious - Dyalla.mp3 에 넣어두었습니다.)
+
 ### 2023.02 ~ 2023.04
 
 <table>
