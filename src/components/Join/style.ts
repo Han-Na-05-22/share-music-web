@@ -57,20 +57,6 @@ export const JoinContainer = styled.div<JoinStyleProps>`
       width: 100%;
       gap: 20px 0px;
 
-      div {
-        p {
-          position: absolute;
-          bottom: -2.5px;
-          color: #999;
-        }
-        div {
-          p {
-            position: absolute;
-            bottom: -2.5px;
-            color: #999;
-          }
-        }
-      }
       .users {
         flex-direction: column;
         gap: 0px 15px;
@@ -128,6 +114,10 @@ export const JoinContainer = styled.div<JoinStyleProps>`
         & > div {
           &:first-child {
             margin-bottom: 10px;
+          }
+
+          &:last-child {
+            margin-top: 10px;
           }
         }
       }

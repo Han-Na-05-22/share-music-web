@@ -107,7 +107,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
 
     const options = {
       maxSizeMB: 2,
-      maxWidthOrHeight: 200,
+      maxWidthOrHeight: 100,
     };
 
     if (file) {

@@ -15,7 +15,7 @@ export const LoginContainer = styled.div`
   height: 400px;
 
   input {
-    background: ${({ theme }) => theme.colors.ModalColor};
+    background: ${({ theme }) => theme.colors.ModalColor} !important;
     color: ${({ theme }) => theme.colors.LightText};
   }
 
@@ -33,7 +33,7 @@ export const LoginContainer = styled.div`
       font-size: 12px;
     }
     label {
-      font-size: 12px;
+      font-size: 11.5px;
     }
     button {
     }

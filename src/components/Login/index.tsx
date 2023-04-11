@@ -17,6 +17,7 @@ interface LoginFormProps {
 }
 
 const emailRegex = /^(?=.*\d)(?=.*[a-z])[0-9a-z]{5,}$/;
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
 const Login = ({ className }: LoginProps) => {
   const [
@@ -29,7 +30,10 @@ const Login = ({ className }: LoginProps) => {
   const queryClient = useQueryClient();
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
 
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const isRegex: boolean =
+    emailRegex?.test(form?.email) && passwordRegex?.test(form?.password);
+
+  console.log("isRegex", isRegex);
 
   const { mutate: loginMutation } = useMutation(
     async ({ email, password }: LoginFormProps) => {
@@ -55,7 +59,6 @@ const Login = ({ className }: LoginProps) => {
         );
         toastMsg("login", "success");
 
-        setIsClicked(false);
         setLoginStateDate({
           ...loginStateDate,
           isLogin: false,
@@ -67,8 +70,6 @@ const Login = ({ className }: LoginProps) => {
       },
     },
   );
-
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
   return (
     <>
@@ -88,9 +89,9 @@ const Login = ({ className }: LoginProps) => {
         <TextInput
           name="email"
           value={form?.email}
-          label="ID"
-          isError={!emailRegex?.test(form?.email) && isClicked}
-          errorMsg={"아이디는 영문 및 숫자를 포함하여 5글자 이상 입력해주세요."}
+          label="아이디"
+          isError={!emailRegex?.test(form?.email)}
+          errorMsg={"영문 소문자 및 숫자를 포함하여 5글자 이상 입력해주세요."}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleChangeInput(e)
           }
@@ -98,26 +99,25 @@ const Login = ({ className }: LoginProps) => {
         <TextInput
           name="password"
           type="password"
-          isError={
-            form?.password?.length <= 8 &&
-            !passwordRegex?.test(form?.password) &&
-            isClicked
-          }
+          isError={!passwordRegex?.test(form?.password)}
           errorMsg={
             "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
           }
           value={form?.password}
-          label="Password"
+          label="비밀번호"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleChangeInput(e)
           }
         ></TextInput>
         <Button
           marginLeft="15px"
-          btnType="submit"
-          onClick={() => {
-            loginMutation(form);
-            setIsClicked(true);
+          btnType={isRegex ? "submit" : "none"}
+          onClick={(e: any) => {
+            if (isRegex) {
+              loginMutation(form);
+            } else {
+              e.stopPropagation();
+            }
           }}
         >
           로그인

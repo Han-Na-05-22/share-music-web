@@ -28,6 +28,7 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
   label,
   input {
     color: ${({ theme }) => theme.colors.BlackColor};
+
     font-size: inherit;
   }
 
@@ -53,7 +54,7 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
     props.isError &&
     css`
       input {
-        border: 2px solid ${({ theme }) => theme.colors.DefaultRed};
+        border: 2px solid ${({ theme }) => theme.colors.DisabledColor};
       }
 
       p {
@@ -61,29 +62,21 @@ export const TextInputContainer = styled.div<TextInputStyleProps>`
         position: absolute;
         bottom: -10px;
         display: block;
-        color: ${({ theme }) => theme.colors.DefaultRed};
+        color: ${({ theme }) => theme.colors.LightText};
       }
 
       label {
-        color: ${({ theme }) => theme.colors.DefaultRed};
+        color: ${({ theme }) => theme.colors.BlackColor};
       }
 
       &:hover,
       &:active {
         input {
-          border: 2px solid ${({ theme }) => theme.colors.DefaultRed};
-        }
-
-        p {
-          font-size: 10px;
-          position: absolute;
-          bottom: -10px;
-          display: block;
-          color: ${({ theme }) => theme.colors.DefaultRed};
+          border: 2px solid ${({ theme }) => theme.colors.ActiveColor};
         }
 
         label {
-          color: ${({ theme }) => theme.colors.DefaultRed};
+          color: ${({ theme }) => theme.colors.BlackColor};
         }
       }
       @media screen and (max-width: 1660px) {
