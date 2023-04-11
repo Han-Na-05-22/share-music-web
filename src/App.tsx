@@ -47,7 +47,7 @@ function App() {
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<MusicFormProps[]>(myMusicPlayListState);
   const navigate = useNavigate();
-  console.log("myMusicPlayList", myMusicPlayList);
+
   // get 전체 user 정보
   const { isLoading: getUserListLoading, data: UserAllList } = useQuery<any>(
     "getUserAllList",

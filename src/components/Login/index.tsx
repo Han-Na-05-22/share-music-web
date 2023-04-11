@@ -1,6 +1,5 @@
 import Button from "components/Button";
 import TextInput from "components/TextInput";
-import { useState } from "react";
 import { LoginProps } from "./interface";
 import { LoginContainer } from "./style";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -32,8 +31,6 @@ const Login = ({ className }: LoginProps) => {
 
   const isRegex: boolean =
     emailRegex?.test(form?.email) && passwordRegex?.test(form?.password);
-
-  console.log("isRegex", isRegex);
 
   const { mutate: loginMutation } = useMutation(
     async ({ email, password }: LoginFormProps) => {
