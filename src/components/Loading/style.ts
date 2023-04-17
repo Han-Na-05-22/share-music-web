@@ -2,17 +2,17 @@ import styled from "styled-components";
 export const LoadingContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   align-items: center;
   justify-content: center;
   position: absolute;
   gap: 0px 35px;
-  background: rgba(255, 255, 255, 0.7);
+  background: #fff;
   z-index: 1000;
 
   .box {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     background: ${({ theme }) => theme.colors.DefaultColor};
     border-radius: 100px;
     animation-name: loadingAni;

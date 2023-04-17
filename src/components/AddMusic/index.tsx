@@ -279,7 +279,9 @@ const AddMusic = ({
             </Button>
           </div>
         </div>
-        {isCompleted === "loading" && <Loading></Loading>}
+        {isCompleted === "loading" && (
+          <Loading className="addMusicLoading"></Loading>
+        )}
       </AddMusicContainer>
     </Overlay>
   );

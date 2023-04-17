@@ -76,6 +76,7 @@ const MusicTable = () => {
     {
       onError: (error) => {
         console.log("error:", error);
+        toastMsg("add", "failure");
       },
       onSuccess: async () => {
         await quertyClient.invalidateQueries("getMusicAllDataList");
@@ -211,24 +212,22 @@ const MusicTable = () => {
     setPage(1);
   }, [navData]);
 
-  // useEffect(() => {
-  //   setMyMusicPlayList(myMusicPlayList?.filter((i: any) => i !== undefined));
-  // }, []);
-
   return (
     <>
       <MusicTableContainer>
         <Button
           className="my-info-submit"
           fontSize="16px"
-          btnType={user?.email ? "submit" : "none"}
-          onClick={async () => {
-            if (addMusicPlayer?.length === 0) {
-              toastMsg("add", "failure");
-            } else {
-              await updateMusicDownloadAllCount();
+          btnType={
+            user?.email && addMusicPlayer?.length !== 0 ? "submit" : "none"
+          }
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            if (user?.email && addMusicPlayer?.length !== 0) {
+              updateMusicDownloadAllCount();
               toastMsg("add", "success");
               setAddMusicPlayer([]);
+            } else {
+              e.preventDefault();
             }
           }}
         >

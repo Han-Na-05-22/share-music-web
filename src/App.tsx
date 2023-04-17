@@ -173,6 +173,7 @@ function App() {
               playListData={myMusicPlayList}
             ></PlayList>
           </Suspense>
+          {musicAllListDataLoading && <Loading></Loading>}
         </Container>
       </div>
     </>
