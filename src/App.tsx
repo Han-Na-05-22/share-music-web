@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { allUserInfo, userInfo } from "components/Login/state";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
-import { Suspense, useEffect } from "react";
+import { Suspense, useCallback, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
@@ -75,7 +75,7 @@ function App() {
 
   let getDownloadMusicList: any = "";
 
-  const getDownloadMusicData = () => {
+  const getDownloadMusicData = useCallback(() => {
     musicList
       ?.filter((item: MusicFormProps) => item?.email !== user?.email)
       ?.map((i: MusicFormProps) => {
@@ -85,7 +85,7 @@ function App() {
           }
         });
       });
-  };
+  }, [user]);
 
   useEffect(() => {
     setUserAll(UserAllList);
@@ -132,7 +132,7 @@ function App() {
           ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
     }
-  }, [musicList]);
+  }, [musicList, user]);
 
   useEffect(() => {
     // 다시 랜더링될 때마다 home으로(스타일 지정되어 있음)

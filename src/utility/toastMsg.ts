@@ -19,12 +19,10 @@ export const toastMsg = (
   if (resultState === "success") {
     return toast?.success(`${msgContent[options]} 성공하였습니다.`, {
       autoClose: 3000,
-      position: toast.POSITION.BOTTOM_CENTER,
     });
   } else {
     return toast?.error(`${msgContent[options]} 실패하였습니다.`, {
       autoClose: 3000,
-      position: toast.POSITION.TOP_RIGHT,
     });
   }
 };

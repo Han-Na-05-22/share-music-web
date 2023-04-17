@@ -14,9 +14,17 @@ export const LoginContainer = styled.div`
   width: 450px;
   height: 400px;
 
-  input {
-    background: ${({ theme }) => theme.colors.ModalColor} !important;
-    color: ${({ theme }) => theme.colors.LightText};
+  form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      background: ${({ theme }) => theme.colors.ModalColor} !important;
+      color: ${({ theme }) => theme.colors.LightText};
+    }
   }
 
   .close-btn {

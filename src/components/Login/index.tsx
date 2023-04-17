@@ -9,6 +9,8 @@ import { loginState } from "./state";
 import { useMutation, useQueryClient } from "react-query";
 import useInputs from "hooks/useInputs";
 import { toastMsg } from "utility/toastMsg";
+import { useNavigate } from "react-router-dom";
+import { navState } from "common/layout/Nav/state";
 
 interface LoginFormProps {
   email: string;
@@ -28,10 +30,10 @@ const Login = ({ className }: LoginProps) => {
   ] = useInputs("login");
   const queryClient = useQueryClient();
   const [loginStateDate, setLoginStateDate] = useRecoilState<any>(loginState);
-
+  const navigate = useNavigate();
   const isRegex: boolean =
     emailRegex?.test(form?.email) && passwordRegex?.test(form?.password);
-
+  const [navData, setNavData] = useRecoilState<any[]>(navState);
   const { mutate: loginMutation } = useMutation(
     async ({ email, password }: LoginFormProps) => {
       await signInWithEmailAndPassword(
@@ -45,8 +47,8 @@ const Login = ({ className }: LoginProps) => {
         console.log("error : ", error);
         toastMsg("login", "failure");
       },
-      onSuccess: async () => {
-        await sessionStorage.setItem(
+      onSuccess: () => {
+        sessionStorage.setItem(
           "user",
           JSON.stringify({
             uid: auth?.currentUser?.uid,
@@ -55,14 +57,28 @@ const Login = ({ className }: LoginProps) => {
           }),
         );
         toastMsg("login", "success");
-
         setLoginStateDate({
           ...loginStateDate,
           isLogin: false,
         });
 
         setTimeout(() => {
-          window.location.replace("/");
+          navigate("/");
+          setNavData(
+            navData?.map((i: any) => {
+              if (i?.name === "Home") {
+                return {
+                  ...i,
+                  isClicked: true,
+                };
+              }
+              return {
+                ...i,
+                isClicked: false,
+              };
+            }),
+          );
+          queryClient.invalidateQueries();
         }, 1000);
       },
     },
@@ -83,42 +99,47 @@ const Login = ({ className }: LoginProps) => {
         >
           닫기
         </Button>
-        <TextInput
-          name="email"
-          value={form?.email}
-          label="아이디"
-          isError={!emailRegex?.test(form?.email)}
-          errorMsg={"영문 소문자 및 숫자를 포함하여 5글자 이상 입력해주세요."}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handleChangeInput(e)
-          }
-        ></TextInput>
-        <TextInput
-          name="password"
-          type="password"
-          isError={!passwordRegex?.test(form?.password)}
-          errorMsg={
-            "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
-          }
-          value={form?.password}
-          label="비밀번호"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            handleChangeInput(e)
-          }
-        ></TextInput>
-        <Button
-          marginLeft="15px"
-          btnType={isRegex ? "submit" : "none"}
-          onClick={(e: any) => {
+        <form
+          onSubmit={(e: any) => {
             if (isRegex) {
+              e.preventDefault();
               loginMutation(form);
             } else {
               e.stopPropagation();
             }
           }}
         >
-          로그인
-        </Button>
+          <TextInput
+            name="email"
+            value={form?.email}
+            label="아이디"
+            isError={!emailRegex?.test(form?.email)}
+            errorMsg={"영문 소문자 및 숫자를 포함하여 5글자 이상 입력해주세요."}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
+          ></TextInput>
+          <TextInput
+            name="password"
+            type="password"
+            isError={!passwordRegex?.test(form?.password)}
+            errorMsg={
+              "숫자 + 영문자 + 특수문자를 포함하여 8자리 이상 입력해주세요."
+            }
+            value={form?.password}
+            label="비밀번호"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleChangeInput(e)
+            }
+          ></TextInput>
+          <Button
+            marginLeft="15px"
+            btnType={isRegex ? "submit" : "none"}
+            onClick={(e: any) => {}}
+          >
+            로그인
+          </Button>
+        </form>
       </LoginContainer>
     </>
   );
