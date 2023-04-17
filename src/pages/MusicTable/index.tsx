@@ -24,7 +24,10 @@ import { loginState, userInfo } from "components/Login/state";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
 import { LoginStateProps, UserProps } from "components/Login/interface";
-import { MusicFormProps } from "components/AddMusic/interface";
+import {
+  MusicCountListProps,
+  MusicFormProps,
+} from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 import { navState } from "common/layout/Nav/state";
 import { toastMsg } from "utility/toastMsg";
@@ -48,7 +51,7 @@ const MusicTable = () => {
     useRecoilState<boolean>(searchFilterState);
   const [addMusicPlayer, setAddMusicPlayer] =
     useRecoilState<any[]>(addMusicPlayerState);
-  let myDownloadDataLength: any[] = [];
+
   const [myMusicPlayList, setMyMusicPlayList] =
     useRecoilState<MusicFormProps[]>(myMusicPlayListState);
   const offset = (page - 1) * limit;
@@ -86,27 +89,27 @@ const MusicTable = () => {
   // 체크박스 전체 체크
   const onCheckedAllMusic = () => {
     let array: any = "";
-    if (
-      addMusicPlayer?.length !== 0 &&
-      getMusicList?.slice(offset, offset + limit)?.length ===
-        addMusicPlayer?.length +
-          getMusicList
-            ?.slice(offset, offset + limit)
-            ?.filter((i: MusicFormProps) => i?.email === user?.email)?.length +
-          myDownloadDataLength?.length
-    ) {
-      setAddMusicPlayer([]);
-    } else {
-      getMusicList
-        ?.slice(offset, offset + limit)
-        ?.forEach((i: MusicFormProps) => {
-          if (
-            !myMusicPlayList?.map((j: MusicFormProps) => j?.id)?.includes(i?.id)
-          ) {
-            array = [...array, i?.id];
-          }
-          setAddMusicPlayer(array);
-        });
+    if (!allCheckd) {
+      if (
+        addMusicPlayer?.length !== 0 &&
+        getMusicList?.slice(offset, offset + limit)?.length ===
+          addMusicPlayer?.length + myMusicPlayListLength
+      ) {
+        setAddMusicPlayer([]);
+      } else {
+        getMusicList
+          ?.slice(offset, offset + limit)
+          ?.forEach((i: MusicFormProps) => {
+            if (
+              !myMusicPlayList
+                ?.map((j: MusicFormProps) => j?.id)
+                ?.includes(i?.id)
+            ) {
+              array = [...array, i?.id];
+            }
+            setAddMusicPlayer(array);
+          });
+      }
     }
   };
 
@@ -132,35 +135,36 @@ const MusicTable = () => {
     }
   };
 
+  const myMusicPlayListLength: number = getMusicList
+    ?.slice(offset, offset + limit)
+    ?.map((i: MusicFormProps) => {
+      let isDownload = false;
+      i?.downloadClickList?.filter((a: MusicCountListProps) => {
+        if (a?.email === user?.email) {
+          return (isDownload = true);
+        } else {
+          return isDownload;
+        }
+      });
+
+      if (isDownload || i?.email === user?.email) {
+        return {
+          ...i,
+        };
+      }
+    })
+    ?.filter((i: any) => i !== undefined)?.length;
+
   const allCheckd =
     getMusicList[0]?.email === "" ||
     selectFilter === "MyMusic" ||
     selectFilter === "Playlist" ||
     myMusicPlayList?.filter((i: any) => i?.genre === selectFilter)?.length ===
       getMusicList?.length ||
-    musicList?.length === myMusicPlayList?.length;
-
-  // 내 플레이리스트에 있는 다른 유저 음악들 가져오기
-  const getMyDownloadData = useCallback(() => {
-    if (getMusicList?.length !== 0) {
-      getMusicList
-        ?.slice(offset, offset + limit)
-        ?.filter((i: MusicFormProps) => i?.email !== user?.email)
-        ?.map((a: any) =>
-          a?.downloadClickList?.filter((b: any) => {
-            if (b?.email === user?.email) {
-              return (myDownloadDataLength = [
-                ...myDownloadDataLength,
-                {
-                  id: a?.id,
-                  b: b?.email,
-                },
-              ]);
-            }
-          }),
-        );
-    }
-  }, []);
+    musicList?.length ===
+      myMusicPlayList?.filter((i: any) => i !== undefined)?.length ||
+    myMusicPlayListLength ===
+      getMusicList?.slice(offset, offset + limit)?.length;
 
   useEffect(() => {
     if (searchFilter) {
@@ -203,8 +207,13 @@ const MusicTable = () => {
     }
   }, [selectFilter, musicList, myMusicPlayList, searchFilter]);
 
-  getMyDownloadData();
+  useEffect(() => {
+    setPage(1);
+  }, [navData]);
 
+  useEffect(() => {
+    setMyMusicPlayList(myMusicPlayList?.filter((i: any) => i !== undefined));
+  }, []);
   return (
     <>
       <MusicTableContainer>
@@ -240,17 +249,15 @@ const MusicTable = () => {
                       selectFilter === "MyMusic" ||
                       selectFilter === "Playlist" ||
                       getMusicList?.slice(offset, offset + limit)?.length ===
-                        getMusicList
-                          ?.slice(offset, offset + limit)
-                          ?.filter(
-                            (i: MusicFormProps) => i?.email === user?.email,
-                          )?.length +
-                          myDownloadDataLength?.length
+                        myMusicPlayListLength
                     }
                     onClick={(
                       e: React.MouseEvent<HTMLTableCaptionElement, MouseEvent>,
                     ) => {
-                      e.stopPropagation();
+                      if (allCheckd) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                      }
 
                       if (!allCheckd) {
                         onCheckedAllMusic();
@@ -259,20 +266,7 @@ const MusicTable = () => {
                     onChange={() => {}}
                     checked={
                       getMusicList?.slice(offset, offset + limit)?.length ===
-                        addMusicPlayer?.length +
-                          getMusicList
-                            ?.slice(offset, offset + limit)
-                            ?.filter(
-                              (i: MusicFormProps) => i?.email === user?.email,
-                            )?.length +
-                          myDownloadDataLength?.length &&
-                      getMusicList?.slice(offset, offset + limit)?.length !==
-                        getMusicList
-                          ?.slice(offset, offset + limit)
-                          ?.filter(
-                            (i: MusicFormProps) => i?.email === user?.email,
-                          )?.length +
-                          myDownloadDataLength?.length
+                      addMusicPlayer?.length + myMusicPlayListLength
                     }
                   ></CheckBox>
                 ),
