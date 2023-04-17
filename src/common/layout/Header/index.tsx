@@ -197,9 +197,15 @@ const Header = () => {
             className="add-music"
             width="125px"
             onClick={() => {
-              !user?.email
-                ? alert("로그인 후 이용해주세요")
-                : setIsAddMuisc(true);
+              if (!user?.email) {
+                alert("로그인 후 이용해주세요");
+                setLoginStateDate({
+                  ...loginStateDate,
+                  isLogin: true,
+                });
+              } else {
+                setIsAddMuisc(true);
+              }
             }}
           >
             음원 등록
@@ -214,12 +220,10 @@ const Header = () => {
                   <strong
                     className="my-page-btn"
                     onClick={() => {
-                      !user?.email
-                        ? alert("로그인 후 이용해주세요")
-                        : setIsDetailData({
-                            ...isDetailData,
-                            isLocation: "mypage",
-                          });
+                      setIsDetailData({
+                        ...isDetailData,
+                        isLocation: "mypage",
+                      });
                       setNavData(
                         navData?.map((i: any) => {
                           return {

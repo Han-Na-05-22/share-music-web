@@ -1,7 +1,7 @@
 import { HomeContainer } from "./style";
 import { useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
-import { allUserInfo, userInfo } from "components/Login/state";
+import { allUserInfo, loginState, userInfo } from "components/Login/state";
 import { musicListState } from "components/AddMusic/state";
 import {
   isMusicDetailState,
@@ -19,11 +19,14 @@ import {
   musicNewDataListState,
   musicLikeCountToptenState,
 } from "./state";
-import { UserProps } from "components/Login/interface";
+import { LoginStateProps, UserProps } from "components/Login/interface";
 import { MusicFormProps } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 
 const Home = () => {
+  const [loginStateDate, setLoginStateDate] =
+    useRecoilState<LoginStateProps>(loginState);
+
   // 음악 인기순
   const [musicLikeCountTopten, setMusicLikeCountTopten] = useRecoilState<
     MusicFormProps[]
@@ -169,13 +172,19 @@ const Home = () => {
                   key={idx}
                   className="slider-list"
                   onClick={() => {
-                    !user?.email
-                      ? alert("로그인 후 이용해주세요")
-                      : setIsDetailData({
-                          isDetail: true,
-                          isLocation: "home",
-                        });
-                    setMusicDetailData(item);
+                    if (!user?.email) {
+                      alert("로그인 후 이용해주세요");
+                      setLoginStateDate({
+                        ...loginStateDate,
+                        isLogin: true,
+                      });
+                    } else {
+                      setIsDetailData({
+                        isDetail: true,
+                        isLocation: "home",
+                      });
+                      setMusicDetailData(item);
+                    }
                   }}
                 >
                   <img src={item?.img} alt="음원 이미지" />
@@ -203,13 +212,19 @@ const Home = () => {
                         key={idx}
                         className="new-list list"
                         onClick={() => {
-                          !user?.email
-                            ? alert("로그인 후 이용해주세요")
-                            : setIsDetailData({
-                                isDetail: true,
-                                isLocation: "home",
-                              });
-                          setMusicDetailData(item);
+                          if (!user?.email) {
+                            alert("로그인 후 이용해주세요");
+                            setLoginStateDate({
+                              ...loginStateDate,
+                              isLogin: true,
+                            });
+                          } else {
+                            setIsDetailData({
+                              isDetail: true,
+                              isLocation: "home",
+                            });
+                            setMusicDetailData(item);
+                          }
                         }}
                       >
                         <span className="order">{idx + 1}</span>
@@ -245,13 +260,19 @@ const Home = () => {
                         key={idx}
                         className="top-list list"
                         onClick={() => {
-                          !user?.email
-                            ? alert("로그인 후 이용해주세요")
-                            : setIsDetailData({
-                                isDetail: true,
-                                isLocation: "home",
-                              });
-                          setMusicDetailData(item);
+                          if (!user?.email) {
+                            alert("로그인 후 이용해주세요");
+                            setLoginStateDate({
+                              ...loginStateDate,
+                              isLogin: true,
+                            });
+                          } else {
+                            setIsDetailData({
+                              isDetail: true,
+                              isLocation: "home",
+                            });
+                            setMusicDetailData(item);
+                          }
                         }}
                       >
                         <span className="order">{idx + 1}</span>

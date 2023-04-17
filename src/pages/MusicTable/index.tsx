@@ -20,16 +20,19 @@ import {
 } from "components/MusicDetail/state";
 import MusicDetail from "components/MusicDetail";
 import { myMusicPlayListState } from "pages/MyPage/state";
-import { userInfo } from "components/Login/state";
+import { loginState, userInfo } from "components/Login/state";
 import { useMutation, useQueryClient } from "react-query";
 import { musicApi } from "common/api/music";
-import { UserProps } from "components/Login/interface";
+import { LoginStateProps, UserProps } from "components/Login/interface";
 import { MusicFormProps } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
 import { navState } from "common/layout/Nav/state";
 import { toastMsg } from "utility/toastMsg";
 
 const MusicTable = () => {
+  const [loginStateDate, setLoginStateDate] =
+    useRecoilState<LoginStateProps>(loginState);
+
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
 
@@ -326,6 +329,10 @@ const MusicTable = () => {
                         setMusicDetailData(item);
                       } else {
                         alert("로그인 후 이용해주세요.");
+                        setLoginStateDate({
+                          ...loginStateDate,
+                          isLogin: true,
+                        });
                       }
                     }}
                   >

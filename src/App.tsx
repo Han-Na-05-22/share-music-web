@@ -73,7 +73,7 @@ function App() {
       },
     );
 
-  let getDownloadMusicList: any = "";
+  let getDownloadMusicList: any[] = [];
 
   const getDownloadMusicData = useCallback(() => {
     musicList
@@ -85,7 +85,7 @@ function App() {
           }
         });
       });
-  }, [user]);
+  }, [musicList]);
 
   useEffect(() => {
     setUserAll(UserAllList);
@@ -111,10 +111,11 @@ function App() {
     }
   }, [musicAllListData]);
 
+  // getDownloadMusicData();
+
   useEffect(() => {
     getDownloadMusicData();
-
-    if (getDownloadMusicList) {
+    if (getDownloadMusicList?.length !== 0) {
       // 내가 등록한 음악리스트와 플레이리스트에 추가한 다른 유저의 음악을 합침
       setMyMusicPlayList(
         getDownloadMusicList
@@ -132,7 +133,7 @@ function App() {
           ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
       );
     }
-  }, [musicList, user]);
+  }, [musicList, user, getDownloadMusicData]);
 
   useEffect(() => {
     // 다시 랜더링될 때마다 home으로(스타일 지정되어 있음)
