@@ -1,7 +1,7 @@
 import { RecordProps } from "./interface";
 import { RecordContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { useRecoilState } from "recoil";
@@ -13,6 +13,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { UserProps } from "components/Login/interface";
 import { MusicFormProps } from "components/AddMusic/interface";
 import { musicDetailState } from "components/MusicDetail/state";
+import { isCurrentAudioState } from "./state";
+import Loading from "components/Loading";
 
 const Record = ({
   className,
@@ -21,11 +23,14 @@ const Record = ({
   onClick,
 }: RecordProps) => {
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
+  const [isCurrentAudio, setIsCurrentAudio] =
+    useRecoilState<boolean>(isCurrentAudioState);
   const [musicList, setMusicList] =
     useRecoilState<MusicFormProps[]>(musicListState);
   const quertyClient = useQueryClient();
   const [musicDetailData, setMusicDetailData] =
     useRecoilState<MusicFormProps>(musicDetailState);
+  const player = useRef<any>();
 
   const { mutate: updateMusicLikeCount } = useMutation(
     () =>
@@ -60,6 +65,12 @@ const Record = ({
 
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (player?.current?.audio?.current?.duration) {
+      setIsCurrentAudio(true);
+    }
+  }, [player?.current?.audio?.current?.duration]);
+
   return (
     <RecordContainer className={className} width={width} height={height}>
       <div className="add-date">
@@ -74,6 +85,7 @@ const Record = ({
       </div>
 
       <AudioPlayer
+        ref={player}
         autoPlay={isPlay}
         src={musicDetailData?.url}
         onPause={() => setIsPlay(false)}
@@ -160,6 +172,7 @@ const Record = ({
       <div className="about-music bottom">
         <p>{musicDetailData?.explanation}</p>
       </div>
+      {!isCurrentAudio && <Loading className="musicDetailLoading"></Loading>}
     </RecordContainer>
   );
 };

@@ -21,3 +21,8 @@ export const currentMusicState = atom<MusicFormProps>({
     url: "",
   },
 });
+
+export const isCurrentAudioState = atom<boolean>({
+  key: "isCurrentAudioStateData",
+  default: false,
+});

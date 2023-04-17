@@ -16,6 +16,11 @@ export const MusicDetailContainer = styled.div<MusicDetailStyleProps>`
   padding-bottom: 70px;
   flex-direction: column;
 
+  .close-btn {
+    position: relative;
+    z-index: 10000;
+  }
+
   @media screen and (max-width: 1660px) {
     width: 300px;
     height: 500px;

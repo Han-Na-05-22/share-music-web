@@ -211,9 +211,9 @@ const MusicTable = () => {
     setPage(1);
   }, [navData]);
 
-  useEffect(() => {
-    setMyMusicPlayList(myMusicPlayList?.filter((i: any) => i !== undefined));
-  }, []);
+  // useEffect(() => {
+  //   setMyMusicPlayList(myMusicPlayList?.filter((i: any) => i !== undefined));
+  // }, []);
 
   return (
     <>

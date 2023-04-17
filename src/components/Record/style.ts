@@ -11,6 +11,11 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   align-items: center;
   padding: 70px 100px 0px;
 
+  .musicDetailLoading {
+    background: #fff;
+    height: 110%;
+  }
+
   .add-date {
     position: absolute;
     top: 15px;

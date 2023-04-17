@@ -99,22 +99,24 @@ function App() {
 
   useEffect(() => {
     setMyMusicPlayList(
-      musicAllListData?.map((i: MusicFormProps) => {
-        let isDownload = false;
-        i?.downloadClickList?.filter((a: MusicCountListProps) => {
-          if (a?.email === user?.email) {
-            return (isDownload = true);
-          } else {
-            return isDownload;
-          }
-        });
+      musicAllListData
+        ?.map((i: MusicFormProps) => {
+          let isDownload = false;
+          i?.downloadClickList?.filter((a: MusicCountListProps) => {
+            if (a?.email === user?.email) {
+              return (isDownload = true);
+            } else {
+              return isDownload;
+            }
+          });
 
-        if (isDownload || i?.email === user?.email) {
-          return {
-            ...i,
-          };
-        }
-      }),
+          if (isDownload || i?.email === user?.email) {
+            return {
+              ...i,
+            };
+          }
+        })
+        ?.filter((item: any) => item !== undefined),
     );
   }, [musicList, user]);
 

@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { MusicDetailProps, MusicDetailStateProps } from "./interface";
 import { isMusicDetailState } from "./state";
 import { MusicDetailContainer } from "./style";
+import { isCurrentAudioState } from "components/Record/state";
 
 const MusicDetail = ({
   className,
@@ -14,6 +15,8 @@ const MusicDetail = ({
 }: MusicDetailProps) => {
   const [isDetailData, setIsDetailData] =
     useRecoilState<MusicDetailStateProps>(isMusicDetailState);
+  const [isCurrentAudio, setIsCurrentAudio] =
+    useRecoilState<boolean>(isCurrentAudioState);
 
   return (
     <Overlay>
@@ -27,9 +30,10 @@ const MusicDetail = ({
               isDetail: false,
               isLocation: "",
             });
+            setIsCurrentAudio(false);
           }}
         >
-          확인
+          {isCurrentAudio ? "확인" : "닫기"}
         </Button>
       </MusicDetailContainer>
     </Overlay>
