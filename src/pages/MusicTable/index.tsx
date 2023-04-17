@@ -214,6 +214,7 @@ const MusicTable = () => {
   useEffect(() => {
     setMyMusicPlayList(myMusicPlayList?.filter((i: any) => i !== undefined));
   }, []);
+
   return (
     <>
       <MusicTableContainer>
@@ -227,6 +228,7 @@ const MusicTable = () => {
             } else {
               await updateMusicDownloadAllCount();
               toastMsg("add", "success");
+              setAddMusicPlayer([]);
             }
           }}
         >
