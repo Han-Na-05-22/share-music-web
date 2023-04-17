@@ -213,8 +213,8 @@ export const PlayListContainer = styled.div`
 
       .img-ani.ani,
       .img-ani-paused.ani {
-        width: 150px;
-        height: 150px;
+        width: 100px;
+        height: 100px;
         background-image: linear-gradient(
           to top,
           rgba(255, 255, 255, 0.2) 0%,
@@ -481,8 +481,8 @@ export const PlayListContainer = styled.div`
 
         .img-ani.ani,
         .img-ani-paused.ani {
-          width: 150px;
-          height: 150px;
+          width: 100px;
+          height: 100px;
           background-image: linear-gradient(
             to top,
             rgba(255, 255, 255, 0.2) 0%,
@@ -686,10 +686,12 @@ export const PlayListContainer = styled.div`
 
         .prev-btn {
           left: 15px;
+          top: 50%;
           width: 15px;
         }
         .next-btn {
           right: 15px;
+          top: 50%;
           width: 15px;
         }
       }
@@ -773,12 +775,10 @@ export const PlayListContainer = styled.div`
         }
 
         .prev-btn {
-          left: 35px;
           width: 20px;
           bottom: 10px;
         }
         .next-btn {
-          right: 35px;
           bottom: 10px;
           width: 20px;
         }
@@ -816,7 +816,7 @@ export const PlayListContainer = styled.div`
             .rhap_main-controls {
               left: 50%;
               transform: translateX(-50%);
-              bottom: 0px;
+              bottom: 10px;
 
               button {
                 font-size: 30px;
@@ -864,7 +864,7 @@ export const PlayListContainer = styled.div`
       .paly-list-container {
         width: 100%;
         flex-direction: column;
-        gap: 50px 0px;
+        gap: 35px 0px;
         align-items: center;
         cursor: default;
 
@@ -878,8 +878,8 @@ export const PlayListContainer = styled.div`
 
         .img-ani.ani,
         .img-ani-paused.ani {
-          width: 150px;
-          height: 150px;
+          width: 100px;
+          height: 100px;
           background-image: linear-gradient(
             to top,
             rgba(255, 255, 255, 0.2) 0%,

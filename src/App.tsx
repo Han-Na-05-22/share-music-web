@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { allUserInfo, userInfo } from "components/Login/state";
 import { myMusicPlayListState } from "pages/MyPage/state";
 import NotFound from "pages/NotFound";
-import { Suspense, useCallback, useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { auth } from "service/firebase";
@@ -45,7 +45,7 @@ function App() {
 
   // 내 플레이리스트 음악
   const [myMusicPlayList, setMyMusicPlayList] =
-    useRecoilState<MusicFormProps[]>(myMusicPlayListState);
+    useRecoilState<any>(myMusicPlayListState);
   const navigate = useNavigate();
 
   // get 전체 user 정보
@@ -73,20 +73,6 @@ function App() {
       },
     );
 
-  let getDownloadMusicList: any[] = [];
-
-  const getDownloadMusicData = useCallback(() => {
-    musicList
-      ?.filter((item: MusicFormProps) => item?.email !== user?.email)
-      ?.map((i: MusicFormProps) => {
-        i?.downloadClickList?.filter((a: MusicCountListProps) => {
-          if (a?.email === user?.email) {
-            return (getDownloadMusicList = [...getDownloadMusicList, i]);
-          }
-        });
-      });
-  }, [musicList]);
-
   useEffect(() => {
     setUserAll(UserAllList);
     if (auth?.currentUser !== null || userData) {
@@ -111,29 +97,26 @@ function App() {
     }
   }, [musicAllListData]);
 
-  // getDownloadMusicData();
-
   useEffect(() => {
-    getDownloadMusicData();
-    if (getDownloadMusicList?.length !== 0) {
-      // 내가 등록한 음악리스트와 플레이리스트에 추가한 다른 유저의 음악을 합침
-      setMyMusicPlayList(
-        getDownloadMusicList
-          ?.concat(
-            musicList?.filter(
-              (item: MusicFormProps) => item?.email === user?.email,
-            ),
-          )
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
-      );
-    } else {
-      setMyMusicPlayList(
-        musicList
-          ?.filter((item: MusicFormProps) => item?.email === user?.email)
-          ?.sort((a: MusicFormProps, b: MusicFormProps) => b?.id - a?.id),
-      );
-    }
-  }, [musicList, user, getDownloadMusicData]);
+    setMyMusicPlayList(
+      musicAllListData?.map((i: MusicFormProps) => {
+        let isDownload = false;
+        i?.downloadClickList?.filter((a: MusicCountListProps) => {
+          if (a?.email === user?.email) {
+            return (isDownload = true);
+          } else {
+            return isDownload;
+          }
+        });
+
+        if (isDownload || i?.email === user?.email) {
+          return {
+            ...i,
+          };
+        }
+      }),
+    );
+  }, [musicList, user]);
 
   useEffect(() => {
     // 다시 랜더링될 때마다 home으로(스타일 지정되어 있음)

@@ -3,7 +3,7 @@ import Tabel from "components/Table";
 import { useRecoilState } from "recoil";
 import { MusicTableContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Pagination from "components/Pagination";
 import {
   addMusicPlayerState,
@@ -141,7 +141,7 @@ const MusicTable = () => {
     musicList?.length === myMusicPlayList?.length;
 
   // 내 플레이리스트에 있는 다른 유저 음악들 가져오기
-  const getMyDownloadData = () => {
+  const getMyDownloadData = useCallback(() => {
     if (getMusicList?.length !== 0) {
       getMusicList
         ?.slice(offset, offset + limit)
@@ -160,7 +160,7 @@ const MusicTable = () => {
           }),
         );
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (searchFilter) {
@@ -181,7 +181,7 @@ const MusicTable = () => {
     }
 
     if (selectFilter === "Playlist" && !searchFilter) {
-      setFilterMusicList(myMusicPlayList);
+      setFilterMusicList(myMusicPlayList?.filter((i: any) => i !== undefined));
     }
 
     if (selectFilter === "New" && !searchFilter) {
@@ -387,7 +387,11 @@ const MusicTable = () => {
                   </tr>
                 ))
             ) : (
-              <p className="no-data">데이터가 없습니다.</p>
+              <p className="no-data">
+                {!user?.email
+                  ? "로그인 후 이용해주세요."
+                  : "데이터가 없습니다."}
+              </p>
             )}
           </Tabel>
           {getMusicList?.length !== 0 &&
