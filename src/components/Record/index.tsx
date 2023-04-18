@@ -172,7 +172,7 @@ const Record = ({
       <div className="about-music bottom">
         <p>{musicDetailData?.explanation}</p>
       </div>
-      {!isCurrentAudio && <Loading className="musicDetailLoading"></Loading>}
+      {!isCurrentAudio && <Loading className="music-detail-loading"></Loading>}
     </RecordContainer>
   );
 };

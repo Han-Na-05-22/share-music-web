@@ -27,7 +27,7 @@ export const userApi = {
         displayName: data?.displayName,
         email: user?.email,
         phoneNumber: data?.phoneNumber,
-        creationTime: user?.creationTime,
+        creationTime: data?.creationTime,
       },
     });
   },

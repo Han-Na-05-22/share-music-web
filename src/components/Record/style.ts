@@ -11,7 +11,7 @@ export const RecordContainer = styled.div<RecordStyleProps>`
   align-items: center;
   padding: 70px 100px 0px;
 
-  .musicDetailLoading {
+  .music-detail-loading {
     background: #fff;
     height: 110%;
   }

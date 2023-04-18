@@ -15,6 +15,7 @@ import { loginState } from "components/Login/state";
 import { userFunction } from "common/api/user";
 import useInputs from "hooks/useInputs";
 import { toastMsg } from "utility/toastMsg";
+import Loading from "components/Loading";
 
 const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
   const navigate = useNavigate();
@@ -43,13 +44,17 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
     emailRegex?.test(form?.email) &&
     phoneRegex?.test(form?.phoneNumber);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const signUp = async ({ email, password, displayName }: any) => {
     try {
+      setIsLoading(true);
       const { user }: any = await createUserWithEmailAndPassword(
         auth,
         `${email + "@music.com"}`,
         password,
       );
+      <Loading></Loading>;
       await updateProfile(user, {
         displayName: displayName,
       });
@@ -63,7 +68,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           displayName: displayName,
           email: `${email}@music.com`,
           phoneNumber: form?.phoneNumber,
-          creationTime: user?.metadata?.creationTime,
+          creationTime: form?.creationTime,
         },
       });
       toastMsg("join", "success");
@@ -71,6 +76,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
       await auth?.signOut();
 
       setJoinStateDate(false);
+      setIsLoading(false);
     } catch {
       toastMsg("join", "failure");
     }
@@ -202,6 +208,7 @@ const Join = ({ className, width = "1150px", height = "780px" }: JoinProps) => {
           </Button>
         </div>
       </div>
+      {isLoading && <Loading className="join-loading"></Loading>}
     </JoinContainer>
   );
 };

@@ -16,6 +16,11 @@ export const JoinContainer = styled.div<JoinStyleProps>`
   justify-content: center;
   flex-direction: column;
 
+  .join-loading {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
   .user-infos {
     width: 800px;
     height: 100%;

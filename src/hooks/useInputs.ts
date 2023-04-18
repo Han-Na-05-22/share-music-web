@@ -40,6 +40,7 @@ export default function useInputs(type: "add" | "join" | "login" | "user") {
         rePassword: "",
         phoneNumber: "",
         displayName: "",
+        creationTime: moment().format("YYYY-MM-DD HH:mm:ss"),
       }) ||
       (type === "login" && {
         email: "",

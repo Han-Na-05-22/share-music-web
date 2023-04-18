@@ -16,7 +16,7 @@ export const AddMusicContainer = styled.section<AddMusicStyleProps>`
   flex-direction: column;
   padding: 40px;
 
-  .addMusicLoading {
+  .add-music-loading {
     height: 100%;
     background: rgba(255, 255, 255, 0.7);
   }
