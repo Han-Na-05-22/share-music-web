@@ -121,8 +121,8 @@ export const HeaderContainer = styled.header`
           display: flex;
           justify-content: flex-end;
           align-items: flex-end;
-          gap: 0px 10px;
-          font-size: 10px;
+          gap: 0px 20px;
+          font-size: 13px;
         }
       }
     }
@@ -170,7 +170,7 @@ export const HeaderContainer = styled.header`
         gap: 0px 20px;
 
         strong {
-          font-size: 10px;
+          font-size: 12px;
         }
       }
     }
@@ -219,7 +219,7 @@ export const HeaderContainer = styled.header`
     }
     .auth-btn-container {
       right: 0px;
-      bottom: -65px;
+      bottom: -60px;
       position: absolute;
     }
   }
@@ -250,6 +250,10 @@ export const HeaderContainer = styled.header`
 
     .auth-btn-container {
       bottom: -45px;
+      gap: 0px 15px !important;
+      strong {
+        font-size: 10px !important;
+      }
     }
   }
 `;
