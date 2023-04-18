@@ -22,6 +22,7 @@ import {
 import { LoginStateProps, UserProps } from "components/Login/interface";
 import { MusicFormProps } from "components/AddMusic/interface";
 import { MusicDetailStateProps } from "components/MusicDetail/interface";
+import { analytics } from "service/firebase";
 
 const Home = () => {
   const [loginStateDate, setLoginStateDate] =
