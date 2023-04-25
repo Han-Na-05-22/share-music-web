@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-// todo : 반응형 중복인 부분 삭제해야함!!
-
 export const MyPageContainer = styled.div`
   display: flex;
   width: 100%;
@@ -34,14 +32,13 @@ export const MyPageContainer = styled.div`
   }
 
   @media screen and (max-width: 1660px) {
-    display: flex;
-    width: 100%;
     padding: 75px 40px 170px;
     justify-content: space-evenly;
 
     @media screen and (max-width: 1150px) {
       justify-content: space-between;
     }
+
     .user-info-container {
       min-height: 810px;
       width: 550px;
@@ -125,8 +122,6 @@ export const MyPageContainer = styled.div`
       }
     }
     .tabel-container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
       min-height: 810px;
       position: relative;
       div {
@@ -141,7 +136,6 @@ export const MyPageContainer = styled.div`
         }
         &:nth-child(2) {
           bottom: 25px;
-          position: absolute;
         }
       }
 
@@ -168,12 +162,6 @@ export const MyPageContainer = styled.div`
           svg {
             height: 15px;
             width: 15px;
-            &:hover {
-              path {
-                transition: 0.2s;
-                fill-opacity: 1;
-              }
-            }
           }
         }
       }
@@ -181,8 +169,6 @@ export const MyPageContainer = styled.div`
   }
 
   @media screen and (max-width: 950px) {
-    display: flex;
-    width: 100%;
     padding: 75px 40px 180px;
     justify-content: center;
     flex-wrap: wrap;
@@ -193,73 +179,16 @@ export const MyPageContainer = styled.div`
       min-height: 100%;
       width: 100%;
       min-width: 100%;
-      padding: 85px 40px;
-      position: relative;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
 
       .my-info-edit {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-
         .input-container {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          margin: 30px 0px;
-          gap: 30px 0px;
-
           & > div {
             height: 100%;
-            width: 100%;
-
-            &:last-child {
-              input {
-                margin-bottom: 0px;
-              }
-            }
-          }
-          input {
-            width: 100%;
-            height: 50px;
-            margin: 10px 0px 20px;
-            font-size: 14px;
-          }
-
-          label {
-            font-size: 14px;
-            color: ${({ theme }) => theme.colors.DefaultText};
-          }
-        }
-
-        .my-img {
-        }
-
-        .mine {
-          gap: 0px 20px;
-          display: flex;
-        }
-
-        .my-info-submit {
-          width: 150px;
-          height: 50px;
-          span {
-            font-size: 16px;
           }
         }
       }
     }
     .tabel-container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
       height: 100%;
       min-height: 300px;
       div {
@@ -267,10 +196,6 @@ export const MyPageContainer = styled.div`
 
         &:nth-child(1) {
           min-height: 300px;
-        }
-        &:nth-child(2) {
-          bottom: 25px;
-          position: absolute;
         }
       }
 
@@ -284,12 +209,6 @@ export const MyPageContainer = styled.div`
           svg {
             width: 20px;
             height: 20px;
-            &:hover {
-              path {
-                transition: 0.2s;
-                fill-opacity: 1;
-              }
-            }
           }
         }
       }
@@ -297,69 +216,25 @@ export const MyPageContainer = styled.div`
   }
 
   @media screen and (max-width: 650px) {
-    display: flex;
-    width: 100%;
     padding: 75px 20px 180px;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 80px 0px;
-    flex-direction: column;
 
     .user-info-container {
-      width: 100%;
-      min-width: 100%;
       padding: 40px 20px;
-      position: relative;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
 
       .my-info-edit {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-
         .input-container {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: space-between;
-          width: 100%;
-          margin: 30px 0px;
           gap: 20px 0px;
 
           & > div {
-            width: 100%;
-
-            &:last-child {
-              input {
-                margin-bottom: 0px;
-              }
-            }
           }
           input {
-            width: 100%;
             height: 40px;
-            margin: 10px 0px 20px;
             font-size: 12px;
           }
 
           label {
             font-size: 12px;
-            color: ${({ theme }) => theme.colors.DefaultText};
           }
-        }
-
-        .my-img {
-        }
-
-        .mine {
-          gap: 0px 20px;
-          display: flex;
         }
 
         .my-info-submit {
@@ -372,15 +247,11 @@ export const MyPageContainer = styled.div`
       }
     }
     .tabel-container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-
       div {
         width: 100%;
         padding: 15px 10px;
         &:nth-child(2) {
           bottom: 15px;
-          position: absolute;
 
           button {
             width: 20px;
@@ -411,12 +282,6 @@ export const MyPageContainer = styled.div`
           svg {
             width: 15px;
             height: 15px;
-            &:hover {
-              path {
-                transition: 0.2s;
-                fill-opacity: 1;
-              }
-            }
           }
         }
       }

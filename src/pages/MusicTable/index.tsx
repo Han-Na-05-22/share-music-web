@@ -3,7 +3,7 @@ import Tabel from "components/Table";
 import { useRecoilState } from "recoil";
 import { MusicTableContainer } from "./style";
 import SVG from "react-inlinesvg";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Pagination from "components/Pagination";
 import {
   addMusicPlayerState,
