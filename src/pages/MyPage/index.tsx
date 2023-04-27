@@ -34,6 +34,7 @@ const MyPage = () => {
   const [currentMusic, setCurrentMusic] =
     useRecoilState<MusicFormProps>(currentMusicState);
   const [user, setUser] = useRecoilState<UserProps>(userInfo);
+
   const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
   const offset = (page - 1) * limit;
