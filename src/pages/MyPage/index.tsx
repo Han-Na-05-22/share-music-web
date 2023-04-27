@@ -52,6 +52,10 @@ const MyPage = () => {
       onSuccess: async () => {
         toastMsg("delete", "success");
         queryClient.invalidateQueries("getMusicAllDataList");
+
+        setTimeout(() => {
+          queryClient.invalidateQueries("getMusicAllDataList");
+        }, 2000);
       },
     },
   );
