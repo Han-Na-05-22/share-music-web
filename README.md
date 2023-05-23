@@ -11,8 +11,14 @@
 |     ID      |  user00  |
 |     PW      | user00!! |
 
-### 테스트 업로드 mp3 파일 : https://github.com/Han-Na-05-22/share-music-web/blob/master/public/image/Soulicious%20-%20Dyalla.mp3
+#### 테스트 업로드 mp3 파일 : https://github.com/Han-Na-05-22/share-music-web/blob/master/public/image/Soulicious%20-%20Dyalla.mp3
 
+#### 테스트 업로드 이미지
+
+<img src="./public/image/test-img.jpeg" width="200">
+- 위 이미지 마우스 우클릭 후 이미지를 다른 이름으로 저장
+
+<br />
 <br />
 
 ### 2023.02 ~ 2023.04
@@ -34,6 +40,8 @@
     <td>한달</td>
   </tr>
 </table>
+
+<br />
 
 <div>
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
