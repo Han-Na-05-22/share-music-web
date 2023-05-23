@@ -2,7 +2,18 @@
 
 ### \* 내 음악을 다른 사람들과 공유할 수 있는 음악 공유 사이트입니다.
 
-#### (음원등록 할 때 필요한 mp3 파일은 share-music-web/public/image/Soulicious - Dyalla.mp3 에 넣어두었습니다.)
+### 배포 사이트 : https://eclectic-fenglisu-b7772c.netlify.app/
+
+<br />
+
+| 테스트 계정 |          |
+| :---------: | :------: |
+|     ID      |  user00  |
+|     PW      | user00!! |
+
+### 테스트 업로드 mp3 파일 : https://github.com/Han-Na-05-22/share-music-web/blob/master/public/image/Soulicious%20-%20Dyalla.mp3
+
+<br />
 
 ### 2023.02 ~ 2023.04
 
@@ -32,6 +43,9 @@
   <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=Firebase&logoColor=white">
   <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=Netlify&logoColor=white">
 </div>
+
+<br />
+<br />
 
 ## 📑 Pages
 
