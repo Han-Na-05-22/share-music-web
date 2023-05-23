@@ -368,7 +368,7 @@ const MusicTable = () => {
                         }
                       ></CheckBox>
                     </td>
-                    <td>{page === 1 ? idx + 1 : idx + 1 + (page - 1) * 15}</td>
+                    <td>{page === 1 ? idx + 1 : idx + 1 + (page - 1) * 10}</td>
                     <td>
                       <img src={item?.img} alt="" />
                     </td>
